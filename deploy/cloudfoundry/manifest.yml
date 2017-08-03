@@ -6,5 +6,6 @@ services:
 - companysharingexternal
 applications:
 - name: companysharingexternal
+  path: build/libs/*.war
   env:
     SPRING_PROFILES_ACTIVE: prod, cloudfoundry
