@@ -112,6 +112,7 @@ Desktop.ini
 ######################
 /bin/
 /deploy/
+!/deploy/cloudfoundry/manifest.yml
 
 ######################
 # Logs
