@@ -111,8 +111,8 @@ Desktop.ini
 # Directories
 ######################
 /bin/
-/deploy/
-!/deploy/cloudfoundry/manifest.yml
+/deploy/*
+!cloudfoundry/
 
 ######################
 # Logs
