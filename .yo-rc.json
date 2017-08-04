@@ -22,7 +22,7 @@
     "enableSocialSignIn": false,
     "rememberMeKey": "56f0dea10b9d7e2f447d87431b0c2918057f7c5d",
     "clientFramework": "angular2",
-    "useSass": false,
+    "useSass": true,
     "clientPackageManager": "yarn",
     "applicationType": "monolith",
     "testFrameworks": [

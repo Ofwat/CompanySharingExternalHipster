@@ -55,6 +55,10 @@ module.exports = (config) => {
                         loaders: ['file?name=[name].[hash].[ext]', 'extract']
                     },
                     {
+                        test: /\.scss$/,
+                        loaders: ['to-string-loader', 'css-loader', 'sass-loader']
+                    },
+                    {
                         test: /\.(jpe?g|png|gif|svg|woff2?|ttf|eot)$/i,
                         loaders: ['file-loader?hash=sha512&digest=hex&name=[hash].[ext]']
                     },
