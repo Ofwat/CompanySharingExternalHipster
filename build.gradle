@@ -128,6 +128,7 @@ repositories {
     maven { url 'https://oss.sonatype.org/content/repositories/releases' }
     maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
     maven { url 'http://repo.maven.apache.org/maven2' }
+    maven { url "http://dl.bintray.com/gov-uk-notify/maven" }
 }
 
 dependencies {
@@ -186,6 +187,8 @@ dependencies {
     compile "org.mariadb.jdbc:mariadb-java-client"
     compile "com.h2database:h2"
     compile "org.mapstruct:mapstruct-jdk8:${mapstruct_version}"
+    compile("uk.gov.service.notify:notifications-java-client:${ukGovNotify_version}")
+
     testCompile "org.awaitility:awaitility:${awaitility_version}"
     testCompile "com.jayway.jsonpath:json-path"
     testCompile ("org.springframework.boot:spring-boot-starter-test") {

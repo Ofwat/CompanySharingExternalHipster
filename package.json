@@ -28,7 +28,8 @@
     "rxjs": "5.4.0",
     "swagger-ui": "2.2.10",
     "tether": "1.4.0",
-    "zone.js": "0.8.11"
+    "zone.js": "0.8.11",
+    "govuk_frontend_toolkit": "^7.0.0"
   },
   "devDependencies": {
     "@angular/cli": "1.0.6",

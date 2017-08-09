@@ -1,6 +1,458 @@
-<div class="row">
+<main id="content" role="main" tabindex="-1">
+
+
+
+
+
+<!--
+    <div class="grid-row">
+        <div class="column-one-third">
+            <h3 class="heading-medium" id="typography-font">Font</h3>
+            <div class="text">
+                <p>
+                    Use the GDS Transport Website font in Light and Bold. It’s licensed for use on the GOV.UK domains only.
+                </p>
+                <p>
+                    For services publicly available on different domains, use an alternative typeface like Arial.
+                </p>
+                <input class="button" type="button" value="Button"></input>
+            </div>
+            <div class="example">
+                <h1 class="heading-xlarge">A <em class="highlight">48px Bold</em> heading</h1>
+
+                <h2 class="heading-large">A <em class="highlight">36px Bold</em> heading</h2>
+
+                <h3 class="heading-medium">A <em class="highlight">24px Bold</em> heading</h3>
+
+                <h4 class="heading-small">A <em class="highlight">19px Bold</em> heading</h4>
+
+            </div>
+        </div>
+
+
+
+    <div class="column-two-thirds">
+        <h1 class="heading-large">Welcome, Java Hipster!</h1>
+        <div class="text">
+        <p class="">This is your homepage</p>
+
+        <div [ngSwitch]="isAuthenticated()">
+            <div class="alert alert-success" *ngSwitchCase="true">
+                    <span *ngIf="account"
+                    > You are logged in as user "{{account.login}}". </span>
+            </div>
+
+            <div class="alert alert-warning" *ngSwitchCase="false">
+                <span>If you want to </span>
+                <a class="alert-link" (click)="login()">sign in</a><span>, you can try the default accounts:<br/>- Administrator (login="admin" and password="admin") <br/>- User (login="user" and password="user").</span>
+            </div>
+
+            <div class="alert alert-warning" *ngSwitchCase="false">
+                <span>You don't have an account yet?</span>
+                <a class="alert-link" routerLink="register">Register a new account</a>
+            </div>
+        </div>
+
+        <p>
+            If you have any question on JHipster:
+        </p>
+
+        <ul>
+            <li><a href="http://jhipster.github.io/" target="_blank" rel="noopener">JHipster homepage</a></li>
+            <li><a href="http://stackoverflow.com/tags/jhipster/info" target="_blank" rel="noopener">JHipster on Stack Overflow</a></li>
+            <li><a href="https://github.com/jhipster/generator-jhipster/issues?state=open" target="_blank" rel="noopener">JHipster bug tracker</a></li>
+            <li><a href="https://gitter.im/jhipster/generator-jhipster" target="_blank" rel="noopener">JHipster public chat room</a></li>
+            <li><a href="https://twitter.com/java_hipster" target="_blank" rel="noopener">follow @java_hipster on Twitter</a></li>
+        </ul>
+
+        <p>
+            <span>If you like JHipster, don't forget to give us a star on</span> <a href="https://github.com/jhipster/generator-jhipster" target="_blank" rel="noopener">Github</a>!
+        </p>
+    </div>
+    </div>
+
+    </div>
+
+
+    <div class="text">
+        <p class="lede">
+            Use white space to create a visual hierarchy on the page.
+        </p>
+    </div>
+
+    <h2 class="heading-small heading-contents">Contents:</h2>
+    <div class="grid-row">
+        <div class="column-two-thirds">
+            <ul class="list list-contents">
+                <li><a href="#page-width">Page width</a></li>
+                <li><a href="#screen-size">Screen size</a></li>
+                <li><a href="#layout-spacing">Spacing</a></li>
+                <li><a href="#layout-grid-unit-proportions">Grid unit proportions</a></li>
+                <li><a href="#examples">Examples</a></li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+-->
+<!--    <h1 class="heading-xlarge">
+        <span class="heading-secondary">GOV.UK elements</span>
+        Layout
+    </h1>
+
+    <div class="text">
+        <p class="lede">
+            Use white space to create a visual hierarchy on the page.
+        </p>
+    </div>
+
+    <h2 class="heading-small heading-contents">Contents:</h2>
+    <div class="grid-row">
+        <div class="column-two-thirds">
+            <ul class="list list-contents">
+                <li><a href="#page-width">Page width</a></li>
+                <li><a href="#screen-size">Screen size</a></li>
+                <li><a href="#layout-spacing">Spacing</a></li>
+                <li><a href="#layout-grid-unit-proportions">Grid unit proportions</a></li>
+                <li><a href="#examples">Examples</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <h3 class="heading-medium" id="page-width">Page width</h3>
+    <div class="text">
+        <p>
+            The default maximum page width is 1020px, but go wider if the content requires it.
+        </p>
+        <p>
+            <a href="#layout-grid-unit-proportions">Use a grid</a> to lay out your content. To prevent long lines of text, content should sit in a column which is two-thirds of the page width.
+        </p>
+        <p>
+            Long lines reduce legibility, so all lines of text should be no longer than 70 to 80 characters.
+        </p>
+    </div>
+
+    <h3 class="heading-medium" id="screen-size">Screen size</h3>
+    <div class="text">
+        <p>
+            Design for small screens first using a single column layout.
+        </p>
+        <p>
+            Optimise for different screen sizes, but don’t make assumptions about what devices people are using.
+        </p>
+    </div>
+
+    <h3 class="heading-medium" id="layout-spacing">Spacing</h3>
+    <ul class="list list-bullet text">
+        <li>spacing between elements is usually 5px, 10px, 15px or multiples of 15px</li>
+        <li>gutters are 15px for smaller screens and 30px for larger screens</li>
+    </ul>
+
+    <div class="example example-images">
+        <div class="grid-row">
+            <div class="column-one-half">
+                <img src="/public/images/examples/15px-gutter-example.png" alt="15px gutter example">
+            </div>
+            <div class="column-one-half">
+                <img src="/public/images/examples/30px-gutter-example.png" alt="30px gutter example">
+            </div>
+        </div>
+
+    </div>
+
+    <h3 class="heading-medium" id="layout-grid-unit-proportions">Grid unit proportions</h3>
+    <ul class="list list-bullet text">
+        <li>introduce columns as the content requires it – base column ratios on halves, thirds or quarters of the page width</li>
+        <li>for screen breakpoints use media queries – find these in the GOV.UK frontend toolkit <a href="https://github.com/alphagov/govuk_frontend_toolkit/blob/master/stylesheets/_conditionals.scss">_conditionals.scss</a> file</li>
+    </ul>
+
+    <h4 class="heading-medium">Full width</h4>
+    <div class="example example-grid">
+        <div class="grid-row">
+
+            <div class="column-full">
+                <p>Content</p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <pre class=" language-markup"><code class=" language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>grid-row<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>column-full<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">&gt;</span></span>Content<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span></code></pre>
+
+    <h4 class="heading-medium">Halves</h4>
+    <div class="example example-grid">
+        <div class="grid-row">
+
+            <div class="column-one-half">
+                <p>Content</p>
+            </div>
+
+            <div class="column-one-half">
+                <p>Content</p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <pre class=" language-markup"><code class=" language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>grid-row<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>column-one-half<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">&gt;</span></span>Content<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>column-one-half<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">&gt;</span></span>Content<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span></code></pre>
+
+    <h4 class="heading-medium">Thirds</h4>
+    <div class="example example-grid">
+        <div class="grid-row">
+
+            <div class="column-one-third">
+                <p>Content</p>
+            </div>
+
+            <div class="column-one-third">
+                <p>Content</p>
+            </div>
+
+            <div class="column-one-third">
+                <p>Content</p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <pre class=" language-markup"><code class=" language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>grid-row<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>column-one-third<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">&gt;</span></span>Content<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>column-one-third<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">&gt;</span></span>Content<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>column-one-third<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">&gt;</span></span>Content<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span></code></pre>
+
+    <h4 class="heading-medium">Two thirds / One third</h4>
+    <div class="example example-grid">
+        <div class="grid-row">
+
+            <div class="column-two-thirds">
+                <p>Content</p>
+            </div>
+
+            <div class="column-one-third">
+                <p>Content</p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <pre class=" language-markup"><code class=" language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>grid-row<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>column-two-thirds<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">&gt;</span></span>Content<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>column-one-third<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">&gt;</span></span>Content<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span></code></pre>
+
+    <h4 class="heading-medium">One third / Two thirds</h4>
+    <div class="example example-grid">
+        <div class="grid-row">
+
+            <div class="column-one-third">
+                <p>Content</p>
+            </div>
+
+            <div class="column-two-thirds">
+                <p>Content</p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <pre class=" language-markup"><code class=" language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>grid-row<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>column-one-third<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">&gt;</span></span>Content<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>column-two-thirds<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">&gt;</span></span>Content<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span></code></pre>
+
+    <h4 class="heading-medium">Quarters</h4>
+    <div class="example example-grid">
+        <div class="grid-row">
+
+            <div class="column-one-quarter">
+                <p>Content</p>
+            </div>
+
+            <div class="column-one-quarter">
+                <p>Content</p>
+            </div>
+
+            <div class="column-one-quarter">
+                <p>Content</p>
+            </div>
+
+            <div class="column-one-quarter">
+                <p>Content</p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <pre class=" language-markup"><code class=" language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>grid-row<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>column-one-quarter<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">&gt;</span></span>Content<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>column-one-quarter<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">&gt;</span></span>Content<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>column-one-quarter<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">&gt;</span></span>Content<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>column-one-quarter<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">&gt;</span></span>Content<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span></code></pre>
+
+    <h3 class="heading-medium" id="examples">Examples</h3>
+    <ul class="list list-bullet">
+        <li>
+            <a href="/layout/example-grid-layout/">
+                an example grid layout page
+            </a>
+        </li>
+    </ul>-->
+
+</main>
+
+<!--
+
+    <div class="grid-row">
+        <div class="column-two-thirds">
+            <h1 class="display-4">Welcome, Java Hipster!</h1>
+            <p class="lead">This is your homepage</p>
+
+            <div [ngSwitch]="isAuthenticated()">
+                <div class="alert alert-success" *ngSwitchCase="true">
+                <span *ngIf="account"
+                > You are logged in as user "{{account.login}}". </span>
+                </div>
+
+                <div class="alert alert-warning" *ngSwitchCase="false">
+                    <span>If you want to </span>
+                    <a class="alert-link" (click)="login()">sign in</a><span>, you can try the default accounts:<br/>- Administrator (login="admin" and password="admin") <br/>- User (login="user" and password="user").</span>
+                </div>
+
+                <div class="alert alert-warning" *ngSwitchCase="false">
+                    <span>You don't have an account yet?</span>
+                    <a class="alert-link" routerLink="register">Register a new account</a>
+                </div>
+            </div>
+
+            <p>
+                If you have any question on JHipster:
+            </p>
+
+            <ul>
+                <li><a href="http://jhipster.github.io/" target="_blank" rel="noopener">JHipster homepage</a></li>
+                <li><a href="http://stackoverflow.com/tags/jhipster/info" target="_blank" rel="noopener">JHipster on Stack Overflow</a></li>
+                <li><a href="https://github.com/jhipster/generator-jhipster/issues?state=open" target="_blank" rel="noopener">JHipster bug tracker</a></li>
+                <li><a href="https://gitter.im/jhipster/generator-jhipster" target="_blank" rel="noopener">JHipster public chat room</a></li>
+                <li><a href="https://twitter.com/java_hipster" target="_blank" rel="noopener">follow @java_hipster on Twitter</a></li>
+            </ul>
+
+            <p>
+                <span>If you like JHipster, don't forget to give us a star on</span> <a href="https://github.com/jhipster/generator-jhipster" target="_blank" rel="noopener">Github</a>!
+            </p>
+        </div>
+        <div class="column-third">
+            <h3 class="heading-medium" id="typography-font">Font</h3>
+            <div class="text">
+                <p>
+                    Use the GDS Transport Website font in Light and Bold. It’s licensed for use on the GOV.UK domains only.
+                </p>
+                <p>
+                    For services publicly available on different domains, use an alternative typeface like Arial.
+                </p>
+                <input class="button" type="button" value="Button"></input>
+            </div>
+            <div class="example">
+                <h1 class="heading-xlarge">A <em class="highlight">48px Bold</em> heading</h1>
+
+                <h2 class="heading-large">A <em class="highlight">36px Bold</em> heading</h2>
+
+                <h3 class="heading-medium">A <em class="highlight">24px Bold</em> heading</h3>
+
+                <h4 class="heading-small">A <em class="highlight">19px Bold</em> heading</h4>
+
+            </div>
+        </div>
+    </div>
+-->
+
+ <!--   <div class="hero-image">
+        <img ...>
+    </div>-->
+
+<!--<div class="row">
     <div class="col-md-3">
-        <span class="hipster img-fluid img-rounded"></span>
+        &lt;!&ndash;<span class="hipster img-fluid img-rounded"></span>&ndash;&gt;
+        <h3 class="heading-medium" id="typography-font">Font</h3>
+        <div class="text">
+            <p>
+                Use the GDS Transport Website font in Light and Bold. It’s licensed for use on the GOV.UK domains only.
+            </p>
+            <p>
+                For services publicly available on different domains, use an alternative typeface like Arial.
+            </p>
+            <input class="button" type="button" value="Button"></input>
+        </div>
+        <div class="example">
+            <h1 class="heading-xlarge">A <em class="highlight">48px Bold</em> heading</h1>
+
+            <h2 class="heading-large">A <em class="highlight">36px Bold</em> heading</h2>
+
+            <h3 class="heading-medium">A <em class="highlight">24px Bold</em> heading</h3>
+
+            <h4 class="heading-small">A <em class="highlight">19px Bold</em> heading</h4>
+
+        </div>
     </div>
     <div class="col-md-9">
         <h1 class="display-4">Welcome, Java Hipster!</h1>
@@ -39,4 +491,5 @@
             <span>If you like JHipster, don't forget to give us a star on</span> <a href="https://github.com/jhipster/generator-jhipster" target="_blank" rel="noopener">Github</a>!
         </p>
     </div>
-</div>
+</div>-->
+

@@ -1,4 +1,4 @@
-<nav class="navbar navbar-inverse navbar-toggleable-md jh-navbar">
+<!--<nav class="navbar navbar-inverse navbar-toggleable-md jh-navbar">
     <div class="jh-logo-container float-left">
         <a class="jh-navbar-toggler hidden-lg-up float-right" href="javascript:void(0);" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation" (click)="toggleNavbar()">
             <i class="fa fa-bars"></i>
@@ -16,7 +16,7 @@
                     <span>Home</span>
                 </a>
             </li>
-            <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
+            &lt;!&ndash; jhipster-needle-add-element-to-menu - JHipster will add new menu items here &ndash;&gt;
             <li *ngSwitchCase="true" ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                 <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entity-menu">
                     <span>
@@ -28,7 +28,7 @@
                     </span>
                 </a>
                 <ul class="dropdown-menu" ngbDropdownMenu>
-                    <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
+                    &lt;!&ndash; jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here &ndash;&gt;
                 </ul>
             </li>
             <li *jhiHasAnyAuthority="'ROLE_ADMIN'" ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
@@ -82,7 +82,7 @@
                             <span>API</span>
                         </a>
                     </li>
-                    <!-- jhipster-needle-add-element-to-admin-menu - JHipster will add entities to the admin menu here -->
+                    &lt;!&ndash; jhipster-needle-add-element-to-admin-menu - JHipster will add entities to the admin menu here &ndash;&gt;
                     <li *ngIf="!inProduction">
                         <a class="dropdown-item" href='./h2-console' target="_tab" (click)="collapseNavbar()">
                             <i class="fa fa-fw fa-hdd-o" aria-hidden="true"></i>
@@ -145,4 +145,25 @@
             </li>
         </ul>
     </div>
-</nav>
+</nav>-->
+
+
+
+                <nav id='proposition-menu'>
+                    <a href='/govuk_template/' id='proposition-name'>Company Sharing External</a>
+                    <ul id='proposition-links' [ngSwitch]="isAuthenticated()">
+                        <li><a href='url-to-page-1' class='active'>Navigation item #1</a></li>
+                        <li><a href='url-to-page-2'>Navigation item #2</a></li>
+                        <li *ngSwitchCase="true"><a href="#" (click)="logout()" id="logout">
+                            <i class="fa fa-fw fa-sign-out" aria-hidden="true"></i>
+                            <span>Sign out</span>
+                        </a></li>
+                        <li *ngSwitchCase="false">
+                            <a class="" href="#" (click)="login()" id="login">
+                                <i class="fa fa-fw fa-sign-in" aria-hidden="true"></i>
+                                <span>Sign in</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+
