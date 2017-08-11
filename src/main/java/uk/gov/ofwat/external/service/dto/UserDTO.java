@@ -43,6 +43,9 @@ public class UserDTO {
     @Size(min = 2, max = 5)
     private String langKey;
 
+    @Size(min = 4, max = 40)
+    private String mobileTelephoneNumber;
+
     private String createdBy;
 
     private Instant createdDate;
@@ -147,6 +150,14 @@ public class UserDTO {
 
     public Set<String> getAuthorities() {
         return authorities;
+    }
+
+    public String getMobileTelephoneNumber() {
+        return mobileTelephoneNumber;
+    }
+
+    public void setMobileTelephoneNumber(String mobileTelephoneNumber) {
+        this.mobileTelephoneNumber = mobileTelephoneNumber;
     }
 
     @Override

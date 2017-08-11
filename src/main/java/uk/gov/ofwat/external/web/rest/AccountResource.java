@@ -7,6 +7,7 @@ import uk.gov.ofwat.external.domain.User;
 import uk.gov.ofwat.external.repository.PersistentTokenRepository;
 import uk.gov.ofwat.external.repository.UserRepository;
 import uk.gov.ofwat.external.security.SecurityUtils;
+import uk.gov.ofwat.external.service.CompanyService;
 import uk.gov.ofwat.external.service.MailService;
 import uk.gov.ofwat.external.service.UserService;
 import uk.gov.ofwat.external.service.dto.UserDTO;
@@ -44,17 +45,20 @@ public class AccountResource {
 
     private final MailService mailService;
 
+    private final CompanyService companyService;
+
     private final PersistentTokenRepository persistentTokenRepository;
 
     private static final String CHECK_ERROR_MESSAGE = "Incorrect password";
 
     public AccountResource(UserRepository userRepository, UserService userService,
-            MailService mailService, PersistentTokenRepository persistentTokenRepository) {
+            MailService mailService, PersistentTokenRepository persistentTokenRepository, CompanyService companyService) {
 
         this.userRepository = userRepository;
         this.userService = userService;
         this.mailService = mailService;
         this.persistentTokenRepository = persistentTokenRepository;
+        this.companyService = companyService;
     }
 
     /**
@@ -82,8 +86,8 @@ public class AccountResource {
                         .createUser(managedUserVM.getLogin(), managedUserVM.getPassword(),
                             managedUserVM.getFirstName(), managedUserVM.getLastName(),
                             managedUserVM.getEmail().toLowerCase(), managedUserVM.getImageUrl(),
-                            managedUserVM.getLangKey());
-
+                            managedUserVM.getLangKey(), managedUserVM.getMobileTelephoneNumber());
+                    companyService.addUserToCompany(managedUserVM.getCompanyId(), user);
                     mailService.sendActivationEmail(user);
                     return new ResponseEntity<>(HttpStatus.CREATED);
                 })
@@ -148,7 +152,7 @@ public class AccountResource {
             .findOneByLogin(userLogin)
             .map(u -> {
                 userService.updateUser(userDTO.getFirstName(), userDTO.getLastName(), userDTO.getEmail(),
-                    userDTO.getLangKey(), userDTO.getImageUrl());
+                    userDTO.getLangKey(), userDTO.getImageUrl(), userDTO.getMobileTelephoneNumber());
                 return new ResponseEntity(HttpStatus.OK);
             })
             .orElseGet(() -> new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));

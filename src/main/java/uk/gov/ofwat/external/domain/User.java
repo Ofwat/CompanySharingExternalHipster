@@ -61,6 +61,10 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Column(nullable = false)
     private boolean activated = false;
 
+    @NotNull
+    @Column(nullable = false)
+    private boolean enabled = false;
+
     @Size(min = 2, max = 5)
     @Column(name = "lang_key", length = 5)
     private String langKey;
@@ -73,6 +77,10 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Column(name = "activation_key", length = 20)
     @JsonIgnore
     private String activationKey;
+
+    @Size(max = 40)
+    @Column(name = "mobile_telephone_number", length = 40)
+    private String mobileTelephoneNumber;
 
     @Size(max = 20)
     @Column(name = "reset_key", length = 20)
@@ -91,6 +99,13 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @BatchSize(size = 20)
     private Set<Authority> authorities = new HashSet<>();
+
+    @ManyToMany
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JoinTable(name = "company_user",
+        joinColumns = @JoinColumn(name="users_id", referencedColumnName="id"),
+        inverseJoinColumns = @JoinColumn(name="companies_id", referencedColumnName="id"))
+    private Set<Company> companies = new HashSet<>();
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "user")
@@ -162,6 +177,14 @@ public class User extends AbstractAuditingEntity implements Serializable {
         this.activated = activated;
     }
 
+    public boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
     public String getActivationKey() {
         return activationKey;
     }
@@ -193,6 +216,14 @@ public class User extends AbstractAuditingEntity implements Serializable {
         this.langKey = langKey;
     }
 
+    public String getMobileTelephoneNumber() {
+        return mobileTelephoneNumber;
+    }
+
+    public void setMobileTelephoneNumber(String mobileTelephoneNumber) {
+        this.mobileTelephoneNumber = mobileTelephoneNumber;
+    }
+
     public Set<Authority> getAuthorities() {
         return authorities;
     }
@@ -207,6 +238,14 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     public void setPersistentTokens(Set<PersistentToken> persistentTokens) {
         this.persistentTokens = persistentTokens;
+    }
+
+    public Set<Company> getCompanies() {
+        return companies;
+    }
+
+    public void setCompanies(Set<Company> companies) {
+        this.companies = companies;
     }
 
     @Override
@@ -239,6 +278,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
             ", activated='" + activated + '\'' +
             ", langKey='" + langKey + '\'' +
             ", activationKey='" + activationKey + '\'' +
+            ", mobileTelephoneNumber='" + mobileTelephoneNumber + '\'' +
             "}";
     }
 }

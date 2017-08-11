@@ -1,6 +1,6 @@
 <div>
     <div class="row">
-        <div class="col-md-8 offset-md-2">
+        <div class="column-full">
             <h1>Registration</h1>
 
             <div class="alert alert-success" *ngIf="success">
@@ -26,7 +26,7 @@
         <div class="col-md-8 offset-md-2">
             <form name="form" role="form" (ngSubmit)="register()" #registerForm="ngForm" *ngIf="!success">
                 <div class="form-group">
-                    <label class="form-control-label" for="login">Username</label>
+                    <label class="form-label" for="login">Username</label>
                     <input type="text" class="form-control" [(ngModel)]="registerAccount.login" id="login" name="login" #login="ngModel" placeholder="Your username"
                             required minlength="1" maxlength="50" pattern="^[_'.@A-Za-z0-9-]*$">
                     <div *ngIf="login.dirty && login.invalid">
@@ -48,7 +48,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="form-control-label" for="email">Email</label>
+                    <label class="form-label" for="email">Email</label>
                     <input type="email" class="form-control" id="email" name="email" #email="ngModel" placeholder="Your email"
                             [(ngModel)]="registerAccount.email" minlength=5 maxlength=100 required>
                     <div *ngIf="email.dirty && email.invalid">
@@ -71,7 +71,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="form-control-label" for="password">New password</label>
+                    <label class="form-label" for="password">New password</label>
                     <input type="password" class="form-control" id="password" name="password" #password="ngModel" placeholder="New password"
                             [(ngModel)]="registerAccount.password" minlength=4 maxlength=50 required>
                     <div *ngIf="password.dirty && password.invalid">
@@ -91,7 +91,7 @@
                     <jhi-password-strength-bar [passwordToCheck]="registerAccount.password"></jhi-password-strength-bar>
                 </div>
                 <div class="form-group">
-                    <label class="form-control-label" for="confirmPassword">New password confirmation</label>
+                    <label class="form-label" for="confirmPassword">New password confirmation</label>
                     <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" #confirmPasswordInput="ngModel" placeholder="Confirm the new password"
                             [(ngModel)]="confirmPassword" minlength=4 maxlength=50 required>
                     <div *ngIf="confirmPasswordInput.dirty && confirmPasswordInput.invalid">
@@ -109,14 +109,36 @@
                         </small>
                     </div>
                 </div>
+                <div class="form-group">
+                    <label class="form-label" for="mobileTelephoneNumber">Mobile telephone number
+                        <span class="form-hint">
+                            We will need to send you a text message to authenticate your account.
+                        </span>
+                    </label>
+                    <input type="tel" class="form-control" id="mobileTelephoneNumber" name="mobileTelephoneNumber" #mobileTelephoneNumberInput="ngModel" placeholder=""
+                           [(ngModel)]="registerAccount.mobileTelephoneNumber" minlength=4 maxlength=50 required>
 
-                <button type="submit" [disabled]="registerForm.form.invalid" class="btn btn-primary">Register</button>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="company">Company
+                        <span class="form-hint">
+                            Please select the company you work for.
+                          </span>
+                    </label>
+                    <select style="height: auto" class="form-control" id="company" name="company" #companyInput="ngModel"
+                            [(ngModel)]="this.selectedCompany" required>
+                        <option *ngFor="let c of this.companies" [ngValue]="c.id">{{c.name}}</option>
+                    </select>
+
+                </div>
+                <button type="submit" [disabled]="registerForm.form.invalid" class="button">Register</button>
             </form>
             <p></p>
+            <!--
             <div class="alert alert-warning">
                 <span>If you want to </span>
                 <a class="alert-link" (click)="openLogin()">sign in</a><span>, you can try the default accounts:<br/>- Administrator (login="admin" and password="admin") <br/>- User (login="user" and password="user").</span>
-            </div>
+            </div>-->
         </div>
     </div>
 </div>

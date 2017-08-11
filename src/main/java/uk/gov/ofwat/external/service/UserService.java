@@ -86,7 +86,7 @@ public class UserService {
     }
 
     public User createUser(String login, String password, String firstName, String lastName, String email,
-        String imageUrl, String langKey) {
+        String imageUrl, String langKey, String mobileTelephoneNumber) {
 
         User newUser = new User();
         Authority authority = authorityRepository.findOne(AuthoritiesConstants.USER);
@@ -100,6 +100,7 @@ public class UserService {
         newUser.setEmail(email);
         newUser.setImageUrl(imageUrl);
         newUser.setLangKey(langKey);
+        newUser.setMobileTelephoneNumber(mobileTelephoneNumber);
         // new user is not active
         newUser.setActivated(false);
         // new user gets registration key
@@ -118,6 +119,7 @@ public class UserService {
         user.setLastName(userDTO.getLastName());
         user.setEmail(userDTO.getEmail());
         user.setImageUrl(userDTO.getImageUrl());
+        user.setMobileTelephoneNumber(userDTO.getMobileTelephoneNumber());
         if (userDTO.getLangKey() == null) {
             user.setLangKey("en"); // default language
         } else {
@@ -149,13 +151,14 @@ public class UserService {
      * @param langKey language key
      * @param imageUrl image URL of user
      */
-    public void updateUser(String firstName, String lastName, String email, String langKey, String imageUrl) {
+    public void updateUser(String firstName, String lastName, String email, String langKey, String imageUrl, String mobileTelephoneNumber) {
         userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin()).ifPresent(user -> {
             user.setFirstName(firstName);
             user.setLastName(lastName);
             user.setEmail(email);
             user.setLangKey(langKey);
             user.setImageUrl(imageUrl);
+            user.setMobileTelephoneNumber(mobileTelephoneNumber);
             log.debug("Changed Information for User: {}", user);
         });
     }
@@ -177,6 +180,7 @@ public class UserService {
                 user.setImageUrl(userDTO.getImageUrl());
                 user.setActivated(userDTO.isActivated());
                 user.setLangKey(userDTO.getLangKey());
+                user.setMobileTelephoneNumber(userDTO.getMobileTelephoneNumber());
                 Set<Authority> managedAuthorities = user.getAuthorities();
                 managedAuthorities.clear();
                 userDTO.getAuthorities().stream()
