@@ -8,7 +8,8 @@ import {
     logsRoute,
     metricsRoute,
     userMgmtRoute,
-    userDialogRoute
+    userDialogRoute,
+    ofwatUserMgmtRoute
 } from './';
 
 import { UserRouteAccessService } from '../shared';
@@ -20,6 +21,7 @@ const ADMIN_ROUTES = [
     healthRoute,
     logsRoute,
     ...userMgmtRoute,
+    ...ofwatUserMgmtRoute,
     metricsRoute
 ];
 

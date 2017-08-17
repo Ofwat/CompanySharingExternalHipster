@@ -12,6 +12,8 @@ export class User {
     public lastModifiedBy?: string;
     public lastModifiedDate?: Date;
     public password?: string;
+    public enabled?: Boolean;
+    public mobileTelephoneNumber: string;
 
     constructor(
         id?: any,
@@ -26,7 +28,9 @@ export class User {
         createdDate?: Date,
         lastModifiedBy?: string,
         lastModifiedDate?: Date,
-        password?: string
+        password?: string,
+        enabled?: Boolean,
+        mobileTelephoneNumber?: string
     ) {
         this.id = id ? id : null;
         this.login = login ? login : null;
@@ -41,5 +45,7 @@ export class User {
         this.lastModifiedBy = lastModifiedBy ? lastModifiedBy : null;
         this.lastModifiedDate = lastModifiedDate ? lastModifiedDate : null;
         this.password = password ? password : null;
+        this.enabled = enabled ? enabled : null;
+        this.mobileTelephoneNumber = mobileTelephoneNumber ? mobileTelephoneNumber : null;
     }
 }

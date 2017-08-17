@@ -1,7 +1,9 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
-
 import { CompanySharingExternalSharedModule } from '../shared';
+import {OfwatUserMgmtComponent} from './ofwat-user-management/ofwat-user-management.component';
+import {OfwatUserMgmtDetailComponent} from './ofwat-user-management/ofwat-user-management-detail.component';
+import {OfwatUserMgmtPermissionsComponent} from './ofwat-user-management/ofwat-user-management-permissions.component';
 /* jhipster-needle-add-admin-module-import - JHipster will add admin modules imports here */
 
 import {
@@ -26,6 +28,7 @@ import {
     JhiMetricsService,
     LogsService,
     UserResolvePagingParams,
+    OfwatUserResolvePagingParams,
     UserResolve,
     UserModalService
 } from './';
@@ -39,9 +42,12 @@ import {
     declarations: [
         AuditsComponent,
         UserMgmtComponent,
+        OfwatUserMgmtComponent,
         UserDialogComponent,
         UserDeleteDialogComponent,
         UserMgmtDetailComponent,
+        OfwatUserMgmtDetailComponent,
+        OfwatUserMgmtPermissionsComponent,
         UserMgmtDialogComponent,
         UserMgmtDeleteDialogComponent,
         LogsComponent,
@@ -65,6 +71,7 @@ import {
         JhiMetricsService,
         LogsService,
         UserResolvePagingParams,
+        OfwatUserResolvePagingParams,
         UserResolve,
         UserModalService
     ],

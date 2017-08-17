@@ -181,6 +181,7 @@ public class UserService {
                 user.setActivated(userDTO.isActivated());
                 user.setLangKey(userDTO.getLangKey());
                 user.setMobileTelephoneNumber(userDTO.getMobileTelephoneNumber());
+                user.setEnabled(userDTO.getEnabled());
                 Set<Authority> managedAuthorities = user.getAuthorities();
                 managedAuthorities.clear();
                 userDTO.getAuthorities().stream()

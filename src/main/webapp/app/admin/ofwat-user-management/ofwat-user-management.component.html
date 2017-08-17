@@ -1,4 +1,42 @@
 <div>
+    <h2 class="heading-medium">
+        <span>Ofwat Users</span>
+        <button class="button float-right" [routerLink]="['/', { outlets: { popup: ['user-management-new'] } }]">
+            <span class="fa fa-plus"></span> <span>Create a new User</span>
+        </button>
+        <span class="float-right">&nbsp;</span>
+        <button class="button float-right" [routerLink]="['../register']">
+            <span class="fa fa-plus"></span> <span>Invite a new User</span>
+        </button>
+    </h2>
+    <button type="button" (click)="clickMe()">I will create alert - Click Me!</button>
+    <jhi-alert></jhi-alert>
+    <jhi-alert-error></jhi-alert-error> <!-- Use this one if you wan't the error returned by the server to be displayed. -->
+    <div class="table-responsive" *ngIf="users">
+        <table class="">
+            <thead>
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+                    <th scope="col" jhiSortBy="email"><span>Email</span> <span class="fa fa-sort"></span></th>
+                    <th scope="col" ><span>Mobile #</span></th>
+                    <th scope="col" jhiSortBy="enabled"><span>Enabled</span> <span class="fa fa-sort"></span></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody *ngIf ="users">
+                <tr *ngFor="let user of users; trackBy: trackIdentity">
+                    <td>{{user.email}}</td>
+                    <td>{{user.mobileTelephoneNumber}}</td>
+                    <td><span class="multiple-choice" ><input style="opacity: 1; top:-20px;" id="testField{{user.id}}" name="testField{{user.id}}" [ngModel]="user.enabled" type="checkbox" class="" (click)="checkbox(user)"></span></td>
+                    <td><a href="" [routerLink]="['../ofwat-user-management', user.login]">Details</a></td>
+                    <td><a href="" [routerLink]="['../ofwat-user-management/permissions', user.login]">Permissions</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!--
+<div>
     <h2>
         <span>Users</span>
         <button class="btn btn-primary float-right" [routerLink]="['/', { outlets: { popup: ['user-management-new'] } }]">
@@ -44,7 +82,7 @@
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"
-                                [routerLink]="['../user-management', user.login]"
+                                [routerLink]="['../ofwat-user-management', user.login]"
                                 class="btn btn-info btn-sm">
                             <span class="fa fa-eye"></span>
                             <span class="hidden-md-down">View</span>
@@ -78,3 +116,4 @@
         </div>
     </div>
 </div>
+-->

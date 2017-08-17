@@ -7,10 +7,10 @@ import { ITEMS_PER_PAGE, Principal, User, UserService, ResponseWrapper } from '.
 import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
 
 @Component({
-    selector: 'jhi-user-mgmt',
-    templateUrl: './user-management.component.html'
+    selector: 'jhi-ofwat-user-mgmt',
+    templateUrl: './ofwat-user-management.component.html'
 })
-export class UserMgmtComponent implements OnInit, OnDestroy {
+export class OfwatUserMgmtComponent implements OnInit, OnDestroy {
 
     currentAccount: any;
     users: User[];
@@ -64,6 +64,7 @@ export class UserMgmtComponent implements OnInit, OnDestroy {
 
     setActive(user, isActivated) {
         user.activated = isActivated;
+
         this.userService.update(user).subscribe(
             (response) => {
                 if (response.status === 200) {
@@ -107,13 +108,31 @@ export class UserMgmtComponent implements OnInit, OnDestroy {
     }
 
     transition() {
-        this.router.navigate(['/user-management'], {
+        this.router.navigate(['/ofwat-user-management'], {
             queryParams: {
                 page: this.page,
                 sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
             }
         });
         this.loadAll();
+    }
+
+    checkbox(user: User) {
+        user.enabled = !user.enabled;
+        this.userService.update(user).subscribe(
+            (response) => {
+                if (response.status === 200) {
+                    this.error = null;
+                    this.success = 'OK';
+                    // this.loadAll(); // - We dont need to reload all the users do we?
+                } else {
+                    this.success = null;
+                    this.error = 'ERROR';
+                    user.enabled = !user.enabled;
+                    // TODO display the error message outlet.
+                    this.onError( {error: this.error, message: 'Something went wrong - get this from i8n'} );
+                }
+            });
     }
 
     private onSuccess(data, headers) {
@@ -124,6 +143,12 @@ export class UserMgmtComponent implements OnInit, OnDestroy {
     }
 
     private onError(error) {
+        console.log( 'Calling the alert service with error:' );
+        console.log(error);
         this.alertService.error(error.error, error.message, null);
+    }
+
+    clickMe() {
+        this.alertService.error('404', {timeout:0}, null);
     }
 }

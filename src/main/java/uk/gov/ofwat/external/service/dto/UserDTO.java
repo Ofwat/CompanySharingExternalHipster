@@ -56,6 +56,8 @@ public class UserDTO {
 
     private Set<String> authorities;
 
+    private Boolean enabled = false;
+
     public UserDTO() {
         // Empty constructor needed for Jackson.
     }
@@ -65,13 +67,13 @@ public class UserDTO {
             user.getEmail(), user.getActivated(), user.getImageUrl(), user.getLangKey(),
             user.getCreatedBy(), user.getCreatedDate(), user.getLastModifiedBy(), user.getLastModifiedDate(),
             user.getAuthorities().stream().map(Authority::getName)
-                .collect(Collectors.toSet()));
+                .collect(Collectors.toSet()), user.getMobileTelephoneNumber(), user.getEnabled());
     }
 
     public UserDTO(Long id, String login, String firstName, String lastName,
         String email, boolean activated, String imageUrl, String langKey,
         String createdBy, Instant createdDate, String lastModifiedBy, Instant lastModifiedDate,
-        Set<String> authorities) {
+        Set<String> authorities, String mobileTelephoneNumber, boolean enabled) {
 
         this.id = id;
         this.login = login;
@@ -86,6 +88,8 @@ public class UserDTO {
         this.lastModifiedBy = lastModifiedBy;
         this.lastModifiedDate = lastModifiedDate;
         this.authorities = authorities;
+        this.mobileTelephoneNumber = mobileTelephoneNumber;
+        this.enabled = enabled;
     }
 
     public Long getId() {
@@ -158,6 +162,14 @@ public class UserDTO {
 
     public void setMobileTelephoneNumber(String mobileTelephoneNumber) {
         this.mobileTelephoneNumber = mobileTelephoneNumber;
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
     }
 
     @Override
