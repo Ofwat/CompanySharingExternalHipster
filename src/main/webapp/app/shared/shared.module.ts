@@ -1,5 +1,6 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { DatePipe } from '@angular/common';
+import { CompanySelectComponent } from './company-select/company-select.component';
 
 import {
     CompanySharingExternalSharedLibsModule,
@@ -23,7 +24,8 @@ import {
     ],
     declarations: [
         JhiLoginModalComponent,
-        HasAnyAuthorityDirective
+        HasAnyAuthorityDirective,
+        CompanySelectComponent
     ],
     providers: [
         LoginService,
@@ -41,7 +43,8 @@ import {
         CompanySharingExternalSharedCommonModule,
         JhiLoginModalComponent,
         HasAnyAuthorityDirective,
-        DatePipe
+        DatePipe,
+        CompanySelectComponent
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 

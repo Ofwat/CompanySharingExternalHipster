@@ -149,21 +149,27 @@
 
 
 
-                <nav id='proposition-menu'>
-                    <a href='/govuk_template/' id='proposition-name'>Company Sharing External</a>
-                    <ul id='proposition-links' [ngSwitch]="isAuthenticated()">
-                        <li><a href='url-to-page-1' class='active'>Navigation item #1</a></li>
-                        <li><a href='url-to-page-2'>Navigation item #2</a></li>
-                        <li *ngSwitchCase="true"><a href="#" (click)="logout()" id="logout">
-                            <i class="fa fa-fw fa-sign-out" aria-hidden="true"></i>
-                            <span>Sign out</span>
-                        </a></li>
-                        <li *ngSwitchCase="false">
-                            <a class="" href="#" (click)="login()" id="login">
-                                <i class="fa fa-fw fa-sign-in" aria-hidden="true"></i>
-                                <span>Sign in</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
+<nav id='proposition-menu'>
+    <a href='/govuk_template/' id='proposition-name'>Company Sharing External</a>
+    <ul id='proposition-links' [ngSwitch]="isAuthenticated()">
+        <li *ngSwitchCase="true"><a href="#" (click)="logout()" id="logout">
+            <i class="fa fa-fw fa-sign-out" aria-hidden="true"></i>
+            <span>Sign out</span>
+        </a></li>
+        <li *ngSwitchCase="false"><a href='' [routerLink]="['register']" class=''>Register</a></li>
+        <li *ngSwitchCase="false">
+            <a class="" href="#" (click)="login()" id="login">
+                <i class="fa fa-fw fa-sign-in" aria-hidden="true"></i>
+                <span>Sign in</span>
+            </a>
+        </li>
+        <li *ngSwitchCase="true"><a href='' [routerLink]="['ofwat-user-management']">User management</a></li>
+        <li *ngSwitchCase="true">
+            <jhi-ofwat-company-select></jhi-ofwat-company-select>
+            <!-- If it is an ofwat employee display a select list of all companies -->
+            <!-- Else display only for the company the user is associated with. -->
+            <!--<a href='url-to-page-2'>{{isOfwatEmployee()}}</a>-->
+        </li>
+    </ul>
+</nav>
 

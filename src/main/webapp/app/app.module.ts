@@ -24,6 +24,7 @@ import {
     PageRibbonComponent,
     ErrorComponent
 } from './layouts';
+import {CookieComponent} from "./layouts/cookie/cookie.component";
 
 @NgModule({
     imports: [
@@ -42,7 +43,8 @@ import {
         NavbarComponent,
         ErrorComponent,
         PageRibbonComponent,
-        FooterComponent
+        FooterComponent,
+        CookieComponent
     ],
     providers: [
         ProfileService,

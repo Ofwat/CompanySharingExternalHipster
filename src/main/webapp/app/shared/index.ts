@@ -20,3 +20,4 @@ export * from './model/base-entity';
 export * from './shared-libs.module';
 export * from './shared-common.module';
 export * from './shared.module';
+export { CompanySelectComponent } from './company-select/company-select.component';
