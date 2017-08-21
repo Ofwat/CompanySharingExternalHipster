@@ -20,5 +20,110 @@
     color: $hm-government;
 }
 
+
+.button{
+   @include button;
+}
+.button-secondary{
+   @include button($grey-3);
+ }
+.button-warning{
+   @include button($red);
+}
+
+
+.navigation {
+    padding: 0 30px 0 0
+}
+
+.navigation-service {
+    padding: 11px 0 9px 0;
+    border-bottom: 1px solid #bfc1c3;
+    margin: 0 0 10px;
+    position: relative
+}
+
+.navigation-service-name {
+    font-family: "nta", Arial, sans-serif;
+    font-weight: 700;
+    text-transform: none;
+    font-size: 16px;
+    line-height: 1.25;
+    margin: 0 0 0 0
+}
+
+@media (min-width: 641px) {
+    .navigation-service-name {
+        font-size: 19px;
+        line-height: 1.31579
+    }
+}
+
+.navigation-service-switch {
+    font-family: "nta", Arial, sans-serif;
+    font-weight: 400;
+    text-transform: none;
+    font-size: 14px;
+    line-height: 1.14286;
+    text-align: right;
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 13px 0 9px 15px
+}
+
+@media (min-width: 641px) {
+    .navigation-service-switch {
+        font-size: 16px;
+        line-height: 1.25
+    }
+}
+
+.navigation-service-switch:focus {
+    outline: none;
+    border-bottom: 4px solid #ffbf47;
+    border-left: 10px solid #ffbf47;
+    border-right: 3px solid #ffbf47;
+    right: -3px;
+    color: #0b0c0c
+}
+
+.navigation li {
+    font-family: "nta", Arial, sans-serif;
+    font-weight: 400;
+    text-transform: none;
+    font-size: 16px;
+    line-height: 1.25;
+    margin: 0;
+    list-style-type: none
+}
+
+@media (min-width: 641px) {
+    .navigation li {
+        font-size: 19px;
+        line-height: 1.31579
+    }
+}
+
+.navigation a {
+    display: block;
+    padding: 5px 0;
+    position: relative;
+    top: 5px
+}
+
+.navigation a:link, .navigation a:visited {
+    text-decoration: none
+}
+
+.navigation a:hover {
+    color: #2b8cc4;
+    text-decoration: underline
+}
+
+.navigation a:focus {
+    color: #0b0c0c
+}
+
 /* jhipster-needle-scss-add-main JHipster will add new css style */
 
