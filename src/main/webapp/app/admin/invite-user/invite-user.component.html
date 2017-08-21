@@ -1,7 +1,7 @@
 <div>
     <div class="row">
         <div class="column-full">
-            <h2 class="heading-medium">Invite user</h2>
+            <h2 class="heading-large">Invite a team member</h2>
 
             <div class="alert alert-success" *ngIf="success">
                 <strong>Invitation sent!</strong> Please check your email for confirmation.
@@ -101,7 +101,7 @@
                         <option *ngFor="let c of this.companies" [ngValue]="c.id">{{c.name}}</option>
                     </select>
                 </div>
-                <button type="submit" [disabled]="inviteForm.form.invalid" class="button"><span class="font-medium">Invite user</span></button>
+                <button type="submit" [disabled]="inviteForm.form.invalid" class="button"><span class="font-medium">Send invitation email</span></button>
                 <button class="button button-secondary" [routerLink]="['../ofwat-user-management']"><span class="font-medium">Back to user management</span></button>
             </form>
             <p></p>

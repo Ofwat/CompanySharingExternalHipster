@@ -5,7 +5,10 @@ import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ProfileService } from '../profiles/profile.service';
 import { Principal, LoginModalService, LoginService } from '../../shared';
 
+import { User, UserService } from '../../shared';
+
 import { VERSION, DEBUG_INFO_ENABLED } from '../../app.constants';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
     selector: 'jhi-navbar',
@@ -16,12 +19,14 @@ import { VERSION, DEBUG_INFO_ENABLED } from '../../app.constants';
 })
 export class NavbarComponent implements OnInit {
 
+    userName: string;
     inProduction: boolean;
     isNavbarCollapsed: boolean;
     languages: any[];
     swaggerEnabled: boolean;
     modalRef: NgbModalRef;
     version: string;
+    private subscription: Subscription;
 
     constructor(
         private loginService: LoginService,
@@ -39,6 +44,13 @@ export class NavbarComponent implements OnInit {
             this.inProduction = profileInfo.inProduction;
             this.swaggerEnabled = profileInfo.swaggerEnabled;
         });
+        if(this.isAuthenticated()){
+            console.log('authenticated');
+            this.principal.identity().then((account) => {
+                // console.log(account);
+                this.userName = account.email;
+            });
+        }
     }
 
     collapseNavbar() {

@@ -172,6 +172,9 @@
             <!--<a href='url-to-page-2'>{{isOfwatEmployee()}}</a>-->
             <a *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_OFWAT_USER', 'ROLE_COMPANY_ADMIN', 'ROLE_USER', 'ROLE_COMPANY_USER']" href='' [routerLink]="['data-collection']">Data collections</a></li>
         </li>
+        <li *ngSwitchCase="true">
+            <a>{{userName}}</a>
+        </li>
     </ul>
 </nav>
 
