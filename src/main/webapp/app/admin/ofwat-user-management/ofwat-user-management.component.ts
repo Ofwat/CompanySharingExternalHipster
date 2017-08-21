@@ -149,6 +149,8 @@ export class OfwatUserMgmtComponent implements OnInit, OnDestroy {
     }
 
     clickMe() {
-        this.alertService.error('404', {timeout:0}, null);
+
+        this.alertService.error('404', {}, null);
+        this.alertService.success('Success', {}, null);
     }
 }

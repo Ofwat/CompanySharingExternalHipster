@@ -29,4 +29,7 @@ export * from './ofwat-user-management/ofwat-user-management-detail.component';
 export * from './ofwat-user-management/ofwat-user-management.component';
 export * from './ofwat-user-management/ofwat-user-management.route';
 export * from './user-management/user-modal.service';
+export * from './invite-user/invite-user.component';
+export * from './invite-user/invite-user-route';
+export * from './invite-user/invite-user.service';
 export * from './admin.route';

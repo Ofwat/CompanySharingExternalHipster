@@ -1,5 +1,5 @@
-import {StateStorageService} from '../../shared/auth/state-storage.service';
 import {Component, OnInit} from '@angular/core';
+import {LocalStorageService, SessionStorageService} from 'ng2-webstorage';
 
 @Component({
     selector: 'jhi-accept-cookie',
@@ -8,20 +8,23 @@ import {Component, OnInit} from '@angular/core';
 
 export class CookieComponent implements OnInit {
 
-    show:boolean;
+    show: boolean;
+    cookieNotice = 'COOKIE_NOTICE';
 
     constructor(
-        private $storageService: StateStorageService
+        private $localStorageService: LocalStorageService
     ) {
-
         this.show = true;
     }
 
     ngOnInit() {
-
+        if ( this.$localStorageService.retrieve(this.cookieNotice) != null ) {
+            this.show = this.$localStorageService.retrieve(this.cookieNotice);
+        }
     }
 
-    dismiss(){
+    dismiss() {
         this.show = false;
+        this.$localStorageService.store(this.cookieNotice, this.show);
     }
 }

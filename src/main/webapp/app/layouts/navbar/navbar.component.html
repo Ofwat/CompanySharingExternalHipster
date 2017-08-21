@@ -150,25 +150,27 @@
 
 
 <nav id='proposition-menu'>
-    <a href='/govuk_template/' id='proposition-name'>Company Sharing External</a>
+    <a [routerLink]="['/']" id='proposition-name'>Company Sharing External</a>&nbsp;
+    <strong class="phase-tag">Alpha</strong>
     <ul id='proposition-links' [ngSwitch]="isAuthenticated()">
         <li *ngSwitchCase="true"><a href="#" (click)="logout()" id="logout">
-            <i class="fa fa-fw fa-sign-out" aria-hidden="true"></i>
+            <!--<i class="fa fa-fw fa-sign-out" aria-hidden="true"></i>-->
             <span>Sign out</span>
         </a></li>
         <li *ngSwitchCase="false"><a href='' [routerLink]="['register']" class=''>Register</a></li>
         <li *ngSwitchCase="false">
             <a class="" href="#" (click)="login()" id="login">
-                <i class="fa fa-fw fa-sign-in" aria-hidden="true"></i>
+                <!--<i class="fa fa-fw fa-sign-in" aria-hidden="true"></i>-->
                 <span>Sign in</span>
             </a>
         </li>
-        <li *ngSwitchCase="true"><a href='' [routerLink]="['ofwat-user-management']">User management</a></li>
+        <li *ngSwitchCase="true"><a *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_OFWAT_USER', 'ROLE_COMPANY_ADMIN']" href='' [routerLink]="['ofwat-user-management']">User management</a></li>
         <li *ngSwitchCase="true">
-            <jhi-ofwat-company-select></jhi-ofwat-company-select>
+            <!--<jhi-ofwat-company-select></jhi-ofwat-company-select>-->
             <!-- If it is an ofwat employee display a select list of all companies -->
             <!-- Else display only for the company the user is associated with. -->
             <!--<a href='url-to-page-2'>{{isOfwatEmployee()}}</a>-->
+            <a *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_OFWAT_USER', 'ROLE_COMPANY_ADMIN', 'ROLE_USER', 'ROLE_COMPANY_USER']" href='' [routerLink]="['data-collection']">Data collections</a></li>
         </li>
     </ul>
 </nav>

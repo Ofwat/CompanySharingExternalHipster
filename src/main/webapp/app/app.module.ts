@@ -24,7 +24,7 @@ import {
     PageRibbonComponent,
     ErrorComponent
 } from './layouts';
-import {CookieComponent} from "./layouts/cookie/cookie.component";
+import {CookieComponent} from './layouts/cookie/cookie.component';
 
 @NgModule({
     imports: [

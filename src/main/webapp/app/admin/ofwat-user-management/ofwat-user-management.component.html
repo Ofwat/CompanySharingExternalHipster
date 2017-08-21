@@ -1,17 +1,17 @@
 <div>
     <h2 class="heading-medium">
         <span>Ofwat Users</span>
-        <button class="button float-right" [routerLink]="['/', { outlets: { popup: ['user-management-new'] } }]">
+<!--        <button class="button float-right" [routerLink]="['/', { outlets: { popup: ['user-management-new'] } }]">
             <span class="fa fa-plus"></span> <span>Create a new User</span>
-        </button>
+        </button>-->
         <span class="float-right">&nbsp;</span>
-        <button class="button float-right" [routerLink]="['../register']">
+        <button class="button float-right" [routerLink]="['../invite']">
             <span class="fa fa-plus"></span> <span>Invite a new User</span>
         </button>
     </h2>
     <button type="button" (click)="clickMe()">I will create alert - Click Me!</button>
     <jhi-alert></jhi-alert>
-    <jhi-alert-error></jhi-alert-error> <!-- Use this one if you wan't the error returned by the server to be displayed. -->
+    <jhi-alert-error></jhi-alert-error> <!-- Use this one if you want the error returned by the server to be displayed. -->
     <div class="table-responsive" *ngIf="users">
         <table class="">
             <thead>
