@@ -32,4 +32,7 @@ export * from './user-management/user-modal.service';
 export * from './invite-user/invite-user.component';
 export * from './invite-user/invite-user-route';
 export * from './invite-user/invite-user.service';
+export * from "./user-profile/user-profile.component";
+export * from "./user-profile/user-profile.route";
+export * from "./user-profile/user-profile.service";
 export * from './admin.route';

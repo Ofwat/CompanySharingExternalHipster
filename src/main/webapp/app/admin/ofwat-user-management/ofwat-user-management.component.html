@@ -1,6 +1,6 @@
 <div>
     <h2 class="heading-medium">
-        <span>Ofwat Users</span>
+        <span class="heading-large">Ofwat Users</span>
 <!--        <button class="button float-right" [routerLink]="['/', { outlets: { popup: ['user-management-new'] } }]">
             <span class="fa fa-plus"></span> <span>Create a new User</span>
         </button>-->
@@ -17,7 +17,7 @@
             <thead>
                 <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
                     <th scope="col" jhiSortBy="email"><span>Email</span> <span class="fa fa-sort"></span></th>
-                    <th scope="col" ><span>Mobile #</span></th>
+                    <th scope="col" ><span>Mobile telephone</span></th>
                     <th scope="col" jhiSortBy="enabled"><span>Enabled</span> <span class="fa fa-sort"></span></th>
                     <th></th>
                     <th></th>

@@ -45,7 +45,6 @@ export class NavbarComponent implements OnInit {
             this.swaggerEnabled = profileInfo.swaggerEnabled;
         });
         if(this.isAuthenticated()){
-            console.log('authenticated');
             this.principal.identity().then((account) => {
                 // console.log(account);
                 this.userName = account.email;

@@ -10,6 +10,7 @@ import {
     userMgmtRoute,
     userDialogRoute,
     ofwatUserMgmtRoute,
+    userProfileRoute,
     inviteUserRoute
 } from './';
 
@@ -24,6 +25,7 @@ const ADMIN_ROUTES = [
     ...userMgmtRoute,
     ...ofwatUserMgmtRoute,
     inviteUserRoute,
+    ...userProfileRoute,
     metricsRoute
 ];
 

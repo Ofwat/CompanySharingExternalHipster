@@ -6,6 +6,8 @@ import { OfwatUserMgmtDetailComponent } from './ofwat-user-management/ofwat-user
 import { OfwatUserMgmtPermissionsComponent } from './ofwat-user-management/ofwat-user-management-permissions.component';
 import { InviteUserComponent } from './invite-user/invite-user.component';
 import { InviteUser} from './invite-user/invite-user.service';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { UserProfileService } from './user-profile/user-profile.service';
 /* jhipster-needle-add-admin-module-import - JHipster will add admin modules imports here */
 
 import {
@@ -35,6 +37,7 @@ import {
     UserModalService
 } from './';
 
+
 @NgModule({
     imports: [
         CompanySharingExternalSharedModule,
@@ -59,7 +62,8 @@ import {
         JhiDocsComponent,
         JhiMetricsMonitoringComponent,
         JhiMetricsMonitoringModalComponent,
-        InviteUserComponent
+        InviteUserComponent,
+        UserProfileComponent
     ],
     entryComponents: [
         UserMgmtDialogComponent,
@@ -77,7 +81,8 @@ import {
         OfwatUserResolvePagingParams,
         UserResolve,
         UserModalService,
-        InviteUser
+        InviteUser,
+        UserProfileService
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
