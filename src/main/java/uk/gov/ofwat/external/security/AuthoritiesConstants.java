@@ -15,6 +15,9 @@ public final class AuthoritiesConstants {
 
     public static final String COMPANY_USER = "ROLE_COMPANY_USER";
 
+    // TODO We will need a pre-auth user role to use two(step) auth mechanism. TBA.
+    public static final String PRE_AUTH_USER = "PRE_AUTH_ROLE_USER";
+
     private AuthoritiesConstants() {
     }
 }
