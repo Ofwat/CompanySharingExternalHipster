@@ -10,10 +10,12 @@ import {
     userMgmtRoute,
     userDialogRoute,
     ofwatUserMgmtRoute,
+    // dataCollectionMgmtRoute,
     inviteUserRoute
 } from './';
 
 import { UserRouteAccessService } from '../shared';
+import {dataCollectionMgmtRoute} from "./data-collection-management/data-collection-management.route";
 
 const ADMIN_ROUTES = [
     auditsRoute,
@@ -23,6 +25,7 @@ const ADMIN_ROUTES = [
     logsRoute,
     ...userMgmtRoute,
     ...ofwatUserMgmtRoute,
+    ...dataCollectionMgmtRoute,
     inviteUserRoute,
     metricsRoute
 ];

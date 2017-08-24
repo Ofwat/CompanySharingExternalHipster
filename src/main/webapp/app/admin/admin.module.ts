@@ -32,7 +32,9 @@ import {
     UserResolvePagingParams,
     OfwatUserResolvePagingParams,
     UserResolve,
-    UserModalService
+    UserModalService,
+    DataCollectionMgmtComponent,
+    DataCollectionResolvePagingParams
 } from './';
 
 @NgModule({
@@ -59,7 +61,8 @@ import {
         JhiDocsComponent,
         JhiMetricsMonitoringComponent,
         JhiMetricsMonitoringModalComponent,
-        InviteUserComponent
+        InviteUserComponent,
+        DataCollectionMgmtComponent,
     ],
     entryComponents: [
         UserMgmtDialogComponent,
@@ -77,7 +80,8 @@ import {
         OfwatUserResolvePagingParams,
         UserResolve,
         UserModalService,
-        InviteUser
+        InviteUser,
+        DataCollectionResolvePagingParams
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

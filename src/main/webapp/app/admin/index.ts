@@ -33,3 +33,6 @@ export * from './invite-user/invite-user.component';
 export * from './invite-user/invite-user-route';
 export * from './invite-user/invite-user.service';
 export * from './admin.route';
+export * from './data-collection-management/data-collection-management.component';
+export * from './data-collection-management/data-collection-management.route';
+

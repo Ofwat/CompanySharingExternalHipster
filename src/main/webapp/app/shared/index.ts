@@ -21,3 +21,5 @@ export * from './shared-libs.module';
 export * from './shared-common.module';
 export * from './shared.module';
 export { CompanySelectComponent } from './company-select/company-select.component';
+export * from './data-collection/data-collection.model';
+export * from './data-collection/data-collection.service';
