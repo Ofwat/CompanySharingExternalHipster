@@ -11,12 +11,6 @@ import { DataCollectionDeletedComponent } from './data-collection-deletion/data-
 import {
     adminState,
     AuditsComponent,
-    // UserMgmtComponent,
-    // UserDialogComponent,
-    // UserDeleteDialogComponent,
-    // UserMgmtDetailComponent,
-    // UserMgmtDialogComponent,
-    // UserMgmtDeleteDialogComponent,
     LogsComponent,
     JhiMetricsMonitoringModalComponent,
     JhiMetricsMonitoringComponent,
@@ -29,10 +23,6 @@ import {
     JhiHealthService,
     JhiMetricsService,
     LogsService,
-    // UserResolvePagingParams,
-    // OfwatUserResolvePagingParams,
-    // UserResolve,
-    // UserModalService,
     DataCollectionMgmtComponent,
     DataCollectionResolvePagingParams
 } from './';
@@ -44,20 +34,6 @@ import {
         /* jhipster-needle-add-admin-module - JHipster will add admin modules here */
     ],
     declarations: [
-        // AuditsComponent,
-        // UserMgmtComponent,
-        // UserDialogComponent,
-        // UserDeleteDialogComponent,
-        // UserMgmtDetailComponent,
-        // UserMgmtDialogComponent,
-        // UserMgmtDeleteDialogComponent,
-        // LogsComponent,
-        // JhiConfigurationComponent,
-        // JhiHealthCheckComponent,
-        // JhiHealthModalComponent,
-        // JhiDocsComponent,
-        // JhiMetricsMonitoringComponent,
-        // JhiMetricsMonitoringModalComponent,
         DataCollectionMgmtComponent,
         DataCollectionCreationComponent,
         DataCollectionDetailComponent,
@@ -65,8 +41,6 @@ import {
         DataCollectionDeletedComponent
     ],
     entryComponents: [
-        // UserMgmtDialogComponent,
-        // UserMgmtDeleteDialogComponent,
         JhiHealthModalComponent,
         JhiMetricsMonitoringModalComponent,
     ],
@@ -76,10 +50,6 @@ import {
         JhiHealthService,
         JhiMetricsService,
         LogsService,
-        // UserResolvePagingParams,
-        // OfwatUserResolvePagingParams,
-        // UserResolve,
-        // UserModalService,
         DataCollectionResolvePagingParams
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]

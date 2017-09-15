@@ -6,13 +6,7 @@ import {
     docsRoute,
     healthRoute,
     logsRoute,
-    metricsRoute,
-    // userMgmtRoute,
-    // userDialogRoute,
-    // ofwatUserMgmtRoute,
-    // dataCollectionMgmtRoute,
-    // inviteUserRoute,
-    // createDataCollectionRoute
+    metricsRoute
 } from '../admin';
 
 import { UserRouteAccessService } from '../shared';
@@ -28,10 +22,7 @@ const ADMIN_ROUTES = [
     docsRoute,
     healthRoute,
     logsRoute,
-    // ...userMgmtRoute,
-    // ...ofwatUserMgmtRoute,
     ...dataCollectionMgmtRoute,
-    // inviteUserRoute,
     metricsRoute,
     dataCollectionCreationRoute,
     dataCollectionDetailRoute,
