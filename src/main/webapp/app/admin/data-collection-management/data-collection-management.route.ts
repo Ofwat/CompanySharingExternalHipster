@@ -7,16 +7,6 @@ import { DataCollectionMgmtComponent } from './data-collection-management.compon
 
 import { Principal } from '../../shared';
 
-// @Injectable()
-// export class UserResolveOfwat implements CanActivate {
-//
-//     constructor(private principal: Principal) { }
-//
-//     canActivate() {
-//         return this.principal.identity().then((account) => this.principal.hasAnyAuthority(['ROLE_ADMIN']));
-//     }
-// }
-
 @Injectable()
 export class DataCollectionResolvePagingParams implements Resolve<any> {
 
@@ -41,7 +31,7 @@ export const dataCollectionMgmtRoute: Routes = [
             'pagingParams': DataCollectionResolvePagingParams
         },
         data: {
-            pageTitle: 'OfwatUsers'
+            pageTitle: 'DataCollections'
         }
     }
 ];

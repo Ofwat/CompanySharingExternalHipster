@@ -8,7 +8,7 @@ import { createRequestOption } from '../model/request-util';
 
 @Injectable()
 export class DataCollectionService {
-    private resourceUrl = 'api/dataCollections';
+    private resourceUrl = 'api/data-collections';
 
     constructor(private http: Http) { }
 
@@ -22,8 +22,13 @@ export class DataCollectionService {
             .map((res: Response) => this.convertResponse(res));
     }
 
-    find(login: string): Observable<DataCollection> {
-        return this.http.get(`${this.resourceUrl}/${login}`).map((res: Response) => res.json());
+    get(id: any): Observable<DataCollection> {
+        return this.http.get(`${this.resourceUrl}/${id}`).map((res: Response) => res.json());
+    }
+
+    find(name: string): Observable<DataCollection> {
+        // return this.http.get(`${this.resourceUrl}/${name}`).map((res: Response) => res.json());
+        return this.http.get(`${this.resourceUrl}?name=${name}`).map((res: Response) => res.json());
     }
 
     query(req?: any): Observable<ResponseWrapper> {
@@ -32,8 +37,9 @@ export class DataCollectionService {
             .map((res: Response) => this.convertResponse(res));
     }
 
-    delete(login: string): Observable<Response> {
-        return this.http.delete(`${this.resourceUrl}/${login}`);
+    delete(id: any): Observable<Response> {
+        return this.http.delete(`${this.resourceUrl}/${id}`);
+        // return this.http.delete(`${this.resourceUrl}?name=${name}`);
     }
 
     authorities(): Observable<string[]> {

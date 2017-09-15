@@ -71,7 +71,7 @@ public class DataCollectionResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        DataCollectionResource dataCollectionResource = new DataCollectionResource(dataCollectionService);
+        DataCollectionResource dataCollectionResource = new DataCollectionResource(dataCollectionService, dataCollectionRepository);
         this.restDataCollectionMockMvc = MockMvcBuilders.standaloneSetup(dataCollectionResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)

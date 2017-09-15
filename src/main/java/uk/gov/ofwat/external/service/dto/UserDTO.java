@@ -1,14 +1,13 @@
 package uk.gov.ofwat.external.service.dto;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
 import uk.gov.ofwat.external.config.Constants;
-
 import uk.gov.ofwat.external.domain.Authority;
 import uk.gov.ofwat.external.domain.User;
 
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotBlank;
-
-import javax.validation.constraints.*;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.time.Instant;
 import java.util.Set;
 import java.util.stream.Collectors;

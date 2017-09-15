@@ -1,7 +1,9 @@
 package uk.gov.ofwat.external.service.dto;
 
 
-import javax.validation.constraints.*;
+import uk.gov.ofwat.external.domain.DataCollection;
+
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -14,6 +16,14 @@ public class DataCollectionDTO implements Serializable {
 
     @NotNull
     private String name;
+
+    public DataCollectionDTO() {
+    }
+
+    public DataCollectionDTO(DataCollection dataCollection) {
+        this.id = dataCollection.getId();
+        this.name = dataCollection.getName();
+    }
 
     public Long getId() {
         return id;

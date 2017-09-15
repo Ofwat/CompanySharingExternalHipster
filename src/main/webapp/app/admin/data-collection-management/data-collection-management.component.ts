@@ -13,7 +13,7 @@ import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
 export class DataCollectionMgmtComponent implements OnInit, OnDestroy {
 
     currentAccount: any;
-    dataCollection: DataCollection[];
+    dataCollections: DataCollection[];
     error: any;
     success: any;
     routeData: any;
@@ -139,7 +139,7 @@ export class DataCollectionMgmtComponent implements OnInit, OnDestroy {
         this.links = this.parseLinks.parse(headers.get('link'));
         this.totalItems = headers.get('X-Total-Count');
         this.queryCount = this.totalItems;
-        this.dataCollection = data;
+        this.dataCollections = data;
     }
 
     private onError(error) {

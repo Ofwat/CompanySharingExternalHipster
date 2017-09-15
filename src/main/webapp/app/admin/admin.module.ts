@@ -6,6 +6,11 @@ import { OfwatUserMgmtDetailComponent } from './ofwat-user-management/ofwat-user
 import { OfwatUserMgmtPermissionsComponent } from './ofwat-user-management/ofwat-user-management-permissions.component';
 import { InviteUserComponent } from './invite-user/invite-user.component';
 import { InviteUser} from './invite-user/invite-user.service';
+import { DataCollectionCreationComponent } from './data-collection-creation/data-collection-creation.component';
+import { DataCollectionDetailComponent } from './data-collection-detail/data-collection-detail.component';
+import { DataCollectionDeletionConfirmationComponent } from './data-collection-deletion/data-collection-deletion-confirmation.component';
+import { DataCollectionDeletedComponent } from './data-collection-deletion/data-collection-deleted.component';
+
 /* jhipster-needle-add-admin-module-import - JHipster will add admin modules imports here */
 
 import {
@@ -63,6 +68,10 @@ import {
         JhiMetricsMonitoringModalComponent,
         InviteUserComponent,
         DataCollectionMgmtComponent,
+        DataCollectionCreationComponent,
+        DataCollectionDetailComponent,
+        DataCollectionDeletionConfirmationComponent,
+        DataCollectionDeletedComponent
     ],
     entryComponents: [
         UserMgmtDialogComponent,

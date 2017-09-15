@@ -1,9 +1,10 @@
 package uk.gov.ofwat.external.repository;
 
-import uk.gov.ofwat.external.domain.DataCollection;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import uk.gov.ofwat.external.domain.DataCollection;
 
-import org.springframework.data.jpa.repository.*;
+import java.util.Optional;
 
 
 /**
@@ -12,5 +13,6 @@ import org.springframework.data.jpa.repository.*;
 @SuppressWarnings("unused")
 @Repository
 public interface DataCollectionRepository extends JpaRepository<DataCollection,Long> {
-    
+    Optional<DataCollection> findOneByName(String name);
+    void deleteByName(String name);
 }

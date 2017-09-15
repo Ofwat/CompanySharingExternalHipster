@@ -11,11 +11,16 @@ import {
     userDialogRoute,
     ofwatUserMgmtRoute,
     // dataCollectionMgmtRoute,
-    inviteUserRoute
+    inviteUserRoute,
+    // createDataCollectionRoute
 } from './';
 
 import { UserRouteAccessService } from '../shared';
 import {dataCollectionMgmtRoute} from "./data-collection-management/data-collection-management.route";
+import {dataCollectionCreationRoute} from "./data-collection-creation/data-collection-creation-route";
+import {dataCollectionDetailRoute} from "./data-collection-detail/data-collection-detail-route";
+import {dataCollectionDeletionRoute} from "./data-collection-deletion/data-collection-deletion-route";
+
 
 const ADMIN_ROUTES = [
     auditsRoute,
@@ -27,7 +32,10 @@ const ADMIN_ROUTES = [
     ...ofwatUserMgmtRoute,
     ...dataCollectionMgmtRoute,
     inviteUserRoute,
-    metricsRoute
+    metricsRoute,
+    dataCollectionCreationRoute,
+    dataCollectionDetailRoute,
+    ...dataCollectionDeletionRoute
 ];
 
 export const adminState: Routes = [{

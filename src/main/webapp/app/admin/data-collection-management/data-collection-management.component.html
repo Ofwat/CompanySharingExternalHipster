@@ -2,11 +2,11 @@
     <h2 class="heading-medium">
         <span>Data Collections</span>
         <span class="float-right">&nbsp;</span>
-        <button class="button float-right" [routerLink]="['../invite']">
+        <button class="button float-right" [routerLink]="['../data-collection-creation']">
             <span class="fa fa-plus"></span> <span>Create new Data Collection</span>
         </button>
     </h2>
-    <div class="table-responsive" *ngIf="dataCollections">
+    <div class="table-responsive" *ngIf="dataCollections" ng-app="myShoppingList" ng-controller="myCtrl">
         <table class="">
             <thead>
                 <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
@@ -18,10 +18,7 @@
             <tbody *ngIf ="dataCollections">
                 <tr *ngFor="let dataCollection of dataCollections; trackBy: trackIdentity">
                     <td>{{dataCollection.name}}</td>
-<!--
-Link to details here
-                    <td><a href="" [routerLink]="['../ofwat-user-management', user.login]">Details</a></td>
--->
+                    <td><a href="" [routerLink]="['../data-collection-detail', dataCollection.id]">Details</a></td>
                 </tr>
             </tbody>
         </table>

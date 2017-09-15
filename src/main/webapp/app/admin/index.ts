@@ -35,4 +35,9 @@ export * from './invite-user/invite-user.service';
 export * from './admin.route';
 export * from './data-collection-management/data-collection-management.component';
 export * from './data-collection-management/data-collection-management.route';
+export * from './data-collection-creation/data-collection-creation.component';
+export * from './data-collection-creation/data-collection-creation-route';
+export * from './data-collection-deletion/data-collection-deleted.component';
+export * from './data-collection-deletion/data-collection-deletion-confirmation.component';
+export * from './data-collection-deletion/data-collection-deletion-route';
 
