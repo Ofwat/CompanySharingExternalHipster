@@ -1,13 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes, CanActivate } from '@angular/router';
-
 import { JhiPaginationUtil } from 'ng-jhipster';
-
 import { OfwatUserMgmtComponent } from './ofwat-user-management.component';
 import { OfwatUserMgmtDetailComponent } from './ofwat-user-management-detail.component';
 import {OfwatUserMgmtPermissionsComponent} from './ofwat-user-management-permissions.component';
-/*import { UserDialogComponent } from './user-management-dialog.component';
-import { UserDeleteDialogComponent } from './user-management-delete-dialog.component';*/
 
 import { Principal } from '../../shared';
 

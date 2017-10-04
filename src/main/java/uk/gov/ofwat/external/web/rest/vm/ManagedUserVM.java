@@ -20,6 +20,10 @@ public class ManagedUserVM extends UserDTO {
 
     private long companyId;
 
+    private String captcha;
+
+    private String registrationKey;
+
     public ManagedUserVM() {
         // Empty constructor needed for Jackson.
     }
@@ -51,5 +55,21 @@ public class ManagedUserVM extends UserDTO {
 
     public void setCompanyId(long companyId) {
         this.companyId = companyId;
+    }
+
+    public String getCaptcha() {
+        return captcha;
+    }
+
+    public void setCaptcha(String captcha) {
+        this.captcha = captcha;
+    }
+
+    public String getRegistrationKey() {
+        return registrationKey;
+    }
+
+    public void setRegistrationKey(String registrationKey) {
+        this.registrationKey = registrationKey;
     }
 }

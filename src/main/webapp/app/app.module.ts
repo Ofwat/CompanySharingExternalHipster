@@ -6,13 +6,14 @@ import { Ng2Webstorage } from 'ng2-webstorage';
 
 import { CompanySharingExternalSharedModule, UserRouteAccessService } from './shared';
 import { CompanySharingExternalHomeModule } from './home/home.module';
+import { CompanySharingExternalUserHomeModule } from './user-home/user-home.module';
 import { CompanySharingExternalAdminModule } from './admin/admin.module';
 import { CompanySharingExternalAccountModule } from './account/account.module';
 import { CompanySharingExternalEntityModule } from './entities/entity.module';
 
 import { customHttpProvider } from './blocks/interceptor/http.provider';
 import { PaginationConfig } from './blocks/config/uib-pagination.config';
-
+import {CookieComponent} from './layouts/cookie/cookie.component';
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 
 import {
@@ -24,7 +25,6 @@ import {
     PageRibbonComponent,
     ErrorComponent
 } from './layouts';
-import {CookieComponent} from './layouts/cookie/cookie.component';
 
 @NgModule({
     imports: [
@@ -33,9 +33,10 @@ import {CookieComponent} from './layouts/cookie/cookie.component';
         Ng2Webstorage.forRoot({ prefix: 'jhi', separator: '-'}),
         CompanySharingExternalSharedModule,
         CompanySharingExternalHomeModule,
+        CompanySharingExternalUserHomeModule,
         CompanySharingExternalAdminModule,
         CompanySharingExternalAccountModule,
-        CompanySharingExternalEntityModule,
+        CompanySharingExternalEntityModule
         // jhipster-needle-angular-add-module JHipster will add new module here
     ],
     declarations: [

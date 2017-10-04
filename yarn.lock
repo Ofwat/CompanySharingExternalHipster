@@ -138,6 +138,10 @@
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/@ngx-translate/http-loader/-/http-loader-0.1.0.tgz#6029325561d7868fe325a419de2770e98ff1502e"
 
+"@types/grecaptcha@^2.0.33":
+  version "2.0.33"
+  resolved "https://registry.yarnpkg.com/@types/grecaptcha/-/grecaptcha-2.0.33.tgz#ab5019c23c8ca9a2554d4f17c308f3d2c3477740"
+
 "@types/jasmine@2.5.47":
   version "2.5.47"
   resolved "https://registry.yarnpkg.com/@types/jasmine/-/jasmine-2.5.47.tgz#bbba9bcf0e95e7890c6f4a47394e8bacaa960eb6"
@@ -4889,6 +4893,12 @@ ng-jhipster@0.2.6:
   dependencies:
     "@ngx-translate/core" "7.0.0"
     "@ngx-translate/http-loader" "0.1.0"
+
+ng-recaptcha@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/ng-recaptcha/-/ng-recaptcha-3.0.0.tgz#2d117a795ea42a5be769467bf0a39afa2fd6357d"
+  optionalDependencies:
+    "@types/grecaptcha" "^2.0.33"
 
 ng2-webstorage@1.8.0:
   version "1.8.0"

@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef, Renderer, AfterViewInit } from '@angular/core';
 import { InviteUser } from './invite-user.service';
 import { CompanyService } from '../../entities/company/company.service';
 import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
@@ -8,7 +8,7 @@ import { JhiAlertService } from 'ng-jhipster';
     selector: 'jhi-invite-user',
     templateUrl: './invite-user.component.html'
 })
-export class InviteUserComponent implements OnInit {
+export class InviteUserComponent implements OnInit, AfterViewInit {
 
     error: string;
     errorEmailExists: string;
@@ -17,12 +17,14 @@ export class InviteUserComponent implements OnInit {
     success: boolean;
     selectedCompany: any;
     companies: any;
+    confirmInvite: boolean;
 
     constructor(
         private inviteUserService: InviteUser,
         private companyService: CompanyService,
         private elementRef: ElementRef,
-        private alertService: JhiAlertService
+        private alertService: JhiAlertService,
+        private renderer: Renderer
     ) {
     }
 
@@ -36,15 +38,37 @@ export class InviteUserComponent implements OnInit {
             (res: ResponseWrapper) => this.onSuccessLoadCompanies(res.json, res.headers),
             (res: ResponseWrapper) => this.onErrorLoadCompanies(res.json)
         );
-        /*
-                this.registerAccount.companies = [
-                        {id: 1, name: 'Company1'},
-                        {id: 2, name: 'Company2'}
-                    ];
-        */
     }
 
     ngAfterViewInit() {
+        this.focusFirstFormElement();
+    }
+
+    private focusFirstFormElement() {
+        this.renderer.invokeElementMethod(this.elementRef.nativeElement.querySelector('#login'), 'focus', []);
+    }
+
+    confirm() {
+        console.log('In confirm()');
+        this.confirmInvite = true;
+    }
+
+    register() {
+/*        console.log('In invite()');
+        this.error = null;
+        this.errorUserExists = null;
+        this.errorEmailExists = null;
+        this.errorCaptchaFailed = null;
+        this.registerAccount.langKey = 'en';
+        this.registerAccount.companyId = this.selectedCompany.id;
+        this.registerService.requestAccount(this.registerAccount).subscribe(() => {
+            this.success = true;
+        }, (response) => this.processError(response));*/
+    }
+
+    cancel() {
+        this.confirmInvite = false;
+        this.focusFirstFormElement();
     }
 
     invite() {

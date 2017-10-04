@@ -3,12 +3,13 @@ import { Router } from '@angular/router';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 import { ProfileService } from '../profiles/profile.service';
-import { Principal, LoginModalService, LoginService } from '../../shared';
+import { Principal } from '../../shared';
 
 import { User, UserService } from '../../shared';
 
 import { VERSION, DEBUG_INFO_ENABLED } from '../../app.constants';
 import {Subscription} from 'rxjs/Subscription';
+import {LoginService} from '../../account/login/login.service';
 
 @Component({
     selector: 'jhi-navbar',
@@ -24,14 +25,14 @@ export class NavbarComponent implements OnInit {
     isNavbarCollapsed: boolean;
     languages: any[];
     swaggerEnabled: boolean;
-    modalRef: NgbModalRef;
+    // modalRef: NgbModalRef;
     version: string;
     private subscription: Subscription;
 
     constructor(
         private loginService: LoginService,
         private principal: Principal,
-        private loginModalService: LoginModalService,
+        // private loginModalService: LoginModalService,
         private profileService: ProfileService,
         private router: Router
     ) {
@@ -44,7 +45,7 @@ export class NavbarComponent implements OnInit {
             this.inProduction = profileInfo.inProduction;
             this.swaggerEnabled = profileInfo.swaggerEnabled;
         });
-        if(this.isAuthenticated()){
+        if ( this.isAuthenticated() ) {
             this.principal.identity().then((account) => {
                 // console.log(account);
                 this.userName = account.email;
@@ -66,7 +67,8 @@ export class NavbarComponent implements OnInit {
     }
 
     login() {
-        this.modalRef = this.loginModalService.open();
+        // this.modalRef = this.loginModalService.open();
+        // this.router.navigateByUrl('login');
     }
 
     logout() {

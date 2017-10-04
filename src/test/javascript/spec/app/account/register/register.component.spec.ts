@@ -2,24 +2,24 @@ import { ComponentFixture, TestBed, async, inject, tick, fakeAsync } from '@angu
 import { Renderer, ElementRef } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { CompanySharingExternalTestModule } from '../../../test.module';
-import { LoginModalService } from '../../../../../../main/webapp/app/shared';
+// import { LoginModalService } from '../../../../../../main/webapp/app/shared';
 import { Register } from '../../../../../../main/webapp/app/account/register/register.service';
-import { RegisterComponent } from '../../../../../../main/webapp/app/account/register/register.component';
+import { RegisterInitComponent } from '../../../../../../main/webapp/app/account/register/init/init.component';
 
 describe('Component Tests', () => {
 
-    describe('RegisterComponent', () => {
-        let fixture: ComponentFixture<RegisterComponent>;
-        let comp: RegisterComponent;
+    describe('RegisterInitComponent', () => {
+        let fixture: ComponentFixture<RegisterInitComponent>;
+        let comp: RegisterInitComponent;
 
         beforeEach(async(() => {
             TestBed.configureTestingModule({
                 imports: [CompanySharingExternalTestModule],
-                declarations: [RegisterComponent],
+                declarations: [RegisterInitComponent],
                 providers: [
                     Register,
                     {
-                        provide: LoginModalService,
+                        // provide: LoginModalService,
                         useValue: null
                     },
                     {
@@ -31,12 +31,12 @@ describe('Component Tests', () => {
                         useValue: null
                     }
                 ]
-            }).overrideTemplate(RegisterComponent, '')
+            }).overrideTemplate(RegisterInitComponent, '')
             .compileComponents();
         }));
 
         beforeEach(() => {
-            fixture = TestBed.createComponent(RegisterComponent);
+            fixture = TestBed.createComponent(RegisterInitComponent);
             comp = fixture.componentInstance;
             comp.ngOnInit();
         });
@@ -65,7 +65,7 @@ describe('Component Tests', () => {
                     });
                     expect(comp.success).toEqual(true);
                     expect(comp.registerAccount.langKey).toEqual('en');
-                    
+
                     expect(comp.errorUserExists).toBeNull();
                     expect(comp.errorEmailExists).toBeNull();
                     expect(comp.error).toBeNull();

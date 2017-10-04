@@ -133,3 +133,8 @@ jhipster:
 # ===================================================================
 
 application:
+    notify:
+        api-key: companysharingdev1-c818b815-c312-4b29-9cf6-2e62cb132034-79e654ba-1a30-456d-b2d4-0f07f3ac8218
+    recaptcha:
+        secret: 6LfcITEUAAAAABvapZyYMUl2NMWkoj2V0l3Qno8x
+        url: https://www.google.com/recaptcha/api/siteverify

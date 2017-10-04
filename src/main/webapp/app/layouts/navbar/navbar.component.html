@@ -157,9 +157,9 @@
             <!--<i class="fa fa-fw fa-sign-out" aria-hidden="true"></i>-->
             <span>Sign out</span>
         </a></li>
-        <li *ngSwitchCase="false"><a href='' [routerLink]="['register']" class=''>Register</a></li>
+        <li *ngSwitchCase="false"><a href='' [routerLink]="['registration-request']" class=''>Register</a></li>
         <li *ngSwitchCase="false">
-            <a class="" href="#" (click)="login()" id="login">
+            <a class="" href='' [routerLink]="['login']" id="login">
                 <!--<i class="fa fa-fw fa-sign-in" aria-hidden="true"></i>-->
                 <span>Sign in</span>
             </a>
@@ -174,6 +174,9 @@
         </li>
         <li *ngSwitchCase="true">
             <a [routerLink]="['user-profile']">{{userName}}</a>
+        </li>
+        <li>
+            <a href="#">Help</a>
         </li>
     </ul>
 </nav>

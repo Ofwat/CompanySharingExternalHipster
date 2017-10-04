@@ -3,35 +3,8 @@ import { JhiAlertService } from 'ng-jhipster';
 
 @Component({
     selector: 'jhi-alert',
-    template: `
-        <div *ngIf="successAlerts.length > 0" class="govuk-box-highlight" role="alert" aria-labelledby="error-summary" tabindex="-1">
-                <h2 class="heading-medium" id="error-summary-heading-example-2">
-                    There was a problem (This is the error message (TODO - i8n))
-                </h2>
-                <p class="font-medium">
-                    Optional description of the errors and how to correct them
-                </p>
-                <div class="font-medium">
-                    <ul class="">
-                        <li *ngFor="let alert of successAlerts">{{alert.msg}}</li>
-                    </ul>
-                </div>
-        </div>
-        <div *ngIf="dangerAlerts.length > 0" class="error-summary" role="alert" aria-labelledby="error-summary" tabindex="-1">
-
-            <h2 class="heading-medium error-summary-heading" id="error-summary-heading-example-2">
-                There was a problem (This is the error message (TODO - i8n))
-            </h2>
-            <p>
-                Optional description of the errors and how to correct them
-            </p>
-
-            <ul class="error-summary-list">
-                <li *ngFor="let alert of dangerAlerts"><a href="#example-full-name">{{alert.msg}}</a></li>
-            </ul>
-        </div>        
-    `
-})
+    templateUrl: './alert.component.html'
+ })
 
 // Alert types:
 // 'success' | 'danger' | 'warning' | 'info';
@@ -78,7 +51,7 @@ export class JhiAlertComponent implements OnInit, OnDestroy, DoCheck {
     ngDoCheck() {
         const changes = this.iterableDiffer.diff(this.alerts);
         if (changes) {
-            changes.forEachAddedItem(r => {
+            changes.forEachAddedItem(( r ) => {
                     switch (r.item.type) {
                         case('success'):
                             this.successAlerts.push(r.item);
@@ -98,25 +71,25 @@ export class JhiAlertComponent implements OnInit, OnDestroy, DoCheck {
                     }
                 }
             );
-            changes.forEachRemovedItem(r => {
+            changes.forEachRemovedItem(( r ) => {
                 switch (r.item.type) {
                     case('success'):
-                        this.successAlerts = this.successAlerts.filter(o => o.id !== r.item.id);
+                        this.successAlerts = this.successAlerts.filter( ( o ) => o.id !== r.item.id);
                         break;
                     case('danger'):
-                        this.dangerAlerts = this.dangerAlerts.filter(o => o.id !== r.item.id);
+                        this.dangerAlerts = this.dangerAlerts.filter( ( o ) => o.id !== r.item.id);
                         break;
                     case('warning'):
-                        this.warningAlerts = this.warningAlerts.filter(o => o.id !== r.item.id);
+                        this.warningAlerts = this.warningAlerts.filter( ( o ) => o.id !== r.item.id);
                         break;
                     case('info'):
-                        this.infoAlerts = this.infoAlerts.filter(o => o.id !== r.item.id);
+                        this.infoAlerts = this.infoAlerts.filter( ( o ) => o.id !== r.item.id);
                         break;
                     default:
-                        this.infoAlerts = this.infoAlerts.filter(o => o.id !== r.item.id);
+                        this.infoAlerts = this.infoAlerts.filter( ( o ) => o.id !== r.item.id);
                         break;
                 }
-            })
+            });
         }
     }
 

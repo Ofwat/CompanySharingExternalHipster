@@ -11,6 +11,179 @@
 @import "fonts.css";
 @import "govuk-elements-styles";
 
+.text-warning, .text-pending {
+    display: inline-block
+}
+
+.text-warning:before, .text-pending:before {
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    content: '!';
+    color: #fff;
+    display: inline-block;
+    font-family: arial;
+    font-weight: bold;
+    height: 1em;
+    line-height: 1;
+    margin-left: 5px;
+    margin-right: 5px;
+    padding: 2px;
+    text-align: center;
+    width: 1em
+}
+
+.form .text-warning:before, .form .text-pending:before {
+    margin-left: 0
+}
+
+.text-warning {
+    color: #b10e1e
+}
+
+.text-warning:before {
+    background-color: #b10e1e
+}
+
+.text-pending:before {
+    background-color: #0b0c0c
+}
+
+.pager {
+    margin-top: .3125em;
+    margin-bottom: 1.25em
+}
+
+@media (min-width: 641px) {
+    .pager {
+        margin-top: .26316em;
+        margin-bottom: 1.05263em
+    }
+}
+
+.pagination {
+    display: none
+}
+
+@media (min-width: 641px) {
+    .pagination {
+        display: inline
+    }
+
+    .pagination li {
+        display: inline;
+        margin: 0 5px
+    }
+
+    .pagination li:first-child {
+        margin-left: 0
+    }
+
+    .pagination li:last-child {
+        margin-right: 0
+    }
+}
+
+.pager-prev, .pager-next {
+    margin-right: 10px
+}
+
+@media (min-width: 641px) {
+    .pager-prev, .pager-next {
+        margin-right: 0
+    }
+}
+
+@media (min-width: 641px) {
+    .pager-prev {
+        margin-right: 10px
+    }
+}
+
+@media (min-width: 641px) {
+    .pager-next {
+        margin-left: 10px
+    }
+}
+
+@media (min-width: 641px) {
+    .pager-controls {
+        float: right
+    }
+}
+
+#content{
+    padding-bottom: 90px;
+}
+
+.page-footer-secondary-link{
+    display: block;
+    margin-top: 30px;
+}
+
+.form-control-5em {
+    width: 5em;
+}
+
+.link {
+    color: #005ea5;
+    text-decoration: underline
+}
+
+.link:visited {
+    color: #4c2c92
+}
+
+.link:hover {
+    color: #2b8cc4
+}
+
+.link:active {
+    color: #005ea5
+}
+
+.link-back {
+    display: -moz-inline-stack;
+    display: inline-block;
+    position: relative;
+    font-family: "nta", Arial, sans-serif;
+    font-weight: 400;
+    text-transform: none;
+    font-size: 14px;
+    line-height: 1.14286;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    padding-left: 14px;
+    color: #0b0c0c;
+    text-decoration: none;
+    border-bottom: 1px solid #0b0c0c
+}
+
+@media (min-width: 641px) {
+    .link-back {
+        font-size: 16px;
+        line-height: 1.25
+    }
+}
+
+.link-back:link, .link-back:visited, .link-back:hover, .link-back:active {
+    color: #0b0c0c
+}
+
+.link-back::before {
+    content: '';
+    display: block;
+    width: 0;
+    height: 0;
+    border-top: 5px solid transparent;
+    border-right: 6px solid #0b0c0c;
+    border-bottom: 5px solid transparent;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    margin-top: -6px
+}
+
 #footer {
     border-top: 10px solid #005ea5;
 }

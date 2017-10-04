@@ -79,7 +79,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
     private String activationKey;
 
     @Size(max = 40)
-    @Column(name = "mobile_telephone_number", length = 40)
+    @Column(name = "mobile_telephone_number", length = 40, nullable = false)
     private String mobileTelephoneNumber;
 
     @Size(max = 20)
@@ -89,6 +89,23 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     @Column(name = "reset_date")
     private Instant resetDate = null;
+
+    @Column(name = "require_otp_validation", nullable = false)
+    @JsonIgnore
+    private Boolean requireOtpValidation = true;
+
+    @Size(max = 20)
+    @Column(name = "otp_code", length = 20)
+    @JsonIgnore
+    private String otpCode;
+
+    @Column(name = "otp_sent_date")
+    @JsonIgnore
+    private Instant otpSentDate = null;
+
+    @Column(name = "otp_sent_count", nullable = false)
+    @JsonIgnore
+    private Integer otpSentCount = 0;
 
     @JsonIgnore
     @ManyToMany
@@ -100,17 +117,63 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @BatchSize(size = 20)
     private Set<Authority> authorities = new HashSet<>();
 
-    @ManyToMany
+/*    @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "company_user",
         joinColumns = @JoinColumn(name="users_id", referencedColumnName="id"),
-        inverseJoinColumns = @JoinColumn(name="companies_id", referencedColumnName="id"))
+        inverseJoinColumns = @JoinColumn(name="companies_id", referencedColumnName="id"))*/
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "users")
     private Set<Company> companies = new HashSet<>();
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "user")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<PersistentToken> persistentTokens = new HashSet<>();
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL,
+        fetch = FetchType.LAZY, optional = true)
+    private RegistrationRequest registrationRequest;
+
+    public RegistrationRequest getRegistrationRequest() {
+        return registrationRequest;
+    }
+
+    public void setRegistrationRequest(RegistrationRequest registrationRequest) {
+        this.registrationRequest = registrationRequest;
+    }
+
+    public String getOtpCode() {
+        return otpCode;
+    }
+
+    public void setOtpCode(String otpCode) {
+        this.otpCode = otpCode;
+    }
+
+    public Boolean getRequireOtpValidation() {
+        return requireOtpValidation;
+    }
+
+    public void setRequireOtpValidation(Boolean requireOtpValidation) {
+        this.requireOtpValidation = requireOtpValidation;
+    }
+
+    public Instant getOtpSentDate() {
+        return otpSentDate;
+    }
+
+    public void setOtpSentDate(Instant otpSentDate) {
+        this.otpSentDate = otpSentDate;
+    }
+
+    public Integer getOtpSentCount() {
+        return otpSentCount;
+    }
+
+    public void setOtpSentCount(Integer otpSentCount) {
+        this.otpSentCount = otpSentCount;
+    }
 
     public Long getId() {
         return id;

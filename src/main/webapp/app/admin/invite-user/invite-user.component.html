@@ -1,4 +1,4 @@
-<div>
+<main id="content" role="main" tabindex="-1">
     <div class="row">
         <div class="column-full">
             <h2 class="heading-large">Invite a team member</h2>
@@ -21,7 +21,71 @@
 
         </div>
         <div class="col-md-8 offset-md-2">
-            <form name="form" role="form" (ngSubmit)="invite()" #inviteForm="ngForm" *ngIf="!success">
+            <div *ngIf="!success && confirmInvite">
+                <h2 class="heading-medium">Confirm Invitation Details</h2>
+
+
+                <table class="table-summary" itemtype="http://schema.org/Organization" itemscope>
+
+                    <caption class="visuallyhidden">Caption to identify a table</caption>
+
+                    <tbody>
+
+                    <tr>
+                        <th class="table-summary-title" scope="row">Business name</th>
+                        <td class="table-summary-content" itemprop="name">Beech Farm</td>
+                    </tr>
+
+                    <tr>
+                        <th class="table-summary-title" scope="row">Firm reference</th>
+                        <td class="table-summary-content">2000000045</td>
+                    </tr>
+
+                    <tr>
+                        <th class="table-summary-title" scope="row">VAT registration number</th>
+                        <td class="table-summary-content">567890123</td>
+                    </tr>
+
+                    <tr>
+                        <th class="table-summary-title" scope="row">Address</th>
+                        <td class="table-summary-content">
+                            <div itemprop="address" itemtype="http://schema.org/PostalAddress" itemscope>
+                                <div itemprop="streetAddress">Pooley Bridge</div>
+                                <div itemprop="addressLocality">Penrith</div>
+                                <div itemprop="addressRegion">Cumbria</div>
+                                <div itemprop="postalCode">CH3 6NZ</div>
+                                <div itemprop="addressCountry">United Kingdom</div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th class="table-summary-title" scope="row">Landline</th>
+                        <td class="table-summary-content" itemprop="telephone">07337938476</td>
+                    </tr>
+
+                    <tr>
+                        <th class="table-summary-title" scope="row">Mobile</th>
+                        <td class="table-summary-content" itemprop="telephone">07449654321</td>
+                    </tr>
+
+                    <tr>
+                        <th class="table-summary-title" scope="row">Email</th>
+                        <td class="table-summary-content" itemprop="email"><a href="mailto:">defra@kainos.com</a></td>
+                    </tr>
+
+                    </tbody>
+
+                </table>
+
+                Username {{registerAccount.login}}
+                Email address {{registerAccount.email}}
+                Mobile Telephone Number: {{registerAccount.mobileTelephoneNumber}}
+                Company: {{selectedCompany.name}}
+                <button class="button button-start" (click)="invite()"><span class="font-medium">Invite user</span></button>
+                <button class="button button-secondary" (click)="cancel()"><span class="font-medium">Cancel</span></button>
+            </div>
+            <form name="form" role="form" (ngSubmit)="confirm()" #inviteForm="ngForm" *ngIf="!success && !confirmInvite">
                 <div class="form-group">
                     <label class="form-label" for="login">Username
                         <span class="form-hint">
@@ -112,4 +176,4 @@
             </div>-->
         </div>
     </div>
-</div>
+</main>

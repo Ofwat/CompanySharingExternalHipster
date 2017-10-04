@@ -26,17 +26,15 @@ export class OfwatUserMgmtComponent implements OnInit, OnDestroy {
     previousPage: any;
     reverse: any;
 
-    constructor(
-        private userService: UserService,
-        private parseLinks: JhiParseLinks,
-        private alertService: JhiAlertService,
-        private principal: Principal,
-        private eventManager: JhiEventManager,
-        private paginationUtil: JhiPaginationUtil,
-        private paginationConfig: PaginationConfig,
-        private activatedRoute: ActivatedRoute,
-        private router: Router
-    ) {
+    constructor(private userService: UserService,
+                private parseLinks: JhiParseLinks,
+                private alertService: JhiAlertService,
+                private principal: Principal,
+                private eventManager: JhiEventManager,
+                private paginationUtil: JhiPaginationUtil,
+                private paginationConfig: PaginationConfig,
+                private activatedRoute: ActivatedRoute,
+                private router: Router) {
         this.itemsPerPage = ITEMS_PER_PAGE;
         this.routeData = this.activatedRoute.data.subscribe((data) => {
             this.page = data['pagingParams'].page;
@@ -82,7 +80,8 @@ export class OfwatUserMgmtComponent implements OnInit, OnDestroy {
         this.userService.query({
             page: this.page - 1,
             size: this.itemsPerPage,
-            sort: this.sort()}).subscribe(
+            sort: this.sort()
+        }).subscribe(
             (res: ResponseWrapper) => this.onSuccess(res.json, res.headers),
             (res: ResponseWrapper) => this.onError(res.json)
         );
@@ -126,11 +125,19 @@ export class OfwatUserMgmtComponent implements OnInit, OnDestroy {
                     this.success = 'OK';
                     // this.loadAll(); // - We dont need to reload all the users do we?
                 } else {
+                    // console.log( 'In the stream response' );
+                    // console.log( user );
                     this.success = null;
                     this.error = 'ERROR';
-                    user.enabled = !user.enabled;
+                    // iterate and find the user...
+                    for (const u of this.users) {
+                        if (user.id === u.id) {
+                            u.enabled = !u.enabled;
+                        }
+                    }
                     // TODO display the error message outlet.
-                    this.onError( {error: this.error, message: 'Something went wrong - get this from i8n'} );
+                    this.loadAll();
+                    this.onError({error: this.error, message: 'Something went wrong - get this from i8n'});
                 }
             });
     }
@@ -143,7 +150,7 @@ export class OfwatUserMgmtComponent implements OnInit, OnDestroy {
     }
 
     private onError(error) {
-        console.log( 'Calling the alert service with error:' );
+        console.log('Calling the alert service with error:');
         console.log(error);
         this.alertService.error(error.error, error.message, null);
     }

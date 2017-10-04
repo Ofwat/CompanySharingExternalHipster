@@ -6,11 +6,11 @@ import {Location} from '@angular/common';
     templateUrl: './user-profile.component.html'
 })
 export class UserProfileComponent  {
-    constructor(private location: Location){
+    constructor( private location: Location ) {
 
     }
 
-    navigateBack(){
+    navigateBack() {
         this.location.back();
     }
 }

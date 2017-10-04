@@ -43,6 +43,23 @@ export class UserService {
         });
     }
 
+    queryInvites(req: any, companyId: number): Observable<ResponseWrapper> {
+        const options = createRequestOption(req);
+        options.params.append('companyId', companyId.toString());
+        return this.http.get('api/users/pending_accounts', options)
+            .map((res: Response) => this.convertResponse(res));
+    }
+
+    deleteInvite(login: string) {
+        return this.http.delete(`api/users/pending_accounts/${login}`)
+            .map((res: Response) => this.convertResponse(res));
+    }
+
+    approveInvite(login: string): Observable<ResponseWrapper> {
+        return this.http.post(`api/users/pending_accounts`, login)
+            .map((res: Response) => this.convertResponse(res));
+    }
+
     private convertResponse(res: Response): ResponseWrapper {
         const jsonResponse = res.json();
         return new ResponseWrapper(res.headers, jsonResponse, res.status);

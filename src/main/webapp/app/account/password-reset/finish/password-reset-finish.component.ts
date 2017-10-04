@@ -3,7 +3,6 @@ import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute } from '@angular/router';
 
 import { PasswordResetFinishService } from './password-reset-finish.service';
-import { LoginModalService } from '../../../shared';
 
 @Component({
     selector: 'jhi-password-reset-finish',
@@ -21,7 +20,7 @@ export class PasswordResetFinishComponent implements OnInit, AfterViewInit {
 
     constructor(
         private passwordResetFinishService: PasswordResetFinishService,
-        private loginModalService: LoginModalService,
+        // private loginModalService: LoginModalService,
         private route: ActivatedRoute,
         private elementRef: ElementRef, private renderer: Renderer
     ) {
@@ -57,6 +56,7 @@ export class PasswordResetFinishComponent implements OnInit, AfterViewInit {
     }
 
     login() {
-        this.modalRef = this.loginModalService.open();
+        // TODO This should redirect to login component.
+        // this.modalRef = this.loginModalService.open();
     }
 }

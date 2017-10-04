@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Rx';
 import { CompanySharingExternalTestModule } from '../../../test.module';
 import { MockActivatedRoute } from '../../../helpers/mock-route.service';
-import { LoginModalService } from '../../../../../../main/webapp/app/shared';
+// import { LoginModalService } from '../../../../../../main/webapp/app/shared';
 import { ActivateService } from '../../../../../../main/webapp/app/account/activate/activate.service';
 import { ActivateComponent } from '../../../../../../main/webapp/app/account/activate/activate.component';
 
@@ -24,7 +24,7 @@ describe('Component Tests', () => {
                         useValue: new MockActivatedRoute({'key': 'ABC123'})
                     },
                     {
-                        provide: LoginModalService,
+                        // provide: LoginModalService,
                         useValue: null
                     }
                 ]

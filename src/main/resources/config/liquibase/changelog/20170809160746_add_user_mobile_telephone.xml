@@ -12,7 +12,7 @@
             </column>
         </addColumn>
         <update tableName="jhi_user">
-            <column name="mobile_telephone_number" value="070">
+            <column name="mobile_telephone_number" value="070100010001">
             </column>
         </update>
         <addNotNullConstraint columnDataType="varchar" tableName="jhi_user" columnName="mobile_telephone_number"/>

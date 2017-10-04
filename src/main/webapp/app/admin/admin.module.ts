@@ -33,10 +33,11 @@ import {
     LogsService,
     UserResolvePagingParams,
     OfwatUserResolvePagingParams,
+    OfwatPendingInviteResolvePagingParams,
     UserResolve,
-    UserModalService
+    UserModalService,
+    PendingInvitesComponent
 } from './';
-
 
 @NgModule({
     imports: [
@@ -63,7 +64,8 @@ import {
         JhiMetricsMonitoringComponent,
         JhiMetricsMonitoringModalComponent,
         InviteUserComponent,
-        UserProfileComponent
+        UserProfileComponent,
+        PendingInvitesComponent
     ],
     entryComponents: [
         UserMgmtDialogComponent,
@@ -79,6 +81,7 @@ import {
         LogsService,
         UserResolvePagingParams,
         OfwatUserResolvePagingParams,
+        OfwatPendingInviteResolvePagingParams,
         UserResolve,
         UserModalService,
         InviteUser,

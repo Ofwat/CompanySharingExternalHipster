@@ -3,7 +3,6 @@ import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute } from '@angular/router';
 
 import { ActivateService } from './activate.service';
-import { LoginModalService } from '../../shared';
 
 @Component({
     selector: 'jhi-activate',
@@ -16,7 +15,7 @@ export class ActivateComponent implements OnInit {
 
     constructor(
         private activateService: ActivateService,
-        private loginModalService: LoginModalService,
+        // private loginModalService: LoginModalService,
         private route: ActivatedRoute
     ) {
     }
@@ -34,6 +33,7 @@ export class ActivateComponent implements OnInit {
     }
 
     login() {
-        this.modalRef = this.loginModalService.open();
+        // TODO This should redirect to login component.
+        // this.modalRef = this.loginModalService.open();
     }
 }

@@ -11,7 +11,8 @@ import {
     userDialogRoute,
     ofwatUserMgmtRoute,
     userProfileRoute,
-    inviteUserRoute
+    inviteUserRoute,
+    pendingInvitesRoute
 } from './';
 
 import { UserRouteAccessService } from '../shared';
@@ -25,6 +26,7 @@ const ADMIN_ROUTES = [
     ...userMgmtRoute,
     ...ofwatUserMgmtRoute,
     inviteUserRoute,
+    ...pendingInvitesRoute,
     ...userProfileRoute,
     metricsRoute
 ];
