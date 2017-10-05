@@ -3,18 +3,50 @@
         <span>Data Collection</span>
     </h2>
     <dl class="row-md jh-entity-details">
-        <dt><span>Name</span></dt>
+        <dt>Name</dt>
         <dd>{{dataCollection.name}}</dd>
+        <hr>
+        <dt>Publishing Status</dt>
+        <dd>{{dataCollection.publishingStatus.status}}</dd>
+        <hr>
+        <dt>Owner</dt>
+        <dd><div *ngIf="dataCollection.owner">{{dataCollection.owner.firstName}} {{dataCollection.owner.lastName}}</div></dd>
+        <hr>
+        <dt>Reviewer</dt>
+        <dd><div *ngIf="dataCollection.reviewer">{{dataCollection.reviewer.firstName}} {{dataCollection.reviewer.lastName}}</div></dd>
+        <hr>
+        <dt>Description</dt>
+        <dd>{{dataCollection.description}}</dd>
+        <hr>
+        <dt>Guidance</dt>
+        <dd>{{dataCollection.guidance}}</dd>
+        <hr>
+        <dt>Created</dt>
+        <dd>{{dataCollection.createdDate | date:'dd LLLL yyyy HH:mm'}}</dd>
+        <hr>
+        <dt>Created by</dt>
+        <dd>{{dataCollection.createdBy}}</dd>
+        <hr>
+        <dt>Last modified</dt>
+        <dd>{{dataCollection.lastModifiedDate | date:'dd LLLL yyyy HH:mm'}}</dd>
+        <hr>
+        <dt>Last modified by</dt>
+        <dd><div *ngIf="dataCollection.lastModifiedBy">{{dataCollection.lastModifiedBy}}</div></dd>
     </dl>
+    <button type="submit"
+            [routerLink]="['/data-collection-edit', dataCollection.id]"
+            class="button float-right">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span>Edit</span>
+    </button>
     <button type="submit"
             [routerLink]="['/data-collection-deletion-confirmation', dataCollection.id]"
             class="button float-right">
-        <span class="fa fa-arrow-left"></span>&nbsp;<span> Delete</span>
+        <span class="fa fa-arrow-left"></span>&nbsp;<span>Delete</span>
     </button>
     <button type="submit"
             routerLink="/data-collection-management"
             class="button button-secondary">
-        <span class="fa fa-arrow-left"></span>&nbsp;<span> Back</span>
+        <span class="fa fa-arrow-left"></span>&nbsp;<span>Back</span>
     </button>
 </div>
 

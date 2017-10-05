@@ -25,8 +25,8 @@ if (OperatingSystem.current().isWindows()) {
     }
 }
 
-task liquibaseDiffChangelog(dependsOn: compileJava, type: JavaExec) {
-    group = "liquibase"
+    task liquibaseDiffChangelog(dependsOn: compileJava, type: JavaExec) {
+        group = "liquibase"
 
 //    if (OperatingSystem.current().isWindows()) {
 //        dependsOn pathingLiquibaseJar
@@ -37,16 +37,40 @@ task liquibaseDiffChangelog(dependsOn: compileJava, type: JavaExec) {
         classpath sourceSets.main.runtimeClasspath
         classpath configurations.liquibase
 //    }
-    main = "liquibase.integration.commandline.Main"
+        main = "liquibase.integration.commandline.Main"
 
-    args "--changeLogFile=src/main/resources/config/liquibase/changelog/" + buildTimestamp() +"_changelog.xml"
-    args "--referenceUrl=hibernate:spring:uk.gov.ofwat.external.domain?dialect=org.hibernate.dialect.H2Dialect&hibernate.physical_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy&hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy"
-    args "--username=CompanySharingExternal"
-    args "--password="
-    args "--url=jdbc:h2:file:./build/h2db/db/companysharingexternal"
-    args "--driver=org.h2.Driver"
-    args "diffChangeLog"
-}
+        args "--changeLogFile=src/main/resources/config/liquibase/changelog/" + buildTimestamp() +"_changelog.xml"
+        args "--referenceUrl=hibernate:spring:uk.gov.ofwat.external.domain?dialect=org.hibernate.dialect.H2Dialect&hibernate.physical_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy&hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy"
+        args "--username=CompanySharingExternal"
+        args "--password="
+        args "--url=jdbc:h2:file:./build/h2db/db/companysharingexternal"
+        args "--driver=org.h2.Driver"
+        args "diffChangeLog"
+    }
+
+    task liquibaseUpdate(dependsOn: compileJava, type: JavaExec) {
+        group = "liquibase"
+
+//    if (OperatingSystem.current().isWindows()) {
+//        dependsOn pathingLiquibaseJar
+//        doFirst {
+//            classpath = files(pathingLiquibaseJar.archivePath)
+//        }
+//    } else {
+        classpath sourceSets.main.runtimeClasspath
+        classpath configurations.liquibase
+//    }
+        main = "liquibase.integration.commandline.Main"
+
+        args "--changeLogFile=src/main/resources/config/liquibase/master.xml"
+        args "--referenceUrl=hibernate:spring:uk.gov.ofwat.external.domain?dialect=org.hibernate.dialect.H2Dialect&hibernate.physical_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy&hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy"
+        args "--username=CompanySharingExternal"
+        args "--password="
+        args "--url=jdbc:h2:file:./build/h2db/db/companysharingexternal"
+        args "--driver=org.h2.Driver"
+        args "updateSQL"
+    }
+
 
 def buildTimestamp() {
     def date = new Date()

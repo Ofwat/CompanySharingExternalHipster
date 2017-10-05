@@ -7,7 +7,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import uk.gov.ofwat.external.domain.DataCollection;
+import uk.gov.ofwat.external.domain.PublishingStatus;
 import uk.gov.ofwat.external.repository.DataCollectionRepository;
+import uk.gov.ofwat.external.repository.PublishingStatusRepository;
 import uk.gov.ofwat.external.service.dto.DataCollectionDTO;
 import uk.gov.ofwat.external.service.mapper.DataCollectionMapper;
 
@@ -24,12 +26,13 @@ public class DataCollectionService {
     private final Logger log = LoggerFactory.getLogger(DataCollectionService.class);
 
     private final DataCollectionRepository dataCollectionRepository;
-
     private final DataCollectionMapper dataCollectionMapper;
+    private final PublishingStatusRepository publishingStatusRepository;
 
-    public DataCollectionService(DataCollectionRepository dataCollectionRepository, DataCollectionMapper dataCollectionMapper) {
+    public DataCollectionService(DataCollectionRepository dataCollectionRepository, DataCollectionMapper dataCollectionMapper, PublishingStatusRepository publishingStatusRepository) {
         this.dataCollectionRepository = dataCollectionRepository;
         this.dataCollectionMapper = dataCollectionMapper;
+        this.publishingStatusRepository = publishingStatusRepository;
     }
 
     /**
@@ -43,6 +46,20 @@ public class DataCollectionService {
         DataCollection dataCollection = dataCollectionMapper.toEntity(dataCollectionDTO);
         dataCollection = dataCollectionRepository.save(dataCollection);
         return dataCollectionMapper.toDto(dataCollection);
+    }
+
+
+    /**
+     * Save a new dataCollection.
+     *
+     * @param dataCollectionDTO the entity to save
+     * @return the persisted entity
+     */
+    public DataCollectionDTO saveNew(DataCollectionDTO dataCollectionDTO) {
+        log.debug("Request to save new DataCollection : {}", dataCollectionDTO);
+        PublishingStatus publishingStatus = publishingStatusRepository.findOne(new Long(1));
+        dataCollectionDTO.setPublishingStatus(publishingStatus);
+        return save(dataCollectionDTO);
     }
 
     /**

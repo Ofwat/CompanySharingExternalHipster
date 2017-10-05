@@ -13,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uk.gov.ofwat.external.repository.DataCollectionRepository;
 import uk.gov.ofwat.external.service.DataCollectionService;
+import uk.gov.ofwat.external.service.PublishingStatusService;
+import uk.gov.ofwat.external.service.UserService;
 import uk.gov.ofwat.external.service.dto.DataCollectionDTO;
 import uk.gov.ofwat.external.web.rest.util.HeaderUtil;
 import uk.gov.ofwat.external.web.rest.util.PaginationUtil;
@@ -35,10 +37,15 @@ public class DataCollectionResource {
 
     private final DataCollectionService dataCollectionService;
     private final DataCollectionRepository dataCollectionRepository;
+    private final UserService userService;
+    private final PublishingStatusService publishingStatusService;
 
-    public DataCollectionResource(DataCollectionService dataCollectionService, DataCollectionRepository dataCollectionRepository) {
+
+    public DataCollectionResource(DataCollectionService dataCollectionService, DataCollectionRepository dataCollectionRepository, UserService userService, PublishingStatusService publishingStatusService) {
         this.dataCollectionService = dataCollectionService;
         this.dataCollectionRepository = dataCollectionRepository;
+        this.userService = userService;
+        this.publishingStatusService = publishingStatusService;
     }
 
     /**
@@ -60,7 +67,7 @@ public class DataCollectionResource {
             return ResponseEntity.status(HttpStatus.CONFLICT).headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "datacollectionexists", "DataCollection is already in use")).body(null);
         }
 
-        DataCollectionDTO newDataCollectionDTO = dataCollectionService.save(dataCollectionDTO);
+        DataCollectionDTO newDataCollectionDTO = dataCollectionService.saveNew(dataCollectionDTO);
         return ResponseEntity.created(new URI("/api/data-collections/" + newDataCollectionDTO.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, newDataCollectionDTO.getId().toString()))
             .body(newDataCollectionDTO);
