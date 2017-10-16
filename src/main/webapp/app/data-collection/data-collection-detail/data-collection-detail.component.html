@@ -7,7 +7,7 @@
         <dd>{{dataCollection.name}}</dd>
         <hr>
         <dt>Publishing Status</dt>
-        <dd>{{dataCollection.publishingStatus.status}}</dd>
+        <dd>{{dataCollection?.publishingStatus?.status}}</dd>
         <hr>
         <dt>Owner</dt>
         <dd><div *ngIf="dataCollection.owner">{{dataCollection.owner.firstName}} {{dataCollection.owner.lastName}}</div></dd>

@@ -5,6 +5,7 @@ import { DataCollectionCreationComponent } from './data-collection-creation/data
 import { DataCollectionDetailComponent } from './data-collection-detail/data-collection-detail.component';
 import { DataCollectionDeletionConfirmationComponent } from './data-collection-deletion/data-collection-deletion-confirmation.component';
 import { DataCollectionDeletedComponent } from './data-collection-deletion/data-collection-deleted.component';
+import { DataCollectionEditComponent } from './data-collection-edit/data-collection-edit.component';
 
 /* jhipster-needle-add-admin-module-import - JHipster will add admin modules imports here */
 
@@ -38,7 +39,8 @@ import {
         DataCollectionCreationComponent,
         DataCollectionDetailComponent,
         DataCollectionDeletionConfirmationComponent,
-        DataCollectionDeletedComponent
+        DataCollectionDeletedComponent,
+        DataCollectionEditComponent
     ],
     entryComponents: [
         JhiHealthModalComponent,

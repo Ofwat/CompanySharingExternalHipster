@@ -14,6 +14,7 @@ import {dataCollectionMgmtRoute} from "./data-collection-management/data-collect
 import {dataCollectionCreationRoute} from "./data-collection-creation/data-collection-creation-route";
 import {dataCollectionDetailRoute} from "./data-collection-detail/data-collection-detail-route";
 import {dataCollectionDeletionRoute} from "./data-collection-deletion/data-collection-deletion-route";
+import {dataCollectionEditRoute} from "./data-collection-edit/data-collection-edit-route";
 
 
 const ADMIN_ROUTES = [
@@ -26,7 +27,8 @@ const ADMIN_ROUTES = [
     metricsRoute,
     dataCollectionCreationRoute,
     dataCollectionDetailRoute,
-    ...dataCollectionDeletionRoute
+    ...dataCollectionDeletionRoute,
+    dataCollectionEditRoute
 ];
 
 export const adminState: Routes = [{

@@ -28,4 +28,6 @@ export * from './data-collection-creation/data-collection-creation-route';
 export * from './data-collection-deletion/data-collection-deleted.component';
 export * from './data-collection-deletion/data-collection-deletion-confirmation.component';
 export * from './data-collection-deletion/data-collection-deletion-route';
+export * from './data-collection-edit/data-collection-edit.component';
+export * from './data-collection-edit/data-collection-edit-route';
 
