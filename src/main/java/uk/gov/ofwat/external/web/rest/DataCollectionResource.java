@@ -13,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uk.gov.ofwat.external.repository.DataCollectionRepository;
 import uk.gov.ofwat.external.service.DataCollectionService;
+import uk.gov.ofwat.external.domain.PublishingStatus;
+import uk.gov.ofwat.external.repository.PublishingStatusRepository;
 import uk.gov.ofwat.external.service.PublishingStatusService;
 import uk.gov.ofwat.external.service.UserService;
 import uk.gov.ofwat.external.service.dto.DataCollectionDTO;
@@ -23,6 +25,7 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * REST controller for managing DataCollection.
@@ -39,13 +42,15 @@ public class DataCollectionResource {
     private final DataCollectionRepository dataCollectionRepository;
     private final UserService userService;
     private final PublishingStatusService publishingStatusService;
+    private final PublishingStatusRepository publishingStatusRepository;
 
 
-    public DataCollectionResource(DataCollectionService dataCollectionService, DataCollectionRepository dataCollectionRepository, UserService userService, PublishingStatusService publishingStatusService) {
+    public DataCollectionResource(DataCollectionService dataCollectionService, DataCollectionRepository dataCollectionRepository, UserService userService, PublishingStatusService publishingStatusService, PublishingStatusRepository publishingStatusRepository) {
         this.dataCollectionService = dataCollectionService;
         this.dataCollectionRepository = dataCollectionRepository;
         this.userService = userService;
         this.publishingStatusService = publishingStatusService;
+        this.publishingStatusRepository = publishingStatusRepository;
     }
 
     /**
@@ -66,6 +71,15 @@ public class DataCollectionResource {
         else if (dataCollectionService.findOneByName(dataCollectionDTO.getName()).isPresent()) {
             return ResponseEntity.status(HttpStatus.CONFLICT).headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "datacollectionexists", "DataCollection is already in use")).body(null);
         }
+        ResponseEntity.
+        PublishingStatus publishingStatus = null;
+        Optional<PublishingStatus> optionalPublishingStatus = publishingStatusRepository.findOneByStatus("DRAFT");
+        if (!optionalPublishingStatus.isPresent()) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "publishingStatusMissing", "Publishing status 'Draft' not found in database."))
+                .body(null);
+        }
+        dataCollectionDTO.setPublishingStatus(optionalPublishingStatus.get());
 
         DataCollectionDTO newDataCollectionDTO = dataCollectionService.saveNew(dataCollectionDTO);
         return ResponseEntity.created(new URI("/api/data-collections/" + newDataCollectionDTO.getId()))

@@ -1,0 +1,52 @@
+<div *ngIf="dataBundle">
+    <h2>
+        <span>Data Collection</span>
+    </h2>
+    <dl class="row-md jh-entity-details">
+        <dt>Name</dt>
+        <dd>{{dataBundle.name}}</dd>
+        <hr>
+        <dt>Publishing Status</dt>
+        <dd>{{dataBundle?.publishingStatus?.status}}</dd>
+        <hr>
+        <dt>Owner</dt>
+        <dd><div *ngIf="dataBundle.owner">{{dataBundle.owner.firstName}} {{dataBundle.owner.lastName}}</div></dd>
+        <hr>
+        <dt>Reviewer</dt>
+        <dd><div *ngIf="dataBundle.reviewer">{{dataBundle.reviewer.firstName}} {{dataBundle.reviewer.lastName}}</div></dd>
+        <hr>
+        <dt>Description</dt>
+        <dd>{{dataBundle.description}}</dd>
+        <hr>
+        <dt>Guidance</dt>
+        <dd>{{dataBundle.guidance}}</dd>
+        <hr>
+        <dt>Created</dt>
+        <dd>{{dataBundle.createdDate | date:'dd LLLL yyyy HH:mm'}}</dd>
+        <hr>
+        <dt>Created by</dt>
+        <dd>{{dataBundle.createdBy}}</dd>
+        <hr>
+        <dt>Last modified</dt>
+        <dd>{{dataBundle.lastModifiedDate | date:'dd LLLL yyyy HH:mm'}}</dd>
+        <hr>
+        <dt>Last modified by</dt>
+        <dd><div *ngIf="dataBundle.lastModifiedBy">{{dataBundle.lastModifiedBy}}</div></dd>
+    </dl>
+    <button type="submit"
+            [routerLink]="['/data-bundle-edit', dataBundle.id]"
+            class="button float-right">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span>Edit</span>
+    </button>
+    <button type="submit"
+            [routerLink]="['/data-bundle-deletion-confirmation', dataBundle.id]"
+            class="button float-right">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span>Delete</span>
+    </button>
+    <button type="submit"
+            routerLink="/data-bundle-management"
+            class="button button-secondary">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span>Back</span>
+    </button>
+</div>
+

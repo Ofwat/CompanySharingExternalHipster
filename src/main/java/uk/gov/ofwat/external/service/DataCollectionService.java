@@ -57,8 +57,6 @@ public class DataCollectionService {
      */
     public DataCollectionDTO saveNew(DataCollectionDTO dataCollectionDTO) {
         log.debug("Request to save new DataCollection : {}", dataCollectionDTO);
-        PublishingStatus publishingStatus = publishingStatusRepository.findOne(new Long(1));
-        dataCollectionDTO.setPublishingStatus(publishingStatus);
         return save(dataCollectionDTO);
     }
 

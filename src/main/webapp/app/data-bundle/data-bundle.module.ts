@@ -1,16 +1,16 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CompanySharingExternalSharedModule } from '../shared';
-import { DataCollectionCreationComponent } from './data-collection-creation/data-collection-creation.component';
-import { DataCollectionDetailComponent } from './data-collection-detail/data-collection-detail.component';
-import { DataCollectionDeletionConfirmationComponent } from './data-collection-deletion/data-collection-deletion-confirmation.component';
-import { DataCollectionDeletedComponent } from './data-collection-deletion/data-collection-deleted.component';
-import { DataCollectionEditComponent } from './data-collection-edit/data-collection-edit.component';
+import { DataBundleCreationComponent } from './data-bundle-creation/data-bundle-creation.component';
+import { DataBundleDetailComponent } from './data-bundle-detail/data-bundle-detail.component';
+import { DataBundleDeletionConfirmationComponent } from './data-bundle-deletion/data-bundle-deletion-confirmation.component';
+import { DataBundleDeletedComponent } from './data-bundle-deletion/data-bundle-deleted.component';
+import { DataBundleEditComponent } from './data-bundle-edit/data-bundle-edit.component';
 
 /* jhipster-needle-add-admin-module-import - JHipster will add admin modules imports here */
 
 import {
-    dataCollectionState,
+    dataBundleState,
     AuditsComponent,
     LogsComponent,
     JhiMetricsMonitoringModalComponent,
@@ -24,23 +24,23 @@ import {
     JhiHealthService,
     JhiMetricsService,
     LogsService,
-    DataCollectionMgmtComponent,
-    DataCollectionResolvePagingParams
+    DataBundleMgmtComponent,
+    DataBundleResolvePagingParams
 } from './';
 
 @NgModule({
     imports: [
         CompanySharingExternalSharedModule,
-        RouterModule.forRoot(dataCollectionState, { useHash: true }),
+        RouterModule.forRoot(dataBundleState, { useHash: true }),
         /* jhipster-needle-add-admin-module - JHipster will add admin modules here */
     ],
     declarations: [
-        DataCollectionMgmtComponent,
-        DataCollectionCreationComponent,
-        DataCollectionDetailComponent,
-        DataCollectionDeletionConfirmationComponent,
-        DataCollectionDeletedComponent,
-        DataCollectionEditComponent
+        DataBundleMgmtComponent,
+        DataBundleCreationComponent,
+        DataBundleDetailComponent,
+        DataBundleDeletionConfirmationComponent,
+        DataBundleDeletedComponent,
+        DataBundleEditComponent
     ],
     entryComponents: [
         JhiHealthModalComponent,
@@ -52,8 +52,8 @@ import {
         JhiHealthService,
         JhiMetricsService,
         LogsService,
-        DataCollectionResolvePagingParams
+        DataBundleResolvePagingParams
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class CompanySharingExternalDataCollectionModule {}
+export class CompanySharingExternalDataBundleModule {}

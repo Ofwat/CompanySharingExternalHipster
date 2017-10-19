@@ -1,0 +1,51 @@
+<div>
+    <div >
+        <h2 class="heading-medium">Create Data Collection</h2>
+
+        <div class="alert alert-success" *ngIf="success">
+            <strong>Data Collection created</strong>
+            <button type="button" class="button button-secondary" [routerLink]="['../data-bundle-management']"><span class="font-medium">Back to Data Collections</span></button>
+        </div>
+
+        <div class="alert alert-danger" *ngIf="error">
+            <strong>Data Collection creation failed!</strong> Please try again later.
+        </div>
+
+        <div class="alert alert-danger" *ngIf="errorUserExists">
+            <strong>Data Collection name is already in use!</strong> Please choose another one.
+        </div>
+
+    </div>
+    <div class="col-md-8 offset-md-2">
+        <form name="form" role="form" (ngSubmit)="create()" #createDataBundleForm="ngForm" *ngIf="!success">
+            <div class="form-group">
+                <label class="form-label" for="login">Data Collection Name
+                    <span class="form-hint">The name of the data collection.</span>
+                </label>
+                <input type="text" class="form-control" [(ngModel)]="dataBundle.name" id="login" name="login" #login="ngModel" placeholder=""
+                       required minlength="1" maxlength="50" pattern="^[_'.@A-Za-z0-9-]*$">
+                <div *ngIf="login.dirty && login.invalid">
+                    <small class="form-text text-danger" *ngIf="login.errors.required">
+                        A name is required for the data collection.
+                    </small>
+                    <small class="form-text text-danger" *ngIf="login.errors.minlength"
+                    >
+                        The data collection name is required to be at least 1 character.
+                    </small>
+                    <small class="form-text text-danger" *ngIf="login.errors.maxlength"
+                    >
+                        The data collection name cannot be longer than 50 characters.
+                    </small>
+                    <small class="form-text text-danger" *ngIf="login.errors.pattern"
+                    >
+                        The data collection name can only contain lower-case letters and digits.
+                    </small>
+                </div>
+            </div>
+
+            <button type="submit" [disabled]="createDataBundleForm.form.invalid" class="button"><span class="font-medium">Create Data Collection</span></button>
+            <button type="button" class="button button-secondary" [routerLink]="['../data-bundle-management']"><span class="font-medium">Back to Data Collections</span></button>
+        </form>
+        <p></p>
+    </div>
+</div>

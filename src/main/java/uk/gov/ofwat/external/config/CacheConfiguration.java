@@ -47,6 +47,7 @@ public class CacheConfiguration {
             cm.createCache(uk.gov.ofwat.external.domain.Company.class.getName() + ".users", jcacheConfiguration);
             cm.createCache(uk.gov.ofwat.external.domain.DataCollection.class.getName(), jcacheConfiguration);
             cm.createCache(uk.gov.ofwat.external.domain.PublishingStatus.class.getName(), jcacheConfiguration);
+            cm.createCache(uk.gov.ofwat.external.domain.DataBundle.class.getName(), jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

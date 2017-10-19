@@ -6,6 +6,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.Arrays;
 
 /**
  * A DataCollection.
@@ -25,9 +26,6 @@ public class DataCollection extends AbstractAuditingEntity implements Serializab
     @Column(name = "name", unique = true, nullable = false)
     private String name;
 
-//    @NotNull
-//    @Column(name = "publishingStatus", nullable = false)
-//    @Column(name = "publishingStatus")
     @ManyToOne
     private PublishingStatus publishingStatus;
 
@@ -44,8 +42,9 @@ public class DataCollection extends AbstractAuditingEntity implements Serializab
     @Column(name = "guidance")
     private String guidance;
 
-//    @Column(name = "dataBundles")
-//    private String[] dataBundles;
+    @OneToMany(mappedBy="dataCollection")
+    @OrderColumn(name="orderIndex")
+    private DataBundle[] dataBundles;
 
     public Long getId() {
         return id;
@@ -103,62 +102,65 @@ public class DataCollection extends AbstractAuditingEntity implements Serializab
         this.guidance = guidance;
     }
 
-//    public String[] getDataBundles() {
-//        return dataBundles;
-//    }
-//
-//    public void setDataBundles(String[] dataBundles) {
-//        this.dataBundles = dataBundles;
-//    }
+    public DataBundle[] getDataBundles() {
+        return dataBundles;
+    }
+
+    public void setDataBundles(DataBundle[] dataBundles) {
+        this.dataBundles = dataBundles;
+    }
 
     public DataCollection() {
     }
 
-    public DataCollection(String name, PublishingStatus publishingStatus, User owner, User reviewer, String description, String guidance, String[] dataBundles) {
+    public DataCollection(String name, PublishingStatus publishingStatus, User owner, User reviewer, String description, String guidance, DataBundle[] dataBundles) {
         this.name = name;
         this.publishingStatus = publishingStatus;
         this.owner = owner;
         this.reviewer = reviewer;
         this.description = description;
         this.guidance = guidance;
-//        this.dataBundles = dataBundles;
+        this.dataBundles = dataBundles;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof DataCollection)) return false;
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (!(object instanceof DataCollection)) return false;
+        if (!super.equals(object)) return false;
 
-        DataCollection that = (DataCollection) o;
+        DataCollection that = (DataCollection) object;
 
-        if (!getId().equals(that.getId())) return false;
-        if (!getName().equals(that.getName())) return false;
-        if (getPublishingStatus() != that.getPublishingStatus()) return false;
-        if (!getOwner().equals(that.getOwner())) return false;
+        if (getId() != null ? !getId().equals(that.getId()) : that.getId() != null) return false;
+        if (getName() != null ? !getName().equals(that.getName()) : that.getName() != null) return false;
+        if (getPublishingStatus() != null ? !getPublishingStatus().equals(that.getPublishingStatus()) : that.getPublishingStatus() != null)
+            return false;
+        if (getOwner() != null ? !getOwner().equals(that.getOwner()) : that.getOwner() != null) return false;
         if (getReviewer() != null ? !getReviewer().equals(that.getReviewer()) : that.getReviewer() != null)
             return false;
         if (getDescription() != null ? !getDescription().equals(that.getDescription()) : that.getDescription() != null)
             return false;
-        return (getGuidance() != null ? !getGuidance().equals(that.getGuidance()) : that.getGuidance() != null);
-        // Probably incorrect - comparing Object[] arrays with Arrays.equals
-//        if (!Arrays.equals(getDataBundles(), that.getDataBundles())) return false;
+        if (getGuidance() != null ? !getGuidance().equals(that.getGuidance()) : that.getGuidance() != null)
+            return false;
+        if (!java.util.Arrays.equals(getDataBundles(), that.getDataBundles())) return false;
+
+        return true;
     }
 
-    @Override
     public int hashCode() {
-        int result = getId().hashCode();
-        result = 31 * result + getName().hashCode();
-        result = 31 * result + getPublishingStatus().hashCode();
-        result = 31 * result + getOwner().hashCode();
+        int result = super.hashCode();
+        result = 31 * result + (getId() != null ? getId().hashCode() : 0);
+        result = 31 * result + (getName() != null ? getName().hashCode() : 0);
+        result = 31 * result + (getPublishingStatus() != null ? getPublishingStatus().hashCode() : 0);
+        result = 31 * result + (getOwner() != null ? getOwner().hashCode() : 0);
         result = 31 * result + (getReviewer() != null ? getReviewer().hashCode() : 0);
         result = 31 * result + (getDescription() != null ? getDescription().hashCode() : 0);
         result = 31 * result + (getGuidance() != null ? getGuidance().hashCode() : 0);
-//        result = 31 * result + Arrays.hashCode(getDataBundles());
+        result = 31 * result + java.util.Arrays.hashCode(getDataBundles());
         return result;
     }
 
-    @Override
-    public String toString() {
+    @java.lang.Override
+    public java.lang.String toString() {
         return "DataCollection{" +
             "id=" + id +
             ", name='" + name + '\'' +
@@ -167,7 +169,7 @@ public class DataCollection extends AbstractAuditingEntity implements Serializab
             ", reviewer=" + reviewer +
             ", description='" + description + '\'' +
             ", guidance='" + guidance + '\'' +
-//            ", dataBundles=" + Arrays.toString(dataBundles) +
+            ", dataBundles=" + Arrays.toString(dataBundles) +
             '}';
     }
 }

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <!--
+        Added the constraints for entity DataBundle.
+    -->
+    <changeSet id="20171016150755-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="status_id"
+                                 baseTableName="data_bundle"
+                                 constraintName="fk_data_bundle_status_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="publishing_status"/>
+
+        <addForeignKeyConstraint baseColumnNames="owner_id"
+                                 baseTableName="data_bundle"
+                                 constraintName="fk_data_bundle_owner_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="reviewer_id"
+                                 baseTableName="data_bundle"
+                                 constraintName="fk_data_bundle_reviewer_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="data_collection_id"
+                                 baseTableName="data_bundle"
+                                 constraintName="fk_data_bundle_data_collection_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="data_collection"/>
+
+    </changeSet>
+</databaseChangeLog>

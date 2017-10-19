@@ -10,33 +10,56 @@ import {
 } from '../admin';
 
 import { UserRouteAccessService } from '../shared';
+
 import {dataCollectionMgmtRoute} from "./data-collection-management/data-collection-management.route";
 import {dataCollectionCreationRoute} from "./data-collection-creation/data-collection-creation-route";
 import {dataCollectionDetailRoute} from "./data-collection-detail/data-collection-detail-route";
 import {dataCollectionDeletionRoute} from "./data-collection-deletion/data-collection-deletion-route";
 import {dataCollectionEditRoute} from "./data-collection-edit/data-collection-edit-route";
 
+// import {dataBundleCreationRoute} from "../data-bundle/data-bundle-creation/data-bundle-creation-route";
 
-const ADMIN_ROUTES = [
+// import {
+//     dataCollectionMgmtRoute,
+//     dataCollectionCreationRoute,
+//     dataCollectionDeletionRoute,
+//     dataCollectionDetailRoute,
+//     dataCollectionEditRoute
+// } from '../data-collection';
+
+// import {
+//     dataBundleMgmtRoute,
+//     dataBundleCreationRoute,
+//     dataBundleDeletionRoute,
+//     dataBundleDetailRoute,
+//     dataBundleEditRoute
+// } from '../data-bundle';
+
+const DATA_COLLECTION_ROUTES = [
     auditsRoute,
     configurationRoute,
     docsRoute,
     healthRoute,
     logsRoute,
-    ...dataCollectionMgmtRoute,
     metricsRoute,
+    ...dataCollectionMgmtRoute,
     dataCollectionCreationRoute,
     dataCollectionDetailRoute,
     ...dataCollectionDeletionRoute,
     dataCollectionEditRoute
+    // ...dataBundleMgmtRoute,
+    // dataBundleCreationRoute
+    // dataBundleDetailRoute,
+    // ...dataBundleDeletionRoute,
+    // dataBundleEditRoute
 ];
 
-export const adminState: Routes = [{
+export const dataCollectionState: Routes = [{
     path: '',
     data: {
         authorities: ['ROLE_ADMIN']
     },
     canActivate: [UserRouteAccessService],
-    children: ADMIN_ROUTES
+    children: DATA_COLLECTION_ROUTES
 }
 ];

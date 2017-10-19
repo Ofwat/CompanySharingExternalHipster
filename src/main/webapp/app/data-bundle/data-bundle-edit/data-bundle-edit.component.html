@@ -4,27 +4,27 @@
 
         <div class="alert alert-success" *ngIf="success">
             <strong>Data Collection edited</strong>
-            <button type="button" class="button button-secondary" [routerLink]="['/data-collection-management']"><span class="font-medium">Back to Data Collections</span></button>
+            <button type="button" class="button button-secondary" [routerLink]="['/data-bundle-management']"><span class="font-medium">Back to Data Collections</span></button>
         </div>
 
         <div class="alert alert-danger" *ngIf="error">
             <strong>Data Collection edit failed!</strong> Please try again later.
-            <button type="button" class="button button-secondary" [routerLink]="['/data-collection-management']"><span class="font-medium">Back to Data Collections</span></button>
+            <button type="button" class="button button-secondary" [routerLink]="['/data-bundle-management']"><span class="font-medium">Back to Data Collections</span></button>
         </div>
 
-        <div class="alert alert-danger" *ngIf="errorDataCollectionExists">
-            <strong>Data Collection name '{{dataCollection.name}}' is already in use!</strong> Please choose another one.
-            <button type="button" class="button button-secondary" [routerLink]="['/data-collection-management']"><span class="font-medium">Back to Data Collections</span></button>
+        <div class="alert alert-danger" *ngIf="errorDataBundleExists">
+            <strong>Data Collection name '{{dataBundle.name}}' is already in use!</strong> Please choose another one.
+            <button type="button" class="button button-secondary" [routerLink]="['/data-bundle-management']"><span class="font-medium">Back to Data Collections</span></button>
         </div>
     </div>
 
     <div class="col-md-8 offset-md-2">
-        <form name="form" role="form" (ngSubmit)="save()" #dataCollectionEditForm="ngForm" *ngIf="!success && !errorDataCollectionExists">
+        <form name="form" role="form" (ngSubmit)="save()" #dataBundleEditForm="ngForm" *ngIf="!success && !errorDataBundleExists">
             <div class="form-group">
                 <label class="form-label" for="name">Name
                     <span class="form-hint">The name of the data collection.</span>
                 </label>
-                <input type="text" class="form-control" [(ngModel)]="dataCollection.name" id="name" name="name" #name="ngModel" placeholder=""
+                <input type="text" class="form-control" [(ngModel)]="dataBundle.name" id="name" name="name" #name="ngModel" placeholder=""
                        required minlength="1" maxlength="250" pattern="^[^\s]+(\s+[^\s]+)*$"/>
                 <div *ngIf="name.dirty && name.invalid">
                     <small class="form-text text-danger" *ngIf="name.errors.required">
@@ -46,7 +46,7 @@
                 <label class="form-label" for="description">Description
                     <span class="form-hint">The description of the data collection.</span>
                 </label>
-                <textarea rows="3" class="form-control" [(ngModel)]="dataCollection.description" id="description" name="description" #description="ngModel" placeholder=""
+                <textarea rows="3" class="form-control" [(ngModel)]="dataBundle.description" id="description" name="description" #description="ngModel" placeholder=""
                           required minlength="1" maxlength="250"></textarea>
                 <div *ngIf="description.dirty && description.invalid">
                     <small class="form-text text-danger" *ngIf="description.errors.required">
@@ -68,7 +68,7 @@
                 <label class="form-label" for="guidance">Guidance
                     <span class="form-hint">The guidance of the data collection.</span>
                 </label>
-                <textarea rows="5" class="form-control" [(ngModel)]="dataCollection.guidance" id="guidance" name="guidance" #guidance="ngModel" placeholder=""
+                <textarea rows="5" class="form-control" [(ngModel)]="dataBundle.guidance" id="guidance" name="guidance" #guidance="ngModel" placeholder=""
                        required minlength="1" maxlength="250"></textarea>
                 <div *ngIf="guidance.dirty && guidance.invalid">
                     <small class="form-text text-danger" *ngIf="guidance.errors.required">
@@ -90,10 +90,10 @@
                 <label class="form-label" for="owner">Owner
                     <span class="form-hint">The owner responsible for the Data Collection</span>
                 </label>
-                <select class="form-control" [(ngModel)]="dataCollection.owner.id" id="owner" name="owner" #name="ngModel">
+                <select class="form-control" [(ngModel)]="dataBundle.owner.id" id="owner" name="owner" #name="ngModel">
                     <option *ngFor="let user of users"
                             [value]="user.id"
-                            [selected]="dataCollection.owner.id==user.id ? true : null" >
+                            [selected]="dataBundle.owner.id==user.id ? true : null" >
                         {{user.firstName}} {{user.lastName}}
                     </option>
                 </select>
@@ -104,21 +104,20 @@
                 <label class="form-label" for="reviewer">Reviewer
                     <span class="form-hint">The reviewer responsible for reviewing the Data Collection</span>
                 </label>
-                <select class="form-control" [(ngModel)]="dataCollection.reviewer.id" id="reviewer" name="reviewer" #name="ngModel">
+                <select class="form-control" [(ngModel)]="dataBundle.reviewer.id" id="reviewer" name="reviewer" #name="ngModel">
                     <option *ngFor="let user of users"
                             [value]="user.id"
-                            [selected]="dataCollection.reviewer.id==user.id ? true : null" >
+                            [selected]="dataBundle.reviewer.id==user.id ? true : null" >
                         {{user.firstName}} {{user.lastName}}
                     </option>
                 </select>
-                <!--<select class="form-control" [(ngModel)]="dataCollection.reviewer" id="reviewer" name="reviewer" #name="ngModel">-->
+                <!--<select class="form-control" [(ngModel)]="dataBundle.reviewer" id="reviewer" name="reviewer" #name="ngModel">-->
                     <!--<option *ngFor="let user of users" [value]="user.id">{{user.firstName}} {{user.lastName}}</option>-->
                 <!--</select>-->
             </div>
 
-            <button type="submit" [disabled]="dataCollectionEditForm.form.invalid" class="button"><span class="font-medium">Save Data Collection</span></button>
-            <button type="button" class="button button-secondary" [routerLink]="['/data-collection-detail', dataCollection.id]"><span class="font-medium">Back to Details</span></button>
-            <button type="button" class="button button-secondary" [routerLink]="['/data-bundle-creation', dataCollection.id]"><span class="font-medium">Add Data Bundle</span></button>
+            <button type="submit" [disabled]="dataBundleEditForm.form.invalid" class="button"><span class="font-medium">Save Data Collection</span></button>
+            <button type="button" class="button button-secondary" [routerLink]="['/data-bundle-detail', dataBundle.id]"><span class="font-medium">Back to Details</span></button>
         </form>
         <p></p>
     </div>
