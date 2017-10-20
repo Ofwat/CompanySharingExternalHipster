@@ -26,7 +26,7 @@ spring:
         serialization.indent_output: true
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:h2:file:./build/h2db/db/companysharingexternal;DB_CLOSE_DELAY=-1
+        url: jdbc:h2:file:./build/h2db/db/companysharingexternal;DB_CLOSE_DELAY=-1;AUTO_SERVER=TRUE
         username: CompanySharingExternal
         password:
     h2:
@@ -64,16 +64,16 @@ liquibase:
 #
 # Then, modify the server.ssl properties so your "server" configuration looks like:
 #
-# server:
-#    port: 8443
-#    ssl:
-#        key-store: keystore.p12
-#        key-store-password: <your-password>
-#        keyStoreType: PKCS12
-#        keyAlias: CompanySharingExternal
-# ===================================================================
 server:
-    port: 8080
+    port: 8443
+    ssl:
+        key-store: keystore.p12
+        key-store-password: password
+        keyStoreType: PKCS12
+        keyAlias: tomcat
+# ===================================================================
+# server:
+#    port: 8080
 
 # ===================================================================
 # JHipster specific properties
@@ -102,7 +102,7 @@ jhipster:
             key: 56f0dea10b9d7e2f447d87431b0c2918057f7c5d
     mail: # specific JHipster mail property, for standard properties see MailProperties
         from: CompanySharingExternal@localhost
-        base-url: http://127.0.0.1:8080
+        base-url: https://127.0.0.1:8443
     metrics: # DropWizard Metrics configuration, used by MetricsConfiguration
         jmx.enabled: true
         graphite: # Use the "graphite" Maven profile to have the Graphite dependencies

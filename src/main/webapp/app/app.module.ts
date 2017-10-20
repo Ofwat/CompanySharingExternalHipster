@@ -14,6 +14,7 @@ import { CompanySharingExternalEntityModule } from './entities/entity.module';
 import { customHttpProvider } from './blocks/interceptor/http.provider';
 import { PaginationConfig } from './blocks/config/uib-pagination.config';
 import {CookieComponent} from './layouts/cookie/cookie.component';
+import { MomentModule } from 'angular2-moment';
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 
 import {
@@ -36,7 +37,8 @@ import {
         CompanySharingExternalUserHomeModule,
         CompanySharingExternalAdminModule,
         CompanySharingExternalAccountModule,
-        CompanySharingExternalEntityModule
+        CompanySharingExternalEntityModule,
+        MomentModule
         // jhipster-needle-angular-add-module JHipster will add new module here
     ],
     declarations: [

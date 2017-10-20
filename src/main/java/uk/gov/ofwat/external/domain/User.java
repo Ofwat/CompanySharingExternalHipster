@@ -107,6 +107,9 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @JsonIgnore
     private Integer otpSentCount = 0;
 
+    @Column(name = "password_last_change_date")
+    private Instant passwordLastChangeDate = null;
+
     @JsonIgnore
     @ManyToMany
     @JoinTable(
@@ -157,6 +160,14 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     public void setRequireOtpValidation(Boolean requireOtpValidation) {
         this.requireOtpValidation = requireOtpValidation;
+    }
+
+    public Instant getPasswordLastChangeDate() {
+        return passwordLastChangeDate;
+    }
+
+    public void setPasswordLastChangeDate(Instant passwordLastChangeDate) {
+        this.passwordLastChangeDate = passwordLastChangeDate;
     }
 
     public Instant getOtpSentDate() {

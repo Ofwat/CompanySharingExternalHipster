@@ -2,11 +2,16 @@ import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import {ResponseWrapper} from '../../shared/model/response-wrapper.model';
+import {RegistrationRequest} from "../../shared/registration-request/registration-request.model";
 
 @Injectable()
 export class Register {
 
     constructor(private http: Http) {}
+
+    find(login: string): Observable<RegistrationRequest> {
+        return this.http.get(`api/account/request_details/${login}`).map((res: Response) => res.json());
+    }
 
     save(account: any): Observable<any> {
         return this.http.post('api/register', account);
@@ -25,6 +30,12 @@ export class Register {
         return this.http.post('api/account/request_account', account);
     }
 
+    /**
+     * This method takes the key form the url link sent to the user and gets the details of the registration request to populate
+     *  the form for the user to complete.
+     * @param {string} key
+     * @returns {Observable<ResponseWrapper>}
+     */
     requestAccountDetails(key: string): Observable<ResponseWrapper> {
         return this.http.post('api/account/request_details', key).map((res: Response) => this.convertResponse(res));
     }

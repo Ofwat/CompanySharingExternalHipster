@@ -14,6 +14,7 @@ import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.cache.JCacheManagerCustomizer;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.*;
+import uk.gov.ofwat.external.domain.message.NotifyMessageTemplate;
 
 @Configuration
 @EnableCaching
@@ -45,7 +46,7 @@ public class CacheConfiguration {
             cm.createCache(uk.gov.ofwat.external.domain.User.class.getName() + ".companies", jcacheConfiguration);
             cm.createCache(uk.gov.ofwat.external.domain.Company.class.getName(), jcacheConfiguration);
             cm.createCache(uk.gov.ofwat.external.domain.Company.class.getName() + ".users", jcacheConfiguration);
-            cm.createCache(uk.gov.ofwat.external.domain.SmsTemplate.class.getName(), jcacheConfiguration);
+            cm.createCache(NotifyMessageTemplate.class.getName(), jcacheConfiguration);
             cm.createCache(uk.gov.ofwat.external.domain.RegistrationRequest.class.getName(), jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };

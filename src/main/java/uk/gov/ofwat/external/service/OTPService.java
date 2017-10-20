@@ -6,10 +6,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import uk.gov.ofwat.external.domain.User;
-import uk.gov.ofwat.external.repository.SmsTemplateRepository;
+import uk.gov.ofwat.external.repository.NotifyMessageTemplateRepository;
 import uk.gov.ofwat.external.repository.UserRepository;
 
-import java.time.Instant;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -19,14 +18,14 @@ public class OTPService {
 
     private final Logger log = LoggerFactory.getLogger(OTPService.class);
 
-    private final SmsTemplateRepository smsTemplateRepository;
+    private final NotifyMessageTemplateRepository notifyMessageTemplateRepository;
 
     private final UserRepository userRepository;
 
     private final NotifyService notifyService;
 
-    public OTPService(SmsTemplateRepository smsTemplateRepository, UserRepository userRepository, NotifyService notifyService){
-        this.smsTemplateRepository = smsTemplateRepository;
+    public OTPService(NotifyMessageTemplateRepository notifyMessageTemplateRepository, UserRepository userRepository, NotifyService notifyService){
+        this.notifyMessageTemplateRepository = notifyMessageTemplateRepository;
         this.userRepository = userRepository;
         this.notifyService = notifyService;
     }
@@ -51,7 +50,7 @@ public class OTPService {
         // We'll use an OTP code for the time being but that may not be the best idea.
 
         // TODO refactor to pick up the default for a constant name of OTP_CODE (for example!)
-        smsTemplateRepository.findOneByName("OTP Code").map(smsTemplate -> {
+        notifyMessageTemplateRepository.findOneByName("OTP Code").map(smsTemplate -> {
             user.setEnabled(false);
             Random rnd = new Random();
             int n = 100000 + rnd.nextInt(900000);

@@ -1,20 +1,20 @@
 
-<div *ngIf="smsTemplate">
-    <h2><span>Sms Template</span> {{smsTemplate.id}}</h2>
+<div *ngIf="notifyMessageTemplate">
+    <h2><span>Sms Template</span> {{notifyMessageTemplate.id}}</h2>
     <hr>
     <jhi-alert-error></jhi-alert-error>
     <dl class="row-md jh-entity-details">
         <dt><span>Name</span></dt>
         <dd>
-            <span>{{smsTemplate.name}}</span>
+            <span>{{notifyMessageTemplate.name}}</span>
         </dd>
         <dt><span>Description</span></dt>
         <dd>
-            <span>{{smsTemplate.description}}</span>
+            <span>{{notifyMessageTemplate.description}}</span>
         </dd>
         <dt><span>Template Id</span></dt>
         <dd>
-            <span>{{smsTemplate.templateId}}</span>
+            <span>{{notifyMessageTemplate.templateId}}</span>
         </dd>
     </dl>
 
@@ -25,7 +25,7 @@
     </button>
 
     <button type="button"
-            [routerLink]="['/', { outlets: { popup: 'sms-template/'+ smsTemplate.id + '/edit'} }]"
+            [routerLink]="['/', { outlets: { popup: 'sms-template/'+ notifyMessageTemplate.id + '/edit'} }]"
             replaceUrl="true"
             class="btn btn-primary">
         <span class="fa fa-pencil"></span>&nbsp;<span> Edit</span>

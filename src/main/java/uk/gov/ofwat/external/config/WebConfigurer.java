@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.embedded.*;
+import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
 import org.springframework.boot.context.embedded.undertow.UndertowEmbeddedServletContainerFactory;
 import io.undertow.UndertowOptions;
 import org.springframework.boot.web.servlet.ServletContextInitializer;
@@ -25,6 +26,7 @@ import org.springframework.web.filter.CorsFilter;
 import java.io.File;
 import java.nio.file.Paths;
 import java.util.*;
+import javax.naming.Context;
 import javax.servlet.*;
 
 /**
@@ -183,4 +185,5 @@ public class WebConfigurer implements ServletContextInitializer, EmbeddedServlet
     public void setMetricRegistry(MetricRegistry metricRegistry) {
         this.metricRegistry = metricRegistry;
     }
+
 }

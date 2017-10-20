@@ -73,6 +73,7 @@ export class PendingInvitesComponent implements OnInit, OnDestroy {
     approveAccount(user: User) {
         this.userService.approveInvite( user.login ).subscribe((res: ResponseWrapper) => {
             console.log( 'Approved account' );
+            this.loadAll();
         }, ( res: ResponseWrapper ) => this.approveAccountError( res.json ));
         this.showApproveAccount = false;
     }
@@ -82,13 +83,24 @@ export class PendingInvitesComponent implements OnInit, OnDestroy {
         this.selectedRegistrationRequest = registrationRequest;
     }
 
-    approveAccountError(data: any) {
-        console.log( 'Approve account error!' );
+    deleteAccount(registrationRequest: RegistrationRequest){
+        // Delete the registration request.
+        this.userService.deleteInvite(registrationRequest.login).subscribe(
+            (res: ResponseWrapper) => {
+                console.log( 'Deleted pending account' );
+                this.selectedRegistrationRequest = null;
+                this.showDeleteAccount = false;
+            }, ( res: ResponseWrapper ) => this.deleteAccountError( res.json ));
+    }
+
+    deleteAccountError(data: any){
+        console.log( 'Delete pending account error!' );
         console.log( data );
     }
 
-    deleteAccount(user: User) {
-
+    approveAccountError(data: any) {
+        console.log( 'Approve account error!' );
+        console.log( data );
     }
 
 /*    setActive(registrationRequest, isActivated) {

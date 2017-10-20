@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
-
 import { User, UserService } from '../../shared';
+import { Principal } from '../../shared/auth/principal.service';
 
 @Component({
     selector: 'jhi-ofwat-user-mgmt-detail',
@@ -15,7 +15,8 @@ export class OfwatUserMgmtDetailComponent implements OnInit, OnDestroy {
 
     constructor(
         private userService: UserService,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private principal: Principal,
     ) {
     }
 
@@ -29,6 +30,11 @@ export class OfwatUserMgmtDetailComponent implements OnInit, OnDestroy {
         this.userService.find(login).subscribe((user) => {
             this.user = user;
         });
+    }
+
+    isOfwatEmployee() {
+        // TODO This should check for the correct type of Role TBA!
+        return this.principal.hasAnyAuthorityDirect(['ROLE_ADMIN']);
     }
 
     ngOnDestroy() {

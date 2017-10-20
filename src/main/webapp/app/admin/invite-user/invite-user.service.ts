@@ -8,6 +8,6 @@ export class InviteUser {
     constructor(private http: Http) {}
 
     save(account: any): Observable<any> {
-        return this.http.post('api/register', account);
+        return this.http.post('api/invite', account);
     }
 }

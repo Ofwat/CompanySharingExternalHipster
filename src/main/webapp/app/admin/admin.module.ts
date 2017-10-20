@@ -8,6 +8,7 @@ import { InviteUserComponent } from './invite-user/invite-user.component';
 import { InviteUser} from './invite-user/invite-user.service';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UserProfileService } from './user-profile/user-profile.service';
+import { MomentModule } from 'angular2-moment';
 /* jhipster-needle-add-admin-module-import - JHipster will add admin modules imports here */
 
 import {
@@ -42,6 +43,7 @@ import {
 @NgModule({
     imports: [
         CompanySharingExternalSharedModule,
+        MomentModule,
         RouterModule.forRoot(adminState, { useHash: true }),
         /* jhipster-needle-add-admin-module - JHipster will add admin modules here */
     ],

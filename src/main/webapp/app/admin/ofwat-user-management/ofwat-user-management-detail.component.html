@@ -1,42 +1,215 @@
 <div *ngIf="user">
-    <h2>
-        <span>Ofwat User</span> [<b>{{user.login}}</b>]
-    </h2>
-    <dl class="row-md jh-entity-details">
-        <dt><span>Login</span></dt>
-        <dd>
-            <span>{{user.login}}</span>
-            <span class="badge badge-danger" *ngIf="!user.activated"
-                 >Deactivated</span>
-            <span class="badge badge-success" *ngIf="user.activated"
-                 >Activated</span>
-        </dd>
-        <dt><span>First Name</span></dt>
-        <dd>{{user.firstName}}</dd>
-        <dt><span>Last Name</span></dt>
-        <dd>{{user.lastName}}</dd>
-        <dt><span>Email</span></dt>
-        <dd>{{user.email}}</dd>
-        <dt><span>Created By</span></dt>
-        <dd>{{user.createdBy}}</dd>
-        <dt><span>Created Date</span></dt>
-        <dd>{{user.createdDate | date:'dd/MM/yy HH:mm' }}</dd>
-        <dt><span>Last Modified By</span></dt>
-        <dd>{{user.lastModifiedBy}}</dd>
-        <dt><span>Last Modified Date</span></dt>
-        <dd>{{user.lastModifiedDate | date:'dd/MM/yy HH:mm'}}</dd>
-        <dt><span>Profiles</span></dt>
-        <dd>
-            <ul class="list-unstyled">
-                <li *ngFor="let authority of user.authorities">
-                    <span class="badge badge-info">{{authority}}</span>
-                </li>
-            </ul>
-        </dd>
-    </dl>
+<!--
+    <h1 class="heading-large"><span *ngIf="">Your profile</span><span *ngIf="">{{user.name}}'s profile</span></h1>
+-->
+    <h1 class="heading-large">
+    <span>User</span> [<b>{{user.login}}</b>]
+    </h1>
+    <table class="table table-font-xsmall">
+        <caption class="heading-medium table-heading visuallyhidden">
+            Account settings
+        </caption>
+        <thead class="table-field-headings">
+        <tr>
+            <th scope="col" class="table-field-heading-first">
+                <span class="visuallyhidden">Setting</span>
+            </th>
+            <th scope="col" class="table-field-heading">
+                <span class="visuallyhidden">Value</span>
+            </th>
+            <th scope="col" class="table-field-heading">
+                <span class="visuallyhidden">Link to change</span>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="table-row">
+            <td class="table-field-center-aligned ">
+                <div class="">
+                    Login
+                </div>
+            </td>
+            <td class="table-field-center-aligned ">
+                <div class="">
+                    {{user.login}}
+                    <span class="badge badge-danger" *ngIf="!user.activated"
+                    >Deactivated</span>
+                    <span class="badge badge-success" *ngIf="user.activated"
+                    >Activated</span>
+                </div>
+            </td>
+            <td class="table-field-right-aligned ">
+                <div class="">
+                    <a href="/user-profile/name">Change</a>
+                </div>
+            </td>
+        </tr>
+        <tr class="table-row">
+            <td class="table-field-center-aligned ">
+                <div class="">
+                    Email address
+                </div>
+            </td>
+            <td class="table-field-center-aligned ">
+                <div class="">
+                    {{user.email}}
+                </div>
+            </td>
+            <td class="table-field-right-aligned ">
+                <div class="">
+                    <a href="/user-profile/email">Change</a>
+                </div>
+            </td>
+        </tr>
+        <tr class="table-row">
+            <td class="table-field-center-aligned ">
+                <div class="">
+                    Mobile number
+                </div>
+            </td>
+            <td class="table-field-center-aligned ">
+                <div class="">
+                    {{user.mobileTelephoneNumber}}
+                </div>
+            </td>
+            <td class="table-field-right-aligned ">
+                <div class="">
+                    <a href="/user-profile/mobile-number">Change</a>
+                </div>
+            </td>
+        </tr>
+        <tr class="table-row">
+            <td class="table-field-center-aligned ">
+                <div class="">
+                    Password
+                </div>
+            </td>
+            <td class="table-field-center-aligned ">
+                <div class="" *ngIf="user.passwordLastChangeDate">
+                    Last changed {{user.passwordLastChangeDate | amTimeAgo}}
+                </div>
+            </td>
+            <td class="table-field-right-aligned ">
+                <div class="">
+                    <a href="/user-profile/password">Change</a>
+                </div>
+            </td>
+        </tr>
+        <tr class="table-row">
+            <td class="table-field-center-aligned ">
+                <div class="">
+                    Companies
+                </div>
+            </td>
+            <td class="table-field-center-aligned ">
+                <div class="">
+                    <ul class="list-unstyled">
+                        <li *ngFor="let company of user.companies">
+                            <span class="badge badge-info">{{company}}</span>
+                        </li>
+                    </ul>
+                </div>
+            </td>
+            <td class="table-field-right-aligned ">
+                <div class="">
+                    <a href="/user-profile/password">Change</a>
+                </div>
+            </td>
+        </tr>
+        <tr class="table-row">
+            <td class="table-field-center-aligned ">
+                <div class="">
+                    Roles
+                </div>
+            </td>
+            <td class="table-field-center-aligned ">
+                <div class="">
+                    <ul class="list-unstyled">
+                        <li *ngFor="let authority of user.authorities">
+                            <span class="badge badge-info">{{authority}}</span>
+                        </li>
+                    </ul>
+                </div>
+            </td>
+            <td class="table-field-right-aligned ">
+                <div class="">
+                    <a href="/user-profile/password">Change</a>
+                </div>
+            </td>
+        </tr>
+        <tr class="table-row">
+            <td class="table-field-center-aligned ">
+                <div class="">
+                    Created by
+                </div>
+            </td>
+            <td class="table-field-center-aligned ">
+                <div class="">
+                    {{user.createdBy}}
+                </div>
+            </td>
+            <td class="table-field-right-aligned ">
+                <div class="">
+
+                </div>
+            </td>
+        </tr>
+        <tr class="table-row">
+            <td class="table-field-center-aligned ">
+                <div class="">
+                    Created date
+                </div>
+            </td>
+            <td class="table-field-center-aligned ">
+                <div class="">
+                    {{user.createdDate | date:'dd/MM/yy HH:mm'}}
+                </div>
+            </td>
+            <td class="table-field-right-aligned ">
+                <div class="">
+
+                </div>
+            </td>
+        </tr>
+        <tr class="table-row">
+            <td class="table-field-center-aligned ">
+                <div class="">
+                    Last modified by
+                </div>
+            </td>
+            <td class="table-field-center-aligned ">
+                <div class="">
+                    {{user.lastModifiedBy}}
+                </div>
+            </td>
+            <td class="table-field-right-aligned ">
+                <div class="">
+
+                </div>
+            </td>
+        </tr>
+        <tr class="table-row">
+            <td class="table-field-center-aligned ">
+                <div class="">
+                    Last modified date
+                </div>
+            </td>
+            <td class="table-field-center-aligned ">
+                <div class="">
+                    {{user.lastModifiedDate | date:'dd/MM/yy HH:mm'}}
+                </div>
+            </td>
+            <td class="table-field-right-aligned ">
+                <div class="">
+
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
     <button type="submit"
             routerLink="/ofwat-user-management"
-            class="btn btn-info">
-        <span class="fa fa-arrow-left"></span>&nbsp;<span> Back</span>
+            class="button button-secondary">
+        <span>Back to user management</span>
     </button>
 </div>

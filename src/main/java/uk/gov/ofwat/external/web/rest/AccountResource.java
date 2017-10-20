@@ -5,6 +5,8 @@ import org.springframework.security.access.annotation.Secured;
 import uk.gov.ofwat.external.domain.PersistentToken;
 import uk.gov.ofwat.external.domain.RegistrationRequest;
 import uk.gov.ofwat.external.domain.User;
+import uk.gov.ofwat.external.domain.message.NotifyMessageTemplate;
+import uk.gov.ofwat.external.repository.NotifyMessageTemplateRepository;
 import uk.gov.ofwat.external.repository.PersistentTokenRepository;
 import uk.gov.ofwat.external.repository.UserRepository;
 import uk.gov.ofwat.external.security.AuthoritiesConstants;
@@ -62,7 +64,7 @@ public class AccountResource {
     private static final String REGISTRATION_KEY_ERROR_MESSAGE = "invalid key";
 
     public AccountResource(UserRepository userRepository, UserService userService,
-            MailService mailService, PersistentTokenRepository persistentTokenRepository, CompanyService companyService, NotifyService notifyService, OTPService otpService, CaptchaService captchaService) {
+                           MailService mailService, PersistentTokenRepository persistentTokenRepository, CompanyService companyService, NotifyService notifyService, OTPService otpService, CaptchaService captchaService, NotifyMessageTemplateRepository notifyMessageTemplateRepository) {
 
         this.userRepository = userRepository;
         this.userService = userService;
@@ -104,19 +106,21 @@ public class AccountResource {
 
         return userRepository.findOneByLogin(managedUserVM.getLogin().toLowerCase())
             .map(user -> new ResponseEntity<>("login already in use", textPlainHeaders, HttpStatus.BAD_REQUEST))
-            .orElseGet(() -> userRepository.findOneByEmail(managedUserVM.getEmail())
-                .map(user -> new ResponseEntity<>("email address already in use", textPlainHeaders, HttpStatus.BAD_REQUEST))
-                .orElseGet(() -> {
-                    User user = userService
-                        .createUser(managedUserVM.getLogin(), managedUserVM.getPassword(),
-                            managedUserVM.getFirstName(), managedUserVM.getLastName(),
-                            managedUserVM.getEmail().toLowerCase(), managedUserVM.getImageUrl(),
-                            managedUserVM.getLangKey(), managedUserVM.getMobileTelephoneNumber());
-                    companyService.addUserToCompany(managedUserVM.getCompanyId(), user);
-                    mailService.sendActivationEmail(user);
-                    otpService.generateOtpCode(user);
-                    return new ResponseEntity<>(HttpStatus.CREATED);
-                })
+            .orElseGet(() -> {
+                return userRepository.findOneByEmail(managedUserVM.getEmail())
+                    .map(user -> new ResponseEntity<>("email address already in use", textPlainHeaders, HttpStatus.BAD_REQUEST))
+                    .orElseGet(() -> {
+                        User user = userService
+                            .createUser(managedUserVM.getLogin(), managedUserVM.getPassword(),
+                                managedUserVM.getFirstName(), managedUserVM.getLastName(),
+                                managedUserVM.getEmail().toLowerCase(), managedUserVM.getImageUrl(),
+                                managedUserVM.getLangKey(), managedUserVM.getMobileTelephoneNumber(), registrationRequest.get());
+                        companyService.addUserToCompany(managedUserVM.getCompanyId(), user);
+                        //mailService.sendActivationEmail(user);
+                        otpService.generateOtpCode(user);
+                        return new ResponseEntity<>(HttpStatus.CREATED);
+                    });
+            }
         );
     }
 
@@ -401,13 +405,21 @@ public class AccountResource {
     }
 
     @PostMapping(path = "/account/request_details")
-    public ResponseEntity getRegistrationRequestDetails(@RequestBody String key){
+    public ResponseEntity getValidateKeyAndReturnRegistrationRequestDetails(@RequestBody String key){
         HttpHeaders textPlainHeaders = new HttpHeaders();
         return userService.validateRegistrationKey(key)
             .map(registrationRequest -> new ResponseEntity<RegistrationRequest>(registrationRequest, textPlainHeaders, HttpStatus.OK))
             .orElseGet(() -> {
                 return new ResponseEntity("Not found or expired", textPlainHeaders, HttpStatus.BAD_REQUEST);
             });
+    }
+
+    @GetMapping(path = "/account/request_details")
+    public ResponseEntity getRegistrationRequestDetails(@RequestParam String login){
+        HttpHeaders textPlainHeaders = new HttpHeaders();
+        return userService.getRegistrationRequest(login).map(registrationRequest -> new ResponseEntity<RegistrationRequest>(registrationRequest, textPlainHeaders, HttpStatus.OK)).orElseGet(() -> {
+            return new ResponseEntity("Not found or expired", textPlainHeaders, HttpStatus.BAD_REQUEST);
+        });
     }
 
 }

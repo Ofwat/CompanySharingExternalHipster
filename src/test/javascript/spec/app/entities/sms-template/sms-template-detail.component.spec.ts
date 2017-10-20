@@ -12,7 +12,7 @@ import { SmsTemplate } from '../../../../../../main/webapp/app/entities/sms-temp
 
 describe('Component Tests', () => {
 
-    describe('SmsTemplate Management Detail Component', () => {
+    describe('NotifyMessageTemplate Management Detail Component', () => {
         let comp: SmsTemplateDetailComponent;
         let fixture: ComponentFixture<SmsTemplateDetailComponent>;
         let service: SmsTemplateService;

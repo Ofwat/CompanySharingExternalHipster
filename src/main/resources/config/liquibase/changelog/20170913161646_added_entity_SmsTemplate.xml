@@ -15,7 +15,7 @@
     <property name="floatType" value="float" dbms="mysql, oracle, mssql"/>
 
     <!--
-        Added the entity SmsTemplate.
+        Added the entity NotifyMessageTemplate.
     -->
     <changeSet id="20170913161646-1" author="jhipster">
         <createTable tableName="sms_template">
@@ -36,6 +36,6 @@
 
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
-        
+
     </changeSet>
 </databaseChangeLog>

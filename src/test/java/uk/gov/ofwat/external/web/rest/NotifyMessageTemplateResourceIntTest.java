@@ -2,8 +2,8 @@ package uk.gov.ofwat.external.web.rest;
 
 import uk.gov.ofwat.external.CompanySharingExternalApp;
 
-import uk.gov.ofwat.external.domain.SmsTemplate;
-import uk.gov.ofwat.external.repository.SmsTemplateRepository;
+import uk.gov.ofwat.external.domain.message.NotifyMessageTemplate;
+import uk.gov.ofwat.external.repository.NotifyMessageTemplateRepository;
 import uk.gov.ofwat.external.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -35,7 +35,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = CompanySharingExternalApp.class)
-public class SmsTemplateResourceIntTest {
+public class NotifyMessageTemplateResourceIntTest {
 
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
@@ -47,7 +47,7 @@ public class SmsTemplateResourceIntTest {
     private static final String UPDATED_TEMPLATE_ID = "BBBBBBBBBB";
 
     @Autowired
-    private SmsTemplateRepository smsTemplateRepository;
+    private NotifyMessageTemplateRepository notifyMessageTemplateRepository;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -63,12 +63,12 @@ public class SmsTemplateResourceIntTest {
 
     private MockMvc restSmsTemplateMockMvc;
 
-    private SmsTemplate smsTemplate;
+    private NotifyMessageTemplate notifyMessageTemplate;
 
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        SmsTemplateResource smsTemplateResource = new SmsTemplateResource(smsTemplateRepository);
+        SmsTemplateResource smsTemplateResource = new SmsTemplateResource(notifyMessageTemplateRepository);
         this.restSmsTemplateMockMvc = MockMvcBuilders.standaloneSetup(smsTemplateResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -81,123 +81,123 @@ public class SmsTemplateResourceIntTest {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static SmsTemplate createEntity(EntityManager em) {
-        SmsTemplate smsTemplate = new SmsTemplate()
+    public static NotifyMessageTemplate createEntity(EntityManager em) {
+        NotifyMessageTemplate notifyMessageTemplate = new NotifyMessageTemplate()
             .name(DEFAULT_NAME)
             .description(DEFAULT_DESCRIPTION)
             .templateId(DEFAULT_TEMPLATE_ID);
-        return smsTemplate;
+        return notifyMessageTemplate;
     }
 
     @Before
     public void initTest() {
-        smsTemplate = createEntity(em);
+        notifyMessageTemplate = createEntity(em);
     }
 
     @Test
     @Transactional
     public void createSmsTemplate() throws Exception {
-        int databaseSizeBeforeCreate = smsTemplateRepository.findAll().size();
+        int databaseSizeBeforeCreate = notifyMessageTemplateRepository.findAll().size();
 
-        // Create the SmsTemplate
+        // Create the NotifyMessageTemplate
         restSmsTemplateMockMvc.perform(post("/api/sms-templates")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(smsTemplate)))
+            .content(TestUtil.convertObjectToJsonBytes(notifyMessageTemplate)))
             .andExpect(status().isCreated());
 
-        // Validate the SmsTemplate in the database
-        List<SmsTemplate> smsTemplateList = smsTemplateRepository.findAll();
-        assertThat(smsTemplateList).hasSize(databaseSizeBeforeCreate + 1);
-        SmsTemplate testSmsTemplate = smsTemplateList.get(smsTemplateList.size() - 1);
-        assertThat(testSmsTemplate.getName()).isEqualTo(DEFAULT_NAME);
-        assertThat(testSmsTemplate.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
-        assertThat(testSmsTemplate.getTemplateId()).isEqualTo(DEFAULT_TEMPLATE_ID);
+        // Validate the NotifyMessageTemplate in the database
+        List<NotifyMessageTemplate> notifyMessageTemplateList = notifyMessageTemplateRepository.findAll();
+        assertThat(notifyMessageTemplateList).hasSize(databaseSizeBeforeCreate + 1);
+        NotifyMessageTemplate testNotifyMessageTemplate = notifyMessageTemplateList.get(notifyMessageTemplateList.size() - 1);
+        assertThat(testNotifyMessageTemplate.getName()).isEqualTo(DEFAULT_NAME);
+        assertThat(testNotifyMessageTemplate.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
+        assertThat(testNotifyMessageTemplate.getTemplateId()).isEqualTo(DEFAULT_TEMPLATE_ID);
     }
 
     @Test
     @Transactional
     public void createSmsTemplateWithExistingId() throws Exception {
-        int databaseSizeBeforeCreate = smsTemplateRepository.findAll().size();
+        int databaseSizeBeforeCreate = notifyMessageTemplateRepository.findAll().size();
 
-        // Create the SmsTemplate with an existing ID
-        smsTemplate.setId(1L);
+        // Create the NotifyMessageTemplate with an existing ID
+        notifyMessageTemplate.setId(1L);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restSmsTemplateMockMvc.perform(post("/api/sms-templates")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(smsTemplate)))
+            .content(TestUtil.convertObjectToJsonBytes(notifyMessageTemplate)))
             .andExpect(status().isBadRequest());
 
         // Validate the Alice in the database
-        List<SmsTemplate> smsTemplateList = smsTemplateRepository.findAll();
-        assertThat(smsTemplateList).hasSize(databaseSizeBeforeCreate);
+        List<NotifyMessageTemplate> notifyMessageTemplateList = notifyMessageTemplateRepository.findAll();
+        assertThat(notifyMessageTemplateList).hasSize(databaseSizeBeforeCreate);
     }
 
     @Test
     @Transactional
     public void checkNameIsRequired() throws Exception {
-        int databaseSizeBeforeTest = smsTemplateRepository.findAll().size();
+        int databaseSizeBeforeTest = notifyMessageTemplateRepository.findAll().size();
         // set the field null
-        smsTemplate.setName(null);
+        notifyMessageTemplate.setName(null);
 
-        // Create the SmsTemplate, which fails.
+        // Create the NotifyMessageTemplate, which fails.
 
         restSmsTemplateMockMvc.perform(post("/api/sms-templates")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(smsTemplate)))
+            .content(TestUtil.convertObjectToJsonBytes(notifyMessageTemplate)))
             .andExpect(status().isBadRequest());
 
-        List<SmsTemplate> smsTemplateList = smsTemplateRepository.findAll();
-        assertThat(smsTemplateList).hasSize(databaseSizeBeforeTest);
+        List<NotifyMessageTemplate> notifyMessageTemplateList = notifyMessageTemplateRepository.findAll();
+        assertThat(notifyMessageTemplateList).hasSize(databaseSizeBeforeTest);
     }
 
     @Test
     @Transactional
     public void checkDescriptionIsRequired() throws Exception {
-        int databaseSizeBeforeTest = smsTemplateRepository.findAll().size();
+        int databaseSizeBeforeTest = notifyMessageTemplateRepository.findAll().size();
         // set the field null
-        smsTemplate.setDescription(null);
+        notifyMessageTemplate.setDescription(null);
 
-        // Create the SmsTemplate, which fails.
+        // Create the NotifyMessageTemplate, which fails.
 
         restSmsTemplateMockMvc.perform(post("/api/sms-templates")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(smsTemplate)))
+            .content(TestUtil.convertObjectToJsonBytes(notifyMessageTemplate)))
             .andExpect(status().isBadRequest());
 
-        List<SmsTemplate> smsTemplateList = smsTemplateRepository.findAll();
-        assertThat(smsTemplateList).hasSize(databaseSizeBeforeTest);
+        List<NotifyMessageTemplate> notifyMessageTemplateList = notifyMessageTemplateRepository.findAll();
+        assertThat(notifyMessageTemplateList).hasSize(databaseSizeBeforeTest);
     }
 
     @Test
     @Transactional
     public void checkTemplateIdIsRequired() throws Exception {
-        int databaseSizeBeforeTest = smsTemplateRepository.findAll().size();
+        int databaseSizeBeforeTest = notifyMessageTemplateRepository.findAll().size();
         // set the field null
-        smsTemplate.setTemplateId(null);
+        notifyMessageTemplate.setTemplateId(null);
 
-        // Create the SmsTemplate, which fails.
+        // Create the NotifyMessageTemplate, which fails.
 
         restSmsTemplateMockMvc.perform(post("/api/sms-templates")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(smsTemplate)))
+            .content(TestUtil.convertObjectToJsonBytes(notifyMessageTemplate)))
             .andExpect(status().isBadRequest());
 
-        List<SmsTemplate> smsTemplateList = smsTemplateRepository.findAll();
-        assertThat(smsTemplateList).hasSize(databaseSizeBeforeTest);
+        List<NotifyMessageTemplate> notifyMessageTemplateList = notifyMessageTemplateRepository.findAll();
+        assertThat(notifyMessageTemplateList).hasSize(databaseSizeBeforeTest);
     }
 
     @Test
     @Transactional
     public void getAllSmsTemplates() throws Exception {
         // Initialize the database
-        smsTemplateRepository.saveAndFlush(smsTemplate);
+        notifyMessageTemplateRepository.saveAndFlush(notifyMessageTemplate);
 
         // Get all the smsTemplateList
         restSmsTemplateMockMvc.perform(get("/api/sms-templates?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(smsTemplate.getId().intValue())))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(notifyMessageTemplate.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
             .andExpect(jsonPath("$.[*].templateId").value(hasItem(DEFAULT_TEMPLATE_ID.toString())));
@@ -207,13 +207,13 @@ public class SmsTemplateResourceIntTest {
     @Transactional
     public void getSmsTemplate() throws Exception {
         // Initialize the database
-        smsTemplateRepository.saveAndFlush(smsTemplate);
+        notifyMessageTemplateRepository.saveAndFlush(notifyMessageTemplate);
 
-        // Get the smsTemplate
-        restSmsTemplateMockMvc.perform(get("/api/sms-templates/{id}", smsTemplate.getId()))
+        // Get the notifyMessageTemplate
+        restSmsTemplateMockMvc.perform(get("/api/sms-templates/{id}", notifyMessageTemplate.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.id").value(smsTemplate.getId().intValue()))
+            .andExpect(jsonPath("$.id").value(notifyMessageTemplate.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()))
             .andExpect(jsonPath("$.templateId").value(DEFAULT_TEMPLATE_ID.toString()));
@@ -222,7 +222,7 @@ public class SmsTemplateResourceIntTest {
     @Test
     @Transactional
     public void getNonExistingSmsTemplate() throws Exception {
-        // Get the smsTemplate
+        // Get the notifyMessageTemplate
         restSmsTemplateMockMvc.perform(get("/api/sms-templates/{id}", Long.MAX_VALUE))
             .andExpect(status().isNotFound());
     }
@@ -231,77 +231,77 @@ public class SmsTemplateResourceIntTest {
     @Transactional
     public void updateSmsTemplate() throws Exception {
         // Initialize the database
-        smsTemplateRepository.saveAndFlush(smsTemplate);
-        int databaseSizeBeforeUpdate = smsTemplateRepository.findAll().size();
+        notifyMessageTemplateRepository.saveAndFlush(notifyMessageTemplate);
+        int databaseSizeBeforeUpdate = notifyMessageTemplateRepository.findAll().size();
 
-        // Update the smsTemplate
-        SmsTemplate updatedSmsTemplate = smsTemplateRepository.findOne(smsTemplate.getId());
-        updatedSmsTemplate
+        // Update the notifyMessageTemplate
+        NotifyMessageTemplate updatedNotifyMessageTemplate = notifyMessageTemplateRepository.findOne(notifyMessageTemplate.getId());
+        updatedNotifyMessageTemplate
             .name(UPDATED_NAME)
             .description(UPDATED_DESCRIPTION)
             .templateId(UPDATED_TEMPLATE_ID);
 
         restSmsTemplateMockMvc.perform(put("/api/sms-templates")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(updatedSmsTemplate)))
+            .content(TestUtil.convertObjectToJsonBytes(updatedNotifyMessageTemplate)))
             .andExpect(status().isOk());
 
-        // Validate the SmsTemplate in the database
-        List<SmsTemplate> smsTemplateList = smsTemplateRepository.findAll();
-        assertThat(smsTemplateList).hasSize(databaseSizeBeforeUpdate);
-        SmsTemplate testSmsTemplate = smsTemplateList.get(smsTemplateList.size() - 1);
-        assertThat(testSmsTemplate.getName()).isEqualTo(UPDATED_NAME);
-        assertThat(testSmsTemplate.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
-        assertThat(testSmsTemplate.getTemplateId()).isEqualTo(UPDATED_TEMPLATE_ID);
+        // Validate the NotifyMessageTemplate in the database
+        List<NotifyMessageTemplate> notifyMessageTemplateList = notifyMessageTemplateRepository.findAll();
+        assertThat(notifyMessageTemplateList).hasSize(databaseSizeBeforeUpdate);
+        NotifyMessageTemplate testNotifyMessageTemplate = notifyMessageTemplateList.get(notifyMessageTemplateList.size() - 1);
+        assertThat(testNotifyMessageTemplate.getName()).isEqualTo(UPDATED_NAME);
+        assertThat(testNotifyMessageTemplate.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
+        assertThat(testNotifyMessageTemplate.getTemplateId()).isEqualTo(UPDATED_TEMPLATE_ID);
     }
 
     @Test
     @Transactional
     public void updateNonExistingSmsTemplate() throws Exception {
-        int databaseSizeBeforeUpdate = smsTemplateRepository.findAll().size();
+        int databaseSizeBeforeUpdate = notifyMessageTemplateRepository.findAll().size();
 
-        // Create the SmsTemplate
+        // Create the NotifyMessageTemplate
 
         // If the entity doesn't have an ID, it will be created instead of just being updated
         restSmsTemplateMockMvc.perform(put("/api/sms-templates")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(smsTemplate)))
+            .content(TestUtil.convertObjectToJsonBytes(notifyMessageTemplate)))
             .andExpect(status().isCreated());
 
-        // Validate the SmsTemplate in the database
-        List<SmsTemplate> smsTemplateList = smsTemplateRepository.findAll();
-        assertThat(smsTemplateList).hasSize(databaseSizeBeforeUpdate + 1);
+        // Validate the NotifyMessageTemplate in the database
+        List<NotifyMessageTemplate> notifyMessageTemplateList = notifyMessageTemplateRepository.findAll();
+        assertThat(notifyMessageTemplateList).hasSize(databaseSizeBeforeUpdate + 1);
     }
 
     @Test
     @Transactional
     public void deleteSmsTemplate() throws Exception {
         // Initialize the database
-        smsTemplateRepository.saveAndFlush(smsTemplate);
-        int databaseSizeBeforeDelete = smsTemplateRepository.findAll().size();
+        notifyMessageTemplateRepository.saveAndFlush(notifyMessageTemplate);
+        int databaseSizeBeforeDelete = notifyMessageTemplateRepository.findAll().size();
 
-        // Get the smsTemplate
-        restSmsTemplateMockMvc.perform(delete("/api/sms-templates/{id}", smsTemplate.getId())
+        // Get the notifyMessageTemplate
+        restSmsTemplateMockMvc.perform(delete("/api/sms-templates/{id}", notifyMessageTemplate.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
 
         // Validate the database is empty
-        List<SmsTemplate> smsTemplateList = smsTemplateRepository.findAll();
-        assertThat(smsTemplateList).hasSize(databaseSizeBeforeDelete - 1);
+        List<NotifyMessageTemplate> notifyMessageTemplateList = notifyMessageTemplateRepository.findAll();
+        assertThat(notifyMessageTemplateList).hasSize(databaseSizeBeforeDelete - 1);
     }
 
     @Test
     @Transactional
     public void equalsVerifier() throws Exception {
-        TestUtil.equalsVerifier(SmsTemplate.class);
-        SmsTemplate smsTemplate1 = new SmsTemplate();
-        smsTemplate1.setId(1L);
-        SmsTemplate smsTemplate2 = new SmsTemplate();
-        smsTemplate2.setId(smsTemplate1.getId());
-        assertThat(smsTemplate1).isEqualTo(smsTemplate2);
-        smsTemplate2.setId(2L);
-        assertThat(smsTemplate1).isNotEqualTo(smsTemplate2);
-        smsTemplate1.setId(null);
-        assertThat(smsTemplate1).isNotEqualTo(smsTemplate2);
+        TestUtil.equalsVerifier(NotifyMessageTemplate.class);
+        NotifyMessageTemplate notifyMessageTemplate1 = new NotifyMessageTemplate();
+        notifyMessageTemplate1.setId(1L);
+        NotifyMessageTemplate notifyMessageTemplate2 = new NotifyMessageTemplate();
+        notifyMessageTemplate2.setId(notifyMessageTemplate1.getId());
+        assertThat(notifyMessageTemplate1).isEqualTo(notifyMessageTemplate2);
+        notifyMessageTemplate2.setId(2L);
+        assertThat(notifyMessageTemplate1).isNotEqualTo(notifyMessageTemplate2);
+        notifyMessageTemplate1.setId(null);
+        assertThat(notifyMessageTemplate1).isNotEqualTo(notifyMessageTemplate2);
     }
 }

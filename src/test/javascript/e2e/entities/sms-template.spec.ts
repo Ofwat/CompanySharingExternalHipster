@@ -1,6 +1,6 @@
 import { browser, element, by, $ } from 'protractor';
 
-describe('SmsTemplate e2e test', () => {
+describe('NotifyMessageTemplate e2e test', () => {
 
     const username = element(by.id('username'));
     const password = element(by.id('password'));
@@ -31,7 +31,7 @@ describe('SmsTemplate e2e test', () => {
         });
     });
 
-    it('should load create SmsTemplate dialog', function () {
+    it('should load create NotifyMessageTemplate dialog', function () {
         element(by.css('button.create-sms-template')).click().then(() => {
             const expectVal = /Create or edit a Sms Template/;
             element.all(by.css('h4.modal-title')).first().getText().then((value) => {

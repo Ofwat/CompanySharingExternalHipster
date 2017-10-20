@@ -1,4 +1,4 @@
-package uk.gov.ofwat.external.domain;
+package uk.gov.ofwat.external.domain.message;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -9,12 +9,12 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * A SmsTemplate.
+ * A NotifyMessageTemplate.
  */
 @Entity
-@Table(name = "sms_template")
+@Table(name = "notify_message_template")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class SmsTemplate implements Serializable {
+public class NotifyMessageTemplate implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -34,6 +34,10 @@ public class SmsTemplate implements Serializable {
     @Column(name = "template_id", nullable = false)
     private String templateId;
 
+    @NotNull
+    @Column(name = "type", nullable = false)
+    private String type;
+
     public Long getId() {
         return id;
     }
@@ -46,7 +50,7 @@ public class SmsTemplate implements Serializable {
         return name;
     }
 
-    public SmsTemplate name(String name) {
+    public NotifyMessageTemplate name(String name) {
         this.name = name;
         return this;
     }
@@ -55,11 +59,19 @@ public class SmsTemplate implements Serializable {
         this.name = name;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public String getDescription() {
         return description;
     }
 
-    public SmsTemplate description(String description) {
+    public NotifyMessageTemplate description(String description) {
         this.description = description;
         return this;
     }
@@ -72,7 +84,7 @@ public class SmsTemplate implements Serializable {
         return templateId;
     }
 
-    public SmsTemplate templateId(String templateId) {
+    public NotifyMessageTemplate templateId(String templateId) {
         this.templateId = templateId;
         return this;
     }
@@ -89,11 +101,11 @@ public class SmsTemplate implements Serializable {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        SmsTemplate smsTemplate = (SmsTemplate) o;
-        if (smsTemplate.getId() == null || getId() == null) {
+        NotifyMessageTemplate notifyMessageTemplate = (NotifyMessageTemplate) o;
+        if (notifyMessageTemplate.getId() == null || getId() == null) {
             return false;
         }
-        return Objects.equals(getId(), smsTemplate.getId());
+        return Objects.equals(getId(), notifyMessageTemplate.getId());
     }
 
     @Override
@@ -103,7 +115,7 @@ public class SmsTemplate implements Serializable {
 
     @Override
     public String toString() {
-        return "SmsTemplate{" +
+        return "NotifyMessageTemplate{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
             ", description='" + getDescription() + "'" +

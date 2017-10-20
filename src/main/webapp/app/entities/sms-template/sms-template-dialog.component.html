@@ -7,15 +7,15 @@
     </div>
     <div class="modal-body">
         <jhi-alert-error></jhi-alert-error>
-        <div class="form-group" [hidden]="!smsTemplate.id">
+        <div class="form-group" [hidden]="!notifyMessageTemplate.id">
             <label for="id">ID</label>
             <input type="text" class="form-control" id="id" name="id"
-                   [(ngModel)]="smsTemplate.id" readonly />
+                   [(ngModel)]="notifyMessageTemplate.id" readonly />
         </div>
         <div class="form-group">
             <label class="form-control-label" for="field_name">Name</label>
             <input type="text" class="form-control" name="name" id="field_name"
-                [(ngModel)]="smsTemplate.name" required />
+                [(ngModel)]="notifyMessageTemplate.name" required />
             <div [hidden]="!(editForm.controls.name?.dirty && editForm.controls.name?.invalid)">
                 <small class="form-text text-danger"
                    [hidden]="!editForm.controls.name?.errors?.required">
@@ -26,7 +26,7 @@
         <div class="form-group">
             <label class="form-control-label" for="field_description">Description</label>
             <input type="text" class="form-control" name="description" id="field_description"
-                [(ngModel)]="smsTemplate.description" required />
+                [(ngModel)]="notifyMessageTemplate.description" required />
             <div [hidden]="!(editForm.controls.description?.dirty && editForm.controls.description?.invalid)">
                 <small class="form-text text-danger"
                    [hidden]="!editForm.controls.description?.errors?.required">
@@ -37,7 +37,7 @@
         <div class="form-group">
             <label class="form-control-label" for="field_templateId">Template Id</label>
             <input type="text" class="form-control" name="templateId" id="field_templateId"
-                [(ngModel)]="smsTemplate.templateId" required />
+                [(ngModel)]="notifyMessageTemplate.templateId" required />
             <div [hidden]="!(editForm.controls.templateId?.dirty && editForm.controls.templateId?.invalid)">
                 <small class="form-text text-danger"
                    [hidden]="!editForm.controls.templateId?.errors?.required">

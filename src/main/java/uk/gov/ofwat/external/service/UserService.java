@@ -90,6 +90,7 @@ public class UserService {
            .filter(user -> user.getResetDate().isAfter(Instant.now().minusSeconds(86400)))
            .map(user -> {
                 user.setPassword(passwordEncoder.encode(newPassword));
+                user.setPasswordLastChangeDate(Instant.now());
                 user.setResetKey(null);
                 user.setResetDate(null);
                 return user;
@@ -107,6 +108,18 @@ public class UserService {
     }
 
     public User createUser(String login, String password, String firstName, String lastName, String email,
+                           String imageUrl, String langKey, String mobileTelephoneNumber, RegistrationRequest registrationRequest){
+
+        User user = createUser(login, password, firstName, lastName, email, imageUrl, langKey, mobileTelephoneNumber);
+        registrationRequest.setUserActivated(true);
+        registrationRequestRepository.save(registrationRequest);
+        user.setActivated(true);
+        user = userRepository.save(user);
+        return user;
+
+    }
+
+    public User createUser(String login, String password, String firstName, String lastName, String email,
         String imageUrl, String langKey, String mobileTelephoneNumber) {
 
         User newUser = new User();
@@ -116,6 +129,7 @@ public class UserService {
         newUser.setLogin(login);
         // new user gets initially a generated password
         newUser.setPassword(encryptedPassword);
+        newUser.setPasswordLastChangeDate(Instant.now());
         newUser.setFirstName(firstName);
         newUser.setLastName(lastName);
         newUser.setEmail(email);
@@ -131,6 +145,7 @@ public class UserService {
         newUser.setOtpSentCount(0);
         userRepository.save(newUser);
         log.debug("Created Information for User: {}", newUser);
+
         return newUser;
     }
 
@@ -163,6 +178,7 @@ public class UserService {
 
         String encryptedPassword = passwordEncoder.encode(RandomUtil.generatePassword());
         user.setPassword(encryptedPassword);
+        user.setPasswordLastChangeDate(Instant.now());
         user.setResetKey(RandomUtil.generateResetKey());
         user.setResetDate(Instant.now());
         user.setActivated(true);
@@ -349,6 +365,11 @@ public class UserService {
                 log.debug("Found valid key for {}", registrationRequest);
                 return registrationRequest;
             });
+    }
+
+    public Optional<RegistrationRequest> getRegistrationRequest(String login){
+        log.debug("Getting a registrationRequest details for user {}", login);
+        return registrationRequestRepository.findOneByLogin(login);
     }
 
 }

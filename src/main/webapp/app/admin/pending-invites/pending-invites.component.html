@@ -18,10 +18,13 @@
     <jhi-alert-error></jhi-alert-error> <!-- Use this one if you want the error returned by the server to be displayed. -->
     <div *ngIf="showApproveAccount">
         Approve account! for user {{selectedRegistrationRequest.email}}
-        <button (click)="approveAccount(selectedRegistrationRequest)">Approve?</button>
+        <button (click)="approveAccount(selectedRegistrationRequest)" class="button button-warning">Approve?</button>
     </div>
     <div *ngIf="showDeleteAccount">
-        DeleteAccount! for user {{selectedRegistrationRequest.email}}
+        Delete request for user {{selectedRegistrationRequest.email}}
+        <button (click)="deleteAccount(selectedRegistrationRequest)" class="button button-warning">Delete?</button>
+        <!--Confirm delete request here! -->
+
     </div>
     <div class="table-responsive" *ngIf="requests && (!showApproveAccount && !showDeleteAccount)">
         <table class="">

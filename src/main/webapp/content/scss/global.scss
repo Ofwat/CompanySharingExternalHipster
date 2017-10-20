@@ -10,6 +10,19 @@
 @import "elements-documentation";
 @import "fonts.css";
 @import "govuk-elements-styles";
+@import "check-your-answers";
+
+.pill-separate-item:link, .pill-separate-item:visited {
+    background: #005ea5;
+    color: #fff;
+    text-decoration: underline;
+}
+
+.pill-separate-item {
+    display: block;
+    text-align: left;
+    padding: 10px 15px;
+}
 
 .text-warning, .text-pending {
     display: inline-block

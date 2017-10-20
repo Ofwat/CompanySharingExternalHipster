@@ -22,7 +22,7 @@
             <thead>
                 <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
                     <th scope="col" jhiSortBy="email"><span>Email</span> <span class="fa fa-sort"></span></th>
-                    <th scope="col" ><span>Mobile telephone</span></th>
+                    <th scope="col" ><span>Login</span></th>
                     <!--<th scope="col" jhiSortBy="enabled"><span>Enabled</span> <span class="fa fa-sort"></span></th>-->
                     <th></th>
                     <th></th>
@@ -31,8 +31,8 @@
             <tbody *ngIf ="users">
                 <tr *ngFor="let user of users; trackBy: trackIdentity">
                     <td>{{user.email}}</td>
-                    <td>{{user.mobileTelephoneNumber}}</td>
-                    <td><span class="text-warning">More details required</span></td>
+                    <td>{{user.login}}</td>
+                    <td><span class="text-warning">Important message here</span></td>
 <!--
                     <td><span class="multiple-choice" ><input style="opacity: 1; top:-20px;" id="testField{{user.id}}" name="testField{{user.id}}" [ngModel]="user.enabled" type="checkbox" class="" (click)="checkbox(user)"></span></td>
 -->

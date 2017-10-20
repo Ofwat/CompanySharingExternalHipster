@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes, CanActivate } from '@angular/router';
-
 import { JhiPaginationUtil } from 'ng-jhipster';
 import { PendingInvitesComponent } from './pending-invites.component';
 import { UserResolveOfwat } from '../ofwat-user-management/ofwat-user-management.route';
-/*import { UserDialogComponent } from './user-management-dialog.component';
-import { UserDeleteDialogComponent } from './user-management-delete-dialog.component';*/
+import {PendingInvitesResendComponent} from './pending-invites-resend.component';
 
 @Injectable()
 export class OfwatPendingInviteResolvePagingParams implements Resolve<any> {
@@ -32,6 +30,13 @@ export const pendingInvitesRoute: Routes = [
         },
         data: {
             pageTitle: 'Pending Invites'
+        }
+    },
+    {
+        path: 'pending-invitest-resend/:login',
+        component: PendingInvitesResendComponent,
+        data: {
+            pageTitle: 'Resend Invitation Link'
         }
     }
 ];

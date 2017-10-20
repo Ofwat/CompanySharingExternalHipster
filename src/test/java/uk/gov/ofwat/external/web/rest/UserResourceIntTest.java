@@ -160,7 +160,8 @@ public class UserResourceIntTest {
             authorities,
             1L,
             "077777077852",
-            true);
+            true,
+            Instant.now());
 
         restUserMockMvc.perform(post("/api/users")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -203,7 +204,8 @@ public class UserResourceIntTest {
             authorities,
             1L,
             "077777077852",
-            true);
+            true,
+            Instant.now());
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restUserMockMvc.perform(post("/api/users")
@@ -242,7 +244,8 @@ public class UserResourceIntTest {
             authorities,
             1L,
             "077777077852",
-            true);
+            true,
+            Instant.now());
 
         // Create the User
         restUserMockMvc.perform(post("/api/users")
@@ -281,7 +284,8 @@ public class UserResourceIntTest {
             authorities,
             1L,
             "077777077852",
-            true);
+            true,
+            Instant.now());
 
         // Create the User
         restUserMockMvc.perform(post("/api/users")
@@ -367,7 +371,8 @@ public class UserResourceIntTest {
             authorities,
             1L,
             "077777077852",
-            true);
+            true,
+            Instant.now());
 
         restUserMockMvc.perform(put("/api/users")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -414,7 +419,8 @@ public class UserResourceIntTest {
             authorities,
             1L,
             "077777077852",
-            true);
+            true,
+            Instant.now());
 
         restUserMockMvc.perform(put("/api/users")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -472,7 +478,8 @@ public class UserResourceIntTest {
             authorities,
             1L,
             "077777077852",
-            true);
+            true,
+            Instant.now());
 
         restUserMockMvc.perform(put("/api/users")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -519,7 +526,8 @@ public class UserResourceIntTest {
             authorities,
             1L,
             "077777077852",
-            true);
+            true,
+            Instant.now());
 
         restUserMockMvc.perform(put("/api/users")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -598,7 +606,8 @@ public class UserResourceIntTest {
             null,
             Stream.of(AuthoritiesConstants.USER).collect(Collectors.toSet()),
             "077777077852",
-            true);
+            true,
+            Instant.now());
         User user = userMapper.userDTOToUser(userDTO);
         assertThat(user.getId()).isEqualTo(DEFAULT_ID);
         assertThat(user.getLogin()).isEqualTo(DEFAULT_LOGIN);

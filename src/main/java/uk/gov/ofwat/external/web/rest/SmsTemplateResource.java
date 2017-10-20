@@ -1,9 +1,9 @@
 package uk.gov.ofwat.external.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
-import uk.gov.ofwat.external.domain.SmsTemplate;
+import uk.gov.ofwat.external.domain.message.NotifyMessageTemplate;
 
-import uk.gov.ofwat.external.repository.SmsTemplateRepository;
+import uk.gov.ofwat.external.repository.NotifyMessageTemplateRepository;
 import uk.gov.ofwat.external.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * REST controller for managing SmsTemplate.
+ * REST controller for managing NotifyMessageTemplate.
  */
 @RestController
 @RequestMapping("/api")
@@ -29,51 +29,51 @@ public class SmsTemplateResource {
 
     private static final String ENTITY_NAME = "smsTemplate";
 
-    private final SmsTemplateRepository smsTemplateRepository;
+    private final NotifyMessageTemplateRepository notifyMessageTemplateRepository;
 
-    public SmsTemplateResource(SmsTemplateRepository smsTemplateRepository) {
-        this.smsTemplateRepository = smsTemplateRepository;
+    public SmsTemplateResource(NotifyMessageTemplateRepository notifyMessageTemplateRepository) {
+        this.notifyMessageTemplateRepository = notifyMessageTemplateRepository;
     }
 
     /**
-     * POST  /sms-templates : Create a new smsTemplate.
+     * POST  /sms-templates : Create a new notifyMessageTemplate.
      *
-     * @param smsTemplate the smsTemplate to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new smsTemplate, or with status 400 (Bad Request) if the smsTemplate has already an ID
+     * @param notifyMessageTemplate the notifyMessageTemplate to create
+     * @return the ResponseEntity with status 201 (Created) and with body the new notifyMessageTemplate, or with status 400 (Bad Request) if the notifyMessageTemplate has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/sms-templates")
     @Timed
-    public ResponseEntity<SmsTemplate> createSmsTemplate(@Valid @RequestBody SmsTemplate smsTemplate) throws URISyntaxException {
-        log.debug("REST request to save SmsTemplate : {}", smsTemplate);
-        if (smsTemplate.getId() != null) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new smsTemplate cannot already have an ID")).body(null);
+    public ResponseEntity<NotifyMessageTemplate> createSmsTemplate(@Valid @RequestBody NotifyMessageTemplate notifyMessageTemplate) throws URISyntaxException {
+        log.debug("REST request to save NotifyMessageTemplate : {}", notifyMessageTemplate);
+        if (notifyMessageTemplate.getId() != null) {
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new notifyMessageTemplate cannot already have an ID")).body(null);
         }
-        SmsTemplate result = smsTemplateRepository.save(smsTemplate);
+        NotifyMessageTemplate result = notifyMessageTemplateRepository.save(notifyMessageTemplate);
         return ResponseEntity.created(new URI("/api/sms-templates/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
     /**
-     * PUT  /sms-templates : Updates an existing smsTemplate.
+     * PUT  /sms-templates : Updates an existing notifyMessageTemplate.
      *
-     * @param smsTemplate the smsTemplate to update
-     * @return the ResponseEntity with status 200 (OK) and with body the updated smsTemplate,
-     * or with status 400 (Bad Request) if the smsTemplate is not valid,
-     * or with status 500 (Internal Server Error) if the smsTemplate couldn't be updated
+     * @param notifyMessageTemplate the notifyMessageTemplate to update
+     * @return the ResponseEntity with status 200 (OK) and with body the updated notifyMessageTemplate,
+     * or with status 400 (Bad Request) if the notifyMessageTemplate is not valid,
+     * or with status 500 (Internal Server Error) if the notifyMessageTemplate couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/sms-templates")
     @Timed
-    public ResponseEntity<SmsTemplate> updateSmsTemplate(@Valid @RequestBody SmsTemplate smsTemplate) throws URISyntaxException {
-        log.debug("REST request to update SmsTemplate : {}", smsTemplate);
-        if (smsTemplate.getId() == null) {
-            return createSmsTemplate(smsTemplate);
+    public ResponseEntity<NotifyMessageTemplate> updateSmsTemplate(@Valid @RequestBody NotifyMessageTemplate notifyMessageTemplate) throws URISyntaxException {
+        log.debug("REST request to update NotifyMessageTemplate : {}", notifyMessageTemplate);
+        if (notifyMessageTemplate.getId() == null) {
+            return createSmsTemplate(notifyMessageTemplate);
         }
-        SmsTemplate result = smsTemplateRepository.save(smsTemplate);
+        NotifyMessageTemplate result = notifyMessageTemplateRepository.save(notifyMessageTemplate);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, smsTemplate.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, notifyMessageTemplate.getId().toString()))
             .body(result);
     }
 
@@ -84,9 +84,9 @@ public class SmsTemplateResource {
      */
     @GetMapping("/sms-templates")
     @Timed
-    public List<SmsTemplate> getAllSmsTemplates() {
+    public List<NotifyMessageTemplate> getAllSmsTemplates() {
         log.debug("REST request to get all SmsTemplates");
-        return smsTemplateRepository.findAll();
+        return notifyMessageTemplateRepository.findAll();
     }
 
     /**
@@ -97,10 +97,10 @@ public class SmsTemplateResource {
      */
     @GetMapping("/sms-templates/{id}")
     @Timed
-    public ResponseEntity<SmsTemplate> getSmsTemplate(@PathVariable Long id) {
-        log.debug("REST request to get SmsTemplate : {}", id);
-        SmsTemplate smsTemplate = smsTemplateRepository.findOne(id);
-        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(smsTemplate));
+    public ResponseEntity<NotifyMessageTemplate> getSmsTemplate(@PathVariable Long id) {
+        log.debug("REST request to get NotifyMessageTemplate : {}", id);
+        NotifyMessageTemplate notifyMessageTemplate = notifyMessageTemplateRepository.findOne(id);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(notifyMessageTemplate));
     }
 
     /**
@@ -112,8 +112,8 @@ public class SmsTemplateResource {
     @DeleteMapping("/sms-templates/{id}")
     @Timed
     public ResponseEntity<Void> deleteSmsTemplate(@PathVariable Long id) {
-        log.debug("REST request to delete SmsTemplate : {}", id);
-        smsTemplateRepository.delete(id);
+        log.debug("REST request to delete NotifyMessageTemplate : {}", id);
+        notifyMessageTemplateRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 }

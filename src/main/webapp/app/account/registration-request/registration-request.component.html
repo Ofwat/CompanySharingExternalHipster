@@ -32,15 +32,61 @@
             </div>
 
         </div>
-        <div class="">
-            <div *ngIf="!success && confirmRegistration">
+        <div>
+            <div *ngIf="!success && confirmRegistration" class="column-two-thirds">
                 <h2 class="heading-medium">Confirm Registration Details</h2>
-                Username {{registerAccount.login}}
-                Email address {{registerAccount.email}}
-                Mobile Telephone Number: {{registerAccount.mobileTelephoneNumber}}
-                Company: {{selectedCompany.name}}
-                <button class="button button-start" (click)="register()"><span class="font-medium">Request Account</span></button>
-                <button class="button button-secondary" (click)="cancel()"><span class="font-medium">Cancel</span></button>
+
+                  <dl class="govuk-check-your-answers cya-questions-short">
+                    <div>
+                        <dt class="cya-question">
+                            Login
+                        </dt>
+                        <dd class="cya-answer">
+                            {{registerAccount.login}}
+                        </dd>
+                        <dd class="cya-change"></dd>
+                    </div>
+                </dl>
+
+                <dl class="govuk-check-your-answers cya-questions-short">
+                    <div>
+                        <dt class="cya-question">
+                            Email
+                        </dt>
+                        <dd class="cya-answer">
+                            {{registerAccount.email}}
+                        </dd>
+                        <dd class="cya-change"></dd>
+                    </div>
+                </dl>
+
+                <dl class="govuk-check-your-answers cya-questions-short">
+                    <div>
+                        <dt class="cya-question">
+                            Mobile telephone number
+                        </dt>
+                        <dd class="cya-answer">
+                            {{registerAccount.mobileTelephoneNumber}}
+                        </dd>
+                        <dd class="cya-change"></dd>
+                    </div>
+                </dl>
+
+                <dl class="govuk-check-your-answers cya-questions-short">
+                    <div>
+                        <dt class="cya-question">
+                            Company
+                        </dt>
+                        <dd class="cya-answer">
+                            {{selectedCompany.name}}
+                        </dd>
+                        <dd class="cya-change"></dd>
+                    </div>
+                </dl>
+                <div class="form-group">
+                    <button class="button button-start" (click)="register()"><span class="font-medium">Request account</span></button>
+                    <button class="button button-secondary" (click)="cancel()"><span class="font-medium">Edit details</span></button>
+                </div>
             </div>
             <form name="form" role="form" (ngSubmit)="confirm()" #registerForm="ngForm" *ngIf="!success && !confirmRegistration">
                 <div class="form-group">
@@ -125,7 +171,7 @@
                 <div class="form-group">
                     <re-captcha (resolved)="resolved($event)" [(ngModel)]="registerAccount.captcha" #captchaInput="ngModel" name="captcha" required siteKey="6LfcITEUAAAAAOrOMA8wBwB9ngZb52Mxo63JeLq1"></re-captcha>
                 </div>
-                <button type="submit" [disabled]="registerForm.form.invalid" class="button button-start"><span class="font-medium">Request Account</span></button>
+                <button type="submit" [disabled]="registerForm.form.invalid" class="button button-start"><span class="font-medium">Request account</span></button>
             </form>
         </div>
     </div>

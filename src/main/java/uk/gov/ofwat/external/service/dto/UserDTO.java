@@ -58,6 +58,8 @@ public class UserDTO {
 
     private Boolean enabled = false;
 
+    private Instant passwordLastChangeDate;
+
     public UserDTO() {
         // Empty constructor needed for Jackson.
     }
@@ -67,13 +69,13 @@ public class UserDTO {
             user.getEmail(), user.getActivated(), user.getImageUrl(), user.getLangKey(),
             user.getCreatedBy(), user.getCreatedDate(), user.getLastModifiedBy(), user.getLastModifiedDate(),
             user.getAuthorities().stream().map(Authority::getName)
-                .collect(Collectors.toSet()), user.getMobileTelephoneNumber(), user.getEnabled());
+                .collect(Collectors.toSet()), user.getMobileTelephoneNumber(), user.getEnabled(), user.getPasswordLastChangeDate());
     }
 
     public UserDTO(Long id, String login, String firstName, String lastName,
         String email, boolean activated, String imageUrl, String langKey,
         String createdBy, Instant createdDate, String lastModifiedBy, Instant lastModifiedDate,
-        Set<String> authorities, String mobileTelephoneNumber, boolean enabled) {
+        Set<String> authorities, String mobileTelephoneNumber, boolean enabled, Instant passwordLastChangeDate) {
 
         this.id = id;
         this.login = login;
@@ -90,6 +92,7 @@ public class UserDTO {
         this.authorities = authorities;
         this.mobileTelephoneNumber = mobileTelephoneNumber;
         this.enabled = enabled;
+        this.passwordLastChangeDate = passwordLastChangeDate;
     }
 
     public Long getId() {
@@ -170,6 +173,14 @@ public class UserDTO {
 
     public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public Instant getPasswordLastChangeDate() {
+        return passwordLastChangeDate;
+    }
+
+    public void setPasswordLastChangeDate(Instant passwordLastChangeDate) {
+        this.passwordLastChangeDate = passwordLastChangeDate;
     }
 
     @Override

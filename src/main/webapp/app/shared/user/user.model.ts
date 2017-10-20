@@ -1,3 +1,5 @@
+import {Company} from '../../entities/company/company.model';
+
 export class User {
     public id?: any;
     public login?: string;
@@ -7,6 +9,7 @@ export class User {
     public activated?: Boolean;
     public langKey?: string;
     public authorities?: any[];
+    public companies?: Company[];
     public createdBy?: string;
     public createdDate?: Date;
     public lastModifiedBy?: string;
@@ -14,6 +17,7 @@ export class User {
     public password?: string;
     public enabled?: Boolean;
     public mobileTelephoneNumber: string;
+    public passwordLastChangeDate: Date;
 
     constructor(
         id?: any,
@@ -24,13 +28,15 @@ export class User {
         activated?: Boolean,
         langKey?: string,
         authorities?: any[],
+        companies?: Company[],
         createdBy?: string,
         createdDate?: Date,
         lastModifiedBy?: string,
         lastModifiedDate?: Date,
         password?: string,
         enabled?: Boolean,
-        mobileTelephoneNumber?: string
+        mobileTelephoneNumber?: string,
+        passwordLastChangeDate?: Date
     ) {
         this.id = id ? id : null;
         this.login = login ? login : null;
@@ -40,6 +46,7 @@ export class User {
         this.activated = activated ? activated : false;
         this.langKey = langKey ? langKey : null;
         this.authorities = authorities ? authorities : null;
+        this.companies = companies ? this.companies : null;
         this.createdBy = createdBy ? createdBy : null;
         this.createdDate = createdDate ? createdDate : null;
         this.lastModifiedBy = lastModifiedBy ? lastModifiedBy : null;
@@ -47,5 +54,6 @@ export class User {
         this.password = password ? password : null;
         this.enabled = enabled ? enabled : null;
         this.mobileTelephoneNumber = mobileTelephoneNumber ? mobileTelephoneNumber : null;
+        this.passwordLastChangeDate = passwordLastChangeDate ? passwordLastChangeDate : null;
     }
 }

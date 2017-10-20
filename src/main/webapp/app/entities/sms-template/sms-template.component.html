@@ -24,28 +24,28 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let smsTemplate of smsTemplates ;trackBy: trackId">
-                <td><a [routerLink]="['../sms-template', smsTemplate.id ]">{{smsTemplate.id}}</a></td>
-                <td>{{smsTemplate.name}}</td>
-                <td>{{smsTemplate.description}}</td>
-                <td>{{smsTemplate.templateId}}</td>
+            <tr *ngFor="let notifyMessageTemplate of smsTemplates ;trackBy: trackId">
+                <td><a [routerLink]="['../sms-template', notifyMessageTemplate.id ]">{{notifyMessageTemplate.id}}</a></td>
+                <td>{{notifyMessageTemplate.name}}</td>
+                <td>{{notifyMessageTemplate.description}}</td>
+                <td>{{notifyMessageTemplate.templateId}}</td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"
-                                [routerLink]="['../sms-template', smsTemplate.id ]"
+                                [routerLink]="['../sms-template', notifyMessageTemplate.id ]"
                                 class="btn btn-info btn-sm">
                             <span class="fa fa-eye"></span>
                             <span class="hidden-md-down">View</span>
                         </button>
                         <button type="submit"
-                                [routerLink]="['/', { outlets: { popup: 'sms-template/'+ smsTemplate.id + '/edit'} }]"
+                                [routerLink]="['/', { outlets: { popup: 'sms-template/'+ notifyMessageTemplate.id + '/edit'} }]"
                                 replaceUrl="true"
                                 class="btn btn-primary btn-sm">
                             <span class="fa fa-pencil"></span>
                             <span class="hidden-md-down">Edit</span>
                         </button>
                         <button type="submit"
-                                [routerLink]="['/', { outlets: { popup: 'sms-template/'+ smsTemplate.id + '/delete'} }]"
+                                [routerLink]="['/', { outlets: { popup: 'sms-template/'+ notifyMessageTemplate.id + '/delete'} }]"
                                 replaceUrl="true"
                                 class="btn btn-danger btn-sm">
                             <span class="fa fa-remove"></span>
