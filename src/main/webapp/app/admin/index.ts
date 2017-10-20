@@ -37,4 +37,5 @@ export * from './user-profile/user-profile.route';
 export * from './user-profile/user-profile.service';
 export * from './pending-invites/pending-invites.component';
 export * from './pending-invites/pending-invites.route';
+export * from './pending-invites/pending-invites-resend.component';
 export * from './admin.route';

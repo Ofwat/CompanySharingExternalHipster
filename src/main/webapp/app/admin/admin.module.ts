@@ -37,7 +37,8 @@ import {
     OfwatPendingInviteResolvePagingParams,
     UserResolve,
     UserModalService,
-    PendingInvitesComponent
+    PendingInvitesComponent,
+    PendingInvitesResendComponent
 } from './';
 
 @NgModule({
@@ -67,7 +68,8 @@ import {
         JhiMetricsMonitoringModalComponent,
         InviteUserComponent,
         UserProfileComponent,
-        PendingInvitesComponent
+        PendingInvitesComponent,
+        PendingInvitesResendComponent
     ],
     entryComponents: [
         UserMgmtDialogComponent,
