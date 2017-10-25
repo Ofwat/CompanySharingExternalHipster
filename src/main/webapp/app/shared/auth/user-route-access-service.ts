@@ -2,14 +2,14 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 
 import { Principal } from '../';
-import { LoginModalService } from '../login/login-modal.service';
 import { StateStorageService } from './state-storage.service';
+// import {LoginModalService} from '../../account/login/login-modal.service';
 
 @Injectable()
 export class UserRouteAccessService implements CanActivate {
 
     constructor(private router: Router,
-                private loginModalService: LoginModalService,
+                // private loginModalService: LoginModalService,
                 private principal: Principal,
                 private stateStorageService: StateStorageService) {
     }
@@ -36,7 +36,8 @@ export class UserRouteAccessService implements CanActivate {
             this.router.navigate(['accessdenied']).then(() => {
                 // only show the login dialog, if the user hasn't logged in yet
                 if (!account) {
-                    this.loginModalService.open();
+                    // TODO This should redirect to login component.
+                    // this.modalRef = this.loginModalService.open();
                 }
             });
             return false;

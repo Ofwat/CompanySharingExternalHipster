@@ -1,0 +1,42 @@
+<main id="content" role="main">
+    <div class="row" *ngIf="resendOTP && (!verifySuccess)">
+        <main role="main">
+            <div class="grid-row">
+                <div class="column-two-thirds">
+                    <h1 class="heading-large">Resend security code</h1>
+                    <p>Text messages sometimes take a few minutes to arrive. If you do not receive the text message, you can resend it.</p>
+                    <p>If you no longer have access to the phone with the number you registered for this service, speak to your service manager to reset the number.</p>
+                    <p>
+                        <span class="button" (click)="resendOtp()" role="button">Resend security code</span>
+                    </p>
+                </div>
+            </div>
+        </main>
+    </div>
+    <div class="row" *ngIf="(!resendOTP) && (!verifySuccess)">
+        <div class="column-full">
+            <h1 class="heading-large">Check your phone</h1>
+            <p>We’ve sent you a text message with a security code.</p>
+        </div>
+        <div class="column-full">
+            <form autocomplete="off" (ngSubmit)="verifyCode()" method="post">
+                <div [ngClass]="{'form-group': true, 'form-group-error': otpError}" data-module="autofocus">
+                    <label class="form-label" for="sms_code">
+                        Text message code
+                    </label>
+                    <span *ngIf="otpError" class="error-message">
+                      Code not found
+                    </span>
+                    <input [ngClass]="{'form-control':true, 'form-control-5em':true, 'form-control-error':otpError}" data-module="" id="sms_code" name="code" [(ngModel)]="code" rows="8" type="text" value="">
+                </div>
+                    <input type="submit" class="button" value="Continue">
+                <div>
+                    <span class="page-footer-secondary-link" (click)="notRecievedMessage()">Not received a text message?</span>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div *ngIf="verifySuccess">
+        It worked do something now!
+    </div>
+</main>

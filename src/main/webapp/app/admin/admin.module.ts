@@ -1,7 +1,14 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
-
 import { CompanySharingExternalSharedModule } from '../shared';
+import { OfwatUserMgmtComponent } from './ofwat-user-management/ofwat-user-management.component';
+import { OfwatUserMgmtDetailComponent } from './ofwat-user-management/ofwat-user-management-detail.component';
+import { OfwatUserMgmtPermissionsComponent } from './ofwat-user-management/ofwat-user-management-permissions.component';
+import { InviteUserComponent } from './invite-user/invite-user.component';
+import { InviteUser} from './invite-user/invite-user.service';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { UserProfileService } from './user-profile/user-profile.service';
+import { MomentModule } from 'angular2-moment';
 /* jhipster-needle-add-admin-module-import - JHipster will add admin modules imports here */
 
 import {
@@ -26,22 +33,30 @@ import {
     JhiMetricsService,
     LogsService,
     UserResolvePagingParams,
+    OfwatUserResolvePagingParams,
+    OfwatPendingInviteResolvePagingParams,
     UserResolve,
-    UserModalService
+    UserModalService,
+    PendingInvitesComponent,
+    PendingInvitesResendComponent
 } from './';
 
 @NgModule({
     imports: [
         CompanySharingExternalSharedModule,
+        MomentModule,
         RouterModule.forRoot(adminState, { useHash: true }),
         /* jhipster-needle-add-admin-module - JHipster will add admin modules here */
     ],
     declarations: [
         AuditsComponent,
         UserMgmtComponent,
+        OfwatUserMgmtComponent,
         UserDialogComponent,
         UserDeleteDialogComponent,
         UserMgmtDetailComponent,
+        OfwatUserMgmtDetailComponent,
+        OfwatUserMgmtPermissionsComponent,
         UserMgmtDialogComponent,
         UserMgmtDeleteDialogComponent,
         LogsComponent,
@@ -50,7 +65,11 @@ import {
         JhiHealthModalComponent,
         JhiDocsComponent,
         JhiMetricsMonitoringComponent,
-        JhiMetricsMonitoringModalComponent
+        JhiMetricsMonitoringModalComponent,
+        InviteUserComponent,
+        UserProfileComponent,
+        PendingInvitesComponent,
+        PendingInvitesResendComponent
     ],
     entryComponents: [
         UserMgmtDialogComponent,
@@ -65,8 +84,12 @@ import {
         JhiMetricsService,
         LogsService,
         UserResolvePagingParams,
+        OfwatUserResolvePagingParams,
+        OfwatPendingInviteResolvePagingParams,
         UserResolve,
-        UserModalService
+        UserModalService,
+        InviteUser,
+        UserProfileService
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

@@ -2,10 +2,14 @@ package uk.gov.ofwat.external.web.rest;
 
 import uk.gov.ofwat.external.config.Constants;
 import com.codahale.metrics.annotation.Timed;
+import uk.gov.ofwat.external.domain.Company;
+import uk.gov.ofwat.external.domain.RegistrationRequest;
 import uk.gov.ofwat.external.domain.User;
 import uk.gov.ofwat.external.repository.UserRepository;
 import uk.gov.ofwat.external.security.AuthoritiesConstants;
+import uk.gov.ofwat.external.service.CompanyService;
 import uk.gov.ofwat.external.service.MailService;
+import uk.gov.ofwat.external.service.RegistrationRequestService;
 import uk.gov.ofwat.external.service.UserService;
 import uk.gov.ofwat.external.service.dto.UserDTO;
 import uk.gov.ofwat.external.web.rest.vm.ManagedUserVM;
@@ -25,6 +29,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.websocket.server.PathParam;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.*;
@@ -67,13 +72,19 @@ public class UserResource {
 
     private final UserService userService;
 
-    public UserResource(UserRepository userRepository, MailService mailService,
-            UserService userService) {
+    private final RegistrationRequestService registrationRequestService;
 
-        this.userRepository = userRepository;
-        this.mailService = mailService;
-        this.userService = userService;
-    }
+    private final CompanyService companyService;
+
+     public UserResource(UserRepository userRepository, MailService mailService,
+                         UserService userService, RegistrationRequestService registrationRequestService, CompanyService companyService) {
+
+         this.userRepository = userRepository;
+         this.mailService = mailService;
+         this.userService = userService;
+         this.registrationRequestService = registrationRequestService;
+         this.companyService = companyService;
+     }
 
     /**
      * POST  /users  : Creates a new user.
@@ -175,9 +186,10 @@ public class UserResource {
     @Timed
     public ResponseEntity<UserDTO> getUser(@PathVariable String login) {
         log.debug("REST request to get User : {}", login);
-        return ResponseUtil.wrapOrNotFound(
+        ResponseEntity<UserDTO> responseEntity = ResponseUtil.wrapOrNotFound(
             userService.getUserWithAuthoritiesByLogin(login)
                 .map(UserDTO::new));
+        return responseEntity;
     }
 
     /**
@@ -194,4 +206,66 @@ public class UserResource {
         userService.deleteUser(login);
         return ResponseEntity.ok().headers(HeaderUtil.createAlert( "A user is deleted with identifier " + login, login)).build();
     }
+
+    @Timed
+    @PostMapping("/users/otp")
+    public ResponseEntity<Void> sendOtpCode(@PathVariable String login){
+        // TODO How do we secure this?
+        log.info("REST request to resend OTP code for login: {}", login);
+
+        return ResponseEntity.ok().headers(HeaderUtil.createAlert("", "")).build();
+    }
+
+    /**
+     * GET  /users : get all users.
+     *
+     * @param pageable the pagination information
+     * @return the ResponseEntity with status 200 (OK) and with body all users
+     */
+    @GetMapping("/users/pending_accounts")
+    @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
+    public ResponseEntity<List<RegistrationRequest>> getAllRegistrationRequests(@ApiParam Pageable pageable, @RequestParam Long companyId) {
+        Company company = companyService.findOne(companyId);
+        if(company != null) {
+            Boolean isValidAdmin = companyService.isCurrentUserAdminForCompany(company);
+            if(isValidAdmin) {
+                final Page<RegistrationRequest> page = registrationRequestService.getAllRequests(pageable, company);
+                HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/users/pending_accounts");
+                return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+            }
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    /**
+     * DELETE /users/pending_accounts/:login : delete the "login" RegistrationRequest.
+     *
+     * @param login the login of the user to delete
+     * @return the ResponseEntity with status 200 (OK)
+     */
+    @DeleteMapping("/users/pending_accounts/{login:" + Constants.LOGIN_REGEX + "}")
+    @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
+    public ResponseEntity<Void> deleteRegistrationRequest(@PathVariable String login) {
+        log.debug("REST request to delete RegistrationRequest: {}", login);
+        registrationRequestService.deleteRegistrationRequest(login);
+        return ResponseEntity.ok().headers(HeaderUtil.createAlert( "A RegistrationRequest is deleted with identifier " + login, login)).build();
+    }
+
+    /**
+     * PUT - Send the pending user an email with the link to complete registration.
+     * i.e approve the request.
+     * @param login the login for the request.
+     * @return
+     */
+    @PostMapping("/users/pending_accounts")
+    @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
+    public ResponseEntity<String> approveRegistrationRequest(@RequestBody String login) {
+        log.debug("REST request to approve RegistrationRequest: {}", login);
+        return registrationRequestService.approveRegistrationRequest(login).map(registrationRequest -> new ResponseEntity<String>(HttpStatus.OK))
+            .orElse(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
+    }
+
 }

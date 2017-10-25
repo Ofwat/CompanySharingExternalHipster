@@ -4,6 +4,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -15,7 +16,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "company")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class Company implements Serializable {
+public class Company extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -26,8 +27,16 @@ public class Company implements Serializable {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "deleted")
+    @Column(name = "deleted", nullable = false)
     private Boolean deleted;
+
+/*    @ManyToMany
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JoinTable(name = "company_admin",
+        joinColumns = @JoinColumn(name="companies_id", referencedColumnName="id"),
+        inverseJoinColumns = @JoinColumn(name="users_id", referencedColumnName="id"))*/
+
+
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)

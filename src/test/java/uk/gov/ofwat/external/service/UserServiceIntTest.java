@@ -72,7 +72,7 @@ public class UserServiceIntTest {
 
     @Test
     public void assertThatOnlyActivatedUserCanRequestPasswordReset() {
-        User user = userService.createUser("johndoe", "johndoe", "John", "Doe", "john.doe@localhost", "http://placehold.it/50x50", "en-US");
+        User user = userService.createUser("johndoe", "johndoe", "John", "Doe", "john.doe@localhost", "http://placehold.it/50x50", "en-US", "077777077852");
         Optional<User> maybeUser = userService.requestPasswordReset("john.doe@localhost");
         assertThat(maybeUser.isPresent()).isFalse();
         userRepository.delete(user);
@@ -80,7 +80,7 @@ public class UserServiceIntTest {
 
     @Test
     public void assertThatResetKeyMustNotBeOlderThan24Hours() {
-        User user = userService.createUser("johndoe", "johndoe", "John", "Doe", "john.doe@localhost", "http://placehold.it/50x50", "en-US");
+        User user = userService.createUser("johndoe", "johndoe", "John", "Doe", "john.doe@localhost", "http://placehold.it/50x50", "en-US", "077777077852");
 
         Instant daysAgo = Instant.now().minus(25, ChronoUnit.HOURS);
         String resetKey = RandomUtil.generateResetKey();
@@ -99,7 +99,7 @@ public class UserServiceIntTest {
 
     @Test
     public void assertThatResetKeyMustBeValid() {
-        User user = userService.createUser("johndoe", "johndoe", "John", "Doe", "john.doe@localhost", "http://placehold.it/50x50", "en-US");
+        User user = userService.createUser("johndoe", "johndoe", "John", "Doe", "john.doe@localhost", "http://placehold.it/50x50", "en-US", "077777077852");
 
         Instant daysAgo = Instant.now().minus(25, ChronoUnit.HOURS);
         user.setActivated(true);
@@ -113,7 +113,7 @@ public class UserServiceIntTest {
 
     @Test
     public void assertThatUserCanResetPassword() {
-        User user = userService.createUser("johndoe", "johndoe", "John", "Doe", "john.doe@localhost", "http://placehold.it/50x50", "en-US");
+        User user = userService.createUser("johndoe", "johndoe", "John", "Doe", "john.doe@localhost", "http://placehold.it/50x50", "en-US", "077777077852");
         String oldPassword = user.getPassword();
         Instant daysAgo = Instant.now().minus(2, ChronoUnit.HOURS);
         String resetKey = RandomUtil.generateResetKey();
@@ -160,12 +160,43 @@ public class UserServiceIntTest {
 
     @Test
     public void testRemoveNotActivatedUsers() {
-        User user = userService.createUser("johndoe", "johndoe", "John", "Doe", "john.doe@localhost", "http://placehold.it/50x50", "en-US");
+        User user = userService.createUser("johndoe", "johndoe", "John", "Doe", "john.doe@localhost", "http://placehold.it/50x50", "en-US", "077777077852");
         user.setActivated(false);
         user.setCreatedDate(Instant.now().minus(30, ChronoUnit.DAYS));
         userRepository.save(user);
         assertThat(userRepository.findOneByLogin("johndoe")).isPresent();
         userService.removeNotActivatedUsers();
         assertThat(userRepository.findOneByLogin("johndoe")).isNotPresent();
+    }
+
+    @Test
+    public void testResetOtpCount(){
+        User user = userService.createUser("johndoe", "johndoe", "John", "Doe", "john.doe@localhost", "http://placehold.it/50x50", "en-US", "077777077852");
+        User user1 = userService.createUser("janedoe", "janedoe", "Jane", "Doe", "jane.doe@localhost", "http://placehold.it/50x50", "en-US", "077777077852");
+        user.setOtpSentCount(10);
+        user1.setOtpSentCount(20);
+        userRepository.save(user);
+        userRepository.save(user1);
+        assertThat(userRepository.findOneByLogin("johndoe")).isPresent();
+        assertThat(userRepository.findOneByLogin("janedoe")).isPresent();
+        assertThat(userRepository.findOneByLogin("johndoe").get().getOtpSentCount() == 10);
+        assertThat(userRepository.findOneByLogin("janedoe").get().getOtpSentCount() == 20);
+        userService.resetOtpCounts();
+        assertThat(userRepository.findOneByLogin("johndoe").get().getOtpSentCount() == 0);
+        assertThat(userRepository.findOneByLogin("janedoe").get().getOtpSentCount() == 0);
+    }
+
+    @Test
+    public void TestGenerateAndSendOTPCode(){
+        User user = userService.createUser("johndoe", "johndoe", "John", "Doe", "john.doe@localhost", "http://placehold.it/50x50", "en-US", "077777077852");
+        userRepository.save(user);
+        assertThat(userRepository.findOneByLogin("johndoe") ).isPresent();
+        // TODO Do we need to mock the NotifyService?
+        userService.generateAndSendOTPCode(user.getLogin());
+        User updatedUser = userRepository.findOneByLogin(user.getLogin()).get();
+        assertThat(updatedUser.getOtpSentCount() > 0);
+        Instant now = Instant.now();
+        assertThat(updatedUser.getOtpSentDate().toEpochMilli() < now.toEpochMilli());
+        assertThat(updatedUser.getOtpCode() != null);
     }
 }

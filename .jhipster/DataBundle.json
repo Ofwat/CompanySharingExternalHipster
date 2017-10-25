@@ -1,0 +1,67 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "status",
+            "otherEntityName": "publishingStatus",
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": [
+                "required"
+            ],
+            "otherEntityField": "status"
+        },
+        {
+            "relationshipName": "owner",
+            "otherEntityName": "jhiUser",
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": [
+                "required"
+            ],
+            "otherEntityField": "lastName"
+        },
+        {
+            "relationshipName": "reviewer",
+            "otherEntityName": "jhiUser",
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": [
+                "required"
+            ],
+            "otherEntityField": "lastName"
+        },
+        {
+            "relationshipName": "dataCollection",
+            "otherEntityName": "dataCollection",
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": [
+                "required"
+            ],
+            "otherEntityField": "name"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "guidance",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "defaultDeadline",
+            "fieldType": "LocalDate"
+        }
+    ],
+    "changelogDate": "20171016150755",
+    "dto": "mapstruct",
+    "service": "serviceClass",
+    "entityTableName": "data_bundle",
+    "pagination": "pagination"
+}

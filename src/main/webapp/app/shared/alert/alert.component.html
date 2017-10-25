@@ -1,0 +1,41 @@
+<div>
+    <div *ngIf="successAlerts.length > 0" class="govuk-box-highlight" role="alert" aria-labelledby="error-summary" tabindex="-1">
+        <h2 class="heading-medium" id="error-summary-heading-example-2">
+            There was a problem (This is the error message (TODO - i8n))
+        </h2>
+        <p class="font-medium">
+            Optional description of the errors and how to correct them
+        </p>
+        <div class="font-medium">
+            <ul class="">
+                <li *ngFor="let alert of successAlerts">{{alert.msg}}</li>
+            </ul>
+        </div>
+    </div>
+    <div *ngIf="dangerAlerts.length > 0" class="error-summary" role="alert" aria-labelledby="error-summary" tabindex="-1">
+
+        <h2 class="heading-medium error-summary-heading" id="error-summary-heading-example-2">
+            There was a problem (This is the error message (TODO - i8n))
+        </h2>
+        <p>
+            Optional description of the errors and how to correct them
+        </p>
+
+        <ul class="error-summary-list">
+            <li *ngFor="let alert of dangerAlerts"><a href="#example-full-name">{{alert.msg}}</a></li>
+        </ul>
+    </div>
+    <div *ngIf="infoAlerts.length > 0" class="" role="alert" aria-labelledby="" tabindex="-1">
+
+        <h2 class="heading-medium" id="">
+            Info Alert
+        </h2>
+        <p>
+            Optional description of the info
+        </p>
+
+        <ul class="">
+            <li *ngFor="let alert of dangerAlerts"><a href="#example-full-name">{{alert.msg}}</a></li>
+        </ul>
+    </div>
+</div>

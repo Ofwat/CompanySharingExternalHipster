@@ -1,0 +1,8 @@
+id;description;name;template_id;type
+1;Test email template;test email;478d07b5-4d5c-44bc-8287-5803e23973c8;EMAIL
+2;OTP code message;OTP Code;85969360-29f8-4d3b-a30f-7de2ebd88979;SMS
+3;Password reset email;Password reset user;4cbb33f2-aba7-4a6a-af68-06f06d7f7888;EMAIL
+4;Account activation mail sent to the user when approved by admin;Account activation user;8fc57a73-10c3-475f-89f3-75873cca1a3c;EMAIL
+5;Account request email sent to admin;Account request admin;47348f24-3915-4a96-84c1-b1d7d1ffeb72;EMAIL
+6;Account request email sent to user;Account request user;caca3ac2-60c9-4945-8018-476978e5714a;EMAIL
+7;Welcome email sent on user signup;Welcome user;26bf6490-93a7-4b99-9fd0-69d1ae468fd4;EMAIL

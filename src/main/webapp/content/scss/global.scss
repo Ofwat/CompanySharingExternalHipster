@@ -6,12 +6,314 @@
 @import '~govuk_frontend_toolkit/stylesheets/colours/_palette';
 @import '~govuk_frontend_toolkit/stylesheets/colours/_organisation';
 */
-
-@import "govuk-elements-styles";
-@import "elements-documentation";
 @import "govuk-template";
+@import "elements-documentation";
 @import "fonts.css";
+@import "govuk-elements-styles";
+@import "check-your-answers";
+
+.pill-separate-item:link, .pill-separate-item:visited {
+    background: #005ea5;
+    color: #fff;
+    text-decoration: underline;
+}
+
+.pill-separate-item {
+    display: block;
+    text-align: left;
+    padding: 10px 15px;
+}
+
+.text-warning, .text-pending {
+    display: inline-block
+}
+
+.text-warning:before, .text-pending:before {
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    content: '!';
+    color: #fff;
+    display: inline-block;
+    font-family: arial;
+    font-weight: bold;
+    height: 1em;
+    line-height: 1;
+    margin-left: 5px;
+    margin-right: 5px;
+    padding: 2px;
+    text-align: center;
+    width: 1em
+}
+
+.form .text-warning:before, .form .text-pending:before {
+    margin-left: 0
+}
+
+.text-warning {
+    color: #b10e1e
+}
+
+.text-warning:before {
+    background-color: #b10e1e
+}
+
+.text-pending:before {
+    background-color: #0b0c0c
+}
+
+.pager {
+    margin-top: .3125em;
+    margin-bottom: 1.25em
+}
+
+@media (min-width: 641px) {
+    .pager {
+        margin-top: .26316em;
+        margin-bottom: 1.05263em
+    }
+}
+
+.pagination {
+    display: none
+}
+
+@media (min-width: 641px) {
+    .pagination {
+        display: inline
+    }
+
+    .pagination li {
+        display: inline;
+        margin: 0 5px
+    }
+
+    .pagination li:first-child {
+        margin-left: 0
+    }
+
+    .pagination li:last-child {
+        margin-right: 0
+    }
+}
+
+.pager-prev, .pager-next {
+    margin-right: 10px
+}
+
+@media (min-width: 641px) {
+    .pager-prev, .pager-next {
+        margin-right: 0
+    }
+}
+
+@media (min-width: 641px) {
+    .pager-prev {
+        margin-right: 10px
+    }
+}
+
+@media (min-width: 641px) {
+    .pager-next {
+        margin-left: 10px
+    }
+}
+
+@media (min-width: 641px) {
+    .pager-controls {
+        float: right
+    }
+}
+
+#content{
+    padding-bottom: 90px;
+}
+
+.page-footer-secondary-link{
+    display: block;
+    margin-top: 30px;
+}
+
+.form-control-5em {
+    width: 5em;
+}
+
+.link {
+    color: #005ea5;
+    text-decoration: underline
+}
+
+.link:visited {
+    color: #4c2c92
+}
+
+.link:hover {
+    color: #2b8cc4
+}
+
+.link:active {
+    color: #005ea5
+}
+
+.link-back {
+    display: -moz-inline-stack;
+    display: inline-block;
+    position: relative;
+    font-family: "nta", Arial, sans-serif;
+    font-weight: 400;
+    text-transform: none;
+    font-size: 14px;
+    line-height: 1.14286;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    padding-left: 14px;
+    color: #0b0c0c;
+    text-decoration: none;
+    border-bottom: 1px solid #0b0c0c
+}
+
+@media (min-width: 641px) {
+    .link-back {
+        font-size: 16px;
+        line-height: 1.25
+    }
+}
+
+.link-back:link, .link-back:visited, .link-back:hover, .link-back:active {
+    color: #0b0c0c
+}
+
+.link-back::before {
+    content: '';
+    display: block;
+    width: 0;
+    height: 0;
+    border-top: 5px solid transparent;
+    border-right: 6px solid #0b0c0c;
+    border-bottom: 5px solid transparent;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    margin-top: -6px
+}
+
+#footer {
+    border-top: 10px solid #005ea5;
+}
+
+.float-right{
+    float: right;
+}
+
+.highlight {
+    font-style: normal;
+    color: $hm-government;
+}
 
 
+.button{
+   @include button;
+}
+.button-secondary{
+   @include button($grey-3);
+ }
+.button-warning{
+   @include button($red);
+}
+
+
+.navigation {
+    padding: 0 30px 0 0
+}
+
+.navigation-service {
+    padding: 11px 0 9px 0;
+    border-bottom: 1px solid #bfc1c3;
+    margin: 0 0 10px;
+    position: relative
+}
+
+.navigation-service-name {
+    font-family: "nta", Arial, sans-serif;
+    font-weight: 700;
+    text-transform: none;
+    font-size: 16px;
+    line-height: 1.25;
+    margin: 0 0 0 0
+}
+
+@media (min-width: 641px) {
+    .navigation-service-name {
+        font-size: 19px;
+        line-height: 1.31579
+    }
+}
+
+.navigation-service-switch {
+    font-family: "nta", Arial, sans-serif;
+    font-weight: 400;
+    text-transform: none;
+    font-size: 14px;
+    line-height: 1.14286;
+    text-align: right;
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 13px 0 9px 15px
+}
+
+@media (min-width: 641px) {
+    .navigation-service-switch {
+        font-size: 16px;
+        line-height: 1.25
+    }
+}
+
+.navigation-service-switch:focus {
+    outline: none;
+    border-bottom: 4px solid #ffbf47;
+    border-left: 10px solid #ffbf47;
+    border-right: 3px solid #ffbf47;
+    right: -3px;
+    color: #0b0c0c
+}
+
+.navigation li {
+    font-family: "nta", Arial, sans-serif;
+    font-weight: 400;
+    text-transform: none;
+    font-size: 16px;
+    line-height: 1.25;
+    margin: 0;
+    list-style-type: none
+}
+
+@media (min-width: 641px) {
+    .navigation li {
+        font-size: 19px;
+        line-height: 1.31579
+    }
+}
+
+.navigation a {
+    display: block;
+    padding: 5px 0;
+    position: relative;
+    top: 5px
+}
+
+.navigation a:link, .navigation a:visited {
+    text-decoration: none
+}
+
+.navigation a:hover {
+    color: #2b8cc4;
+    text-decoration: underline
+}
+
+.navigation a:focus {
+    color: #0b0c0c
+}
 
 /* jhipster-needle-scss-add-main JHipster will add new css style */
+

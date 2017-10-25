@@ -1,7 +1,8 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
-
 import { CompanySharingExternalSharedModule } from '../shared';
+import { RecaptchaModule } from 'ng-recaptcha';
+import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
 
 import {
     Register,
@@ -12,29 +13,43 @@ import {
     SessionsService,
     SessionsComponent,
     PasswordStrengthBarComponent,
-    RegisterComponent,
+    // RegisterComponent,
+    RegisterInitComponent,
+    EnterOtpComponent,
+    RegisterFinishComponent,
     ActivateComponent,
     PasswordComponent,
     PasswordResetInitComponent,
     PasswordResetFinishComponent,
     SettingsComponent,
-    accountState
+    accountState,
+    LoginComponent,
+    LoginService,
+    CaptchaService,
+    RegistrationRequestComponent
 } from './';
 
 @NgModule({
     imports: [
         CompanySharingExternalSharedModule,
-        RouterModule.forRoot(accountState, { useHash: true })
+        RouterModule.forRoot(accountState, { useHash: true }),
+        RecaptchaModule.forRoot(),
+        RecaptchaFormsModule
     ],
     declarations: [
         ActivateComponent,
-        RegisterComponent,
+        // RegisterComponent,
+        RegisterInitComponent,
+        EnterOtpComponent,
+        RegisterFinishComponent,
         PasswordComponent,
         PasswordStrengthBarComponent,
         PasswordResetInitComponent,
         PasswordResetFinishComponent,
         SessionsComponent,
-        SettingsComponent
+        SettingsComponent,
+        LoginComponent,
+        RegistrationRequestComponent
     ],
     providers: [
         SessionsService,
@@ -42,7 +57,9 @@ import {
         ActivateService,
         PasswordService,
         PasswordResetInitService,
-        PasswordResetFinishService
+        PasswordResetFinishService,
+        LoginService,
+        CaptchaService
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

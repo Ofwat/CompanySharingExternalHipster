@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
 
-import { Account, LoginModalService, Principal } from '../shared';
+import { Account, Principal } from '../shared';
 
 @Component({
     selector: 'jhi-home',
     templateUrl: './home.component.html',
     styleUrls: [
-        'home.scss'
+        // 'home.scss'
     ]
 
 })
@@ -18,7 +18,7 @@ export class HomeComponent implements OnInit {
 
     constructor(
         private principal: Principal,
-        private loginModalService: LoginModalService,
+        // private loginModalService: LoginModalService,
         private eventManager: JhiEventManager
     ) {
     }
@@ -43,6 +43,7 @@ export class HomeComponent implements OnInit {
     }
 
     login() {
-        this.modalRef = this.loginModalService.open();
+        // TODO This should redirect to login component.
+        // this.modalRef = this.loginModalService.open();
     }
 }

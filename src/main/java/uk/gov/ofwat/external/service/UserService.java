@@ -1,16 +1,16 @@
 package uk.gov.ofwat.external.service;
 
+import org.hibernate.cfg.NotYetImplementedException;
 import uk.gov.ofwat.external.domain.Authority;
+import uk.gov.ofwat.external.domain.Company;
+import uk.gov.ofwat.external.domain.RegistrationRequest;
 import uk.gov.ofwat.external.domain.User;
-import uk.gov.ofwat.external.repository.AuthorityRepository;
-import uk.gov.ofwat.external.repository.PersistentTokenRepository;
+import uk.gov.ofwat.external.repository.*;
 import uk.gov.ofwat.external.config.Constants;
-import uk.gov.ofwat.external.repository.UserRepository;
 import uk.gov.ofwat.external.security.AuthoritiesConstants;
 import uk.gov.ofwat.external.security.SecurityUtils;
 import uk.gov.ofwat.external.service.util.RandomUtil;
 import uk.gov.ofwat.external.service.dto.UserDTO;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -19,11 +19,16 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDate;
+import uk.gov.ofwat.external.repository.AuthorityRepository;
+import uk.gov.ofwat.external.repository.PersistentTokenRepository;
+import uk.gov.ofwat.external.repository.UserRepository;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -39,15 +44,28 @@ public class UserService {
 
     private final PasswordEncoder passwordEncoder;
 
+    private final OTPService otpService;
+
     private final PersistentTokenRepository persistentTokenRepository;
 
     private final AuthorityRepository authorityRepository;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, PersistentTokenRepository persistentTokenRepository, AuthorityRepository authorityRepository) {
+    private final CompanyRepository companyRepository;
+
+    private final RegistrationRequestRepository registrationRequestRepository;
+
+    private final MailService mailService;
+
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, OTPService otpService, PersistentTokenRepository persistentTokenRepository,
+                       AuthorityRepository authorityRepository, CompanyRepository companyRepository, RegistrationRequestRepository registrationRequestRepository, MailService mailService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.otpService = otpService;
         this.persistentTokenRepository = persistentTokenRepository;
         this.authorityRepository = authorityRepository;
+        this.companyRepository = companyRepository;
+        this.registrationRequestRepository = registrationRequestRepository;
+        this.mailService = mailService;
     }
 
     public Optional<User> activateRegistration(String key) {
@@ -58,6 +76,16 @@ public class UserService {
                 user.setActivated(true);
                 user.setActivationKey(null);
                 log.debug("Activated user: {}", user);
+
+                registrationRequestRepository.findOneByLogin(user.getLogin()).map(
+                    registrationRequest -> {
+                        registrationRequest.setUserActivated(true);
+                        registrationRequestRepository.save(registrationRequest);
+                        user.setRegistrationRequest(registrationRequest);
+                        return userRepository.save(user);
+                    }
+                );
+
                 return user;
             });
     }
@@ -69,6 +97,7 @@ public class UserService {
            .filter(user -> user.getResetDate().isAfter(Instant.now().minusSeconds(86400)))
            .map(user -> {
                 user.setPassword(passwordEncoder.encode(newPassword));
+                user.setPasswordLastChangeDate(Instant.now());
                 user.setResetKey(null);
                 user.setResetDate(null);
                 return user;
@@ -86,15 +115,28 @@ public class UserService {
     }
 
     public User createUser(String login, String password, String firstName, String lastName, String email,
+                           String imageUrl, String langKey, String mobileTelephoneNumber, RegistrationRequest registrationRequest){
+
+        User user = createUser(login, password, firstName, lastName, email, imageUrl, langKey, mobileTelephoneNumber);
+        registrationRequest.setUserActivated(true);
+        registrationRequestRepository.save(registrationRequest);
+        user.setActivated(true);
+        user = userRepository.save(user);
+        return user;
+
+    }
+
+    public User createUser(String login, String password, String firstName, String lastName, String email,
         String imageUrl, String langKey, String mobileTelephoneNumber) {
 
         User newUser = new User();
-        Authority authority = authorityRepository.findOne(AuthoritiesConstants.USER);
+        Authority authority = authorityRepository.findOne(AuthoritiesConstants.PRE_AUTH_USER);
         Set<Authority> authorities = new HashSet<>();
         String encryptedPassword = passwordEncoder.encode(password);
         newUser.setLogin(login);
         // new user gets initially a generated password
         newUser.setPassword(encryptedPassword);
+        newUser.setPasswordLastChangeDate(Instant.now());
         newUser.setFirstName(firstName);
         newUser.setLastName(lastName);
         newUser.setEmail(email);
@@ -107,8 +149,10 @@ public class UserService {
         newUser.setActivationKey(RandomUtil.generateActivationKey());
         authorities.add(authority);
         newUser.setAuthorities(authorities);
+        newUser.setOtpSentCount(0);
         userRepository.save(newUser);
         log.debug("Created Information for User: {}", newUser);
+
         return newUser;
     }
 
@@ -125,6 +169,12 @@ public class UserService {
         } else {
             user.setLangKey(userDTO.getLangKey());
         }
+
+        //Set<Authority> authorities = new HashSet<>();
+        //log.debug( userDTO.getAuthorities().toString() );
+        //authorities.add(authorityRepository.findOne("1"));
+        //user.setAuthorities(authorities);
+
         if (userDTO.getAuthorities() != null) {
             Set<Authority> authorities = new HashSet<>();
             userDTO.getAuthorities().forEach(
@@ -132,8 +182,10 @@ public class UserService {
             );
             user.setAuthorities(authorities);
         }
+
         String encryptedPassword = passwordEncoder.encode(RandomUtil.generatePassword());
         user.setPassword(encryptedPassword);
+        user.setPasswordLastChangeDate(Instant.now());
         user.setResetKey(RandomUtil.generateResetKey());
         user.setResetDate(Instant.now());
         user.setActivated(true);
@@ -169,7 +221,7 @@ public class UserService {
      * @param userDTO user to update
      * @return updated user
      */
-    public Optional<UserDTO> updateUser(UserDTO userDTO) {
+    public java.util.Optional<UserDTO> updateUser(UserDTO userDTO) {
         return Optional.of(userRepository
             .findOne(userDTO.getId()))
             .map(user -> {
@@ -181,6 +233,7 @@ public class UserService {
                 user.setActivated(userDTO.isActivated());
                 user.setLangKey(userDTO.getLangKey());
                 user.setMobileTelephoneNumber(userDTO.getMobileTelephoneNumber());
+                user.setEnabled(userDTO.getEnabled());
                 Set<Authority> managedAuthorities = user.getAuthorities();
                 managedAuthorities.clear();
                 userDTO.getAuthorities().stream()
@@ -264,4 +317,77 @@ public class UserService {
     public List<String> getAuthorities() {
         return authorityRepository.findAll().stream().map(Authority::getName).collect(Collectors.toList());
     }
+
+    /**
+     * Generate a new OTP code for a user and send them a rate limited SMS with the code in it.
+     * @param login
+     */
+    public void generateAndSendOTPCode(String login) {
+        throw new NotYetImplementedException();
+    }
+
+    /**
+     * Reset all the OTP counts for users to 0 to allow them to re-send SMS messages.
+     * This is to prevent spamming of SMS - see OTPService for rate checks - I.E no more than X messages in a Y time period.
+     */
+    @Scheduled(initialDelay=60000, fixedRate=300000)
+    public void resetOtpCounts(){
+        log.debug("Starting reset OTP Counts for all users job.");
+        List<User> users = userRepository.findAll();
+        for (User user : users) {
+            log.debug("Resetting OTP count for user {}", user.getLogin());
+            user = otpService.resetOtpCount(user);
+            userRepository.save(user);
+        }
+    }
+
+    public RegistrationRequest createRegistrationRequest(String login, String firstName, String lastName, String email,
+                                                         String mobileTelephoneNumber, Long companyId){
+        log.debug("Creating new registration request for user: {}", login);
+        RegistrationRequest rr = new RegistrationRequest();
+        rr.setLogin(login);
+        rr.setFirstName("");
+        rr.setLastName("");
+        rr.setEmail(email);
+        rr.setMobileTelephoneNumber(mobileTelephoneNumber);
+        rr.setRegistrationKey(RandomUtil.generateActivationKey());
+        rr.setAdminApproved(false);
+        rr.setUserActivated(false);
+        rr.setKeyCreated(Instant.now());
+        Company company = companyRepository.findOne(companyId);
+        rr.setCompany(company);
+        return registrationRequestRepository.save(rr);
+    }
+
+    /**
+     * Check for a registration key and if a vlaid key is found return the pre-stored details.
+     * @param key
+     * @return
+     */
+    public Optional<RegistrationRequest> validateRegistrationKey(String key){
+        log.debug("Validating a registration key");
+        return registrationRequestRepository.findOneByRegistrationKey(key)
+            .filter(registrationRequest -> registrationRequest.getKeyCreated().isAfter(Instant.now().minusSeconds(86400)))
+            .map(registrationRequest -> {
+                log.debug("Found valid key for {}", registrationRequest);
+                return registrationRequest;
+            });
+    }
+
+    public Optional<RegistrationRequest> getRegistrationRequest(String login){
+        log.debug("Getting a registrationRequest details for user {}", login);
+        return registrationRequestRepository.findOneByLogin(login);
+    }
+
+    public Optional<RegistrationRequest> resendRegistrationRequest(String login){
+        log.info("Resending registration request for login: {}", login);
+        return registrationRequestRepository.findOneByLogin(login).map( registrationRequest -> {
+            registrationRequest.setRegistrationKey(RandomUtil.generateActivationKey());
+            registrationRequest.setKeyCreated(Instant.now());
+            registrationRequest = registrationRequestRepository.save(registrationRequest);
+            mailService.sendRegistrationRequestApprovalEmail(registrationRequest);
+            return registrationRequest;
+        });
+    }
+
 }

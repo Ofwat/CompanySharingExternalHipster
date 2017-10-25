@@ -32,7 +32,6 @@ public abstract class AbstractAuditingEntity implements Serializable {
 
     @CreatedDate
     @Column(name = "created_date", nullable = false)
-    @JsonIgnore
     private Instant createdDate = Instant.now();
 
     @LastModifiedBy
@@ -42,7 +41,6 @@ public abstract class AbstractAuditingEntity implements Serializable {
 
     @LastModifiedDate
     @Column(name = "last_modified_date")
-    @JsonIgnore
     private Instant lastModifiedDate = Instant.now();
 
     public String getCreatedBy() {

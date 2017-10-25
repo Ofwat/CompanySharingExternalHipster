@@ -1,0 +1,27 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet author="Adam Edgar (generated)" id="1505749670487-1">
+        <addColumn tableName="data_collection">
+            <column name="created_by_id" type="bigint"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="Adam Edgar (generated)" id="1505749670487-2">
+        <addColumn tableName="data_collection">
+            <column name="modified_by_id" type="bigint"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="Adam Edgar (generated)" id="1505749670487-3">
+        <addColumn tableName="data_collection">
+            <column name="reviewer_id" type="bigint"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="Adam Edgar (generated)" id="1505749670487-5">
+        <addForeignKeyConstraint baseColumnNames="created_by_id" baseTableName="data_collection" constraintName="FK1hcgfub3qppr8fc5kswl5cqi6" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="jhi_user"/>
+    </changeSet>
+    <changeSet author="Adam Edgar (generated)" id="1505749670487-6">
+        <addForeignKeyConstraint baseColumnNames="reviewer_id" baseTableName="data_collection" constraintName="FK9y3hp9wi1yyqqc9dixsu9iwpg" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="jhi_user"/>
+    </changeSet>
+    <changeSet author="Adam Edgar (generated)" id="1505749670487-7">
+        <addForeignKeyConstraint baseColumnNames="modified_by_id" baseTableName="data_collection" constraintName="FKi4u7nbs27dutev6hmiis99nql" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="jhi_user"/>
+    </changeSet>
+</databaseChangeLog>

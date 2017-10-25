@@ -16,6 +16,8 @@ export class ErrorHandlerInterceptor extends JhiHttpInterceptor {
         return <Observable<Response>> observable.catch((error) => {
             if (!(error.status === 401 && (error.text() === '' ||
                 (error.json().path && error.json().path.indexOf('/api/account') === 0 )))) {
+                console.log( 'Broadcasting error:' );
+                console.log( error.json() );
                 this.eventManager.broadcast( {name: 'companySharingExternalApp.httpError', content: error});
             }
             return Observable.throw(error);

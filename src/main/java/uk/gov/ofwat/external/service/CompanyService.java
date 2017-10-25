@@ -10,6 +10,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.Optional;
+
 
 /**
  * Service Implementation for managing Company.
@@ -71,6 +74,7 @@ public class CompanyService {
         companyRepository.delete(id);
     }
 
+    @Transactional
     public void addUserToCompany(Long companyId, User user){
         Company company = companyRepository.findOne(companyId);
         try{
@@ -80,6 +84,46 @@ public class CompanyService {
         }catch(Exception e){
             log.error("Unable to add user '{}' to company '{}': {}", user, company, e);
         }
+    }
+
+    /**
+     * Check if the current user has the ROLE_COMPANY_ADMIN role for a particular company.
+     * @param company
+     * @return
+     */
+    public boolean isCurrentUserAdminForCompany(Company company){
+        // TODO implement this pending Company/User/Role refactoring
+        return true;
+    }
+
+    /**
+     * Check if the current user has the ROLE_COMPANY_USER role for a particular company.
+     * @param company
+     * @return
+     */
+    public boolean isCurrentUserMemberOfCompany(Company company){
+        // TODO implement this pending Company/User/Role refactoring
+        return true;
+    }
+
+    /**
+     * Get a list of companies that the current user has the role ROLE_COMPANY_ADMIN for.
+     * @param company
+     * @return
+     */
+    public Optional<List<Company>> getListOfCompaniesCurrentUserIsAdminFor(Company company){
+        // TODO implement this pending Company/User/Role refactoring
+        return Optional.empty();
+    }
+
+    /**
+     * Get a list of companies that the current user has the role ROLE_COMPANY_USER for.
+     * @param company
+     * @return
+     */
+    public Optional<List<Company>> getListOfCompaniesCurrentUserIsMemberFor(Company company){
+        // TODO implement this pending Company/User/Role refactoring
+        return Optional.empty();
     }
 
 }

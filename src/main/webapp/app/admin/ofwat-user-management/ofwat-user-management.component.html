@@ -1,0 +1,190 @@
+<main id="content" role="main" tabindex="-1">
+<div>
+    <h2 class="heading-medium">
+        <span class="heading-large">Ofwat Team Members</span>
+<!--        <button class="button float-right" [routerLink]="['/', { outlets: { popup: ['user-management-new'] } }]">
+            <span class="fa fa-plus"></span> <span>Create a new User</span>
+        </button>-->
+        <span class="float-right">&nbsp;</span>
+        <button class="button float-right" [routerLink]="['../invite']">
+            <span class="fa fa-plus"></span> <span>Invite a new User</span>
+        </button>
+        &nbsp;
+        <button class="button float-right" style="margin-right:30px;" [routerLink]="['../pending-invites']">
+            <span class="">View pending invites</span>
+        </button>
+    </h2>
+<!--    <button type="button" (click)="clickMe()">I will create alert - Click Me!</button>-->
+    <jhi-alert></jhi-alert>
+    <jhi-alert-error></jhi-alert-error> <!-- Use this one if you want the error returned by the server to be displayed. -->
+    <div class="table-responsive" *ngIf="users">
+        <table class="js-table-sortable">
+            <thead>
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+                    <th scope="col" jhiSortBy="email"><span>Email</span> <span class="fa fa-sort"></span></th>
+                    <th scope="col" ><span>Login</span></th>
+                    <!--<th scope="col" jhiSortBy="enabled"><span>Enabled</span> <span class="fa fa-sort"></span></th>-->
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody *ngIf ="users">
+                <tr *ngFor="let user of users; trackBy: trackIdentity">
+                    <td>{{user.email}}</td>
+                    <td>{{user.login}}</td>
+                    <td><span class="text-warning">Important message here</span></td>
+<!--
+                    <td><span class="multiple-choice" ><input style="opacity: 1; top:-20px;" id="testField{{user.id}}" name="testField{{user.id}}" [ngModel]="user.enabled" type="checkbox" class="" (click)="checkbox(user)"></span></td>
+-->
+                    <td><a href="" [routerLink]="['../ofwat-user-management', user.login]">Details</a></td>
+<!--                    <td><a href="" [routerLink]="['../ofwat-user-management/permissions', user.login]">Permissions</a></td>-->
+                </tr>
+            </tbody>
+        </table>
+<!--        <table class="table-land-parcels js-table-sortable">
+            <caption class="visuallyhidden">Land parcel distribution</caption>
+            <thead>
+            <tr>
+                <th scope="col" data-sort="string">Parcel ID</th>
+                <th class="numeric" scope="col">Total area (ha)</th>
+                <th scope="col">Eligible covers</th>
+                <th class="numeric last" scope="col">BPS eligible area (ha)</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th scope="row"><a href="/">SP1561 5978</a> <span class="text-pending">Pending</span></th>
+                <td class="numeric">2.62</td>
+                <td>Grassland</td>
+                <td class="numeric last">2.62</td>
+            </tr>
+            <tr>
+                <th scope="row"><a href="/">SP1561 6596</a></th>
+                <td class="numeric">2.05</td>
+                <td>Arable</td>
+                <td class="numeric last">2.05</td>
+            </tr>
+            <tr>
+                <th scope="row"><a href="/">SP1561 7039</a> <span class="text-pending">Pending</span></th>
+                <td class="numeric">10.16</td>
+                <td>Grassland</td>
+                <td class="numeric last">10.16</td>
+            </tr>
+            <tr>
+                <th scope="row"><a href="/">SP1561 7070</a> <span class="text-pending">Pending</span></th>
+                <td class="numeric">6.63</td>
+                <td>Grassland</td>
+                <td class="numeric last">6.63</td>
+            </tr>
+            <tr>
+                <th scope="row"><a href="/">SP1561 9086</a></th>
+                <td class="numeric">9.15</td>
+                <td>Arable</td>
+                <td class="numeric last">9.15</td>
+            </tr>
+            <tr>
+                <th scope="row"><a href="/">SP1562 8012</a></th>
+                <td class="numeric">3.01</td>
+                <td>Arable</td>
+                <td class="numeric last">3.01</td>
+            </tr>
+            </tbody>
+        </table>-->
+    </div>
+    <div class="row">
+        <div *ngIf="users">
+            <div class="row justify-content-center">
+                <span class="float-left">
+                    <jhi-item-count [page]="page" [total]="queryCount" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+                </span>
+                <span class="float-right">
+                    <ngb-pagination [collectionSize]="totalItems" [(page)]="page" (pageChange)="loadPage(page)"></ngb-pagination>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+</main>
+<!--
+<div>
+    <h2>
+        <span>Users</span>
+        <button class="btn btn-primary float-right" [routerLink]="['/', { outlets: { popup: ['user-management-new'] } }]">
+            <span class="fa fa-plus"></span> <span>Create a new User</span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="table-responsive" *ngIf="users">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+            <th jhiSortBy="id"><span>ID</span><span class="fa fa-sort"></span></th>
+                <th jhiSortBy="login"><span>Login</span> <span class="fa fa-sort"></span></th>
+                <th jhiSortBy="email"><span>Email</span> <span class="fa fa-sort"></span></th>
+                <th></th>
+                <th><span>Profiles</span></th>
+                <th jhiSortBy="createdDate"><span>Created Date</span> <span class="fa fa-sort"></span></th>
+                <th jhiSortBy="lastModifiedBy"><span>Last Modified By</span> <span class="fa fa-sort"></span></th>
+                <th jhiSortBy="lastModifiedDate"><span>Last Modified Date</span> <span class="fa fa-sort"></span></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody *ngIf ="users">
+            <tr *ngFor="let user of users; trackBy: trackIdentity">
+                <td><a [routerLink]="['../user-management', user.login]">{{user.id}}</a></td>
+                <td>{{user.login}}</td>
+                <td>{{user.email}}</td>
+                <td>
+                    <button class="btn btn-danger btn-sm" (click)="setActive(user, true)" *ngIf="!user.activated"
+                           >Deactivated</button>
+                    <button class="btn btn-success btn-sm" (click)="setActive(user, false)" *ngIf="user.activated"
+                            [disabled]="currentAccount.login === user.login">Activated</button>
+                </td>
+
+                <td>
+                    <div *ngFor="let authority of user.authorities">
+                        <span class="badge badge-info">{{ authority }}</span>
+                    </div>
+                </td>
+                <td>{{user.createdDate | date:'dd/MM/yy HH:mm'}}</td>
+                <td>{{user.lastModifiedBy}}</td>
+                <td>{{user.lastModifiedDate | date:'dd/MM/yy HH:mm'}}</td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../ofwat-user-management', user.login]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="hidden-md-down">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'user-management/'+ user.login + '/edit'} }]"
+                                replaceUrl="true"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="hidden-md-down">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'user-management/'+ user.login + '/delete'} }]"
+                                replaceUrl="true"
+                                class="btn btn-danger btn-sm" [disabled]="currentAccount.login === user.login">
+                            <span class="fa fa-remove"></span>
+                            <span class="hidden-md-down">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div *ngIf="users">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="queryCount" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" (pageChange)="loadPage(page)"></ngb-pagination>
+        </div>
+    </div>
+</div>
+-->

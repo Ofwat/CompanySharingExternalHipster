@@ -25,5 +25,18 @@ export * from './user-management/user-management-delete-dialog.component';
 export * from './user-management/user-management-detail.component';
 export * from './user-management/user-management.component';
 export * from './user-management/user-management.route';
+export * from './ofwat-user-management/ofwat-user-management-detail.component';
+export * from './ofwat-user-management/ofwat-user-management.component';
+export * from './ofwat-user-management/ofwat-user-management.route';
 export * from './user-management/user-modal.service';
+export * from './invite-user/invite-user.component';
+export * from './invite-user/invite-user-route';
+export * from './invite-user/invite-user.service';
+export * from './user-profile/user-profile.component';
+export * from './user-profile/user-profile.route';
+export * from './user-profile/user-profile.service';
+export * from './pending-invites/pending-invites.component';
+export * from './pending-invites/pending-invites.route';
+export * from './pending-invites/pending-invites-resend.component';
 export * from './admin.route';
+

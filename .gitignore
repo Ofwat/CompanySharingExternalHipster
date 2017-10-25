@@ -142,4 +142,8 @@ Desktop.ini
 ######################
 .eslintcache
 
+######################
+# Dev Keystore
+######################
+
 keystore.p12

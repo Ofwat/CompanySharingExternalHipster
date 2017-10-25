@@ -5,12 +5,18 @@ import { Subscription } from 'rxjs/Rx';
 @Component({
     selector: 'jhi-alert-error',
     template: `
-        <div class="alerts" role="alert">
-            <div *ngFor="let alert of alerts"  [ngClass]="{\'alert.position\': true, \'toast\': alert.toast}">
-                <ngb-alert *ngIf="alert && alert.type && alert.msg" [type]="alert.type" (close)="alert.close(alerts)">
-                    <pre [innerHTML]="alert.msg"></pre>
-                </ngb-alert>
-            </div>
+        <div *ngIf="alerts.length > 0" class="error-summary" role="alert" aria-labelledby="error-summary" tabindex="-1">
+
+            <h2 class="heading-medium error-summary-heading" id="error-summary-heading-example-2">
+                There was a problem.
+            </h2>
+            <p>
+                The folowing errors occured:
+            </p>
+
+            <ul class="error-summary-list">
+                <li *ngFor="let alert of alerts"><a href="#example-full-name">{{alert.msg}}</a></li>
+            </ul>
         </div>`
 })
 export class JhiAlertErrorComponent implements OnDestroy {

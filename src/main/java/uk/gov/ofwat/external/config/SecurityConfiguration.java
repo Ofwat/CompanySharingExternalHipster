@@ -1,5 +1,8 @@
 package uk.gov.ofwat.external.config;
 
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
+import org.springframework.security.web.context.SecurityContextRepository;
 import uk.gov.ofwat.external.security.*;
 
 import io.github.jhipster.config.JHipsterProperties;
@@ -50,6 +53,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         this.jHipsterProperties = jHipsterProperties;
         this.rememberMeServices = rememberMeServices;
         this.corsFilter = corsFilter;
+
     }
 
     @PostConstruct
@@ -66,6 +70,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     public AjaxAuthenticationSuccessHandler ajaxAuthenticationSuccessHandler() {
         return new AjaxAuthenticationSuccessHandler();
+    }
+
+    @Bean
+    public CompanySharingAjaxAuthenticationFailureHandler companySharingAjaxAuthenticationFailureHandler() {
+        return new CompanySharingAjaxAuthenticationFailureHandler();
     }
 
     @Bean
@@ -88,6 +97,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+/*    @Bean
+    public RefreshingUserDetailsSecurityContextRepository refreshingUserDetailsSecurityContextRepository(HttpSessionSecurityContextRepository httpSessionSecurityContextRepository) {
+        return new RefreshingUserDetailsSecurityContextRepository(httpSessionSecurityContextRepository, this.userDetailsService);
+    }*/
+
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
@@ -103,6 +117,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+/*            .securityContext().securityContextRepository(this.refreshingUserDetailsSecurityContextRepository(new HttpSessionSecurityContextRepository()))
+        .and()*/
             .csrf()
             .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
         .and()
@@ -118,7 +134,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .formLogin()
             .loginProcessingUrl("/api/authentication")
             .successHandler(ajaxAuthenticationSuccessHandler())
-            .failureHandler(ajaxAuthenticationFailureHandler())
+            .failureHandler(companySharingAjaxAuthenticationFailureHandler())
             .usernameParameter("j_username")
             .passwordParameter("j_password")
             .permitAll()
@@ -138,12 +154,22 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/api/authenticate").permitAll()
             .antMatchers("/api/account/reset_password/init").permitAll()
             .antMatchers("/api/account/reset_password/finish").permitAll()
+            .antMatchers("/api/account/resend_otp").permitAll()
+            .antMatchers("/api/account/verify_otp").permitAll()
+            .antMatchers("/api/account/request_account").permitAll()
+            .antMatchers("/api/account/request_details").permitAll()
+            .antMatchers("/api/account/request_details_resend").hasAnyAuthority(AuthoritiesConstants.ADMIN)
+            .antMatchers("/api/invite").hasAuthority(AuthoritiesConstants.ADMIN)
+            .antMatchers("/api/resend_invite").hasAuthority(AuthoritiesConstants.ADMIN)
+            .antMatchers("/api/users/pending_accounts/**").hasAuthority(AuthoritiesConstants.ADMIN)
+/*            .antMatchers("/api/account/verify_captcha").permitAll()*/
             .antMatchers("/api/profile-info").permitAll()
+            .antMatchers(HttpMethod.GET, "/api/companies").permitAll()
             .antMatchers("/api/**").authenticated()
             .antMatchers("/management/health").permitAll()
             .antMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/v2/api-docs/**").permitAll()
-            .antMatchers("/swagger-resources/configuration/ui").permitAll()
+            .antMatchers("/swagger-resources/confresend_otpiguration/ui").permitAll()
             .antMatchers("/swagger-ui/index.html").hasAuthority(AuthoritiesConstants.ADMIN);
 
     }

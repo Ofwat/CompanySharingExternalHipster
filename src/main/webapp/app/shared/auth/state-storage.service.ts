@@ -3,6 +3,9 @@ import { SessionStorageService } from 'ng2-webstorage';
 
 @Injectable()
 export class StateStorageService {
+
+    loginFailureCode: string;
+
     constructor(
         private $sessionStorage: SessionStorageService
     ) {}

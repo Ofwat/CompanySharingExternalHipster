@@ -11,5 +11,8 @@
                 <constraints nullable="false"/>
             </column>
         </addColumn>
+        <update tableName="jhi_user">
+            <column name="enabled" valueBoolean="true"></column>
+        </update>
     </changeSet>
 </databaseChangeLog>

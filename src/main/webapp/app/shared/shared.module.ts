@@ -1,5 +1,6 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { DatePipe } from '@angular/common';
+import { CompanySelectComponent } from './company-select/company-select.component';
 
 import {
     CompanySharingExternalSharedLibsModule,
@@ -9,11 +10,11 @@ import {
     AccountService,
     UserService,
     StateStorageService,
-    LoginService,
-    LoginModalService,
+/*    LoginService,
+    LoginModalService,*/
     Principal,
-    HasAnyAuthorityDirective,
-    JhiLoginModalComponent
+    HasAnyAuthorityDirective
+/*    LoginComponent*/
 } from './';
 
 @NgModule({
@@ -22,12 +23,13 @@ import {
         CompanySharingExternalSharedCommonModule
     ],
     declarations: [
-        JhiLoginModalComponent,
-        HasAnyAuthorityDirective
+/*        LoginComponent,*/
+        HasAnyAuthorityDirective,
+        CompanySelectComponent
     ],
     providers: [
-        LoginService,
-        LoginModalService,
+/*        LoginService,
+        LoginModalService,*/
         AccountService,
         StateStorageService,
         Principal,
@@ -36,12 +38,13 @@ import {
         UserService,
         DatePipe
     ],
-    entryComponents: [JhiLoginModalComponent],
+    // entryComponents: [JhiLoginModalComponent],
     exports: [
         CompanySharingExternalSharedCommonModule,
-        JhiLoginModalComponent,
+/*        LoginComponent,*/
         HasAnyAuthorityDirective,
-        DatePipe
+        DatePipe,
+        CompanySelectComponent
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 

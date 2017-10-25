@@ -1,15 +1,17 @@
 package uk.gov.ofwat.external.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
-
+import org.springframework.security.access.annotation.Secured;
 import uk.gov.ofwat.external.domain.PersistentToken;
+import uk.gov.ofwat.external.domain.RegistrationRequest;
 import uk.gov.ofwat.external.domain.User;
+import uk.gov.ofwat.external.domain.message.NotifyMessageTemplate;
+import uk.gov.ofwat.external.repository.NotifyMessageTemplateRepository;
 import uk.gov.ofwat.external.repository.PersistentTokenRepository;
 import uk.gov.ofwat.external.repository.UserRepository;
+import uk.gov.ofwat.external.security.AuthoritiesConstants;
 import uk.gov.ofwat.external.security.SecurityUtils;
-import uk.gov.ofwat.external.service.CompanyService;
-import uk.gov.ofwat.external.service.MailService;
-import uk.gov.ofwat.external.service.UserService;
+import uk.gov.ofwat.external.service.*;
 import uk.gov.ofwat.external.service.dto.UserDTO;
 import uk.gov.ofwat.external.web.rest.vm.KeyAndPasswordVM;
 import uk.gov.ofwat.external.web.rest.vm.ManagedUserVM;
@@ -45,20 +47,33 @@ public class AccountResource {
 
     private final MailService mailService;
 
+    private final NotifyService notifyService;
+
+    private final OTPService otpService;
+
     private final CompanyService companyService;
 
     private final PersistentTokenRepository persistentTokenRepository;
 
+    private final CaptchaService captchaService;
+
     private static final String CHECK_ERROR_MESSAGE = "Incorrect password";
 
+    private static final String CAPTCHA_ERROR_MESSAGE = "captcha failed";
+
+    private static final String REGISTRATION_KEY_ERROR_MESSAGE = "invalid key";
+
     public AccountResource(UserRepository userRepository, UserService userService,
-            MailService mailService, PersistentTokenRepository persistentTokenRepository, CompanyService companyService) {
+                           MailService mailService, PersistentTokenRepository persistentTokenRepository, CompanyService companyService, NotifyService notifyService, OTPService otpService, CaptchaService captchaService, NotifyMessageTemplateRepository notifyMessageTemplateRepository) {
 
         this.userRepository = userRepository;
         this.userService = userService;
         this.mailService = mailService;
         this.persistentTokenRepository = persistentTokenRepository;
         this.companyService = companyService;
+        this.notifyService = notifyService;
+        this.otpService = otpService;
+        this.captchaService = captchaService;
     }
 
     /**
@@ -74,9 +89,70 @@ public class AccountResource {
 
         HttpHeaders textPlainHeaders = new HttpHeaders();
         textPlainHeaders.setContentType(MediaType.TEXT_PLAIN);
+
         if (!checkPasswordLength(managedUserVM.getPassword())) {
             return new ResponseEntity<>(CHECK_ERROR_MESSAGE, HttpStatus.BAD_REQUEST);
         }
+
+        if (!captchaService.verifyCaptcha(managedUserVM.getCaptcha())) {
+            return new ResponseEntity<>(CAPTCHA_ERROR_MESSAGE, HttpStatus.BAD_REQUEST);
+        }
+
+        // Verify the key is valid.
+        Optional<RegistrationRequest> registrationRequest = userService.validateRegistrationKey(managedUserVM.getRegistrationKey());
+        if(!registrationRequest.isPresent()){
+            return new ResponseEntity<>(REGISTRATION_KEY_ERROR_MESSAGE, HttpStatus.BAD_REQUEST);
+        }
+
+        return userRepository.findOneByLogin(managedUserVM.getLogin().toLowerCase())
+            .map(user -> new ResponseEntity<>("login already in use", textPlainHeaders, HttpStatus.BAD_REQUEST))
+            .orElseGet(() -> {
+                return userRepository.findOneByEmail(managedUserVM.getEmail())
+                    .map(user -> new ResponseEntity<>("email address already in use", textPlainHeaders, HttpStatus.BAD_REQUEST))
+                    .orElseGet(() -> {
+                        User user = userService
+                            .createUser(managedUserVM.getLogin(), managedUserVM.getPassword(),
+                                managedUserVM.getFirstName(), managedUserVM.getLastName(),
+                                managedUserVM.getEmail().toLowerCase(), managedUserVM.getImageUrl(),
+                                managedUserVM.getLangKey(), managedUserVM.getMobileTelephoneNumber(), registrationRequest.get());
+                        companyService.addUserToCompany(managedUserVM.getCompanyId(), user);
+                        //mailService.sendActivationEmail(user);
+                        otpService.generateOtpCode(user);
+                        return new ResponseEntity<>(HttpStatus.CREATED);
+                    });
+            }
+        );
+    }
+
+    /**
+     * POST  /invite : invite the user.
+     *
+     * @param managedUserVM the managed user View Model
+     * @return the ResponseEntity with status 201 (Created) if the user is invited or 400 (Bad Request) if the login or email is already in use.
+     */
+    @PostMapping(path = "/invite",
+        produces={MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_PLAIN_VALUE})
+    @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
+    public ResponseEntity inviteUser(@Valid @RequestBody ManagedUserVM managedUserVM) {
+
+        HttpHeaders textPlainHeaders = new HttpHeaders();
+        textPlainHeaders.setContentType(MediaType.TEXT_PLAIN);
+
+        if (!checkPasswordLength(managedUserVM.getPassword())) {
+            return new ResponseEntity<>(CHECK_ERROR_MESSAGE, HttpStatus.BAD_REQUEST);
+        }
+
+        if (!captchaService.verifyCaptcha(managedUserVM.getCaptcha())) {
+            return new ResponseEntity<>(CAPTCHA_ERROR_MESSAGE, HttpStatus.BAD_REQUEST);
+        }
+
+        // Verify the key is valid.
+        Optional<RegistrationRequest> registrationRequest = userService.validateRegistrationKey(managedUserVM.getRegistrationKey());
+        if(!registrationRequest.isPresent()){
+            return new ResponseEntity<>(REGISTRATION_KEY_ERROR_MESSAGE, HttpStatus.BAD_REQUEST);
+        }
+
         return userRepository.findOneByLogin(managedUserVM.getLogin().toLowerCase())
             .map(user -> new ResponseEntity<>("login already in use", textPlainHeaders, HttpStatus.BAD_REQUEST))
             .orElseGet(() -> userRepository.findOneByEmail(managedUserVM.getEmail())
@@ -89,17 +165,29 @@ public class AccountResource {
                             managedUserVM.getLangKey(), managedUserVM.getMobileTelephoneNumber());
                     companyService.addUserToCompany(managedUserVM.getCompanyId(), user);
                     mailService.sendActivationEmail(user);
+                    otpService.generateOtpCode(user);
                     return new ResponseEntity<>(HttpStatus.CREATED);
                 })
-        );
+            );
     }
 
-    /**
-     * GET  /activate : activate the registered user.
-     *
-     * @param key the activation key
-     * @return the ResponseEntity with status 200 (OK) and the activated user in body, or status 500 (Internal Server Error) if the user couldn't be activated
-     */
+    @PostMapping(path = "/resend_invite",
+        produces={MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_PLAIN_VALUE})
+    @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
+    public ResponseEntity inviteUser(@RequestBody String registrationRequestLogin) {
+        HttpHeaders textPlainHeaders = new HttpHeaders();
+        textPlainHeaders.setContentType(MediaType.TEXT_PLAIN);
+        return userService.resendRegistrationRequest(registrationRequestLogin).map(registrationRequest -> new ResponseEntity<String>(HttpStatus.OK))
+            .orElse(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
+    }
+
+        /**
+         * GET  /activate : activate the registered user.
+         *
+         * @param key the activation key
+         * @return the ResponseEntity with status 200 (OK) and the activated user in body, or status 500 (Internal Server Error) if the user couldn't be activated
+         */
     @GetMapping("/activate")
     @Timed
     public ResponseEntity<String> activateAccount(@RequestParam(value = "key") String key) {
@@ -231,7 +319,9 @@ public class AccountResource {
             .map(user -> {
                 mailService.sendPasswordResetMail(user);
                 return new ResponseEntity<>("email was sent", HttpStatus.OK);
-            }).orElse(new ResponseEntity<>("email address not registered", HttpStatus.BAD_REQUEST));
+            // }).orElse(new ResponseEntity<>("email address not registered", HttpStatus.BAD_REQUEST));
+            // We are always going to send a success so that people can't spam the service to find out email addresses!
+            }).orElse(new ResponseEntity<>("email was sent", HttpStatus.OK));
     }
 
     /**
@@ -258,4 +348,89 @@ public class AccountResource {
             password.length() >= ManagedUserVM.PASSWORD_MIN_LENGTH &&
             password.length() <= ManagedUserVM.PASSWORD_MAX_LENGTH;
     }
+
+    @Timed
+    @PostMapping(path = "/account/resend_otp")
+    public ResponseEntity resendOTP(@RequestBody String mail){
+        // If not see if there is an account based on passed parameters and send OTP to that.
+        // All rate limited!
+        Optional<User> user = userRepository.findOneByEmail(mail);
+        log.debug("Requesting new OTP for user {}", user.get().getLogin());
+        otpService.generateOtpCode(user.get());
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping(path = "/account/verify_otp")
+    public ResponseEntity verifyOTP(@RequestBody HashMap<String, String> otpData){
+        // If not see if there is an account based on passed parameters and send OTP to that.
+        // All rate limited!
+        Boolean verifySuccess = false;
+        ResponseEntity response = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        try {
+            Optional<User> user = userRepository.findOneByEmail(otpData.get("mail"));
+            log.debug("Verifying new OTP for user {}", user.get().getLogin());
+            verifySuccess = otpService.verifyOtpCode(user.get(), otpData.get("code"));
+        }catch(Exception e){
+            log.error("Error when verifying user with mail {}", otpData.get("mail"));
+            log.error(e.getMessage());
+        }
+        finally{
+            if(verifySuccess){
+                log.info("Successfully validated OTP for user {}", otpData.get("mail"));
+                log.info("Updating the registration request for this user (if they have one!)");
+                response = new ResponseEntity<>(HttpStatus.OK);
+            }
+        }
+        return response;
+    }
+
+    @PostMapping(path = "/account/request_account")
+    @Timed
+    public ResponseEntity requestAccount(@Valid @RequestBody ManagedUserVM managedUserVM) {
+
+        HttpHeaders textPlainHeaders = new HttpHeaders();
+
+        if (!captchaService.verifyCaptcha(managedUserVM.getCaptcha())) {
+            return new ResponseEntity<>(CAPTCHA_ERROR_MESSAGE, HttpStatus.BAD_REQUEST);
+        }
+
+        /**
+         * Check for existing users and Registration Requests.
+         */
+        return userRepository.findOneByLogin(managedUserVM.getLogin().toLowerCase())
+            //TODO check for existing registration requests!
+            .map(user -> new ResponseEntity<>("login already in use", textPlainHeaders, HttpStatus.BAD_REQUEST))
+            .orElseGet(() -> userRepository.findOneByEmail(managedUserVM.getEmail())
+                .map(user -> new ResponseEntity<>("email address already in use", textPlainHeaders, HttpStatus.BAD_REQUEST))
+                .orElseGet(() -> {
+                    RegistrationRequest rr = userService.createRegistrationRequest(managedUserVM.getLogin(), managedUserVM.getFirstName(), managedUserVM.getLastName(), managedUserVM.getEmail(),
+                        managedUserVM.getMobileTelephoneNumber(), managedUserVM.getCompanyId());
+
+                    mailService.sendRegistrationRequestUserEmail(rr);
+                    //TODO We need to send the admin email with the correct company.
+                    User user = userRepository.findOneByLogin("admin").get();
+                    mailService.sendRegistrationRequestAdminEmail(rr, user);
+
+                    return new ResponseEntity<>(HttpStatus.CREATED);
+                }));
+    }
+
+    @PostMapping(path = "/account/request_details")
+    public ResponseEntity getValidateKeyAndReturnRegistrationRequestDetails(@RequestBody String key){
+        HttpHeaders textPlainHeaders = new HttpHeaders();
+        return userService.validateRegistrationKey(key)
+            .map(registrationRequest -> new ResponseEntity<RegistrationRequest>(registrationRequest, textPlainHeaders, HttpStatus.OK))
+            .orElseGet(() -> {
+                return new ResponseEntity("Not found or expired", textPlainHeaders, HttpStatus.BAD_REQUEST);
+            });
+    }
+
+    @PostMapping(path = "/account/request_details_resend")
+    public ResponseEntity getRegistrationRequestDetails(@RequestBody String login){
+        HttpHeaders textPlainHeaders = new HttpHeaders();
+        return userService.getRegistrationRequest(login).map(registrationRequest -> new ResponseEntity<RegistrationRequest>(registrationRequest, textPlainHeaders, HttpStatus.OK)).orElseGet(() -> {
+            return new ResponseEntity("Not found or expired", textPlainHeaders, HttpStatus.BAD_REQUEST);
+        });
+    }
+
 }

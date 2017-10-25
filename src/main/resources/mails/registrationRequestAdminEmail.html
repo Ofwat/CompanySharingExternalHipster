@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="#{email.registration_request_user.title}">JHipster activation</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="shortcut icon" href="${baseUrl}/favicon.ico" />
+</head>
+<body>
+<p th:text="#{email.registration_request_user.greeting(${registrationRequest.login})}">
+    Dear
+</p>
+<p th:text="#{email.registration_request_user.text1}">
+    Your JHipster account has been created, please click on the URL below to activate it:
+</p>
+<p>
+    <a th:href="@{|${baseUrl}/#/pending-invites?key=${registrationRequest.registrationKey}|}"
+       th:text="|${registrationRequest.login}|">Request Link</a>
+</p>
+<p>
+    <span th:text="#{email.registration_request_user.text2}">Regards, </span>
+    <br/>
+    <em th:text="#{email.signature}">JHipster.</em>
+</p>
+</body>
+</html>

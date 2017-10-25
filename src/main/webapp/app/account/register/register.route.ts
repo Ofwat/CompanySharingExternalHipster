@@ -1,11 +1,11 @@
 import { Route } from '@angular/router';
 
 import { UserRouteAccessService } from '../../shared';
-import { RegisterComponent } from './register.component';
+import { RegisterInitComponent } from './init/init.component';
 
 export const registerRoute: Route = {
     path: 'register',
-    component: RegisterComponent,
+    component: RegisterInitComponent,
     data: {
         authorities: [],
         pageTitle: 'Registration'
