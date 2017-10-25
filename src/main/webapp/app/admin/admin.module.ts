@@ -6,13 +6,9 @@ import { OfwatUserMgmtDetailComponent } from './ofwat-user-management/ofwat-user
 import { OfwatUserMgmtPermissionsComponent } from './ofwat-user-management/ofwat-user-management-permissions.component';
 import { InviteUserComponent } from './invite-user/invite-user.component';
 import { InviteUser} from './invite-user/invite-user.service';
-<<<<<<< HEAD
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UserProfileService } from './user-profile/user-profile.service';
 import { MomentModule } from 'angular2-moment';
-=======
-
->>>>>>> aacdb7fc74a89be03ace6101deaf73b2dae0fc89
 /* jhipster-needle-add-admin-module-import - JHipster will add admin modules imports here */
 
 import {
@@ -41,11 +37,8 @@ import {
     OfwatPendingInviteResolvePagingParams,
     UserResolve,
     UserModalService,
-<<<<<<< HEAD
     PendingInvitesComponent,
     PendingInvitesResendComponent
-=======
->>>>>>> aacdb7fc74a89be03ace6101deaf73b2dae0fc89
 } from './';
 
 @NgModule({

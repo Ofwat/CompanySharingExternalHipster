@@ -6,9 +6,7 @@ import org.ehcache.config.builders.ResourcePoolsBuilder;
 import org.ehcache.expiry.Duration;
 import org.ehcache.expiry.Expirations;
 import org.ehcache.jsr107.Eh107Configuration;
-
 import java.util.concurrent.TimeUnit;
-
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.cache.JCacheManagerCustomizer;
@@ -46,14 +44,11 @@ public class CacheConfiguration {
             cm.createCache(uk.gov.ofwat.external.domain.User.class.getName() + ".companies", jcacheConfiguration);
             cm.createCache(uk.gov.ofwat.external.domain.Company.class.getName(), jcacheConfiguration);
             cm.createCache(uk.gov.ofwat.external.domain.Company.class.getName() + ".users", jcacheConfiguration);
-<<<<<<< HEAD
             cm.createCache(NotifyMessageTemplate.class.getName(), jcacheConfiguration);
             cm.createCache(uk.gov.ofwat.external.domain.RegistrationRequest.class.getName(), jcacheConfiguration);
-=======
             cm.createCache(uk.gov.ofwat.external.domain.DataCollection.class.getName(), jcacheConfiguration);
             cm.createCache(uk.gov.ofwat.external.domain.PublishingStatus.class.getName(), jcacheConfiguration);
             cm.createCache(uk.gov.ofwat.external.domain.DataBundle.class.getName(), jcacheConfiguration);
->>>>>>> aacdb7fc74a89be03ace6101deaf73b2dae0fc89
             // jhipster-needle-ehcache-add-entry
         };
     }

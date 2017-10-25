@@ -40,12 +40,9 @@ import {
         CompanySharingExternalAdminModule,
         CompanySharingExternalAccountModule,
         CompanySharingExternalEntityModule,
-<<<<<<< HEAD
-        MomentModule
-=======
+        MomentModule,
         CompanySharingExternalDataCollectionModule,
-        CompanySharingExternalDataBundleModule,
->>>>>>> aacdb7fc74a89be03ace6101deaf73b2dae0fc89
+        CompanySharingExternalDataBundleModule
         // jhipster-needle-angular-add-module JHipster will add new module here
     ],
     declarations: [

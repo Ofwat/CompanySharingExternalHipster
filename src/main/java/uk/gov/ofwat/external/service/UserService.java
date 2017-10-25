@@ -1,6 +1,5 @@
 package uk.gov.ofwat.external.service;
 
-<<<<<<< HEAD
 import org.hibernate.cfg.NotYetImplementedException;
 import uk.gov.ofwat.external.domain.Authority;
 import uk.gov.ofwat.external.domain.Company;
@@ -12,9 +11,6 @@ import uk.gov.ofwat.external.security.AuthoritiesConstants;
 import uk.gov.ofwat.external.security.SecurityUtils;
 import uk.gov.ofwat.external.service.util.RandomUtil;
 import uk.gov.ofwat.external.service.dto.UserDTO;
-
-=======
->>>>>>> aacdb7fc74a89be03ace6101deaf73b2dae0fc89
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -23,17 +19,9 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import uk.gov.ofwat.external.config.Constants;
-import uk.gov.ofwat.external.domain.Authority;
-import uk.gov.ofwat.external.domain.User;
 import uk.gov.ofwat.external.repository.AuthorityRepository;
 import uk.gov.ofwat.external.repository.PersistentTokenRepository;
 import uk.gov.ofwat.external.repository.UserRepository;
-import uk.gov.ofwat.external.security.AuthoritiesConstants;
-import uk.gov.ofwat.external.security.SecurityUtils;
-import uk.gov.ofwat.external.service.dto.UserDTO;
-import uk.gov.ofwat.external.service.util.RandomUtil;
-
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
