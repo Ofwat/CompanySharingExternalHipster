@@ -171,12 +171,23 @@ public class AccountResource {
             );
     }
 
-    /**
-     * GET  /activate : activate the registered user.
-     *
-     * @param key the activation key
-     * @return the ResponseEntity with status 200 (OK) and the activated user in body, or status 500 (Internal Server Error) if the user couldn't be activated
-     */
+    @PostMapping(path = "/resend_invite",
+        produces={MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_PLAIN_VALUE})
+    @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
+    public ResponseEntity inviteUser(@RequestBody String registrationRequestLogin) {
+        HttpHeaders textPlainHeaders = new HttpHeaders();
+        textPlainHeaders.setContentType(MediaType.TEXT_PLAIN);
+        return userService.resendRegistrationRequest(registrationRequestLogin).map(registrationRequest -> new ResponseEntity<String>(HttpStatus.OK))
+            .orElse(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
+    }
+
+        /**
+         * GET  /activate : activate the registered user.
+         *
+         * @param key the activation key
+         * @return the ResponseEntity with status 200 (OK) and the activated user in body, or status 500 (Internal Server Error) if the user couldn't be activated
+         */
     @GetMapping("/activate")
     @Timed
     public ResponseEntity<String> activateAccount(@RequestParam(value = "key") String key) {
@@ -414,8 +425,8 @@ public class AccountResource {
             });
     }
 
-    @GetMapping(path = "/account/request_details")
-    public ResponseEntity getRegistrationRequestDetails(@RequestParam String login){
+    @PostMapping(path = "/account/request_details_resend")
+    public ResponseEntity getRegistrationRequestDetails(@RequestBody String login){
         HttpHeaders textPlainHeaders = new HttpHeaders();
         return userService.getRegistrationRequest(login).map(registrationRequest -> new ResponseEntity<RegistrationRequest>(registrationRequest, textPlainHeaders, HttpStatus.OK)).orElseGet(() -> {
             return new ResponseEntity("Not found or expired", textPlainHeaders, HttpStatus.BAD_REQUEST);

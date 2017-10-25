@@ -8,6 +8,7 @@ import { ErrorHandlerInterceptor } from './errorhandler.interceptor';
 import { NotificationInterceptor } from './notification.interceptor';
 import { AccountVerificationInterceptor } from './account-verification.interceptor';
 import { Router } from '@angular/router';
+import { LoginService } from '../../account/login/login.service';
 
 export function interceptableFactory(
     backend: XHRBackend,

@@ -50,8 +50,10 @@ public class UserService {
 
     private final RegistrationRequestRepository registrationRequestRepository;
 
+    private final MailService mailService;
+
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, OTPService otpService, PersistentTokenRepository persistentTokenRepository,
-                       AuthorityRepository authorityRepository, CompanyRepository companyRepository, RegistrationRequestRepository registrationRequestRepository) {
+                       AuthorityRepository authorityRepository, CompanyRepository companyRepository, RegistrationRequestRepository registrationRequestRepository, MailService mailService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.otpService = otpService;
@@ -59,6 +61,7 @@ public class UserService {
         this.authorityRepository = authorityRepository;
         this.companyRepository = companyRepository;
         this.registrationRequestRepository = registrationRequestRepository;
+        this.mailService = mailService;
     }
 
     public Optional<User> activateRegistration(String key) {
@@ -370,6 +373,17 @@ public class UserService {
     public Optional<RegistrationRequest> getRegistrationRequest(String login){
         log.debug("Getting a registrationRequest details for user {}", login);
         return registrationRequestRepository.findOneByLogin(login);
+    }
+
+    public Optional<RegistrationRequest> resendRegistrationRequest(String login){
+        log.info("Resending registration request for login: {}", login);
+        return registrationRequestRepository.findOneByLogin(login).map( registrationRequest -> {
+            registrationRequest.setRegistrationKey(RandomUtil.generateActivationKey());
+            registrationRequest.setKeyCreated(Instant.now());
+            registrationRequest = registrationRequestRepository.save(registrationRequest);
+            mailService.sendRegistrationRequestApprovalEmail(registrationRequest);
+            return registrationRequest;
+        });
     }
 
 }

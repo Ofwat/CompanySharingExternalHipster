@@ -33,7 +33,7 @@ export const pendingInvitesRoute: Routes = [
         }
     },
     {
-        path: 'pending-invitest-resend/:login',
+        path: 'pending-invites-resend/:login',
         component: PendingInvitesResendComponent,
         data: {
             pageTitle: 'Resend Invitation Link'

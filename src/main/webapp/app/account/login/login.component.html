@@ -3,7 +3,7 @@
         <div class="column-full">
             <h1 class="heading-large">Sign in</h1>
             <div class="error-message" *ngIf="authenticationError">
-                <strong>Failed to sign in!</strong> Please check your credentials and try again.
+                <strong>Failed to sign in!</strong> Please check your credentials and try again. {{failureMessage}}
             </div>
         </div>
         <div class="">

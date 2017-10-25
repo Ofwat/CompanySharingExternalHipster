@@ -3,7 +3,7 @@ import { Component, AfterViewInit, Renderer, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { JhiEventManager } from 'ng-jhipster';
 import { LoginService } from './login.service';
-import {StateStorageService} from '../../shared/auth/state-storage.service';
+import { StateStorageService } from '../../shared/auth/state-storage.service';
 
 @Component({
     selector: 'jhi-login-modal',
@@ -15,6 +15,7 @@ export class LoginComponent implements AfterViewInit {
     rememberMe: boolean;
     username: string;
     credentials: any;
+    failureMessage: string;
 
     constructor(
         private eventManager: JhiEventManager,
@@ -60,8 +61,8 @@ export class LoginComponent implements AfterViewInit {
                 content: 'Sending Authentication Success'
             });
 
-            // // previousState was set in the authExpiredInterceptor before being redirected to login modal.
-            // // since login is succesful, go to stored previousState and clear previousState
+            // TODO previousState was set in the authExpiredInterceptor before being redirected to login modal.
+            // since login is succesful, go to stored previousState and clear previousState
             // const redirect = this.stateStorageService.getUrl();
             // if (redirect) {
             //     this.router.navigate([redirect]);
@@ -70,8 +71,9 @@ export class LoginComponent implements AfterViewInit {
             // TODO We are just going to redirect to user managment for the time being.
             this.router.navigate(['user-home']);
 
-        }).catch(() => {
+        }).catch((err) => {
             this.authenticationError = true;
+            this.failureMessage = this.stateStorageService.loginFailureCode;
         });
     }
 

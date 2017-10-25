@@ -15,6 +15,7 @@ export class PendingInvitesResendComponent implements OnInit, OnDestroy {
     request: RegistrationRequest;
     routeData: any;
     private subscription: Subscription;
+    resendSuccess: boolean = false;
 
     constructor(private registerService: Register,
                 private activatedRoute: ActivatedRoute,
@@ -33,19 +34,27 @@ export class PendingInvitesResendComponent implements OnInit, OnDestroy {
     load(login) {
         this.registerService.find(login).subscribe((registrationRequest) => {
             this.request = registrationRequest;
-        }, (res:ResponseWrapper) => this.onErrorLoadRequest(res.json));
+        }, (res: ResponseWrapper) => this.onErrorLoadRequest(res.json));
     }
 
     ngOnDestroy() {
         this.routeData.unsubscribe();
     }
 
-    onErrorLoadRequest(error){
+    onErrorLoadRequest(error) {
         this.alertService.error(error.message, null, null);
     }
 
-    registerChangeInInvites() {
-        //this.eventManager.subscribe('inviteListModification', (response) => this.loadAll());
+    resendInvitation(login: string) {
+        console.log('resending inv for ' + login);
+        this.registerService.resendInvite(login).subscribe((registrationRequest) => {
+            this.request = registrationRequest;
+            this.resendSuccess = true;
+        }, (res: ResponseWrapper) => this.onErrorResendInvitation(res.json));
+    }
+
+    onErrorResendInvitation(error) {
+        this.alertService.error(error.message, null, null);
     }
 
 }

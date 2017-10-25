@@ -154,6 +154,7 @@ public class MailService {
             String url = baseUrl  + "/#/reset/finish?key=" + user.getResetKey();
             personalisation.put("login", user.getLogin());
             personalisation.put("url", url);
+            personalisation.put("email", user.getEmail());
             notifyService.sendMessage(user, notifyMessageTemplate, personalisation);
             return notifyMessageTemplate;
         });

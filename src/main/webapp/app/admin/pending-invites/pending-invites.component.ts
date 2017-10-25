@@ -83,7 +83,7 @@ export class PendingInvitesComponent implements OnInit, OnDestroy {
         this.selectedRegistrationRequest = registrationRequest;
     }
 
-    deleteAccount(registrationRequest: RegistrationRequest){
+    deleteAccount(registrationRequest: RegistrationRequest) {
         // Delete the registration request.
         this.userService.deleteInvite(registrationRequest.login).subscribe(
             (res: ResponseWrapper) => {
@@ -93,7 +93,7 @@ export class PendingInvitesComponent implements OnInit, OnDestroy {
             }, ( res: ResponseWrapper ) => this.deleteAccountError( res.json ));
     }
 
-    deleteAccountError(data: any){
+    deleteAccountError(data: any) {
         console.log( 'Delete pending account error!' );
         console.log( data );
     }
@@ -197,6 +197,10 @@ export class PendingInvitesComponent implements OnInit, OnDestroy {
         console.log('Calling the alert service with error:');
         console.log(error);
         this.alertService.error(error.error, error.message, null);
+    }
+
+    resendActivationLink(registrationRequest:RegistrationRequest) {
+        console.log('Resending link for ' + registrationRequest.login);
     }
 
 /*    clickMe() {

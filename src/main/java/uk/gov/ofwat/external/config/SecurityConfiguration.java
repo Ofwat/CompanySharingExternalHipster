@@ -73,6 +73,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
+    public CompanySharingAjaxAuthenticationFailureHandler companySharingAjaxAuthenticationFailureHandler() {
+        return new CompanySharingAjaxAuthenticationFailureHandler();
+    }
+
+    @Bean
     public AjaxAuthenticationFailureHandler ajaxAuthenticationFailureHandler() {
         return new AjaxAuthenticationFailureHandler();
     }
@@ -129,7 +134,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .formLogin()
             .loginProcessingUrl("/api/authentication")
             .successHandler(ajaxAuthenticationSuccessHandler())
-            .failureHandler(ajaxAuthenticationFailureHandler())
+            .failureHandler(companySharingAjaxAuthenticationFailureHandler())
             .usernameParameter("j_username")
             .passwordParameter("j_password")
             .permitAll()
@@ -153,7 +158,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/api/account/verify_otp").permitAll()
             .antMatchers("/api/account/request_account").permitAll()
             .antMatchers("/api/account/request_details").permitAll()
-            .antMatchers("/api/account/invite").hasAuthority(AuthoritiesConstants.ADMIN)
+            .antMatchers("/api/account/request_details_resend").hasAnyAuthority(AuthoritiesConstants.ADMIN)
+            .antMatchers("/api/invite").hasAuthority(AuthoritiesConstants.ADMIN)
+            .antMatchers("/api/resend_invite").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/api/users/pending_accounts/**").hasAuthority(AuthoritiesConstants.ADMIN)
 /*            .antMatchers("/api/account/verify_captcha").permitAll()*/
             .antMatchers("/api/profile-info").permitAll()

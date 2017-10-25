@@ -36,6 +36,7 @@
                     <th></th>
                     <th></th>
                     <th></th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody *ngIf ="requests">
@@ -46,6 +47,7 @@
                     <td><span *ngIf="request.adminApproved" class="text-pending">Pending user activation</span></td>
 <!--                    <td><span class="multiple-choice" ><input style="opacity: 1; top:-20px;" id="testField{{user.id}}" name="testField{{user.id}}" [ngModel]="user.enabled" type="checkbox" class="" (click)="checkbox(user)"></span></td>-->
                     <td><span *ngIf="!request.adminApproved" (click)="confirmApproveAccount(request)">Approve</span></td>
+                    <td><span class="page-link" [routerLink]="['../pending-invites-resend', request.login]">Resend Invitation</span></td>
                     <td><span (click)="confirmDeleteAccount(request)">Delete</span></td>
                 </tr>
             </tbody>

@@ -5,6 +5,8 @@ import { AuthServerProvider } from '../../shared/auth/auth-session.service';
 @Injectable()
 export class LoginService {
 
+    loginFailureCode: string;
+
     constructor(
         private principal: Principal,
         private authServerProvider: AuthServerProvider

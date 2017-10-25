@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import {ResponseWrapper} from '../../shared/model/response-wrapper.model';
-import {RegistrationRequest} from "../../shared/registration-request/registration-request.model";
+import {RegistrationRequest} from '../../shared/registration-request/registration-request.model';
 
 @Injectable()
 export class Register {
@@ -10,7 +10,7 @@ export class Register {
     constructor(private http: Http) {}
 
     find(login: string): Observable<RegistrationRequest> {
-        return this.http.get(`api/account/request_details/${login}`).map((res: Response) => res.json());
+        return this.http.post('api/account/request_details_resend/', login).map((res: Response) => res.json());
     }
 
     save(account: any): Observable<any> {
@@ -37,7 +37,12 @@ export class Register {
      * @returns {Observable<ResponseWrapper>}
      */
     requestAccountDetails(key: string): Observable<ResponseWrapper> {
+        console.log('Requesting with Key: ' + key);
         return this.http.post('api/account/request_details', key).map((res: Response) => this.convertResponse(res));
+    }
+
+    resendInvite(login: string){
+        return this.http.post('api/resend_invite', login).map((res: Response) => res.json());
     }
 
     private convertResponse(res: Response): ResponseWrapper {
