@@ -22,3 +22,7 @@ export * from './shared-common.module';
 export * from './shared.module';
 export * from './registration-request/registration-request.model';
 export { CompanySelectComponent } from './company-select/company-select.component';
+export * from './data-collection/data-collection.model';
+export * from './data-collection/data-collection.service';
+export * from './data-bundle/data-bundle.model';
+export * from './data-bundle/data-bundle.service';

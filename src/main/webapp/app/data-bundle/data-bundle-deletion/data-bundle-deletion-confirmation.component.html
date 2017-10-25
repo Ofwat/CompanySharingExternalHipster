@@ -1,0 +1,22 @@
+<div>
+    <div >
+        <h2 class="heading-medium">Confirm Data Collection Deletion</h2>
+        <div class="alert alert-success" *ngIf="dataBundle">
+            <strong>Delete this Data Collection?</strong>
+            <strong>{{dataBundle.name}}</strong>
+        </div>
+
+    </div>
+    <div class="col-md-8 offset-md-2" *ngIf="dataBundle">
+        <!--<button class="button float-right" [routerLink]="['/data-bundle-deleted', dataBundle.name]">-->
+            <!--<span class="fa fa-plus"></span> <span>Delete Data Collection</span>-->
+        <!--</button>-->
+        <button class="button float-right" (click)="delete(dataBundle.id)">
+            <span class="fa fa-plus"></span> <span>Delete Data Collection</span>
+        </button>
+        <button class="button button-secondary" [routerLink]="['/data-bundle-detail', dataBundle.id]">
+            <span class="fa fa-plus"></span> <span>Back to Data Collection Detail</span>
+        </button>
+        <p></p>
+    </div>
+</div>

@@ -160,4 +160,8 @@ export class OfwatUserMgmtComponent implements OnInit, OnDestroy {
         this.alertService.error('404', {}, null);
         this.alertService.success('Success', {}, null);
     }
+
+    delete() {
+        console.log('******************* delete pressed *******************');
+    }
 }

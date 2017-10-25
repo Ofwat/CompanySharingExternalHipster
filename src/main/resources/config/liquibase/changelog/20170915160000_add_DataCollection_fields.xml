@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <property name="now" value="now()" dbms="h2"/>
+    <property name="now" value="now()" dbms="mysql"/>
+    <property name="autoIncrement" value="true"/>
+
+    <changeSet id="20170915160000-1" author="aedgar">
+        <addColumn tableName="data_collection">
+            <column name="publishingStatus" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="20170915160000-2" author="aedgar">
+        <addColumn tableName="data_collection">
+            <column name="owner" type="bigint">
+                <constraints nullable="false" />
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="20170915160000-3" author="aedgar">
+        <addColumn tableName="data_collection">
+            <column name="reviewer" type="bigint">
+                <constraints nullable="true" />
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="20170915160000-4" author="aedgar">
+        <addColumn tableName="data_collection">
+            <column name="description" type="clob"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="20170915160000-5" author="aedgar">
+        <addColumn tableName="data_collection">
+            <column name="guidance" type="clob"/>
+        </addColumn>
+    </changeSet>
+
+    <!--<changeSet id="20170915160000-6" author="aedgar">-->
+        <!--<addColumn tableName="data_collection">-->
+            <!--<column name="furtherInformation" type=""/>-->
+        <!--</addColumn>-->
+    <!--</changeSet>-->
+
+    <!--<changeSet id="20170915160000-7" author="aedgar">-->
+        <!--<addColumn tableName="data_collection">-->
+            <!--<column name="dataBundles" type="varchar(255)"/>-->
+        <!--</addColumn>-->
+    <!--</changeSet>-->
+
+    <changeSet id="20170915160000-6" author="aedgar">
+        <addColumn tableName="data_collection">
+            <column name="created" type="timestamp" defaultValueDate="${now}"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="20170915160000-7" author="aedgar">
+        <addColumn tableName="data_collection">
+            <column name="createdBy" type="bigint">
+                <constraints nullable="false" />
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="20170915160000-8" author="aedgar">
+        <addColumn tableName="data_collection">
+            <column name="modified" type="timestamp" defaultValueDate="${now}"/>
+        </addColumn>
+    </changeSet>
+
+
+    <changeSet id="20170915160000-9" author="aedgar">
+        <addColumn tableName="data_collection">
+            <column name="modifiedBy" type="bigint">
+                <constraints nullable="false" />
+            </column>
+        </addColumn>
+    </changeSet>
+
+</databaseChangeLog>

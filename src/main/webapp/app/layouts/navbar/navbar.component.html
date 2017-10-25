@@ -28,6 +28,12 @@
                     </span>
                 </a>
                 <ul class="dropdown-menu" ngbDropdownMenu>
+                    <li>
+                        <a class="dropdown-item" routerLink="data-bundle" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                            <i class="fa fa-fw fa-asterisk" aria-hidden="true"></i>
+                            <span>Data Bundle</span>
+                        </a>
+                    </li>
                     &lt;!&ndash; jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here &ndash;&gt;
                 </ul>
             </li>
@@ -170,7 +176,7 @@
             <!-- If it is an ofwat employee display a select list of all companies -->
             <!-- Else display only for the company the user is associated with. -->
             <!--<a href='url-to-page-2'>{{isOfwatEmployee()}}</a>-->
-            <a *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_OFWAT_USER', 'ROLE_COMPANY_ADMIN', 'ROLE_USER', 'ROLE_COMPANY_USER']" href='' [routerLink]="['data-collection']">Data collections</a></li>
+            <a *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_OFWAT_USER', 'ROLE_COMPANY_ADMIN', 'ROLE_USER', 'ROLE_COMPANY_USER']" href='' [routerLink]="['data-collection-management']">Data collections</a></li>
         </li>
         <li *ngSwitchCase="true">
             <a [routerLink]="['user-profile']">{{userName}}</a>
