@@ -78,4 +78,11 @@ public class DataBundleService {
         log.debug("Request to delete DataBundle : {}", id);
         dataBundleRepository.delete(id);
     }
+
+    public Long getMaxOrderIndex(Long dataCollectionId) {
+        log.debug("Request to get Max OrderIndex from DataBundle");
+        return dataBundleRepository.getMaxOrderIndex(dataCollectionId);
+    }
+
+
 }

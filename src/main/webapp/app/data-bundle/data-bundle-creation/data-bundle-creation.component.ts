@@ -23,6 +23,8 @@ export class DataBundleCreationComponent implements OnInit {
     dataCollection: DataCollection;
     ownerId: any;
     reviewerId: any;
+    deadlineDate: any;
+    currentDate: any;
 
     constructor(
         private alertService: JhiAlertService,
@@ -39,7 +41,7 @@ export class DataBundleCreationComponent implements OnInit {
         this.errorDataBundleExists = false;
         this.dataBundle = {};
         this.loadUsers();
-
+        this.currentDate = new Date();
         this.subscription = this.route.params.subscribe((params) => {
             this.loadDataCollection(params['dataCollectionId']);
         });
@@ -75,8 +77,6 @@ export class DataBundleCreationComponent implements OnInit {
     }
 
     create() {
-        // let ownerId = parseInt(this.dataBundle.owner);
-        // let reviewerId = parseInt(this.dataBundle.reviewer);
         let owner = this.userMap.get(parseInt(this.ownerId));
         this.dataBundle.ownerId = owner.id;
         this.dataBundle.ownerFirstName = owner.firstName;

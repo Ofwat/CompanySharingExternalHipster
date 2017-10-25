@@ -110,19 +110,6 @@ public class DataCollection extends AbstractAuditingEntity implements Serializab
         this.dataBundles = dataBundles;
     }
 
-    public DataCollection() {
-    }
-
-    public DataCollection(String name, PublishingStatus publishingStatus, User owner, User reviewer, String description, String guidance, DataBundle[] dataBundles) {
-        this.name = name;
-        this.publishingStatus = publishingStatus;
-        this.owner = owner;
-        this.reviewer = reviewer;
-        this.description = description;
-        this.guidance = guidance;
-        this.dataBundles = dataBundles;
-    }
-
     public boolean equals(Object object) {
         if (this == object) return true;
         if (!(object instanceof DataCollection)) return false;
@@ -159,8 +146,8 @@ public class DataCollection extends AbstractAuditingEntity implements Serializab
         return result;
     }
 
-    @java.lang.Override
-    public java.lang.String toString() {
+    @Override
+    public String toString() {
         return "DataCollection{" +
             "id=" + id +
             ", name='" + name + '\'' +

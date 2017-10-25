@@ -80,15 +80,17 @@ public class DataCollectionService {
      *  @return the entity
      */
     @Transactional(readOnly = true)
-    public Optional<DataCollection> findOne(Long id) {
+    public DataCollectionDTO findOne(Long id) {
         log.debug("Request to get DataCollection : {}", id);
-        return Optional.of(dataCollectionRepository.findOne((Long)id));
+        DataCollection dataCollection = dataCollectionRepository.findOne(id);
+        return dataCollectionMapper.toDto(dataCollection);
     }
 
     @Transactional(readOnly = true)
-    public Optional<DataCollection> findOneByName(String name) {
+    public DataCollectionDTO findOneByName(String name) {
         log.debug("Request to get DataCollection : {}", name);
-        return dataCollectionRepository.findOneByName(name);
+        DataCollection dataCollection = dataCollectionRepository.findOneByName(name);
+        return dataCollectionMapper.toDto(dataCollection);
     }
 
     /**

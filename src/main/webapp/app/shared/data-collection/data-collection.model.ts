@@ -10,6 +10,7 @@ export class DataCollection {
     public createdBy?: string;
     public lastModifiedDate?: any;
     public lastModifiedBy?: string;
+    public dataBundles?: any[];
 
     constructor(
         id?: any,
@@ -22,7 +23,8 @@ export class DataCollection {
         createdDate?: any,
         createdBy?: any,
         lastModifiedDate?: any,
-        lastModifiedBy?: any
+        lastModifiedBy?: any,
+        dataBundles?: any[]
     ) {
         this.id = id ? id : null;
         this.name = name ? name : null;
@@ -35,5 +37,6 @@ export class DataCollection {
         this.createdBy = createdBy ? createdBy : null;
         this.lastModifiedDate = lastModifiedDate ? lastModifiedDate : null;
         this.lastModifiedBy = lastModifiedBy ? lastModifiedBy : null;
+        this.dataBundles = dataBundles ? dataBundles : null;
     }
 }

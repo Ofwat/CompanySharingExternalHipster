@@ -13,6 +13,6 @@ import java.util.Optional;
 @SuppressWarnings("unused")
 @Repository
 public interface DataCollectionRepository extends JpaRepository<DataCollection,Long> {
-    Optional<DataCollection> findOneByName(String name);
+    DataCollection findOneByName(String name);
     void deleteByName(String name);
 }

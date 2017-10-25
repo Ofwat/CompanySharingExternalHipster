@@ -1,6 +1,8 @@
 package uk.gov.ofwat.external.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import uk.gov.ofwat.external.domain.PublishingStatus;
+import uk.gov.ofwat.external.repository.PublishingStatusRepository;
 import uk.gov.ofwat.external.service.DataBundleService;
 import uk.gov.ofwat.external.web.rest.util.HeaderUtil;
 import uk.gov.ofwat.external.web.rest.util.PaginationUtil;
@@ -35,9 +37,11 @@ public class DataBundleResource {
     private static final String ENTITY_NAME = "dataBundle";
 
     private final DataBundleService dataBundleService;
+    private final PublishingStatusRepository publishingStatusRepository;
 
-    public DataBundleResource(DataBundleService dataBundleService) {
+    public DataBundleResource(DataBundleService dataBundleService, PublishingStatusRepository publishingStatusRepository) {
         this.dataBundleService = dataBundleService;
+        this.publishingStatusRepository = publishingStatusRepository;
     }
 
     /**
@@ -54,6 +58,19 @@ public class DataBundleResource {
         if (dataBundleDTO.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new dataBundle cannot already have an ID")).body(null);
         }
+
+        Long maxOrderIndex = dataBundleService.getMaxOrderIndex(dataBundleDTO.getDataCollectionId());
+        log.error("maxOrderIndex = " + maxOrderIndex);
+        Optional<PublishingStatus> optionalPublishingStatus = publishingStatusRepository.findOneByStatus("DRAFT");
+        if (!optionalPublishingStatus.isPresent()) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "publishingStatusMissing", "Publishing status 'Draft' not found in database."))
+                .body(null);
+        }
+        dataBundleDTO.setStatusId(optionalPublishingStatus.get().getId());
+        dataBundleDTO.setStatusStatus(optionalPublishingStatus.get().getStatus());
+        dataBundleDTO.setOrderIndex(new Long(maxOrderIndex+1));
+
         DataBundleDTO result = dataBundleService.save(dataBundleDTO);
         return ResponseEntity.created(new URI("/api/data-bundles/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))

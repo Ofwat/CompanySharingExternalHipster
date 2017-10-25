@@ -13,25 +13,19 @@ public interface DataBundleMapper extends EntityMapper <DataBundleDTO, DataBundl
 
     @Mapping(source = "status.id", target = "statusId")
     @Mapping(source = "status.status", target = "statusStatus")
-
     @Mapping(source = "owner.id", target = "ownerId")
     @Mapping(source = "owner.firstName", target = "ownerFirstName")
     @Mapping(source = "owner.lastName", target = "ownerLastName")
-
     @Mapping(source = "reviewer.id", target = "reviewerId")
     @Mapping(source = "reviewer.firstName", target = "reviewerFirstName")
     @Mapping(source = "reviewer.lastName", target = "reviewerLastName")
-
     @Mapping(source = "dataCollection.id", target = "dataCollectionId")
     @Mapping(source = "dataCollection.name", target = "dataCollectionName")
     DataBundleDTO toDto(DataBundle dataBundle);
 
     @Mapping(source = "statusId", target = "status")
-
     @Mapping(source = "ownerId", target = "owner")
-
     @Mapping(source = "reviewerId", target = "reviewer")
-
     @Mapping(source = "dataCollectionId", target = "dataCollection")
     DataBundle toEntity(DataBundleDTO dataBundleDTO);
     default DataBundle fromId(Long id) {

@@ -68,11 +68,10 @@ public class DataCollectionResource {
         if (dataCollectionDTO.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new dataCollection cannot already have an ID")).body(null);
         }
-        else if (dataCollectionService.findOneByName(dataCollectionDTO.getName()).isPresent()) {
+        else if (Optional.ofNullable(dataCollectionService.findOneByName(dataCollectionDTO.getName())).isPresent()) {
             return ResponseEntity.status(HttpStatus.CONFLICT).headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "datacollectionexists", "DataCollection is already in use")).body(null);
         }
-        ResponseEntity.
-        PublishingStatus publishingStatus = null;
+
         Optional<PublishingStatus> optionalPublishingStatus = publishingStatusRepository.findOneByStatus("DRAFT");
         if (!optionalPublishingStatus.isPresent()) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -134,7 +133,8 @@ public class DataCollectionResource {
     @Timed
     public ResponseEntity<DataCollectionDTO> getDataCollection(@PathVariable Long id) {
         log.debug("REST request to get DataCollection : {}", id);
-        return ResponseUtil.wrapOrNotFound(dataCollectionService.findOne(id).map(a -> new DataCollectionDTO(a)));
+        DataCollectionDTO dataCollectionDTO = dataCollectionService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(dataCollectionDTO));
     }
 
     /**
@@ -143,7 +143,8 @@ public class DataCollectionResource {
     @Timed
     public ResponseEntity<DataCollectionDTO> getDataCollectionByName(@RequestParam("name") String name) {
         log.debug("REST request to get DataCollection : {" + name + "}");
-        return ResponseUtil.wrapOrNotFound(dataCollectionService.findOneByName(name).map(DataCollectionDTO::new));
+        DataCollectionDTO dataCollectionDTO = dataCollectionService.findOneByName(name);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(dataCollectionDTO));
     }
 
     /**

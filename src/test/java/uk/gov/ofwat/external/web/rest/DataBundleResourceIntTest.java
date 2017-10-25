@@ -4,8 +4,8 @@ import uk.gov.ofwat.external.CompanySharingExternalApp;
 
 import uk.gov.ofwat.external.domain.DataBundle;
 import uk.gov.ofwat.external.domain.PublishingStatus;
-import uk.gov.ofwat.external.domain.JhiUser;
-import uk.gov.ofwat.external.domain.JhiUser;
+import uk.gov.ofwat.external.domain.User;
+import uk.gov.ofwat.external.domain.User;
 import uk.gov.ofwat.external.domain.DataCollection;
 import uk.gov.ofwat.external.repository.DataBundleRepository;
 import uk.gov.ofwat.external.service.DataBundleService;
@@ -111,12 +111,12 @@ public class DataBundleResourceIntTest {
         em.flush();
         dataBundle.setStatus(status);
         // Add required entity
-        JhiUser owner = JhiUserResourceIntTest.createEntity(em);
+        User owner = UserResourceIntTest.createEntity(em);
         em.persist(owner);
         em.flush();
         dataBundle.setOwner(owner);
         // Add required entity
-        JhiUser reviewer = JhiUserResourceIntTest.createEntity(em);
+        User reviewer = UserResourceIntTest.createEntity(em);
         em.persist(reviewer);
         em.flush();
         dataBundle.setReviewer(reviewer);

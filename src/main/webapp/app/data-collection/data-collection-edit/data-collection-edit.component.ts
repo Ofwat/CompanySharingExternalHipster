@@ -10,7 +10,7 @@ import {ActivatedRoute} from "@angular/router";
 @Component({
     selector: 'jhi-data-collection-edit',
     templateUrl: './data-collection-edit.component.html',
-    providers: [DataCollectionService]
+    providers: [DataCollectionService, UserService]
 })
 export class DataCollectionEditComponent implements OnInit {
 
@@ -20,6 +20,8 @@ export class DataCollectionEditComponent implements OnInit {
     dataCollection: DataCollection;
     users: User[];
     userMap: Map<number, {}>;
+    ownerId: any;
+    reviewerId: any;
     private subscription: Subscription;
 
     constructor(
@@ -35,11 +37,11 @@ export class DataCollectionEditComponent implements OnInit {
         this.error = false;
         this.errorDataCollectionExists = false;
         this.dataCollection = {};
+        this.loadUsers();
         this.subscription = this.route.params.subscribe((params) => {
             this.load(params['id']);
         });
 
-        this.loadUsers();
     }
 
     ngAfterViewInit() {
@@ -71,11 +73,12 @@ export class DataCollectionEditComponent implements OnInit {
     }
 
     save() {
-        let ownerId = parseInt(this.dataCollection.owner.id);
-        let reviewerId = parseInt(this.dataCollection.reviewer.id);
-        this.dataCollection.owner = this.userMap.get(ownerId);
-        this.dataCollection.reviewer = this.userMap.get(reviewerId);
-
+        if (this.ownerId) {
+            this.dataCollection.owner = this.userMap.get(parseInt(this.ownerId));
+        }
+        if (this.reviewerId) {
+            this.dataCollection.reviewer = this.userMap.get(parseInt(this.reviewerId));
+        }
         this.dataCollectionService.update(this.dataCollection).subscribe(
             response => {
                 console.log("success" + response.status);

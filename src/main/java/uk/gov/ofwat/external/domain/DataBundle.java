@@ -36,7 +36,8 @@ public class DataBundle extends AbstractAuditingEntity implements Serializable {
     @Column(name = "default_deadline")
     private LocalDate defaultDeadline;
 
-    @Column(name = "orderIndex")
+    @NotNull
+    @Column(name = "orderIndex", nullable = false)
     private Long orderIndex;
 
     @ManyToOne(optional = false)
@@ -52,7 +53,7 @@ public class DataBundle extends AbstractAuditingEntity implements Serializable {
     private User reviewer;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name="DATA_COLLECTION_ID")
+    @JoinColumn(name="DATA_COLLECTION_ID", nullable=false)
     @NotNull
     private DataCollection dataCollection;
 
@@ -214,8 +215,8 @@ public class DataBundle extends AbstractAuditingEntity implements Serializable {
         result = 31 * result + (getDefaultDeadline() != null ? getDefaultDeadline().hashCode() : 0);
         result = 31 * result + (getOrderIndex() != null ? getOrderIndex().hashCode() : 0);
         result = 31 * result + (getStatus() != null ? getStatus().hashCode() : 0);
-        result = 31 * result + (getOwner() != null ? getOwner().hashCode() : 0);
-        result = 31 * result + (getReviewer() != null ? getReviewer().hashCode() : 0);
+//        result = 31 * result + (getOwner() != null ? getOwner().hashCode() : 0);
+//        result = 31 * result + (getReviewer() != null ? getReviewer().hashCode() : 0);
         result = 31 * result + (getDataCollection() != null ? getDataCollection().hashCode() : 0);
         return result;
     }
@@ -232,7 +233,7 @@ public class DataBundle extends AbstractAuditingEntity implements Serializable {
             ", status=" + status +
             ", owner=" + owner +
             ", reviewer=" + reviewer +
-            ", dataCollection=" + dataCollection +
+            ", dataCollection.id=" + dataCollection.getId() +
             '}';
     }
 }
