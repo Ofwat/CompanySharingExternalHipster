@@ -23,7 +23,6 @@ export class DataBundleCreationComponent implements OnInit {
     dataCollection: DataCollection;
     ownerId: any;
     reviewerId: any;
-    deadlineDate: any;
     currentDate: any;
 
     constructor(

@@ -5,79 +5,97 @@
             <h2 class="heading-medium">
                 <span>Data Collection</span>
             </h2>
-            <!--<dl class="row-md jh-entity-details">-->
-            <dl class="govuk-check-your-answers cya-questions-short">
-                <div>
-                    <dt class="cya-question">name</dt>
-                    <dd class="cya-answer">{{dataCollection.name}}</dd>
-                </div>
-                <div>
-                    <dt class="cya-question">Publishing Status</dt>
-                    <dd class="cya-answer">{{dataCollection?.publishingStatus?.status}}</dd>
-                </div>
-                <div>
-                    <dt class="cya-question">Owner</dt>
-                    <dd class="cya-answer"><div *ngIf="dataCollection.owner">{{dataCollection.owner.firstName}} {{dataCollection.owner.lastName}}</div></dd>
-                </div>
-                <div>
-                    <dt class="cya-question">Reviewer</dt>
-                    <dd class="cya-answer"><div *ngIf="dataCollection.reviewer">{{dataCollection.reviewer.firstName}} {{dataCollection.reviewer.lastName}}</div></dd>
-                </div>
-                <div>
-                    <dt class="cya-question">Description</dt>
-                    <dd class="cya-answer">{{dataCollection.description}}</dd>
-                </div>
-                <div>
-                    <dt class="cya-question">Guidance</dt>
-                    <dd class="cya-answer">{{dataCollection.guidance}}</dd>
-                </div>
-                <div>
-                    <dt class="cya-question">Created</dt>
-                    <dd class="cya-answer">{{dataCollection.createdDate | date:'dd LLLL yyyy HH:mm'}}</dd>
-                </div>
-                <div>
-                    <dt class="cya-question">Created by</dt>
-                    <dd class="cya-answer">{{dataCollection.createdBy}}</dd>
-                </div>
-                <div>
-                    <dt class="cya-question">Last modified</dt>
-                    <dd class="cya-answer">{{dataCollection.lastModifiedDate | date:'dd LLLL yyyy HH:mm'}}</dd>
-                </div>
-                <div>
-                    <dt class="cya-question">Last modified by</dt>
-                    <dd class="cya-answer"><div *ngIf="dataCollection.lastModifiedBy">{{dataCollection.lastModifiedBy}}</div></dd>
-                </div>
-            </dl>
 
-            <h2 class="heading-medium">
-                <span>Data Bundles</span>
-            </h2>
-            <table class="govuk-check-your-answers cya-questions-short">
-                <tr>
-                    <th class="cya-question">Name</th>
-                    <th class="cya-question">Description</th>
-                </tr>
-                <tr *ngFor="let db of dataCollection.dataBundles">
-                    <td class="cya-answer">{{db.name}}</td>
-                    <td class="cya-answer">{{db.description}}</td>
-                </tr>
-            </table>
+            <div class="form-group">
+                <dl class="govuk-check-your-answers cya-questions-short">
+                    <div>
+                        <dt class="cya-question">Name</dt>
+                        <dd class="cya-answer">{{dataCollection.name}}</dd>
+                    </div>
+                    <div>
+                        <dt class="cya-question">Publishing Status</dt>
+                        <dd class="cya-answer">{{dataCollection?.publishingStatus?.status}}</dd>
+                    </div>
+                    <div>
+                        <dt class="cya-question">Owner</dt>
+                        <dd class="cya-answer"><div *ngIf="dataCollection.owner">{{dataCollection.owner.firstName}} {{dataCollection.owner.lastName}}</div></dd>
+                    </div>
+                    <div>
+                        <dt class="cya-question">Reviewer</dt>
+                        <dd class="cya-answer"><div *ngIf="dataCollection.reviewer">{{dataCollection.reviewer.firstName}} {{dataCollection.reviewer.lastName}}</div></dd>
+                    </div>
+                    <div>
+                        <dt class="cya-question">Description</dt>
+                        <dd class="cya-answer">{{dataCollection.description}}</dd>
+                    </div>
+                    <div>
+                        <dt class="cya-question">Guidance</dt>
+                        <dd class="cya-answer">{{dataCollection.guidance}}</dd>
+                    </div>
+                    <div>
+                        <dt class="cya-question">Created</dt>
+                        <dd class="cya-answer">{{dataCollection.createdDate | date:'dd LLLL yyyy HH:mm'}}</dd>
+                    </div>
+                    <div>
+                        <dt class="cya-question">Created by</dt>
+                        <dd class="cya-answer">{{dataCollection.createdBy}}</dd>
+                    </div>
+                    <div>
+                        <dt class="cya-question">Last modified</dt>
+                        <dd class="cya-answer">{{dataCollection.lastModifiedDate | date:'dd LLLL yyyy HH:mm'}}</dd>
+                    </div>
+                    <div>
+                        <dt class="cya-question">Last modified by</dt>
+                        <dd class="cya-answer"><div *ngIf="dataCollection.lastModifiedBy">{{dataCollection.lastModifiedBy}}</div></dd>
+                    </div>
+                </dl>
+            </div>
 
-            <button type="submit"
-                    [routerLink]="['/data-collection-edit', dataCollection.id]"
-                    class="button float-right">
-                <span class="fa fa-arrow-left"></span>&nbsp;<span>Edit</span>
-            </button>
-            <button type="submit"
-                    [routerLink]="['/data-collection-deletion-confirmation', dataCollection.id]"
-                    class="button float-right">
-                <span class="fa fa-arrow-left"></span>&nbsp;<span>Delete</span>
-            </button>
-            <button type="submit"
-                    routerLink="/data-collection-management"
-                    class="button button-secondary">
-                <span class="fa fa-arrow-left"></span>&nbsp;<span>Back</span>
-            </button>
+            <div class="form-group">
+                <button type="button"
+                        [routerLink]="['/data-collection-edit', dataCollection.id]"
+                        class="button float-right">
+                    <span class="fa fa-arrow-left"></span>&nbsp;<span>Edit</span>
+                </button>
+                <button type="button"
+                        [routerLink]="['/data-collection-deletion-confirmation', dataCollection.id]"
+                        class="button float-right">
+                    <span class="fa fa-arrow-left"></span>&nbsp;<span>Delete</span>
+                </button>
+            </div>
+
+            <h2 class="heading-medium">Data Bundles</h2>
+
+            <div class="form-group">
+                <dl class="govuk-check-your-answers cya-questions-short">
+                    <div>
+                        <dt class="cya-question">Name</dt>
+                        <dt class="cya-question">Description</dt>
+                        <dt class="cya-question"></dt>
+                    </div>
+                    <div *ngFor="let db of dataCollection.dataBundles">
+                        <dd class="cya-answer">{{db.name}}</dd>
+                        <dd class="cya-answer">{{db.description}}</dd>
+                        <dd class="cya-answer"><a href="" [routerLink]="['/data-bundle-detail', db.id]">Details</a></dd>
+                    </div>
+                </dl>
+            </div>
+
+            <div class="form-group">
+                <button type="button"
+                    class="button float-right"
+                    [routerLink]="['/data-bundle-creation', dataCollection.id]">
+                    <span>Add Data Bundle</span>
+                </button>
+            </div>
+
+            <div class="form-group">
+                <button type="button"
+                        routerLink="/data-collection-management"
+                        class="button button-secondary">
+                    <span class="fa fa-arrow-left"></span>&nbsp;<span>Back</span>
+                </button>
+            </div>
         </div>
     </div>
 </div>

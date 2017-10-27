@@ -1,20 +1,21 @@
 <div>
     <div>
-        <h2 class="heading-medium">Edit Data Collection</h2>
+        <h2 class="heading-medium">Edit Data Bundle</h2>
+        <h3 class="heading-small">Data Collection: {{dataBundle.dataCollectionName}}</h3>
 
         <div class="alert alert-success" *ngIf="success">
-            <strong>Data Collection edited</strong>
-            <button type="button" class="button button-secondary" [routerLink]="['/data-bundle-management']"><span class="font-medium">Back to Data Collections</span></button>
+            <strong>Data Bundle edited</strong>
+            <button type="button" class="button button-secondary" [routerLink]="['/data-bundle-management']"><span class="font-medium">Back to Data Bundles</span></button>
         </div>
 
         <div class="alert alert-danger" *ngIf="error">
-            <strong>Data Collection edit failed!</strong> Please try again later.
-            <button type="button" class="button button-secondary" [routerLink]="['/data-bundle-management']"><span class="font-medium">Back to Data Collections</span></button>
+            <strong>Data Bundle edit failed!</strong> Please try again later.
+            <button type="button" class="button button-secondary" [routerLink]="['/data-bundle-management']"><span class="font-medium">Back to Data Bundles</span></button>
         </div>
 
         <div class="alert alert-danger" *ngIf="errorDataBundleExists">
-            <strong>Data Collection name '{{dataBundle.name}}' is already in use!</strong> Please choose another one.
-            <button type="button" class="button button-secondary" [routerLink]="['/data-bundle-management']"><span class="font-medium">Back to Data Collections</span></button>
+            <strong>Data Bundle name '{{dataBundle.name}}' is already in use!</strong> Please choose another one.
+            <button type="button" class="button button-secondary" [routerLink]="['/data-bundle-management']"><span class="font-medium">Back to Data Bundles</span></button>
         </div>
     </div>
 
@@ -22,102 +23,132 @@
         <form name="form" role="form" (ngSubmit)="save()" #dataBundleEditForm="ngForm" *ngIf="!success && !errorDataBundleExists">
             <div class="form-group">
                 <label class="form-label" for="name">Name
-                    <span class="form-hint">The name of the data collection.</span>
+                    <span class="form-hint">The name of the data bundle.</span>
                 </label>
                 <input type="text" class="form-control" [(ngModel)]="dataBundle.name" id="name" name="name" #name="ngModel" placeholder=""
                        required minlength="1" maxlength="250" pattern="^[^\s]+(\s+[^\s]+)*$"/>
                 <div *ngIf="name.dirty && name.invalid">
                     <small class="form-text text-danger" *ngIf="name.errors.required">
-                        A name is required for the data collection.
+                        A name is required for the data bundle.
                     </small>
                     <small class="form-text text-danger" *ngIf="name.errors.minlength">
-                        The data collection name is required to be at least 1 character.
+                        The data bundle name is required to be at least 1 character.
                     </small>
                     <small class="form-text text-danger" *ngIf="name.errors.maxlength">
-                        The data collection name cannot be longer than 250 characters.
+                        The data bundle name cannot be longer than 250 characters.
                     </small>
                     <small class="form-text text-danger" *ngIf="name.errors.pattern">
-                        The data collection name can contain any characters, but must not start or end with white space.
+                        The data bundle name can contain any characters, but must not start or end with white space.
                     </small>
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="form-label" for="description">Description
-                    <span class="form-hint">The description of the data collection.</span>
+                    <span class="form-hint">The description of the data bundle.</span>
                 </label>
                 <textarea rows="3" class="form-control" [(ngModel)]="dataBundle.description" id="description" name="description" #description="ngModel" placeholder=""
                           required minlength="1" maxlength="250"></textarea>
                 <div *ngIf="description.dirty && description.invalid">
                     <small class="form-text text-danger" *ngIf="description.errors.required">
-                        A description is required for the data collection.
+                        A description is required for the data bundle.
                     </small>
                     <small class="form-text text-danger" *ngIf="description.errors.minlength">
-                        The data collection description is required to be at least 1 character.
+                        The data bundle description is required to be at least 1 character.
                     </small>
                     <small class="form-text text-danger" *ngIf="description.errors.maxlength">
-                        The data collection description cannot be longer than 250 characters.
+                        The data bundle description cannot be longer than 250 characters.
                     </small>
                     <small class="form-text text-danger" *ngIf="description.errors.pattern">
-                        The data collection description can contain any characters, but must not start or end with white space.
+                        The data bundle description can contain any characters, but must not start or end with white space.
                     </small>
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="form-label" for="guidance">Guidance
-                    <span class="form-hint">The guidance of the data collection.</span>
+                    <span class="form-hint">The guidance of the data bundle.</span>
                 </label>
                 <textarea rows="5" class="form-control" [(ngModel)]="dataBundle.guidance" id="guidance" name="guidance" #guidance="ngModel" placeholder=""
                        required minlength="1" maxlength="250"></textarea>
                 <div *ngIf="guidance.dirty && guidance.invalid">
                     <small class="form-text text-danger" *ngIf="guidance.errors.required">
-                        Guidance is required for the data collection.
+                        Guidance is required for the data bundle.
                     </small>
                     <small class="form-text text-danger" *ngIf="guidance.errors.minlength">
-                        The data collection guidance is required to be at least 1 character.
+                        The data bundle guidance is required to be at least 1 character.
                     </small>
                     <small class="form-text text-danger" *ngIf="guidance.errors.maxlength">
-                        The data collection guidance cannot be longer than 250 characters.
+                        The data bundle guidance cannot be longer than 250 characters.
                     </small>
                     <small class="form-text text-danger" *ngIf="guidance.errors.pattern">
-                        The data collection guidance can contain any characters, but must not start or end with white space.
+                        The data bundle guidance can contain any characters, but must not start or end with white space.
+                    </small>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="deadline">Deadline
+                    <span class="form-hint">The deadline by which companies must submit this data bundle</span>
+                    <span class="form-hint">For example, 30 12 2018</span>
+                </label>
+                <input class="form-control"
+                       [(ngModel)]="dataBundle.defaultDeadline"
+                       id="deadline"
+                       name="deadline"
+                       #deadline="ngModel"
+                       type="date"
+                       placeholder="yyyy-MM-dd"
+                       min="{{currentDate | date:'yyyy-MM-dd'}}"
+                       required />
+                <div *ngIf="deadline.dirty && deadline.invalid">
+                    <small class="form-text text-danger" *ngIf="deadline.errors.required">
+                        Deadline is required for the data bundle.
+                    </small>
+                    <small class="form-text text-danger" *ngIf="deadline.errors.date">
+                        Please enter a valid date.
                     </small>
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="form-label" for="owner">Owner
-                    <span class="form-hint">The owner responsible for the Data Collection</span>
+                    <span class="form-hint">The owner responsible for the Data Bundle</span>
                 </label>
-                <select class="form-control" [(ngModel)]="dataBundle.owner.id" id="owner" name="owner" #name="ngModel">
+                <select class="form-control" [(ngModel)]="ownerIndex" id="owner" name="owner" #owner="ngModel">
                     <option *ngFor="let user of users"
-                            [value]="user.id"
-                            [selected]="dataBundle.owner.id==user.id ? true : null" >
-                        {{user.firstName}} {{user.lastName}}
+                            [value]="user?.id"
+                            [selected]="dataBundle.ownerId==user.id ? true : null" >
+                        {{user?.firstName}} {{user?.lastName}}
                     </option>
                 </select>
-
             </div>
 
             <div class="form-group">
                 <label class="form-label" for="reviewer">Reviewer
-                    <span class="form-hint">The reviewer responsible for reviewing the Data Collection</span>
+                    <span class="form-hint">The reviewer responsible for reviewing the Data Bundle</span>
                 </label>
-                <select class="form-control" [(ngModel)]="dataBundle.reviewer.id" id="reviewer" name="reviewer" #name="ngModel">
+                <select class="form-control" [(ngModel)]="reviewerIndex" id="reviewer" name="reviewer" #reviewer="ngModel">
                     <option *ngFor="let user of users"
-                            [value]="user.id"
-                            [selected]="dataBundle.reviewer.id==user.id ? true : null" >
-                        {{user.firstName}} {{user.lastName}}
+                            [value]="user?.id"
+                            [selected]="dataBundle.reviewerId==user.id ? true : null" >
+                        {{user?.firstName}} {{user?.lastName}}
                     </option>
                 </select>
-                <!--<select class="form-control" [(ngModel)]="dataBundle.reviewer" id="reviewer" name="reviewer" #name="ngModel">-->
-                    <!--<option *ngFor="let user of users" [value]="user.id">{{user.firstName}} {{user.lastName}}</option>-->
-                <!--</select>-->
             </div>
 
-            <button type="submit" [disabled]="dataBundleEditForm.form.invalid" class="button"><span class="font-medium">Save Data Collection</span></button>
-            <button type="button" class="button button-secondary" [routerLink]="['/data-bundle-detail', dataBundle.id]"><span class="font-medium">Back to Details</span></button>
+            <div class="form-group">
+                <button type="submit"
+                        [disabled]="dataBundleEditForm.form.invalid"
+                        class="button float-right">
+                    <span>Save</span>
+                </button>
+                <button type="button"
+                        class="button button-secondary"
+                        [routerLink]="['/data-bundle-detail', dataBundle.id]">
+                    <span>Back</span>
+                </button>
+            </div>
         </form>
         <p></p>
     </div>

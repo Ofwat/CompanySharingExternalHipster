@@ -4,17 +4,17 @@
 
         <div class="alert alert-success" *ngIf="success">
             <strong>Data Bundle created</strong>
-            <button type="button" class="button button-secondary" [routerLink]="['../data-bundle-management']"><span class="font-medium">Back to Data Bundles</span></button>
+            <button type="button" class="button button-secondary" [routerLink]="['/data-collection-detail', dataBundle.dataCollectionId]"><span class="font-medium">Back to Data Collection</span></button>
         </div>
 
         <div class="alert alert-danger" *ngIf="error">
             <strong>Data Bundle creation failed!</strong> Please try again later.
-            <button type="button" class="button button-secondary" [routerLink]="['../data-bundle-management']"><span class="font-medium">Back to Data Bundles</span></button>
+            <button type="button" class="button button-secondary" [routerLink]="['/data-collection-detail', dataBundle.dataCollectionId]"><span class="font-medium">Back to Data Collection</span></button>
         </div>
 
         <div class="alert alert-danger" *ngIf="errorDataBundleExists">
             <strong>Data Bundle name '{{dataBundle.name}}' is already in use!</strong> Please choose another one.
-            <button type="button" class="button button-secondary" [routerLink]="['../data-bundle-management']"><span class="font-medium">Back to Data Bundles</span></button>
+            <button type="button" class="button button-secondary" [routerLink]="['/data-collection-detail', dataBundle.dataCollectionId]"><span class="font-medium">Back to Data Collection</span></button>
         </div>
     </div>
 
@@ -86,7 +86,6 @@
                 </div>
             </div>
 
-<!--default deadline            -->
             <div class="form-group">
                 <label class="form-label" for="deadline">Deadline
                     <span class="form-hint">The deadline by which companies must submit this data bundle</span>
@@ -109,24 +108,7 @@
                         Please enter a valid date.
                     </small>
                 </div>
-
-                <!--</div>-->
-                    <!--<div class="form-date">-->
-                        <!--<div class="form-group form-group-day">-->
-                            <!--<label class="form-label" for="deadlineDay">Day</label>-->
-                            <!--<input class="form-control" [(ngModel)]="deadlineDay" id="deadlineDay" name="deadlineDay" #deadlineDay="ngModel" type="number" pattern="[0-9]*" min="0" max="31">-->
-                        <!--</div>-->
-                        <!--<div class="form-group form-group-month">-->
-                            <!--<label class="form-label" for="deadlineMonth">Month</label>-->
-                            <!--<input class="form-control" [(ngModel)]="deadlineMonth" id="deadlineMonth" name="deadlineMonth" #deadlineMonth="ngModel" type="number" pattern="[0-9]*" min="0" max="12">-->
-                        <!--</div>-->
-                        <!--<div class="form-group form-group-year">-->
-                            <!--<label class="form-label" for="deadlineYear">Year</label>-->
-                            <!--<input class="form-control" [(ngModel)]="deadlineYear" id="deadlineYear" name="deadlineYear" #deadlineYear="ngModel" type="number" pattern="[0-9]*">-->
-                        <!--</div>-->
-                    <!--</div>-->
             </div>
-<!-- end default date -->
 
             <div class="form-group">
                 <label class="form-label" for="owner">Owner
@@ -146,9 +128,18 @@
                 </select>
             </div>
 
-            <button type="submit" [disabled]="dataBundleCreationForm.form.invalid" class="button"><span class="font-medium">Create Data Bundle</span></button>
-            <button type="button" class="button button-secondary" [routerLink]="['/data-collection-edit', dataCollection?.id]"><span class="font-medium">Back to Data Collection</span></button>
+            <div class="form-group">
+                <button type="submit"
+                        [disabled]="dataBundleCreationForm.form.invalid"
+                        class="button float-right">
+                    <span>Create Data Bundle</span>
+                </button>
+                <button type="button"
+                        class="button button-secondary"
+                        [routerLink]="['/data-collection-detail', dataCollection?.id]">
+                    <span>Back</span>
+                </button>
+            </div>
         </form>
-        <p></p>
     </div>
 </div>

@@ -104,8 +104,18 @@
                 </select>
             </div>
 
-            <button type="submit" [disabled]="dataCollectionCreationForm.form.invalid" class="button"><span class="font-medium">Create Data Collection</span></button>
-            <button type="button" class="button button-secondary" [routerLink]="['../data-collection-management']"><span class="font-medium">Back to Data Collections</span></button>
+            <div class="form-group">
+                <button type="submit"
+                        [disabled]="dataCollectionCreationForm.form.invalid"
+                        class="button float-right">
+                    <span>Create Data Collection</span>
+                </button>
+                <button type="button"
+                        class="button button-secondary"
+                        [routerLink]="['../data-collection-management']">
+                    <span>Back</span>
+                </button>
+            </div>
         </form>
         <p></p>
     </div>

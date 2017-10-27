@@ -11,6 +11,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Stream;
+
 
 /**
  * Service Implementation for managing DataBundle.
@@ -52,8 +56,7 @@ public class DataBundleService {
     @Transactional(readOnly = true)
     public Page<DataBundleDTO> findAll(Pageable pageable) {
         log.debug("Request to get all DataBundles");
-        return dataBundleRepository.findAll(pageable)
-            .map(dataBundleMapper::toDto);
+        return dataBundleRepository.findAll(pageable).map(dataBundleMapper::toDto);
     }
 
     /**
@@ -76,6 +79,14 @@ public class DataBundleService {
      */
     public void delete(Long id) {
         log.debug("Request to delete DataBundle : {}", id);
+        DataBundle dataBundleToDelete = dataBundleRepository.findOne(id);
+        List<DataBundle> allDataBundles = dataBundleRepository.findAll();
+        for (DataBundle db : allDataBundles) {
+            if (db.getDataCollection().getId() == dataBundleToDelete.getDataCollection().getId() &&
+                db.getOrderIndex() > dataBundleToDelete.getOrderIndex()) {
+                dataBundleRepository.updateOrderIndexForId(db.getOrderIndex()-1, db.getId());
+            }
+        }
         dataBundleRepository.delete(id);
     }
 
