@@ -1,3 +1,5 @@
+import {Company} from "../../entities/company/company.model";
+
 export class RegistrationRequest {
     public id?: any;
     public login?: string;
@@ -12,6 +14,7 @@ export class RegistrationRequest {
     public userActivated: boolean;
     public adminApproved: boolean;
     public registrationKey: string;
+    public company:Company;
 
     constructor(
         id?: any,

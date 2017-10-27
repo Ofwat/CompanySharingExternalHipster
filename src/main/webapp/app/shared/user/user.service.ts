@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Rx';
 import { User } from './user.model';
 import { ResponseWrapper } from '../model/response-wrapper.model';
 import { createRequestOption } from '../model/request-util';
+import { RegistrationRequest } from '../registration-request/registration-request.model';
 
 @Injectable()
 export class UserService {
