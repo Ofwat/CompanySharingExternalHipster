@@ -1,0 +1,51 @@
+<div>
+    <div >
+        <h2 class="heading-medium">Create Data Bundle</h2>
+
+        <div class="alert alert-success" *ngIf="success">
+            <strong>Data Bundle created</strong>
+            <button type="button" class="button button-secondary" [routerLink]="['../data-input-management']"><span class="font-medium">Back to Data Bundles</span></button>
+        </div>
+
+        <div class="alert alert-danger" *ngIf="error">
+            <strong>Data Bundle creation failed!</strong> Please try again later.
+        </div>
+
+        <div class="alert alert-danger" *ngIf="errorUserExists">
+            <strong>Data Bundle name is already in use!</strong> Please choose another one.
+        </div>
+
+    </div>
+    <div class="col-md-8 offset-md-2">
+        <form name="form" role="form" (ngSubmit)="create()" #createDataInputForm="ngForm" *ngIf="!success">
+            <div class="form-group">
+                <label class="form-label" for="login">Data Bundle Name
+                    <span class="form-hint">The name of the data bundle.</span>
+                </label>
+                <input type="text" class="form-control" [(ngModel)]="dataInput.name" id="login" name="login" #login="ngModel" placeholder=""
+                       required minlength="1" maxlength="50" pattern="^[_'.@A-Za-z0-9-]*$">
+                <div *ngIf="login.dirty && login.invalid">
+                    <small class="form-text text-danger" *ngIf="login.errors.required">
+                        A name is required for the data bundle.
+                    </small>
+                    <small class="form-text text-danger" *ngIf="login.errors.minlength"
+                    >
+                        The data bundle name is required to be at least 1 character.
+                    </small>
+                    <small class="form-text text-danger" *ngIf="login.errors.maxlength"
+                    >
+                        The data bundle name cannot be longer than 50 characters.
+                    </small>
+                    <small class="form-text text-danger" *ngIf="login.errors.pattern"
+                    >
+                        The data bundle name can only contain lower-case letters and digits.
+                    </small>
+                </div>
+            </div>
+
+            <button type="submit" [disabled]="createDataInputForm.form.invalid" class="button"><span class="font-medium">Create Data Bundle</span></button>
+            <button type="button" class="button button-secondary" [routerLink]="['../data-input-management']"><span class="font-medium">Back to Data Bundles</span></button>
+        </form>
+        <p></p>
+    </div>
+</div>
