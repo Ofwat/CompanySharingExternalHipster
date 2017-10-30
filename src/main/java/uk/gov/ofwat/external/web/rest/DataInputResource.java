@@ -1,6 +1,8 @@
 package uk.gov.ofwat.external.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import uk.gov.ofwat.external.domain.PublishingStatus;
+import uk.gov.ofwat.external.repository.PublishingStatusRepository;
 import uk.gov.ofwat.external.service.DataInputService;
 import uk.gov.ofwat.external.web.rest.util.HeaderUtil;
 import uk.gov.ofwat.external.web.rest.util.PaginationUtil;
@@ -31,13 +33,13 @@ import java.util.Optional;
 public class DataInputResource {
 
     private final Logger log = LoggerFactory.getLogger(DataInputResource.class);
-
     private static final String ENTITY_NAME = "dataInput";
-
     private final DataInputService dataInputService;
+    private final PublishingStatusRepository publishingStatusRepository;
 
-    public DataInputResource(DataInputService dataInputService) {
+    public DataInputResource(DataInputService dataInputService, PublishingStatusRepository publishingStatusRepository) {
         this.dataInputService = dataInputService;
+        this.publishingStatusRepository = publishingStatusRepository;
     }
 
     /**
@@ -54,6 +56,19 @@ public class DataInputResource {
         if (dataInputDTO.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new dataInput cannot already have an ID")).body(null);
         }
+
+        Long maxOrderIndex = dataInputService.getMaxOrderIndex(dataInputDTO.getDataBundleId());
+        log.error("maxOrderIndex = " + maxOrderIndex);
+        Optional<PublishingStatus> optionalPublishingStatus = publishingStatusRepository.findOneByStatus("DRAFT");
+        if (!optionalPublishingStatus.isPresent()) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "publishingStatusMissing", "Publishing status 'Draft' not found in database."))
+                .body(null);
+        }
+        dataInputDTO.setStatusId(optionalPublishingStatus.get().getId());
+        dataInputDTO.setStatusStatus(optionalPublishingStatus.get().getStatus());
+        dataInputDTO.setOrderIndex(new Long(maxOrderIndex+1));
+
         DataInputDTO result = dataInputService.save(dataInputDTO);
         return ResponseEntity.created(new URI("/api/data-inputs/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))

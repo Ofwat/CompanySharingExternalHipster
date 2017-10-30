@@ -7,6 +7,6 @@ export const dataInputDetailRoute: Route = {
     component: DataInputDetailComponent,
     data: {
         authorities: [],
-        pageTitle: 'Data Bundle Detail'
+        pageTitle: 'Data Input Detail'
     }
 };

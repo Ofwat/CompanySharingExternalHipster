@@ -88,6 +88,10 @@ export class DataInputCreationComponent implements OnInit {
         this.dataInput.dataBundleId = this.dataBundle.id;
         this.dataInput.dataBundleName = this.dataBundle.name;
 
+        this.dataInput.fileName = "a typical file name";
+        this.dataInput.fileLocation = "a typical file location";
+        this.dataInput.orderIndex = 0;
+
         this.dataInputService.create(this.dataInput).subscribe(
             response => {
                 console.log("success" + response.status);

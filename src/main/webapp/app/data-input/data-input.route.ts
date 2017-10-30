@@ -9,21 +9,6 @@ import {
     metricsRoute
 } from '../admin';
 
-// import {
-//     dataInputCreationRoute,
-//     dataInputDeletionRoute,
-//     dataInputEditRoute,
-//     dataInputMgmtRoute,
-//     dataInputDetailRoute
-// } from '../data-input';
-
-// import {
-//     dataBundleCreationRoute,
-//     dataBundleDeletionRoute,
-//     dataBundleEditRoute,
-//     dataBundleMgmtRoute,
-//     dataBundleDetailRoute
-// } from '../data-bundle';
 
 import { UserRouteAccessService } from '../shared';
 
@@ -45,11 +30,6 @@ const DATA_INPUT_ROUTES = [
     dataInputDetailRoute,
     ...dataInputDeletionRoute,
     dataInputEditRoute
-    // ...dataBundleMgmtRoute,
-    // dataBundleCreationRoute,
-    // dataBundleDetailRoute,
-    // ...dataBundleDeletionRoute,
-    // dataBundleEditRoute
 ];
 
 export const dataInputState: Routes = [{

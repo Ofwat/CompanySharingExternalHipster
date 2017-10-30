@@ -33,9 +33,7 @@ import java.util.Optional;
 public class DataBundleResource {
 
     private final Logger log = LoggerFactory.getLogger(DataBundleResource.class);
-
     private static final String ENTITY_NAME = "dataBundle";
-
     private final DataBundleService dataBundleService;
     private final PublishingStatusRepository publishingStatusRepository;
 

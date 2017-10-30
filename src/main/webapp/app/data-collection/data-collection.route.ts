@@ -17,24 +17,6 @@ import {dataCollectionDetailRoute} from "./data-collection-detail/data-collectio
 import {dataCollectionDeletionRoute} from "./data-collection-deletion/data-collection-deletion-route";
 import {dataCollectionEditRoute} from "./data-collection-edit/data-collection-edit-route";
 
-// import {dataBundleCreationRoute} from "../data-bundle/data-bundle-creation/data-bundle-creation-route";
-
-// import {
-//     dataCollectionMgmtRoute,
-//     dataCollectionCreationRoute,
-//     dataCollectionDeletionRoute,
-//     dataCollectionDetailRoute,
-//     dataCollectionEditRoute
-// } from '../data-collection';
-
-// import {
-//     dataBundleMgmtRoute,
-//     dataBundleCreationRoute,
-//     dataBundleDeletionRoute,
-//     dataBundleDetailRoute,
-//     dataBundleEditRoute
-// } from '../data-bundle';
-
 const DATA_COLLECTION_ROUTES = [
     auditsRoute,
     configurationRoute,
@@ -47,11 +29,6 @@ const DATA_COLLECTION_ROUTES = [
     dataCollectionDetailRoute,
     ...dataCollectionDeletionRoute,
     dataCollectionEditRoute
-    // ...dataBundleMgmtRoute,
-    // dataBundleCreationRoute
-    // dataBundleDetailRoute,
-    // ...dataBundleDeletionRoute,
-    // dataBundleEditRoute
 ];
 
 export const dataCollectionState: Routes = [{

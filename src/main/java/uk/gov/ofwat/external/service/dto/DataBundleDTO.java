@@ -5,6 +5,7 @@ import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Instant;
+import java.util.Arrays;
 
 /**
  * A DTO for the DataBundle entity.
@@ -31,6 +32,7 @@ public class DataBundleDTO implements Serializable {
     private String createdBy;
     private Instant lastModifiedDate;
     private String lastModifiedBy;
+    private DataInputDTO[] dataInputs;
 
 
     public Long getId() {
@@ -193,12 +195,20 @@ public class DataBundleDTO implements Serializable {
         this.lastModifiedBy = lastModifiedBy;
     }
 
-    public boolean equals(Object object) {
-        if (this == object) return true;
-        if (!(object instanceof DataBundleDTO)) return false;
-        if (!super.equals(object)) return false;
+    public DataInputDTO[] getDataInputs() {
+        return dataInputs;
+    }
 
-        DataBundleDTO that = (DataBundleDTO) object;
+    public void setDataInputs(DataInputDTO[] dataInputs) {
+        this.dataInputs = dataInputs;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof DataBundleDTO)) return false;
+
+        DataBundleDTO that = (DataBundleDTO) o;
 
         if (getId() != null ? !getId().equals(that.getId()) : that.getId() != null) return false;
         if (getName() != null ? !getName().equals(that.getName()) : that.getName() != null) return false;
@@ -237,13 +247,13 @@ public class DataBundleDTO implements Serializable {
             return false;
         if (getLastModifiedBy() != null ? !getLastModifiedBy().equals(that.getLastModifiedBy()) : that.getLastModifiedBy() != null)
             return false;
-
-        return true;
+        // Probably incorrect - comparing Object[] arrays with Arrays.equals
+        return Arrays.equals(getDataInputs(), that.getDataInputs());
     }
 
+    @Override
     public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + (getId() != null ? getId().hashCode() : 0);
+        int result = getId() != null ? getId().hashCode() : 0;
         result = 31 * result + (getName() != null ? getName().hashCode() : 0);
         result = 31 * result + (getDescription() != null ? getDescription().hashCode() : 0);
         result = 31 * result + (getGuidance() != null ? getGuidance().hashCode() : 0);
@@ -263,11 +273,12 @@ public class DataBundleDTO implements Serializable {
         result = 31 * result + (getCreatedBy() != null ? getCreatedBy().hashCode() : 0);
         result = 31 * result + (getLastModifiedDate() != null ? getLastModifiedDate().hashCode() : 0);
         result = 31 * result + (getLastModifiedBy() != null ? getLastModifiedBy().hashCode() : 0);
+        result = 31 * result + Arrays.hashCode(getDataInputs());
         return result;
     }
 
-    @java.lang.Override
-    public java.lang.String toString() {
+    @Override
+    public String toString() {
         return "DataBundleDTO{" +
             "id=" + id +
             ", name='" + name + '\'' +
@@ -289,6 +300,7 @@ public class DataBundleDTO implements Serializable {
             ", createdBy='" + createdBy + '\'' +
             ", lastModifiedDate=" + lastModifiedDate +
             ", lastModifiedBy='" + lastModifiedBy + '\'' +
+            ", dataInputs=" + Arrays.toString(dataInputs) +
             '}';
     }
 }

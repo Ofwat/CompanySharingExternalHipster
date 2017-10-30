@@ -21,5 +21,4 @@ public interface DataBundleRepository extends JpaRepository<DataBundle,Long> {
     void updateOrderIndexForId(@Param("orderIndex") Long orderIndex,
                                @Param("dataCollectionId") Long dataCollectionId);
 
-
 }

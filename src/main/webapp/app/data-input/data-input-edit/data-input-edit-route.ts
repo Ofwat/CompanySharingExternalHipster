@@ -7,6 +7,6 @@ export const dataInputEditRoute: Route = {
     component: DataInputEditComponent,
     data: {
         authorities: [],
-        pageTitle: 'Edit Data Bundle'
+        pageTitle: 'Edit Data Input'
     }
 };

@@ -1,21 +1,33 @@
 <div>
     <div>
         <h2 class="heading-medium">Edit Data Input</h2>
-        <h3 class="heading-small">Data Bundle: {{dataInput.dataBundleName}}</h3>
+        <h3 class="heading-small" *ngIf="!success && !errorDataBundleExists">Data Bundle: {{dataInput.dataBundleName}}</h3>
 
         <div class="alert alert-success" *ngIf="success">
             <strong>Data Input edited</strong>
-            <button type="button" class="button button-secondary" [routerLink]="['/data-input-management']"><span class="font-medium">Back to Data Inputs</span></button>
+            <button type="button"
+                    class="button button-secondary"
+                    [routerLink]="['/data-input-detail', dataInput.id]">
+                <span class="font-medium">Back to Data Input</span>
+            </button>
         </div>
 
         <div class="alert alert-danger" *ngIf="error">
             <strong>Data Input edit failed!</strong> Please try again later.
-            <button type="button" class="button button-secondary" [routerLink]="['/data-input-management']"><span class="font-medium">Back to Data Inputs</span></button>
+            <button type="button"
+                    class="button button-secondary"
+                    [routerLink]="['/data-input-detail', dataInput.id]">
+                <span>Back to Data Input</span>
+            </button>
         </div>
 
         <div class="alert alert-danger" *ngIf="errorDataInputExists">
             <strong>Data Input name '{{dataInput.name}}' is already in use!</strong> Please choose another one.
-            <button type="button" class="button button-secondary" [routerLink]="['/data-input-management']"><span class="font-medium">Back to Data Inputs</span></button>
+            <button type="button"
+                    class="button button-secondary"
+                    [routerLink]="['/data-input-detail', dataInput.id]">
+                <span>Back to Data Input</span>
+            </button>
         </div>
     </div>
 

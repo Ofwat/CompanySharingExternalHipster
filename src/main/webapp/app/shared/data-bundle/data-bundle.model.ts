@@ -19,6 +19,7 @@ export class DataBundle {
     public createdBy?: string;
     public lastModifiedDate?: any;
     public lastModifiedBy?: string;
+    public dataInputs?: any[];
 
     constructor(
         id?: any,
@@ -40,7 +41,8 @@ export class DataBundle {
         createdDate?: any,
         createdBy?: any,
         lastModifiedDate?: any,
-        lastModifiedBy?: any
+        lastModifiedBy?: any,
+        dataInputs?: any[]
     ) {
         this.id = id ? id : null;
         this.name = name ? name : null;
@@ -62,5 +64,6 @@ export class DataBundle {
         this.createdBy = createdBy ? createdBy : null;
         this.lastModifiedDate = lastModifiedDate ? lastModifiedDate : null;
         this.lastModifiedBy = lastModifiedBy ? lastModifiedBy : null;
+        this.dataInputs = dataInputs ? dataInputs : null;
     }
 }

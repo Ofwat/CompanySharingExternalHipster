@@ -53,6 +53,7 @@ public class DataInput extends AbstractAuditingEntity implements Serializable {
     private PublishingStatus status;
 
     @ManyToOne(optional = false)
+    @JoinColumn(name="DATA_BUNDLE_ID", nullable=false)
     @NotNull
     private DataBundle dataBundle;
 

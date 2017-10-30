@@ -1,6 +1,7 @@
 package uk.gov.ofwat.external.service.dto;
 
 
+import java.time.Instant;
 import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
@@ -14,44 +15,27 @@ import java.util.Objects;
 public class DataInputDTO implements Serializable {
 
     private Long id;
-
-    @NotNull
-    private String name;
-
+    @NotNull private String name;
     private String description;
-
     private String guidance;
-
     private LocalDate defaultDeadline;
-
-    @NotNull
-    private Long orderIndex;
-
-    @NotNull
-    private String fileName;
-
-    @NotNull
-    private String fileLocation;
-
+    @NotNull private Long orderIndex;
+    @NotNull private String fileName;
+    @NotNull private String fileLocation;
     private Long statusId;
-
     private String statusStatus;
-
     private Long dataBundleId;
-
     private String dataBundleName;
-
     private Long ownerId;
-
     private String ownerFirstName;
-
     private String ownerLastName;
-
     private Long reviewerId;
-
     private String reviewerFirstName;
-
     private String reviewerLastName;
+    private Instant createdDate;
+    private String createdBy;
+    private Instant lastModifiedDate;
+    private String lastModifiedBy;
 
     public Long getId() {
         return id;
@@ -197,6 +181,38 @@ public class DataInputDTO implements Serializable {
         this.reviewerLastName = userLastName;
     }
 
+    public Instant getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Instant createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public Instant getLastModifiedDate() {
+        return lastModifiedDate;
+    }
+
+    public void setLastModifiedDate(Instant lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
+    }
+
+    public String getLastModifiedBy() {
+        return lastModifiedBy;
+    }
+
+    public void setLastModifiedBy(String lastModifiedBy) {
+        this.lastModifiedBy = lastModifiedBy;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -235,7 +251,15 @@ public class DataInputDTO implements Serializable {
             return false;
         if (getReviewerFirstName() != null ? !getReviewerFirstName().equals(that.getReviewerFirstName()) : that.getReviewerFirstName() != null)
             return false;
-        return getReviewerLastName() != null ? getReviewerLastName().equals(that.getReviewerLastName()) : that.getReviewerLastName() == null;
+        if (getReviewerLastName() != null ? !getReviewerLastName().equals(that.getReviewerLastName()) : that.getReviewerLastName() != null)
+            return false;
+        if (getCreatedDate() != null ? !getCreatedDate().equals(that.getCreatedDate()) : that.getCreatedDate() != null)
+            return false;
+        if (getCreatedBy() != null ? !getCreatedBy().equals(that.getCreatedBy()) : that.getCreatedBy() != null)
+            return false;
+        if (getLastModifiedDate() != null ? !getLastModifiedDate().equals(that.getLastModifiedDate()) : that.getLastModifiedDate() != null)
+            return false;
+        return getLastModifiedBy() != null ? getLastModifiedBy().equals(that.getLastModifiedBy()) : that.getLastModifiedBy() == null;
     }
 
     @Override
@@ -258,6 +282,38 @@ public class DataInputDTO implements Serializable {
         result = 31 * result + (getReviewerId() != null ? getReviewerId().hashCode() : 0);
         result = 31 * result + (getReviewerFirstName() != null ? getReviewerFirstName().hashCode() : 0);
         result = 31 * result + (getReviewerLastName() != null ? getReviewerLastName().hashCode() : 0);
+        result = 31 * result + (getCreatedDate() != null ? getCreatedDate().hashCode() : 0);
+        result = 31 * result + (getCreatedBy() != null ? getCreatedBy().hashCode() : 0);
+        result = 31 * result + (getLastModifiedDate() != null ? getLastModifiedDate().hashCode() : 0);
+        result = 31 * result + (getLastModifiedBy() != null ? getLastModifiedBy().hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "DataInputDTO{" +
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", description='" + description + '\'' +
+            ", guidance='" + guidance + '\'' +
+            ", defaultDeadline=" + defaultDeadline +
+            ", orderIndex=" + orderIndex +
+            ", fileName='" + fileName + '\'' +
+            ", fileLocation='" + fileLocation + '\'' +
+            ", statusId=" + statusId +
+            ", statusStatus='" + statusStatus + '\'' +
+            ", dataBundleId=" + dataBundleId +
+            ", dataBundleName='" + dataBundleName + '\'' +
+            ", ownerId=" + ownerId +
+            ", ownerFirstName='" + ownerFirstName + '\'' +
+            ", ownerLastName='" + ownerLastName + '\'' +
+            ", reviewerId=" + reviewerId +
+            ", reviewerFirstName='" + reviewerFirstName + '\'' +
+            ", reviewerLastName='" + reviewerLastName + '\'' +
+            ", createdDate=" + createdDate +
+            ", createdBy='" + createdBy + '\'' +
+            ", lastModifiedDate=" + lastModifiedDate +
+            ", lastModifiedBy='" + lastModifiedBy + '\'' +
+            '}';
     }
 }

@@ -1,21 +1,33 @@
 <div>
     <div>
         <h2 class="heading-medium">Edit Data Bundle</h2>
-        <h3 class="heading-small">Data Collection: {{dataBundle.dataCollectionName}}</h3>
+        <h3 class="heading-small" *ngIf="!success && !errorDataBundleExists">Data Collection: {{dataBundle.dataCollectionName}}</h3>
 
         <div class="alert alert-success" *ngIf="success">
             <strong>Data Bundle edited</strong>
-            <button type="button" class="button button-secondary" [routerLink]="['/data-bundle-management']"><span class="font-medium">Back to Data Bundles</span></button>
+            <button type="button"
+                    class="button button-secondary"
+                    [routerLink]="['/data-bundle-detail', dataBundle.id]">
+                <span>Back to Data Bundle</span>
+            </button>
         </div>
 
         <div class="alert alert-danger" *ngIf="error">
             <strong>Data Bundle edit failed!</strong> Please try again later.
-            <button type="button" class="button button-secondary" [routerLink]="['/data-bundle-management']"><span class="font-medium">Back to Data Bundles</span></button>
+            <button type="button"
+                    class="button button-secondary"
+                    [routerLink]="['/data-bundle-detail', dataBundle.id]">
+                <span>Back to Data Bundle</span>
+            </button>
         </div>
 
         <div class="alert alert-danger" *ngIf="errorDataBundleExists">
             <strong>Data Bundle name '{{dataBundle.name}}' is already in use!</strong> Please choose another one.
-            <button type="button" class="button button-secondary" [routerLink]="['/data-bundle-management']"><span class="font-medium">Back to Data Bundles</span></button>
+            <button type="button"
+                    class="button button-secondary"
+                    [routerLink]="['/data-bundle-detail', dataBundle.id]">
+                <span>Back to Data Bundle</span>
+            </button>
         </div>
     </div>
 

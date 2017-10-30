@@ -4,17 +4,29 @@
 
         <div class="alert alert-success" *ngIf="success">
             <strong>Data Bundle created</strong>
-            <button type="button" class="button button-secondary" [routerLink]="['/data-collection-detail', dataBundle.dataCollectionId]"><span class="font-medium">Back to Data Collection</span></button>
+            <button type="button"
+                    class="button button-secondary"
+                    [routerLink]="['/data-collection-detail', dataBundle.dataCollectionId]">
+                <span>Back to Data Collection</span>
+            </button>
         </div>
 
         <div class="alert alert-danger" *ngIf="error">
             <strong>Data Bundle creation failed!</strong> Please try again later.
-            <button type="button" class="button button-secondary" [routerLink]="['/data-collection-detail', dataBundle.dataCollectionId]"><span class="font-medium">Back to Data Collection</span></button>
+            <button type="button"
+                    class="button button-secondary"
+                    [routerLink]="['/data-collection-detail', dataBundle.dataCollectionId]">
+                <span>Back to Data Collection</span>
+            </button>
         </div>
 
         <div class="alert alert-danger" *ngIf="errorDataBundleExists">
             <strong>Data Bundle name '{{dataBundle.name}}' is already in use!</strong> Please choose another one.
-            <button type="button" class="button button-secondary" [routerLink]="['/data-collection-detail', dataBundle.dataCollectionId]"><span class="font-medium">Back to Data Collection</span></button>
+            <button type="button"
+                    class="button button-secondary"
+                    [routerLink]="['/data-collection-detail', dataBundle.dataCollectionId]">
+                <span>Back to Data Collection</span>
+            </button>
         </div>
     </div>
 

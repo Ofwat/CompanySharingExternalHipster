@@ -4,22 +4,49 @@
 
         <div class="alert alert-success" *ngIf="success">
             <strong>Data Input created</strong>
-            <button type="button" class="button button-secondary" [routerLink]="['/data-bundle-detail', dataInput.dataBundleId]"><span class="font-medium">Back to Data Bundle</span></button>
+            <button type="button"
+                    class="button button-secondary"
+                    [routerLink]="['/data-bundle-detail', dataInput.dataBundleId]">
+                <span>Back to Data Bundle</span>
+            </button>
         </div>
 
         <div class="alert alert-danger" *ngIf="error">
             <strong>Data Input creation failed!</strong> Please try again later.
-            <button type="button" class="button button-secondary" [routerLink]="['/data-bundle-detail', dataInput.dataBundleId]"><span class="font-medium">Back to Data Bundle</span></button>
+            <button type="button"
+                    class="button button-secondary"
+                    [routerLink]="['/data-bundle-detail', dataInput.dataBundleId]">
+                <span>Back to Data Bundle</span>
+            </button>
         </div>
 
         <div class="alert alert-danger" *ngIf="errorDataInputExists">
             <strong>Data Input name '{{dataInput.name}}' is already in use!</strong> Please choose another one.
-            <button type="button" class="button button-secondary" [routerLink]="['/data-bundle-detail', dataInput.dataBundleId]"><span class="font-medium">Back to Data Bundle</span></button>
+            <button type="button"
+                    class="button button-secondary"
+                    [routerLink]="['/data-bundle-detail', dataInput.dataBundleId]">
+                <span>Back to Data Bundle</span>
+            </button>
         </div>
     </div>
 
     <div class="col-md-8 offset-md-2">
         <form name="form" role="form" (ngSubmit)="create()" #dataInputCreationForm="ngForm" *ngIf="!success && !errorDataInputExists">
+
+            <div class="form-group">
+                <label class="form-label" for="fileName">
+                    Upload a file
+                </label>
+                <input type="file"
+                       class="form-control"
+                       [(ngModel)]="dataInput.fileName"
+                       id="fileName"
+                       name="fileName"
+                       #fileName="ngModel"
+                       placeholder=""
+                />
+            </div>
+
             <div class="form-group">
                 <label class="form-label" for="name">Name
                     <span class="form-hint">The name of the data input.</span>

@@ -9,22 +9,6 @@ import {
     metricsRoute
 } from '../admin';
 
-// import {
-//     dataBundleCreationRoute,
-//     dataBundleDeletionRoute,
-//     dataBundleEditRoute,
-//     dataBundleMgmtRoute,
-//     dataBundleDetailRoute
-// } from '../data-bundle';
-
-// import {
-//     dataCollectionCreationRoute,
-//     dataCollectionDeletionRoute,
-//     dataCollectionEditRoute,
-//     dataCollectionMgmtRoute,
-//     dataCollectionDetailRoute
-// } from '../data-collection';
-
 import { UserRouteAccessService } from '../shared';
 
 import {dataBundleMgmtRoute} from './data-bundle-management/data-bundle-management.route';
@@ -45,11 +29,6 @@ const DATA_BUNDLE_ROUTES = [
     dataBundleDetailRoute,
     ...dataBundleDeletionRoute,
     dataBundleEditRoute
-    // ...dataCollectionMgmtRoute,
-    // dataCollectionCreationRoute,
-    // dataCollectionDetailRoute,
-    // ...dataCollectionDeletionRoute,
-    // dataCollectionEditRoute
 ];
 
 export const dataBundleState: Routes = [{
