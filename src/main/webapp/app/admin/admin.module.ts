@@ -9,6 +9,11 @@ import { InviteUser} from './invite-user/invite-user.service';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UserProfileService } from './user-profile/user-profile.service';
 import { MomentModule } from 'angular2-moment';
+import {ModifyCompaniesComponent} from './ofwat-user-management/config/modify-companies.component';
+import {ModifyEmailComponent} from './ofwat-user-management/config/modify-email.component';
+import {ModifyLoginComponent} from './ofwat-user-management/config/modify-login.component';
+import {ModifyMobileComponent} from './ofwat-user-management/config/modify-mobile.component';
+import {ModifyRolesComponent} from './ofwat-user-management/config/modify-roles.component';
 /* jhipster-needle-add-admin-module-import - JHipster will add admin modules imports here */
 
 import {
@@ -41,6 +46,7 @@ import {
     PendingInvitesResendComponent
 } from './';
 
+
 @NgModule({
     imports: [
         CompanySharingExternalSharedModule,
@@ -59,6 +65,11 @@ import {
         OfwatUserMgmtPermissionsComponent,
         UserMgmtDialogComponent,
         UserMgmtDeleteDialogComponent,
+        ModifyCompaniesComponent,
+        ModifyEmailComponent,
+        ModifyLoginComponent,
+        ModifyMobileComponent,
+        ModifyRolesComponent,
         LogsComponent,
         JhiConfigurationComponent,
         JhiHealthCheckComponent,
@@ -73,6 +84,11 @@ import {
     ],
     entryComponents: [
         UserMgmtDialogComponent,
+        ModifyLoginComponent,
+        ModifyEmailComponent,
+        ModifyRolesComponent,
+        ModifyCompaniesComponent,
+        ModifyMobileComponent,
         UserMgmtDeleteDialogComponent,
         JhiHealthModalComponent,
         JhiMetricsMonitoringModalComponent,

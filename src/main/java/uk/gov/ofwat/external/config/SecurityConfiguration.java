@@ -1,8 +1,6 @@
 package uk.gov.ofwat.external.config;
 
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
-import org.springframework.security.web.context.SecurityContextRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import uk.gov.ofwat.external.security.*;
 
 import io.github.jhipster.config.JHipsterProperties;
@@ -26,6 +24,7 @@ import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.filter.CorsFilter;
+import uk.gov.ofwat.external.service.UserService;
 
 import javax.annotation.PostConstruct;
 
@@ -44,9 +43,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final CorsFilter corsFilter;
 
+    @Autowired
+    UserService userService;
+
     public SecurityConfiguration(AuthenticationManagerBuilder authenticationManagerBuilder, UserDetailsService userDetailsService,
-        JHipsterProperties jHipsterProperties, RememberMeServices rememberMeServices,
-        CorsFilter corsFilter) {
+                                 JHipsterProperties jHipsterProperties, RememberMeServices rememberMeServices,
+                                 CorsFilter corsFilter) {
 
         this.authenticationManagerBuilder = authenticationManagerBuilder;
         this.userDetailsService = userDetailsService;
@@ -59,9 +61,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @PostConstruct
     public void init() {
         try {
+            CompanySharingDaoAuthenticationProvider provider = companySharingDaoAuthProvider();
+            provider.setUserService(userService);
             authenticationManagerBuilder
-                .userDetailsService(userDetailsService)
-                    .passwordEncoder(passwordEncoder());
+                .authenticationProvider(provider);
+
         } catch (Exception e) {
             throw new BeanInitializationException("Security configuration failed", e);
         }
@@ -95,6 +99,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public CompanySharingDaoAuthenticationProvider companySharingDaoAuthProvider() throws Exception {
+        CompanySharingDaoAuthenticationProvider provider = new CompanySharingDaoAuthenticationProvider();
+        provider.setPasswordEncoder(passwordEncoder());
+        provider.setUserDetailsService(userDetailsService);
+        return provider;
     }
 
 /*    @Bean
@@ -162,6 +174,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/api/invite").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/api/resend_invite").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/api/users/pending_accounts/**").hasAuthority(AuthoritiesConstants.ADMIN)
+            .antMatchers("/api/users/companies/**").hasAuthority(AuthoritiesConstants.ADMIN)
 /*            .antMatchers("/api/account/verify_captcha").permitAll()*/
             .antMatchers("/api/profile-info").permitAll()
             .antMatchers(HttpMethod.GET, "/api/companies").permitAll()

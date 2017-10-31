@@ -46,6 +46,7 @@ public class AccountInterceptor extends HandlerInterceptorAdapter{
         System.out.println("In preHandle we are Intercepting the Request");
         System.out.println("____________________________________________");
         String requestURI = request.getRequestURI();
+        //response.sendRedirect(request.getContextPath() + "/app/main-age");
         System.out.println("____________________________________________");
         return true;
     }

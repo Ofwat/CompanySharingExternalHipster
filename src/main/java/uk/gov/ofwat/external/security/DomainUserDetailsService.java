@@ -11,6 +11,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import uk.gov.ofwat.external.security.exception.UserNotActivatedException;
+import uk.gov.ofwat.external.security.exception.UserNotEnabledException;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -39,9 +41,10 @@ public class DomainUserDetailsService implements UserDetailsService {
             if (!user.getActivated()) {
                 throw new UserNotActivatedException("User " + lowercaseLogin + " was not activated");
             }
-            if(!user.getEnabled()){
+            //Removed pending adding auth post correct password.
+            /*            if(!user.getEnabled()){
                 throw new UserNotEnabledException("User " + lowercaseLogin + " was not enabled");
-            }
+            }*/
             List<GrantedAuthority> grantedAuthorities = user.getAuthorities().stream()
                     .map(authority -> new SimpleGrantedAuthority(authority.getName()))
                 .collect(Collectors.toList());
