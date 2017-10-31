@@ -130,7 +130,7 @@ public class UserService {
         String imageUrl, String langKey, String mobileTelephoneNumber) {
 
         User newUser = new User();
-        Authority authority = authorityRepository.findOne(AuthoritiesConstants.PRE_AUTH_USER);
+        Authority authority = authorityRepository.findOne(AuthoritiesConstants.USER);
         Set<Authority> authorities = new HashSet<>();
         String encryptedPassword = passwordEncoder.encode(password);
         newUser.setLogin(login);

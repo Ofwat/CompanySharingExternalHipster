@@ -260,7 +260,8 @@ public class UserResource {
     public ResponseEntity<Void> deleteRegistrationRequest(@PathVariable String login) {
         log.debug("REST request to delete RegistrationRequest: {}", login);
         registrationRequestService.deleteRegistrationRequest(login);
-        return ResponseEntity.ok().headers(HeaderUtil.createAlert( "A RegistrationRequest is deleted with identifier " + login, login)).build();
+        //return ResponseEntity.ok().headers(HeaderUtil.createAlert( "A RegistrationRequest is deleted with identifier " + login, login)).build();
+        return  ResponseEntity.ok().build();
     }
 
     /**

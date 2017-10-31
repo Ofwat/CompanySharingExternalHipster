@@ -1,19 +1,25 @@
 <main id="content" role="main" tabindex="-1">
 <div>
-    <h2 class="heading-medium">
-        <span class="heading-large">Ofwat Team Members</span>
+    <div class="grid-row">
+    <div class="column-one-half">
+        <h2 class="heading-large"><span>Ofwat Team Members</span></h2>
+    </div>
+    <div class="column-one-quarter">
+        <div>
+        <button class="button align-with-heading" [routerLink]="['../invite']">
+            <span class="fa fa-plus"></span> <span>Invite a new User</span>
+        </button>
+        </div>
+    </div>
+    <div class="column-one-quarter">
+        <button class="button align-with-heading" style="" [routerLink]="['../pending-invites']">
+            <span class="">View pending invites</span>
+        </button>
+    </div>
+    </div>
 <!--        <button class="button float-right" [routerLink]="['/', { outlets: { popup: ['user-management-new'] } }]">
             <span class="fa fa-plus"></span> <span>Create a new User</span>
         </button>-->
-        <span class="float-right">&nbsp;</span>
-        <button class="button float-right" [routerLink]="['../invite']">
-            <span class="fa fa-plus"></span> <span>Invite a new User</span>
-        </button>
-        &nbsp;
-        <button class="button float-right" style="margin-right:30px;" [routerLink]="['../pending-invites']">
-            <span class="">View pending invites</span>
-        </button>
-    </h2>
 <!--    <button type="button" (click)="clickMe()">I will create alert - Click Me!</button>-->
     <jhi-alert></jhi-alert>
     <jhi-alert-error></jhi-alert-error> <!-- Use this one if you want the error returned by the server to be displayed. -->

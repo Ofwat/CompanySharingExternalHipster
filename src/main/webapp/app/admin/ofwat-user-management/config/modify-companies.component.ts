@@ -41,6 +41,7 @@ export class ModifyCompaniesComponent implements OnInit {
             this.user = user;
             return this.userService.getUserCompanies(login);
         }).subscribe((data) => {this.userCompanies = data.json;});
+        console.log('selectedCo is ' + this.selectedCompany.name);
     }
 
     save(user: User){

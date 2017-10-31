@@ -12,6 +12,14 @@
 @import "govuk-elements-styles";
 @import "check-your-answers";
 
+.align-with-heading {
+    display: block;
+    text-align: center;
+    margin-top: 33px;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
 .page-footer-back-link {
     background-color: #6f777b;
     position: relative;

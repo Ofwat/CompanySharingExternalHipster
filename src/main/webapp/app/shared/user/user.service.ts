@@ -53,12 +53,11 @@ export class UserService {
 
     deleteInvite(login: string) {
         return this.http.delete(`api/users/pending_accounts/${login}`)
-            .map((res: Response) => this.convertResponse(res));
     }
 
     approveInvite(login: string): Observable<ResponseWrapper> {
-        return this.http.post(`api/users/pending_accounts`, login)
-            .map((res: Response) => this.convertResponse(res));
+        return this.http.post(`api/users/pending_accounts`, login);
+            //.map((res: Response) => this.convertResponse(res));
     }
 
     getUserCompanies(login:String): Observable<ResponseWrapper> {

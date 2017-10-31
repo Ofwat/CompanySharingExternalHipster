@@ -161,7 +161,7 @@
                           </span>
                     </label>
                     <select style="height: auto" class="form-control" id="company" name="company" #companyInput="ngModel"
-                            [(ngModel)]="this.selectedCompany" required>
+                            [(ngModel)]="this.selectedCompany" required [attr.disabled]="false">
                         <option *ngFor="let c of this.companies" [ngValue]="c.id">{{c.name}}</option>
                     </select>
                 </div>
