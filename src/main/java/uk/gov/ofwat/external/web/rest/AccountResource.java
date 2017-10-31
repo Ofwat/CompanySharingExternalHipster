@@ -143,9 +143,9 @@ public class AccountResource {
             return new ResponseEntity<>(CHECK_ERROR_MESSAGE, HttpStatus.BAD_REQUEST);
         }
 
-        if (!captchaService.verifyCaptcha(managedUserVM.getCaptcha())) {
+/*        if (!captchaService.verifyCaptcha(managedUserVM.getCaptcha())) {
             return new ResponseEntity<>(CAPTCHA_ERROR_MESSAGE, HttpStatus.BAD_REQUEST);
-        }
+        }*/
 
         // Verify the key is valid.
         Optional<RegistrationRequest> registrationRequest = userService.validateRegistrationKey(managedUserVM.getRegistrationKey());

@@ -86,6 +86,16 @@ public class UserResource {
          this.companyService = companyService;
      }
 
+    @Timed
+    @PutMapping("/users/companies")
+    public ResponseEntity<String> addCompanyUser(@RequestBody Long companyId, @RequestBody String login){
+        log.debug("Addding user {} to company with id {}", login, companyId);
+        return userRepository.findOneByLogin(login).map(user -> {
+            companyService.addUserToCompany(companyId, user);
+            return new ResponseEntity<String>(HttpStatus.CREATED);
+        }).orElse(new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR));
+    }
+
     /**
      * POST  /users  : Creates a new user.
      * <p>
@@ -268,4 +278,20 @@ public class UserResource {
             .orElse(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
     }
 
+    @Timed
+    @PostMapping("/users/companies")
+    public Set<Company> getCompaniesForUser(@RequestBody String login){
+        log.info("REST request to get companies for login: {}", login);
+        return companyService.getListOfCompaniesCurrentUserIsMemberFor(login).get();
+    }
+
+    @Timed
+    @DeleteMapping("/users/companies/{companyId}/{login}")
+    public ResponseEntity<String> removeCompanyUser(@PathVariable Long companyId, @PathVariable String login){
+        if(companyService.removeUserFromCompany(companyId, login)){
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 }

@@ -199,7 +199,7 @@ export class PendingInvitesComponent implements OnInit, OnDestroy {
         this.alertService.error(error.error, error.message, null);
     }
 
-    resendActivationLink(registrationRequest:RegistrationRequest) {
+    resendActivationLink(registrationRequest: RegistrationRequest) {
         console.log('Resending link for ' + registrationRequest.login);
     }
 

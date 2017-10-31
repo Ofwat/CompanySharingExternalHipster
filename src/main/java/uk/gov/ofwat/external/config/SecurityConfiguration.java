@@ -174,6 +174,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/api/invite").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/api/resend_invite").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/api/users/pending_accounts/**").hasAuthority(AuthoritiesConstants.ADMIN)
+            .antMatchers("/api/users/companies/**").hasAuthority(AuthoritiesConstants.ADMIN)
 /*            .antMatchers("/api/account/verify_captcha").permitAll()*/
             .antMatchers("/api/profile-info").permitAll()
             .antMatchers(HttpMethod.GET, "/api/companies").permitAll()

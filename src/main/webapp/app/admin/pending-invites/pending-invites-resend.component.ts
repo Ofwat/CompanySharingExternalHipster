@@ -15,7 +15,7 @@ export class PendingInvitesResendComponent implements OnInit, OnDestroy {
     request: RegistrationRequest;
     routeData: any;
     private subscription: Subscription;
-    resendSuccess: boolean = false;
+    resendSuccess = false;
 
     constructor(private registerService: Register,
                 private activatedRoute: ActivatedRoute,

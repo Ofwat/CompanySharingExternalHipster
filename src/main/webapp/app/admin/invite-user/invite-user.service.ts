@@ -9,11 +9,9 @@ export class InviteUser {
 
     constructor(private http: Http) {}
 
-    /**
-     * Send a user an invite to join a particular company.
-     * @param {RegistrationRequest} registerRequest
-     * @returns {Observable<ResponseWrapper>}
-     */
+     //Send a user an invite to join a particular company.
+     //@param {RegistrationRequest} registerRequest
+     //@returns {Observable<ResponseWrapper>}
     sendInvite(registrationRequest:RegistrationRequest): Observable<ResponseWrapper>{
         return this.http.post(`api/users/send_invite`, registrationRequest)
             .map((res: Response) => this.convertResponse(res));

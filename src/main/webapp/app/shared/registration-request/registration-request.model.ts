@@ -1,4 +1,4 @@
-import {Company} from "../../entities/company/company.model";
+import {Company} from '../../entities/company/company.model';
 
 export class RegistrationRequest {
     public id?: any;

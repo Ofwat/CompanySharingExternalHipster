@@ -74,6 +74,9 @@ export class LoginComponent implements AfterViewInit {
         }).catch((err) => {
             this.authenticationError = true;
             this.failureMessage = this.stateStorageService.loginFailureCode;
+            if ( this.failureMessage === 'Check Enabled.' ){
+                this.router.navigate(['register/otp']);
+            }
         });
     }
 

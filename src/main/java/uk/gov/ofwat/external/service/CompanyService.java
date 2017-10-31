@@ -9,9 +9,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import uk.gov.ofwat.external.repository.UserRepository;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 
 /**
@@ -25,9 +28,13 @@ public class CompanyService {
 
     private final CompanyRepository companyRepository;
 
-    public CompanyService(CompanyRepository companyRepository) {
+    private final UserRepository userRepository;
+
+    public CompanyService(CompanyRepository companyRepository, UserRepository userRepository) {
         this.companyRepository = companyRepository;
+        this.userRepository = userRepository;
     }
+
 
     /**
      * Save a company.
@@ -80,6 +87,8 @@ public class CompanyService {
         try{
             company.addUser(user);
             companyRepository.save(company);
+            user.getCompanies().add(company);
+            userRepository.save(user);
             log.debug("Added user '{}' to company '{}'", company, user);
         }catch(Exception e){
             log.error("Unable to add user '{}' to company '{}': {}", user, company, e);
@@ -118,12 +127,23 @@ public class CompanyService {
 
     /**
      * Get a list of companies that the current user has the role ROLE_COMPANY_USER for.
-     * @param company
+     * @param login
      * @return
      */
-    public Optional<List<Company>> getListOfCompaniesCurrentUserIsMemberFor(Company company){
-        // TODO implement this pending Company/User/Role refactoring
-        return Optional.empty();
+    public Optional<Set<Company>> getListOfCompaniesCurrentUserIsMemberFor(String login){
+        Optional<User> user = userRepository.findOneByLogin(login);
+        return user.map(u -> Optional.of(u.getCompanies()).orElse(Collections.emptySet()));
+    }
+
+    public Boolean removeUserFromCompany(Long companyId, String login){
+        Optional<User> user = userRepository.findOneByLogin(login);
+        return user.map((u) -> {
+            Company c = companyRepository.getOne(companyId);
+            c.removeUser(u);
+            u = userRepository.save(u);
+            companyRepository.save(c);
+            return true;
+        }).orElse(false);
     }
 
 }

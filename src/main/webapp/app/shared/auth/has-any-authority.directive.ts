@@ -1,7 +1,8 @@
 import { Directive, Input, TemplateRef, ViewContainerRef } from '@angular/core';
 import { Principal } from './principal.service';
 
-/**
+/*
+ *
  * @whatItDoes Conditionally includes an HTML element if current user has any
  * of the authorities passed as the `expression`.
  *
@@ -11,7 +12,7 @@ import { Principal } from './principal.service';
  *
  *     <some-element *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_USER']">...</some-element>
  * ```
- */
+*/
 @Directive({
     selector: '[jhiHasAnyAuthority]'
 })

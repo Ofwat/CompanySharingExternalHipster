@@ -1,0 +1,44 @@
+<main id="content" role="main" tabindex="-1">
+<div *ngIf="user">
+    <h1 class="heading-large">Change {{login}} login</h1>
+    <div class="grid-row">
+        <div class="column-full">
+            <jhi-alert></jhi-alert>
+            <div class="error-summary" role="alert" aria-labelledby="error-summary" *ngIf="error">
+                <strong>Registration change failed.</strong> Please try again later.
+            </div>
+
+            <div class="error-summary" role="alert" aria-labelledby="error-summary" *ngIf="errorUserExists">
+                <strong>Login name already registered!</strong> Please choose another one.
+            </div>
+        </div>
+        <div class="column-full">
+            <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+                <div class="form-group">
+                    <label class="form-control-label">Login</label>
+                    <input type="text" class="form-control" name="login" #loginInput="ngModel"
+                           [(ngModel)]="user.login" required minlength="1" maxlength="50" pattern="^[_'.@A-Za-z0-9-]*$">
+
+                    <div *ngIf="loginInput.dirty && loginInput.invalid">
+                        <small class="form-text text-danger"
+                               *ngIf="loginInput.errors.required">
+                            This field is required.
+                        </small>
+
+                        <small class="form-text text-danger"
+                               *ngIf="loginInput.errors.maxlength"
+                        >
+                            This field cannot be longer than 50 characters.
+                        </small>
+                    </div>
+                </div>
+                <div class="page-footer">
+                    <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="button" value="Save">Save</button>
+                    <button type="button" class="page-footer-back-link" [routerLink]="['/ofwat-user-management/'+ user.login]">Back to your profile</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</main>

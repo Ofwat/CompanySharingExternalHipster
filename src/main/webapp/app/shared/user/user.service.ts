@@ -61,6 +61,22 @@ export class UserService {
             .map((res: Response) => this.convertResponse(res));
     }
 
+    getUserCompanies(login:String): Observable<ResponseWrapper> {
+        return this.http.post(`api/users/companies`, login)
+            .map((res: Response) => this.convertResponse(res));
+    }
+
+    removeUserFromCompany(companyId:number, login:String): Observable<ResponseWrapper> {
+        return this.http.delete(`api/users/companies/${companyId}/${login}`)
+            .map((res: Response) => this.convertResponse(res));
+    }
+
+    addUserToCompany(companyId:number, login:String): Observable<ResponseWrapper>{
+        console.log("Making put to api/users/companies")
+        return this.http.put('api/users/companies', {'companyId':companyId, 'login':login})
+            .map((res: Response) => this.convertResponse(res));
+    }
+
     private convertResponse(res: Response): ResponseWrapper {
         const jsonResponse = res.json();
         return new ResponseWrapper(res.headers, jsonResponse, res.status);

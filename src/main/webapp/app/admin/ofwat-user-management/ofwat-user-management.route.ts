@@ -3,9 +3,13 @@ import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes, CanActiva
 import { JhiPaginationUtil } from 'ng-jhipster';
 import { OfwatUserMgmtComponent } from './ofwat-user-management.component';
 import { OfwatUserMgmtDetailComponent } from './ofwat-user-management-detail.component';
-import {OfwatUserMgmtPermissionsComponent} from './ofwat-user-management-permissions.component';
-
+import { OfwatUserMgmtPermissionsComponent } from './ofwat-user-management-permissions.component';
 import { Principal } from '../../shared';
+import { ModifyCompaniesComponent } from './config/modify-companies.component';
+import {ModifyLoginComponent} from "./config/modify-login.component";
+import {ModifyMobileComponent} from "./config/modify-mobile.component";
+import {ModifyRolesComponent} from "./config/modify-roles.component";
+import {ModifyEmailComponent} from "./config/modify-email.component";
 
 @Injectable()
 export class UserResolveOfwat implements CanActivate {
@@ -48,14 +52,56 @@ export const ofwatUserMgmtRoute: Routes = [
         path: 'ofwat-user-management/:login',
         component: OfwatUserMgmtDetailComponent,
         data: {
-            pageTitle: 'OfwatUsers'
+            pageTitle: 'User Details'
+        }
+    },
+    {
+        path: 'ofwat-user-management/:login/login',
+        component: ModifyLoginComponent,
+        data: {
+            pageTitle: 'Modify login'
+        }
+    },
+    {
+        path: 'ofwat-user-management/:login/email',
+        component: ModifyEmailComponent,
+        data: {
+            pageTitle: 'Modify email'
+        }
+    },
+    {
+        path: 'ofwat-user-management/:login/mobile',
+        component: ModifyMobileComponent,
+        data: {
+            pageTitle: 'Modify mobile'
+        }
+    },
+    {
+        path: 'ofwat-user-management/:login/password',
+        component: ModifyMobileComponent,
+        data: {
+            pageTitle: 'Reset password'
+        }
+    },
+    {
+        path: 'ofwat-user-management/:login/companies',
+        component: ModifyCompaniesComponent,
+        data: {
+            pageTitle: 'Modify companies'
+        }
+    },
+    {
+        path: 'ofwat-user-management/:login/roles',
+        component: ModifyRolesComponent,
+        data: {
+            pageTitle: 'Assign roles'
         }
     },
     {
         path: 'ofwat-user-management/permissions/:login',
         component: OfwatUserMgmtPermissionsComponent,
         data: {
-            pageTitle: 'OfwatUsers'
+            pageTitle: 'Modify permissions'
         }
     }
 ];

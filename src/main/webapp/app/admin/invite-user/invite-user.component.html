@@ -148,13 +148,10 @@
                 <div class="form-group">
                     <label class="form-label" for="company">Company
                         <span class="form-hint">
-    Please select the company you work for.
-</span>
+                            Please select the company you work for.
+                        </span>
                     </label>
-                    <select style="height: auto" class="form-control" id="company" name="company" #companyInput="ngModel"
-                            [(ngModel)]="this.selectedCompany" required>
-                        <option *ngFor="let c of this.companies" [ngValue]="c.id">{{c.name}}</option>
-                    </select>
+                    <jhi-ofwat-company-select [preselectedCompany]="selectedCompany" (companyChangedEvent)="companyChanged($event)"></jhi-ofwat-company-select>
                 </div>
                 <button type="submit" [disabled]="inviteForm.form.invalid" class="button"><span class="font-medium">Send invitation email</span></button>
                 <button class="button button-secondary" [routerLink]="['../ofwat-user-management']"><span class="font-medium">Back to user management</span></button>
