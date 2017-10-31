@@ -6,6 +6,8 @@ import {map} from 'rxjs/operator/map';
 import {Subscription} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
 import {DataBundle} from '../../shared/data-bundle/data-bundle.model';
+import {Observable} from "rxjs/Observable";
+import {async} from "rxjs/scheduler/async";
 
 @Component({
     selector: 'jhi-data-input-edit',
@@ -65,7 +67,7 @@ export class DataInputEditComponent implements OnInit {
     private onLoadUsersSuccess(data, headers) {
         this.users = data;
         this.userMap = new Map<number, User>();
-        for (let user of this.users) {
+        for (let user of data) {
             this.userMap.set(user.id, user);
         }
     }
@@ -78,19 +80,15 @@ export class DataInputEditComponent implements OnInit {
         if (this.ownerIndex) {
             const owner = this.userMap.get(parseInt(this.ownerIndex));
             this.dataInput.ownerId = owner.id;
-            this.dataInput.ownerFirstName = owner.firstName;
-            this.dataInput.ownerLastName = owner.lastName;
         }
         if (this.reviewerIndex) {
             const reviewer = this.userMap.get(parseInt(this.reviewerIndex));
             this.dataInput.reviewerId = reviewer.id;
-            this.dataInput.reviewerFirstName = reviewer.firstName;
-            this.dataInput.reviewerLastName = reviewer.lastName;
         }
+        this.updateDataInput();
+    }
 
-        // this.dataInput.dataBundleId = this.dataBundle.id;
-        // this.dataInput.dataBundleName = this.dataBundle.name;
-
+    private updateDataInput() {
         this.dataInputService.update(this.dataInput).subscribe(
             response => {
                 console.log("success" + response.status);
@@ -106,5 +104,18 @@ export class DataInputEditComponent implements OnInit {
                 }
             }
         );
+    }
+
+    markAsDraft() {
+        this.dataInput.statusId=1;
+        this.updateDataInput();
+    }
+    markAsReview() {
+        this.dataInput.statusId=2;
+        this.updateDataInput();
+    }
+    markAsPending() {
+        this.dataInput.statusId=3;
+        this.updateDataInput();
     }
 }

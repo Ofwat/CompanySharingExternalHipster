@@ -24,6 +24,8 @@ export class DataBundleCreationComponent implements OnInit {
     ownerId: any;
     reviewerId: any;
     currentDate: any;
+    ownerIndex: any;
+    reviewerIndex: any;
 
     constructor(
         private alertService: JhiAlertService,
@@ -76,14 +78,20 @@ export class DataBundleCreationComponent implements OnInit {
     }
 
     create() {
-        let owner = this.userMap.get(parseInt(this.ownerId));
-        this.dataBundle.ownerId = owner.id;
-        this.dataBundle.ownerFirstName = owner.firstName;
-        this.dataBundle.ownerLastName = owner.lastName;
-        let reviewer = this.userMap.get(parseInt(this.reviewerId));
-        this.dataBundle.reviewerId = reviewer.id;
-        this.dataBundle.reviewerFirstName = reviewer.firstName;
-        this.dataBundle.reviewerLastName = reviewer.lastName;
+        if (this.ownerIndex) {
+            const owner = this.userMap.get(parseInt(this.ownerIndex));
+            this.dataBundle.ownerId = owner.id;
+        }
+        else {
+            this.dataBundle.ownerId = this.dataCollection.owner.id;
+        }
+        if (this.reviewerIndex) {
+            const reviewer = this.userMap.get(parseInt(this.reviewerIndex));
+            this.dataBundle.reviewerId = reviewer.id;
+        }
+        else {
+            this.dataBundle.reviewerId = this.dataCollection.reviewer.id;
+        }
 
         this.dataBundle.dataCollectionId = this.dataCollection.id;
         this.dataBundle.dataCollectionName = this.dataCollection.name;

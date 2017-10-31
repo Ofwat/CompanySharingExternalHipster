@@ -20,12 +20,12 @@ public interface DataInputRepository extends JpaRepository<DataInput,Long> {
     @Query("select data_input from DataInput data_input where data_input.reviewer.login = ?#{principal.username}")
     List<DataInput> findByReviewerIsCurrentUser();
 
-    @Query("SELECT coalesce(max(db.orderIndex), -1) FROM DataInput db WHERE data_Bundle_Id = :dataBundleId")
+    @Query("SELECT coalesce(max(di.orderIndex), -1) FROM DataInput di WHERE data_Bundle_Id = :dataBundleId")
     Long getMaxOrderIndex(@Param("dataBundleId") Long dataBundleId);
 
     @Modifying
-    @Query("UPDATE DataInput db set db.orderIndex = :orderIndex WHERE data_Bundle_Id = :dataBundleId")
+    @Query("UPDATE DataInput di set di.orderIndex = :orderIndex WHERE id = :dataInputId")
     void updateOrderIndexForId(@Param("orderIndex") Long orderIndex,
-                               @Param("dataBundleId") Long dataBundleId);
+                               @Param("dataInputId") Long dataInputId);
 
 }

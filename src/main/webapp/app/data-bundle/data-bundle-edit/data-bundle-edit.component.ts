@@ -78,19 +78,16 @@ export class DataBundleEditComponent implements OnInit {
         if (this.ownerIndex) {
             const owner = this.userMap.get(parseInt(this.ownerIndex));
             this.dataBundle.ownerId = owner.id;
-            this.dataBundle.ownerFirstName = owner.firstName;
-            this.dataBundle.ownerLastName = owner.lastName;
         }
         if (this.reviewerIndex) {
             const reviewer = this.userMap.get(parseInt(this.reviewerIndex));
             this.dataBundle.reviewerId = reviewer.id;
-            this.dataBundle.reviewerFirstName = reviewer.firstName;
-            this.dataBundle.reviewerLastName = reviewer.lastName;
         }
 
-        // this.dataBundle.dataCollectionId = this.dataCollection.id;
-        // this.dataBundle.dataCollectionName = this.dataCollection.name;
+        this.updateDataBundle();
+    }
 
+    private updateDataBundle() {
         this.dataBundleService.update(this.dataBundle).subscribe(
             response => {
                 console.log("success" + response.status);
@@ -106,5 +103,22 @@ export class DataBundleEditComponent implements OnInit {
                 }
             }
         );
+    }
+
+    markAsDraft() {
+        this.dataBundle.statusId=1;
+        this.updateDataBundle();
+    }
+    markAsReview() {
+        this.dataBundle.statusId=2;
+        this.updateDataBundle();
+    }
+    markAsPending() {
+        this.dataBundle.statusId=3;
+        this.updateDataBundle();
+    }
+    markAsPublished() {
+        this.dataBundle.statusId=4;
+        this.updateDataBundle();
     }
 }

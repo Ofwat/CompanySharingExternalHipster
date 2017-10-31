@@ -1,6 +1,7 @@
 package uk.gov.ofwat.external.service;
 
 import uk.gov.ofwat.external.domain.DataBundle;
+import uk.gov.ofwat.external.domain.DataInput;
 import uk.gov.ofwat.external.repository.DataBundleRepository;
 import uk.gov.ofwat.external.service.dto.DataBundleDTO;
 import uk.gov.ofwat.external.service.mapper.DataBundleMapper;
@@ -24,14 +25,14 @@ import java.util.stream.Stream;
 public class DataBundleService {
 
     private final Logger log = LoggerFactory.getLogger(DataBundleService.class);
-
     private final DataBundleRepository dataBundleRepository;
-
     private final DataBundleMapper dataBundleMapper;
+    private final DataInputService dataInputService;
 
-    public DataBundleService(DataBundleRepository dataBundleRepository, DataBundleMapper dataBundleMapper) {
+    public DataBundleService(DataBundleRepository dataBundleRepository, DataBundleMapper dataBundleMapper, DataInputService dataInputService) {
         this.dataBundleRepository = dataBundleRepository;
         this.dataBundleMapper = dataBundleMapper;
+        this.dataInputService = dataInputService;
     }
 
     /**
@@ -80,6 +81,12 @@ public class DataBundleService {
     public void delete(Long id) {
         log.debug("Request to delete DataBundle : {}", id);
         DataBundle dataBundleToDelete = dataBundleRepository.findOne(id);
+        decrementHigherOrderIndexes(dataBundleToDelete);
+        deleteDataInputs(dataBundleToDelete);
+        dataBundleRepository.delete(id);
+    }
+
+    private void decrementHigherOrderIndexes(DataBundle dataBundleToDelete) {
         List<DataBundle> allDataBundles = dataBundleRepository.findAll();
         for (DataBundle db : allDataBundles) {
             if (db.getDataCollection().getId() == dataBundleToDelete.getDataCollection().getId() &&
@@ -87,7 +94,12 @@ public class DataBundleService {
                 dataBundleRepository.updateOrderIndexForId(db.getOrderIndex()-1, db.getId());
             }
         }
-        dataBundleRepository.delete(id);
+    }
+
+    private void deleteDataInputs(DataBundle dataBundle) {
+        for (DataInput di : dataBundle.getDataInputs()) {
+            dataInputService.delete(di.getId());
+        }
     }
 
     public Long getMaxOrderIndex(Long dataCollectionId) {

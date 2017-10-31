@@ -77,14 +77,14 @@ public class DataInputService {
      *
      *  @param id the id of the entity
      */
-//    public void delete(Long id) {
-//        log.debug("Request to delete DataInput : {}", id);
-//        dataInputRepository.delete(id);
-//    }
-
     public void delete(Long id) {
         log.debug("Request to delete DataInput : {}", id);
         DataInput dataInputToDelete = dataInputRepository.findOne(id);
+        decrementHigherOrderIndexes(dataInputToDelete);
+        dataInputRepository.delete(id);
+    }
+
+    private void decrementHigherOrderIndexes(DataInput dataInputToDelete) {
         List<DataInput> allDataInputs = dataInputRepository.findAll();
         for (DataInput di : allDataInputs) {
             if (di.getDataBundle().getId() == dataInputToDelete.getDataBundle().getId() &&
@@ -92,7 +92,6 @@ public class DataInputService {
                 dataInputRepository.updateOrderIndexForId(di.getOrderIndex()-1, di.getId());
             }
         }
-        dataInputRepository.delete(id);
     }
 
     public Long getMaxOrderIndex(Long dataBundleId) {

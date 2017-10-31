@@ -34,4 +34,5 @@ export class DataInputDetailComponent implements OnInit {
     ngOnDestroy() {
         this.subscription.unsubscribe();
     }
+
 }

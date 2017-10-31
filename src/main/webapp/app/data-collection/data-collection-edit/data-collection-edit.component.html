@@ -5,17 +5,29 @@
 
         <div class="alert alert-success" *ngIf="success">
             <strong>Data Collection edited</strong>
-            <button type="button" class="button button-secondary" [routerLink]="['/data-collection-management']"><span class="font-medium">Back to Data Collections</span></button>
+            <button type="button"
+                    class="button button-secondary"
+                    [routerLink]="['/data-collection-detail', dataCollection.id]">
+                <span>Back to Data Collection</span>
+            </button>
         </div>
 
         <div class="alert alert-danger" *ngIf="error">
             <strong>Data Collection edit failed!</strong> Please try again later.
-            <button type="button" class="button button-secondary" [routerLink]="['/data-collection-management']"><span class="font-medium">Back to Data Collections</span></button>
+            <button type="button"
+                    class="button button-secondary"
+                    [routerLink]="['/data-collection-management']">
+                <span>Back to Data Collections</span>
+            </button>
         </div>
 
         <div class="alert alert-danger" *ngIf="errorDataCollectionExists">
             <strong>Data Collection name '{{dataCollection?.name}}' is already in use!</strong> Please choose another one.
-            <button type="button" class="button button-secondary" [routerLink]="['/data-collection-management']"><span class="font-medium">Back to Data Collections</span></button>
+            <button type="button"
+                    class="button button-secondary"
+                    [routerLink]="['/data-collection-management']">
+                <span>Back to Data Collections</span>
+            </button>
         </div>
     </div>
 
@@ -93,7 +105,7 @@
                     <span class="form-hint">The owner responsible for the Data Collection</span>
                 </label>
                 <select class="form-control" [(ngModel)]="ownerId" id="owner" name="owner" #owner="ngModel">
-                    <option *ngFor="let user of users"
+                    <option *ngFor="let user of usersForOwner"
                             [value]="user?.id"
                             [selected]="dataCollection?.owner?.id==user?.id ? true : null" >
                         {{user?.firstName}} {{user?.lastName}}
@@ -106,7 +118,7 @@
                     <span class="form-hint">The reviewer responsible for reviewing the Data Collection</span>
                 </label>
                 <select class="form-control" [(ngModel)]="reviewerId" id="reviewer" name="reviewer" #reviewer="ngModel">
-                    <option *ngFor="let user of users"
+                    <option *ngFor="let user of usersForReviewer"
                             [value]="user?.id"
                             [selected]="dataCollection?.reviewer?.id==user?.id ? true : null" >
                         {{user?.firstName}} {{user?.lastName}}
@@ -124,6 +136,24 @@
                         class="button button-secondary"
                         [routerLink]="['/data-collection-detail', dataCollection.id]">
                     <span>Back</span>
+                </button>
+                <button *ngIf="dataCollection?.publishingStatus?.status=='DRAFT'" class="button float-right" (click)="markAsReview()">
+                    <span class="fa fa-plus"></span> <span>Mark as Review</span>
+                </button>
+                <button *ngIf="dataCollection?.publishingStatus?.status=='REVIEW'" class="button float-right" (click)="markAsDraft()">
+                    <span class="fa fa-plus"></span> <span>Mark as Draft</span>
+                </button>
+                <button *ngIf="dataCollection?.publishingStatus?.status=='REVIEW'" class="button float-right" (click)="markAsPending()">
+                    <span class="fa fa-plus"></span> <span>Mark as Unpublished</span>
+                </button>
+                <button *ngIf="dataCollection?.publishingStatus?.status=='UNPUBLISHED'" class="button float-right" (click)="markAsReview()">
+                    <span class="fa fa-plus"></span> <span>Mark as Reviewed</span>
+                </button>
+                <button *ngIf="dataCollection?.publishingStatus?.status=='UNPUBLISHED'" class="button float-right" (click)="markAsPublished()">
+                    <span class="fa fa-plus"></span> <span>Publish</span>
+                </button>
+                <button *ngIf="dataCollection?.publishingStatus?.status=='PUBLISHED'" class="button float-right" (click)="markAsPending()">
+                    <span class="fa fa-plus"></span> <span>Mark as Reviewed</span>
                 </button>
             </div>
         </form>

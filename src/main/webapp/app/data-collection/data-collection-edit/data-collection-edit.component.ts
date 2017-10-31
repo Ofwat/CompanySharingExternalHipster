@@ -5,6 +5,7 @@ import { User, UserService } from '../../shared';
 import {map} from "rxjs/operator/map";
 import {Subscription} from "rxjs";
 import {ActivatedRoute} from "@angular/router";
+import { NgModule } from '@angular/core';
 // import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -18,8 +19,10 @@ export class DataCollectionEditComponent implements OnInit {
     error: boolean;
     errorDataCollectionExists: boolean;
     dataCollection: DataCollection;
-    users: User[];
+    usersForOwner: User[];
+    usersForReviewer: User[];
     userMap: Map<number, {}>;
+
     ownerId: any;
     reviewerId: any;
     private subscription: Subscription;
@@ -61,9 +64,13 @@ export class DataCollectionEditComponent implements OnInit {
     }
 
     private onLoadUsersSuccess(data, headers) {
-        this.users = data;
+        this.usersForOwner = data.map(user => Object.assign(new User, user));
+        this.usersForOwner[1].firstName = "Fred";
+        this.usersForReviewer = data.map(user => Object.assign(new User, user));
+        this.usersForReviewer[1].firstName = "Bert";
+        // Object.assign(this.usersForReviewer, data);
         this.userMap = new Map<number, {}>();
-        for (let user of this.users) {
+        for (let user of data) {
             this.userMap.set(user.id, user);
         }
     }
@@ -79,6 +86,11 @@ export class DataCollectionEditComponent implements OnInit {
         if (this.reviewerId) {
             this.dataCollection.reviewer = this.userMap.get(parseInt(this.reviewerId));
         }
+
+        this.updateDataCollection();
+    }
+
+    private updateDataCollection() {
         this.dataCollectionService.update(this.dataCollection).subscribe(
             response => {
                 console.log("success" + response.status);
@@ -95,4 +107,22 @@ export class DataCollectionEditComponent implements OnInit {
             }
         );
     }
+
+    markAsDraft() {
+        this.dataCollection.publishingStatus.id=1;
+        this.updateDataCollection();
+    }
+    markAsReview() {
+        this.dataCollection.publishingStatus.id=2;
+        this.updateDataCollection();
+    }
+    markAsPending() {
+        this.dataCollection.publishingStatus.id=3;
+        this.updateDataCollection();
+    }
+    markAsPublished() {
+        this.dataCollection.publishingStatus.id=4;
+        this.updateDataCollection();
+    }
+
 }

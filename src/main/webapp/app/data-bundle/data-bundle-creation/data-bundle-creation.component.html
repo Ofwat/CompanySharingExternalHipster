@@ -126,8 +126,11 @@
                 <label class="form-label" for="owner">Owner
                     <span class="form-hint">The owner responsible for the Data Bundle</span>
                 </label>
-                <select class="form-control" [(ngModel)]="ownerId" id="owner" name="owner" #owner="ngModel" required>
-                    <option *ngFor="let user of users" [value]="user?.id">{{user?.firstName}} {{user?.lastName}}</option>
+                <select class="form-control" [(ngModel)]="ownerIndex" id="owner" name="owner" #owner="ngModel">
+                    <option *ngFor="let user of users"
+                            [value]="user?.id"
+                        [selected]="dataCollection?.owner?.id==user?.id ? true : null" >
+                        {{user?.firstName}} {{user?.lastName}}</option>
                 </select>
             </div>
 
@@ -135,8 +138,11 @@
                 <label class="form-label" for="reviewer">Reviewer
                     <span class="form-hint">The reviewer responsible for reviewing the Data Bundle</span>
                 </label>
-                <select class="form-control" [(ngModel)]="reviewerId" id="reviewer" name="reviewer" #reviewer="ngModel" required>
-                    <option *ngFor="let user of users" [value]="user?.id">{{user?.firstName}} {{user?.lastName}}</option>
+                <select class="form-control" [(ngModel)]="reviewerIndex" id="reviewer" name="reviewer" #reviewer="ngModel">
+                    <option *ngFor="let user of users"
+                            [value]="user?.id"
+                            [selected]="dataCollection?.reviewer?.id==user?.id ? true : null" >
+                    {{user?.firstName}} {{user?.lastName}}</option>
                 </select>
             </div>
 

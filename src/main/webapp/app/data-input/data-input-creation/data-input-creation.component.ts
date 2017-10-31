@@ -24,6 +24,8 @@ export class DataInputCreationComponent implements OnInit {
     ownerId: any;
     reviewerId: any;
     currentDate: any;
+    ownerIndex: any;
+    reviewerIndex: any;
 
     constructor(
         private alertService: JhiAlertService,
@@ -76,14 +78,20 @@ export class DataInputCreationComponent implements OnInit {
     }
 
     create() {
-        let owner = this.userMap.get(parseInt(this.ownerId));
-        this.dataInput.ownerId = owner.id;
-        this.dataInput.ownerFirstName = owner.firstName;
-        this.dataInput.ownerLastName = owner.lastName;
-        let reviewer = this.userMap.get(parseInt(this.reviewerId));
-        this.dataInput.reviewerId = reviewer.id;
-        this.dataInput.reviewerFirstName = reviewer.firstName;
-        this.dataInput.reviewerLastName = reviewer.lastName;
+        if (this.ownerIndex) {
+            const owner = this.userMap.get(parseInt(this.ownerIndex));
+            this.dataInput.ownerId = owner.id;
+        }
+        else {
+            this.dataInput.ownerId = this.dataBundle.ownerId;
+        }
+        if (this.reviewerIndex) {
+            const reviewer = this.userMap.get(parseInt(this.reviewerIndex));
+            this.dataInput.reviewerId = reviewer.id;
+        }
+        else {
+            this.dataInput.reviewerId = this.dataBundle.reviewerId;
+        }
 
         this.dataInput.dataBundleId = this.dataBundle.id;
         this.dataInput.dataBundleName = this.dataBundle.name;
@@ -91,6 +99,7 @@ export class DataInputCreationComponent implements OnInit {
         this.dataInput.fileName = "a typical file name";
         this.dataInput.fileLocation = "a typical file location";
         this.dataInput.orderIndex = 0;
+        this.dataInput.defaultDeadline =this.dataBundle.defaultDeadline;
 
         this.dataInputService.create(this.dataInput).subscribe(
             response => {

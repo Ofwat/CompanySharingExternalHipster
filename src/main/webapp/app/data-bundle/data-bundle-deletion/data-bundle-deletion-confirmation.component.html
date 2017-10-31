@@ -2,15 +2,12 @@
     <div >
         <h2 class="heading-medium">Confirm Data Bundle Deletion</h2>
         <div class="alert alert-success" *ngIf="dataBundle">
-            <strong>Delete this Data Bundle?</strong>
-            <strong>{{dataBundle.name}}</strong>
+            <p>You are about to delete the Data Bundle: <b>{{dataBundle.name}}.</b></p>
+            <p>Deleting this Data Bundle will delete all Data Inputs it contains. Are you sure you would like to continue?</p>
         </div>
 
     </div>
     <div class="col-md-8 offset-md-2" *ngIf="dataBundle">
-        <!--<button class="button float-right" [routerLink]="['/data-bundle-deleted', dataBundle.name]">-->
-            <!--<span class="fa fa-plus"></span> <span>Delete Data Bundle</span>-->
-        <!--</button>-->
         <button class="button float-right" (click)="delete(dataBundle.id)">
             <span class="fa fa-plus"></span> <span>Delete Data Bundle</span>
         </button>
