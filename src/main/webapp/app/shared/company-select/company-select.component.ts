@@ -41,7 +41,7 @@ export class CompanySelectComponent implements OnInit {
     }
 
     companyChanged(event) {
-        //this.$sessionStorage.store('selectedCompany', this.selectedCompany);
+        this.$sessionStorage.store('selectedCompany', this.selectedCompany);
         this.companyChangedEvent.emit(this.selectedCompany);
     }
 
