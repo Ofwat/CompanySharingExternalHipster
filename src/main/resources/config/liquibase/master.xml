@@ -42,6 +42,9 @@
     <include file="classpath:config/liquibase/changelog/20171010193554_password_last_change_date.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20171024103000_update_password_last_change_date.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20171025155755_add_publishing_statuses.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20171027150703_added_entity_DataInput.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20171027150703_added_entity_constraints_DataInput.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20171028155028_DataInput_AbstractAuditingEntity.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

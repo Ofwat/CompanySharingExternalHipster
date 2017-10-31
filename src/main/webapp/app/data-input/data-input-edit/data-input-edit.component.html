@@ -1,0 +1,181 @@
+<div>
+    <div>
+        <h2 class="heading-medium">Edit Data Input</h2>
+        <h3 class="heading-small" *ngIf="!success && !errorDataBundleExists">Data Bundle: {{dataInput.dataBundleName}}</h3>
+
+
+        <div class="alert alert-success" *ngIf="success">
+            <strong>Data Input edited</strong>
+            <button type="button"
+                    class="button button-secondary"
+                    [routerLink]="['/data-input-detail', dataInput.id]">
+                <span class="font-medium">Back to Data Input</span>
+            </button>
+        </div>
+
+        <div class="alert alert-danger" *ngIf="error">
+            <strong>Data Input edit failed!</strong> Please try again later.
+            <button type="button"
+                    class="button button-secondary"
+                    [routerLink]="['/data-input-detail', dataInput.id]">
+                <span>Back to Data Input</span>
+            </button>
+        </div>
+
+        <div class="alert alert-danger" *ngIf="errorDataInputExists">
+            <strong>Data Input name '{{dataInput.name}}' is already in use!</strong> Please choose another one.
+            <button type="button"
+                    class="button button-secondary"
+                    [routerLink]="['/data-input-detail', dataInput.id]">
+                <span>Back to Data Input</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="col-md-8 offset-md-2">
+        <form name="form" role="form" (ngSubmit)="save()" #dataInputEditForm="ngForm" *ngIf="!success && !errorDataInputExists">
+
+            <div class="form-group">
+                <label class="form-label" for="name">Name
+                    <span class="form-hint">The name of the data input.</span>
+                </label>
+                <input type="text" class="form-control" [(ngModel)]="dataInput.name" id="name" name="name" #name="ngModel" placeholder=""
+                       required minlength="1" maxlength="250" pattern="^[^\s]+(\s+[^\s]+)*$"/>
+                <div *ngIf="name.dirty && name.invalid">
+                    <small class="form-text text-danger" *ngIf="name.errors.required">
+                        A name is required for the data input.
+                    </small>
+                    <small class="form-text text-danger" *ngIf="name.errors.minlength">
+                        The data input name is required to be at least 1 character.
+                    </small>
+                    <small class="form-text text-danger" *ngIf="name.errors.maxlength">
+                        The data input name cannot be longer than 250 characters.
+                    </small>
+                    <small class="form-text text-danger" *ngIf="name.errors.pattern">
+                        The data input name can contain any characters, but must not start or end with white space.
+                    </small>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="description">Description
+                    <span class="form-hint">The description of the data input.</span>
+                </label>
+                <textarea rows="3" class="form-control" [(ngModel)]="dataInput.description" id="description" name="description" #description="ngModel" placeholder=""
+                          required minlength="1" maxlength="250"></textarea>
+                <div *ngIf="description.dirty && description.invalid">
+                    <small class="form-text text-danger" *ngIf="description.errors.required">
+                        A description is required for the data input.
+                    </small>
+                    <small class="form-text text-danger" *ngIf="description.errors.minlength">
+                        The data input description is required to be at least 1 character.
+                    </small>
+                    <small class="form-text text-danger" *ngIf="description.errors.maxlength">
+                        The data input description cannot be longer than 250 characters.
+                    </small>
+                    <small class="form-text text-danger" *ngIf="description.errors.pattern">
+                        The data input description can contain any characters, but must not start or end with white space.
+                    </small>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="guidance">Guidance
+                    <span class="form-hint">The guidance of the data input.</span>
+                </label>
+                <textarea rows="5" class="form-control" [(ngModel)]="dataInput.guidance" id="guidance" name="guidance" #guidance="ngModel" placeholder=""
+                       required minlength="1" maxlength="250"></textarea>
+                <div *ngIf="guidance.dirty && guidance.invalid">
+                    <small class="form-text text-danger" *ngIf="guidance.errors.required">
+                        Guidance is required for the data input.
+                    </small>
+                    <small class="form-text text-danger" *ngIf="guidance.errors.minlength">
+                        The data input guidance is required to be at least 1 character.
+                    </small>
+                    <small class="form-text text-danger" *ngIf="guidance.errors.maxlength">
+                        The data input guidance cannot be longer than 250 characters.
+                    </small>
+                    <small class="form-text text-danger" *ngIf="guidance.errors.pattern">
+                        The data input guidance can contain any characters, but must not start or end with white space.
+                    </small>
+                </div>
+            </div>
+
+            <!--<div class="form-group">-->
+                <!--<label class="form-label" for="deadline">Deadline-->
+                    <!--<span class="form-hint">The deadline by which companies must submit this data input</span>-->
+                    <!--<span class="form-hint">For example, 30 12 2018</span>-->
+                <!--</label>-->
+                <!--<input class="form-control"-->
+                       <!--[(ngModel)]="dataInput.defaultDeadline"-->
+                       <!--id="deadline"-->
+                       <!--name="deadline"-->
+                       <!--#deadline="ngModel"-->
+                       <!--type="date"-->
+                       <!--placeholder="yyyy-MM-dd"-->
+                       <!--min="{{currentDate | date:'yyyy-MM-dd'}}"-->
+                       <!--required />-->
+                <!--<div *ngIf="deadline.dirty && deadline.invalid">-->
+                    <!--<small class="form-text text-danger" *ngIf="deadline.errors.required">-->
+                        <!--Deadline is required for the data input.-->
+                    <!--</small>-->
+                    <!--<small class="form-text text-danger" *ngIf="deadline.errors.date">-->
+                        <!--Please enter a valid date.-->
+                    <!--</small>-->
+                <!--</div>-->
+            <!--</div>-->
+
+            <div class="form-group">
+                <label class="form-label" for="owner">Owner
+                    <span class="form-hint">The owner responsible for the Data Input</span>
+                </label>
+                <select class="form-control" [(ngModel)]="ownerIndex" id="owner" name="owner" #owner="ngModel">
+                    <option *ngFor="let user of users"
+                            [value]="user?.id"
+                            [selected]="dataInput?.ownerId==user?.id ? true : null" >
+                        {{user?.firstName}} {{user?.lastName}}
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="reviewer">Reviewer
+                    <span class="form-hint">The reviewer responsible for reviewing the Data Input</span>
+                </label>
+                <select class="form-control" [(ngModel)]="reviewerIndex" id="reviewer" name="reviewer" #reviewer="ngModel">
+                    <option *ngFor="let user of users"
+                            [value]="user?.id"
+                            [selected]="dataInput?.reviewerId==user?.id ? true : null" >
+                        {{user?.firstName}} {{user?.lastName}}
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <button type="submit"
+                        [disabled]="dataInputEditForm.form.invalid"
+                        class="button float-right">
+                    <span>Save</span>
+                </button>
+                <button type="button"
+                        class="button button-secondary"
+                        [routerLink]="['/data-input-detail', dataInput.id]">
+                    <span>Back</span>
+                </button>
+                <button *ngIf="dataInput.statusStatus=='DRAFT'" class="button float-right" (click)="markAsReview()">
+                    <span class="fa fa-plus"></span> <span>Mark as Review</span>
+                </button>
+                <button *ngIf="dataInput.statusStatus=='REVIEW'" class="button float-right" (click)="markAsDraft()">
+                    <span class="fa fa-plus"></span> <span>Mark as Draft</span>
+                </button>
+                <button *ngIf="dataInput.statusStatus=='REVIEW'" class="button float-right" (click)="markAsPending()">
+                    <span class="fa fa-plus"></span> <span>Mark as Unpublished</span>
+                </button>
+                <button *ngIf="dataInput.statusStatus=='UNPUBLISHED'" class="button float-right" (click)="markAsReview()">
+                    <span class="fa fa-plus"></span> <span>Mark as Reviewed</span>
+                </button>
+            </div>
+        </form>
+        <p></p>
+    </div>
+</div>

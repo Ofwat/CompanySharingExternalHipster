@@ -2,8 +2,8 @@
     <div >
         <h2 class="heading-medium">Confirm Data Collection Deletion</h2>
         <div class="alert alert-success" *ngIf="dataCollection">
-            <strong>Delete this Data Collection?</strong>
-            <strong>{{dataCollection.name}}</strong>
+            <p>You are about to delete the Data Collection: <b>{{dataCollection.name}}.</b></p>
+            <p>Deleting this Data Collection will delete all Data Bundles and Data Inputs it contains. Are you sure you would like to continue?</p>
         </div>
 
     </div>

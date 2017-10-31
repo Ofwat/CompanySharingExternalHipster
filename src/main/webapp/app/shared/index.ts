@@ -26,3 +26,5 @@ export * from './data-collection/data-collection.model';
 export * from './data-collection/data-collection.service';
 export * from './data-bundle/data-bundle.model';
 export * from './data-bundle/data-bundle.service';
+export * from './data-input/data-input.model';
+export * from './data-input/data-input.service';

@@ -6,14 +6,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import uk.gov.ofwat.external.domain.DataBundle;
 import uk.gov.ofwat.external.domain.DataCollection;
-import uk.gov.ofwat.external.domain.PublishingStatus;
+import uk.gov.ofwat.external.domain.DataInput;
 import uk.gov.ofwat.external.repository.DataCollectionRepository;
 import uk.gov.ofwat.external.repository.PublishingStatusRepository;
 import uk.gov.ofwat.external.service.dto.DataCollectionDTO;
 import uk.gov.ofwat.external.service.mapper.DataCollectionMapper;
-
-import java.util.Optional;
 
 
 /**
@@ -28,11 +27,13 @@ public class DataCollectionService {
     private final DataCollectionRepository dataCollectionRepository;
     private final DataCollectionMapper dataCollectionMapper;
     private final PublishingStatusRepository publishingStatusRepository;
+    private final DataBundleService dataBundleService;
 
-    public DataCollectionService(DataCollectionRepository dataCollectionRepository, DataCollectionMapper dataCollectionMapper, PublishingStatusRepository publishingStatusRepository) {
+    public DataCollectionService(DataCollectionRepository dataCollectionRepository, DataCollectionMapper dataCollectionMapper, PublishingStatusRepository publishingStatusRepository, DataBundleService dataBundleService) {
         this.dataCollectionRepository = dataCollectionRepository;
         this.dataCollectionMapper = dataCollectionMapper;
         this.publishingStatusRepository = publishingStatusRepository;
+        this.dataBundleService = dataBundleService;
     }
 
     /**
@@ -99,12 +100,24 @@ public class DataCollectionService {
      *  @param id the id of the entity
      */
     public void delete(Long id) {
-        log.debug("Request to delete DataCollection : {}", id);
-        dataCollectionRepository.delete(id);
+        DataCollection dataCollection = dataCollectionRepository.findOne(id);
+        delete(dataCollection);
+    }
+
+    private void delete(DataCollection dataCollection) {
+        log.debug("Request to delete DataCollection : {}", dataCollection.getId());
+        deleteDataBundles(dataCollection);
+        dataCollectionRepository.delete(dataCollection.getId());
+    }
+
+    private void deleteDataBundles(DataCollection dataCollection) {
+        for (DataBundle db : dataCollection.getDataBundles()) {
+            dataBundleService.delete(db.getId());
+        }
     }
 
     public void deleteByName(String name) {
-        log.debug("Request to delete DataCollection : {}", name);
-        dataCollectionRepository.deleteByName(name);
+        DataCollection dataCollection = dataCollectionRepository.findOneByName(name);
+        delete(dataCollection);
     }
 }

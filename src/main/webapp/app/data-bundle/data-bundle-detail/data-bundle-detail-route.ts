@@ -10,4 +10,3 @@ export const dataBundleDetailRoute: Route = {
         pageTitle: 'Data Collection Detail'
     }
 };
-

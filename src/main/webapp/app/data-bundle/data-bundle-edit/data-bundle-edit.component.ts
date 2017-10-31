@@ -2,10 +2,10 @@ import { Component, OnInit, ElementRef } from '@angular/core';
 import { JhiAlertService } from 'ng-jhipster';
 import { ITEMS_PER_PAGE, Principal, ResponseWrapper, DataBundle, DataBundleService } from '../../shared';
 import { User, UserService } from '../../shared';
-import {map} from "rxjs/operator/map";
-import {Subscription} from "rxjs";
-import {ActivatedRoute} from "@angular/router";
-// import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import {map} from 'rxjs/operator/map';
+import {Subscription} from 'rxjs';
+import {ActivatedRoute} from '@angular/router';
+import {DataCollection} from '../../shared/data-collection/data-collection.model';
 
 @Component({
     selector: 'jhi-data-bundle-edit',
@@ -19,8 +19,12 @@ export class DataBundleEditComponent implements OnInit {
     errorDataBundleExists: boolean;
     dataBundle: DataBundle;
     users: User[];
-    userMap: Map<number, {}>;
+    userMap: Map<number, User>;
     private subscription: Subscription;
+    // dataCollection: DataCollection;
+    ownerIndex: any;
+    reviewerIndex: any;
+    currentDate: any;
 
     constructor(
         private alertService: JhiAlertService,
@@ -35,11 +39,11 @@ export class DataBundleEditComponent implements OnInit {
         this.error = false;
         this.errorDataBundleExists = false;
         this.dataBundle = {};
+        this.loadUsers();
+        this.currentDate = new Date();
         this.subscription = this.route.params.subscribe((params) => {
             this.load(params['id']);
         });
-
-        this.loadUsers();
     }
 
     ngAfterViewInit() {
@@ -60,7 +64,7 @@ export class DataBundleEditComponent implements OnInit {
 
     private onLoadUsersSuccess(data, headers) {
         this.users = data;
-        this.userMap = new Map<number, {}>();
+        this.userMap = new Map<number, User>();
         for (let user of this.users) {
             this.userMap.set(user.id, user);
         }
@@ -71,25 +75,50 @@ export class DataBundleEditComponent implements OnInit {
     }
 
     save() {
-        // let ownerId = parseInt(this.dataBundle.owner.id);
-        // let reviewerId = parseInt(this.dataBundle.reviewer.id);
-        // this.dataBundle.owner = this.userMap.get(ownerId);
-        // this.dataBundle.reviewer = this.userMap.get(reviewerId);
-        //
-        // this.dataBundleService.update(this.dataBundle).subscribe(
-        //     response => {
-        //         console.log("success" + response.status);
-        //         this.success = true;
-        //     },
-        //     errorResponse => {
-        //         console.log("error" + errorResponse.status + errorResponse.statusText);
-        //         if (409 == errorResponse.status) {
-        //             this.errorDataBundleExists = true;
-        //         }
-        //         else {
-        //             this.error = true;
-        //         }
-        //     }
-        // );
+        if (this.ownerIndex) {
+            const owner = this.userMap.get(parseInt(this.ownerIndex));
+            this.dataBundle.ownerId = owner.id;
+        }
+        if (this.reviewerIndex) {
+            const reviewer = this.userMap.get(parseInt(this.reviewerIndex));
+            this.dataBundle.reviewerId = reviewer.id;
+        }
+
+        this.updateDataBundle();
+    }
+
+    private updateDataBundle() {
+        this.dataBundleService.update(this.dataBundle).subscribe(
+            response => {
+                console.log("success" + response.status);
+                this.success = true;
+            },
+            errorResponse => {
+                console.log("error" + errorResponse.status + errorResponse.statusText);
+                if (409 == errorResponse.status) {
+                    this.errorDataBundleExists = true;
+                }
+                else {
+                    this.error = true;
+                }
+            }
+        );
+    }
+
+    markAsDraft() {
+        this.dataBundle.statusId=1;
+        this.updateDataBundle();
+    }
+    markAsReview() {
+        this.dataBundle.statusId=2;
+        this.updateDataBundle();
+    }
+    markAsPending() {
+        this.dataBundle.statusId=3;
+        this.updateDataBundle();
+    }
+    markAsPublished() {
+        this.dataBundle.statusId=4;
+        this.updateDataBundle();
     }
 }

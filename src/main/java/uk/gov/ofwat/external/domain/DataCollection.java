@@ -43,7 +43,7 @@ public class DataCollection extends AbstractAuditingEntity implements Serializab
     private String guidance;
 
     @OneToMany(mappedBy="dataCollection")
-    @OrderColumn(name="orderIndex")
+    @OrderColumn(name="order_Index")
     private DataBundle[] dataBundles;
 
     public Long getId() {

@@ -15,4 +15,10 @@ import org.springframework.data.jpa.repository.*;
 public interface DataBundleRepository extends JpaRepository<DataBundle,Long> {
     @Query("SELECT coalesce(max(db.orderIndex), -1) FROM DataBundle db WHERE data_Collection_Id = :dataCollectionId")
     Long getMaxOrderIndex(@Param("dataCollectionId") Long dataCollectionId);
+
+    @Modifying
+    @Query("UPDATE DataBundle db set db.orderIndex = :orderIndex WHERE id = :dataBundleId")
+    void updateOrderIndexForId(@Param("orderIndex") Long orderIndex,
+                               @Param("dataBundleId") Long dataBundleId);
+
 }

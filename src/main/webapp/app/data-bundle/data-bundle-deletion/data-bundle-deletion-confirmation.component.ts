@@ -12,6 +12,7 @@ import {ok} from "assert";
 export class DataBundleDeletionConfirmationComponent implements OnInit {
 
     dataBundle: DataBundle;
+    dataCollectionId: any;
     private subscription: Subscription;
 
     constructor(private route: ActivatedRoute,
@@ -28,13 +29,14 @@ export class DataBundleDeletionConfirmationComponent implements OnInit {
     load(id) {
         this.dataBundleService.get(id).subscribe((dataBundle) => {
             this.dataBundle = dataBundle;
+            this.dataCollectionId = dataBundle.dataCollectionId;
         });
     }
 
     delete(id) {
         this.dataBundleService.delete(id).subscribe((response) => {
             if (response.ok === true) {
-                this.router.navigate(['data-bundle-management']);
+                this.router.navigate(['data-collection-detail', this.dataCollectionId]);
             }
         });
     }

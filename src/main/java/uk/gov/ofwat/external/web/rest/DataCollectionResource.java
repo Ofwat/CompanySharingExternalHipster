@@ -161,6 +161,7 @@ public class DataCollectionResource {
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 
+
     /**
      */
 //    @DeleteMapping(value="/data-collections", params="name")

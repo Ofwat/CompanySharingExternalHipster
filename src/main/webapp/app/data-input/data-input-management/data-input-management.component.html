@@ -1,0 +1,26 @@
+<div>
+    <h2 class="heading-medium">
+        <span>Data Bundles</span>
+        <span class="float-right">&nbsp;</span>
+        <button class="button float-right" [routerLink]="['../data-input-creation']">
+            <span class="fa fa-plus"></span> <span>Create new Data Bundle</span>
+        </button>
+    </h2>
+    <div class="table-responsive" *ngIf="dataInputs" ng-app="myShoppingList" ng-controller="myCtrl">
+        <table class="">
+            <thead>
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+                    <th scope="col" jhiSortBy="name"><span>Name</span> <span class="fa fa-sort"></span></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody *ngIf ="dataInputs">
+                <tr *ngFor="let dataInput of dataInputs; trackBy: trackIdentity">
+                    <td>{{dataInput.name}}</td>
+                    <td><a href="" [routerLink]="['../data-input-detail', dataInput.id]">Details</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

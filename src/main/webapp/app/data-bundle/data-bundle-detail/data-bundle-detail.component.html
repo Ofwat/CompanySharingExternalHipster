@@ -1,52 +1,105 @@
 <div *ngIf="dataBundle">
-    <h2>
-        <span>Data Collection</span>
-    </h2>
-    <dl class="row-md jh-entity-details">
-        <dt>Name</dt>
-        <dd>{{dataBundle.name}}</dd>
-        <hr>
-        <dt>Publishing Status</dt>
-        <dd>{{dataBundle?.publishingStatus?.status}}</dd>
-        <hr>
-        <dt>Owner</dt>
-        <dd><div *ngIf="dataBundle.owner">{{dataBundle.owner.firstName}} {{dataBundle.owner.lastName}}</div></dd>
-        <hr>
-        <dt>Reviewer</dt>
-        <dd><div *ngIf="dataBundle.reviewer">{{dataBundle.reviewer.firstName}} {{dataBundle.reviewer.lastName}}</div></dd>
-        <hr>
-        <dt>Description</dt>
-        <dd>{{dataBundle.description}}</dd>
-        <hr>
-        <dt>Guidance</dt>
-        <dd>{{dataBundle.guidance}}</dd>
-        <hr>
-        <dt>Created</dt>
-        <dd>{{dataBundle.createdDate | date:'dd LLLL yyyy HH:mm'}}</dd>
-        <hr>
-        <dt>Created by</dt>
-        <dd>{{dataBundle.createdBy}}</dd>
-        <hr>
-        <dt>Last modified</dt>
-        <dd>{{dataBundle.lastModifiedDate | date:'dd LLLL yyyy HH:mm'}}</dd>
-        <hr>
-        <dt>Last modified by</dt>
-        <dd><div *ngIf="dataBundle.lastModifiedBy">{{dataBundle.lastModifiedBy}}</div></dd>
-    </dl>
-    <button type="submit"
-            [routerLink]="['/data-bundle-edit', dataBundle.id]"
-            class="button float-right">
-        <span class="fa fa-arrow-left"></span>&nbsp;<span>Edit</span>
-    </button>
-    <button type="submit"
-            [routerLink]="['/data-bundle-deletion-confirmation', dataBundle.id]"
-            class="button float-right">
-        <span class="fa fa-arrow-left"></span>&nbsp;<span>Delete</span>
-    </button>
-    <button type="submit"
-            routerLink="/data-bundle-management"
-            class="button button-secondary">
-        <span class="fa fa-arrow-left"></span>&nbsp;<span>Back</span>
-    </button>
+    <div class="grid-row">
+        <div class="column-two-thirds">
+
+            <h2 class="heading-medium">
+                <span>Data Bundle</span>
+            </h2>
+
+            <dl class="govuk-check-your-answers cya-questions-short">
+                <div>
+                    <dt class="cya-question">Name</dt>
+                    <dd class="cya-answer">{{dataBundle.name}}</dd>
+                </div>
+                <div>
+                    <dt class="cya-question">Data Collection</dt>
+                    <dd class="cya-answer">{{dataBundle.dataCollectionName}}</dd>
+                </div>
+                <div>
+                    <dt class="cya-question">Publishing Status</dt>
+                    <dd class="cya-answer">{{dataBundle.statusStatus}}</dd>
+                </div>
+                <div>
+                    <dt class="cya-question">Deadline</dt>
+                    <dd class="cya-answer">{{dataBundle.defaultDeadline | date:'dd LLLL yyyy'}}</dd>
+                </div>
+                <div>
+                    <dt class="cya-question">Owner</dt>
+                    <dd class="cya-answer"><div *ngIf="dataBundle.ownerFirstName && dataBundle.ownerLastName">{{dataBundle.ownerFirstName}} {{dataBundle.ownerLastName}}</div></dd>
+                </div>
+                <div>
+                    <dt class="cya-question">Reviewer</dt>
+                    <dd class="cya-answer"><div *ngIf="dataBundle.reviewerFirstName && dataBundle.reviewerLastName">{{dataBundle.reviewerFirstName}} {{dataBundle.reviewerLastName}}</div></dd>
+                </div>
+                <div>
+                    <dt class="cya-question">Description</dt>
+                    <dd class="cya-answer">{{dataBundle.description}}</dd>
+                </div>
+                <div>
+                    <dt class="cya-question">Guidance</dt>
+                    <dd class="cya-answer">{{dataBundle.guidance}}</dd>
+                </div>
+                <div>
+                    <dt class="cya-question">Created</dt>
+                    <dd class="cya-answer">{{dataBundle.createdDate | date:'dd LLLL yyyy HH:mm'}}</dd>
+                </div>
+                <div>
+                    <dt class="cya-question">Created by</dt>
+                    <dd class="cya-answer">{{dataBundle.createdBy}}</dd>
+                </div>
+                <div>
+                    <dt class="cya-question">Last modified</dt>
+                    <dd class="cya-answer">{{dataBundle.lastModifiedDate | date:'dd LLLL yyyy HH:mm'}}</dd>
+                </div>
+                <div>
+                    <dt class="cya-question">Last modified by</dt>
+                    <dd class="cya-answer"><div *ngIf="dataBundle.lastModifiedBy">{{dataBundle.lastModifiedBy}}</div></dd>
+                </div>
+            </dl>
+
+            <div class="form-group">
+                <button type="submit"
+                        [routerLink]="['/data-bundle-edit', dataBundle.id]"
+                        class="button float-right">
+                    <span class="fa fa-arrow-left"></span>&nbsp;<span>Edit</span>
+                </button>
+                <button type="submit"
+                        [routerLink]="['/data-bundle-deletion-confirmation', dataBundle.id]"
+                        class="button float-right">
+                    <span class="fa fa-arrow-left"></span>&nbsp;<span>Delete</span>
+                </button>
+            </div>
+
+            <h2 class="heading-medium">Data Files</h2>
+
+            <div class="form-group">
+                <dl class="govuk-check-your-answers cya-questions-short">
+                    <div>
+                        <dt class="cya-question">Name</dt>
+                        <dt class="cya-question">Description</dt>
+                        <dt class="cya-question"></dt>
+                    </div>
+                    <div *ngFor="let db of dataBundle.dataInputs">
+                        <dd class="cya-answer">{{db.name}}</dd>
+                        <dd class="cya-answer">{{db.description}}</dd>
+                        <dd class="cya-answer"><a href="" [routerLink]="['/data-input-detail', db.id]">Details</a></dd>
+                    </div>
+                </dl>
+            </div>
+
+            <div class="form-group">
+                <button type="button"
+                        class="button float-right"
+                        [routerLink]="['/data-input-creation', dataBundle.id]">
+                    <span>Add Data File</span>
+                </button>
+                <button type="submit"
+                        [routerLink]="['/data-collection-detail', dataBundle.dataCollectionId]"
+                        class="button button-secondary">
+                    <span class="fa fa-arrow-left"></span>&nbsp;<span>Back</span>
+                </button>
+            </div>
+        </div>
+    </div>
 </div>
 

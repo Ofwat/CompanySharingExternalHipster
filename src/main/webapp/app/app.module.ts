@@ -12,6 +12,7 @@ import { CompanySharingExternalAccountModule } from './account/account.module';
 import { CompanySharingExternalEntityModule } from './entities/entity.module';
 import { CompanySharingExternalDataCollectionModule } from './data-collection/data-collection.module';
 import { CompanySharingExternalDataBundleModule } from './data-bundle/data-bundle.module';
+import { CompanySharingExternalDataInputModule } from './data-input/data-input.module';
 
 import { customHttpProvider } from './blocks/interceptor/http.provider';
 import { PaginationConfig } from './blocks/config/uib-pagination.config';
@@ -42,7 +43,8 @@ import {
         CompanySharingExternalEntityModule,
         MomentModule,
         CompanySharingExternalDataCollectionModule,
-        CompanySharingExternalDataBundleModule
+        CompanySharingExternalDataBundleModule,
+        CompanySharingExternalDataInputModule
         // jhipster-needle-angular-add-module JHipster will add new module here
     ],
     declarations: [
