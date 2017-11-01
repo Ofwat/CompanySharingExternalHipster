@@ -5,27 +5,27 @@
 
 
         <div class="alert alert-success" *ngIf="success">
-            <strong>Data Input edited</strong>
+            <p><strong>Data Input edited</strong></p>
             <button type="button"
-                    class="button button-secondary"
+                    class="button button-secondary float-left"
                     [routerLink]="['/data-input-detail', dataInput.id]">
                 <span class="font-medium">Back to Data Input</span>
             </button>
         </div>
 
         <div class="alert alert-danger" *ngIf="error">
-            <strong>Data Input edit failed!</strong> Please try again later.
+            <p><strong>Data Input edit failed!</strong> Please try again later.</p>
             <button type="button"
-                    class="button button-secondary"
+                    class="button button-secondary float-left"
                     [routerLink]="['/data-input-detail', dataInput.id]">
                 <span>Back to Data Input</span>
             </button>
         </div>
 
         <div class="alert alert-danger" *ngIf="errorDataInputExists">
-            <strong>Data Input name '{{dataInput.name}}' is already in use!</strong> Please choose another one.
+            <p><strong>Data Input name '{{dataInput.name}}' is already in use!</strong> Please choose another one.</p>
             <button type="button"
-                    class="button button-secondary"
+                    class="button button-secondary float-left"
                     [routerLink]="['/data-input-detail', dataInput.id]">
                 <span>Back to Data Input</span>
             </button>
@@ -154,25 +154,25 @@
             <div class="form-group">
                 <button type="submit"
                         [disabled]="dataInputEditForm.form.invalid"
-                        class="button float-right">
+                        class="button float-left">
                     <span>Save</span>
                 </button>
                 <button type="button"
-                        class="button button-secondary"
+                        class="button button-secondary float-left"
                         [routerLink]="['/data-input-detail', dataInput.id]">
                     <span>Back</span>
                 </button>
-                <button *ngIf="dataInput.statusStatus=='DRAFT'" class="button float-right" (click)="markAsReview()">
-                    <span class="fa fa-plus"></span> <span>Mark as Review</span>
+                <button *ngIf="dataInput.statusStatus=='DRAFT'" class="button float-left" (click)="markAsReview()">
+                    <span>Mark as Review</span>
                 </button>
-                <button *ngIf="dataInput.statusStatus=='REVIEW'" class="button float-right" (click)="markAsDraft()">
-                    <span class="fa fa-plus"></span> <span>Mark as Draft</span>
+                <button *ngIf="dataInput.statusStatus=='REVIEW'" class="button float-left" (click)="markAsDraft()">
+                    <span>Mark as Draft</span>
                 </button>
-                <button *ngIf="dataInput.statusStatus=='REVIEW'" class="button float-right" (click)="markAsPending()">
-                    <span class="fa fa-plus"></span> <span>Mark as Unpublished</span>
+                <button *ngIf="dataInput.statusStatus=='REVIEW'" class="button float-left" (click)="markAsPending()">
+                    <span>Mark as Unpublished</span>
                 </button>
-                <button *ngIf="dataInput.statusStatus=='UNPUBLISHED'" class="button float-right" (click)="markAsReview()">
-                    <span class="fa fa-plus"></span> <span>Mark as Reviewed</span>
+                <button *ngIf="dataInput.statusStatus=='UNPUBLISHED'" class="button float-left" (click)="markAsReview()">
+                    <span>Mark as Reviewed</span>
                 </button>
             </div>
         </form>

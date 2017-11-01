@@ -4,7 +4,7 @@
         <h2 class="heading-medium">Edit Data Collection</h2>
 
         <div class="alert alert-success" *ngIf="success">
-            <strong>Data Collection edited</strong>
+            <p><strong>Data Collection edited</strong></p>
             <button type="button"
                     class="button button-secondary"
                     [routerLink]="['/data-collection-detail', dataCollection.id]">
@@ -13,7 +13,7 @@
         </div>
 
         <div class="alert alert-danger" *ngIf="error">
-            <strong>Data Collection edit failed!</strong> Please try again later.
+            <p><strong>Data Collection edit failed!</strong> Please try again later.</p>
             <button type="button"
                     class="button button-secondary"
                     [routerLink]="['/data-collection-management']">
@@ -22,7 +22,7 @@
         </div>
 
         <div class="alert alert-danger" *ngIf="errorDataCollectionExists">
-            <strong>Data Collection name '{{dataCollection?.name}}' is already in use!</strong> Please choose another one.
+            <p><strong>Data Collection name '{{dataCollection?.name}}' is already in use!</strong> Please choose another one.</p>
             <button type="button"
                     class="button button-secondary"
                     [routerLink]="['/data-collection-management']">
@@ -104,10 +104,36 @@
                 <label class="form-label" for="owner">Owner
                     <span class="form-hint">The owner responsible for the Data Collection</span>
                 </label>
-                <select class="form-control" [(ngModel)]="ownerId" id="owner" name="owner" #owner="ngModel">
+                <!--<select class="form-control" [(ngModel)]="ownerId" id="owner" name="owner"   #owner="ngModel">-->
+                    <!--<option *ngFor="let user of usersForOwner"-->
+                            <!--[value]="user?.id"-->
+                            <!--[compareWith]="">-->
+                        <!--{{user?.firstName}} {{user?.lastName}}-->
+                    <!--</option>-->
+                <!--</select>-->
+
+                <!--<select class="form-control" [(ngModel)]="ownerId" id="owner" name="owner"   #owner="ngModel">-->
+                    <!--<ng-template ngFor let-user [ngForOf]="usersForOwner">-->
+                        <!--<option *ngIf="dataCollection.owner.id == user.id" [value]="user.id" [selected]>{{user.firstName}}</option>-->
+                        <!--<option *ngIf="dataCollection.owner.id != user.id" [value]="user.id">{{user.firstName}}</option>-->
+                    <!--</ng-template>-->
+                <!--</select>-->
+                <!--<ng-template [ngFor]="let user of usersForOwner">-->
+                    <!--<li>{{user.firstName}}</li>-->
+                <!--</ng-template>-->
+                <!--<select class="form-control" [(ngModel)]="ownerId" id="owner" name="owner"   #owner="ngModel">-->
+                    <!--<option *ngFor="let user of usersForOwner"-->
+                            <!--[value]="user?.id"-->
+                            <!--[compareWith]="">-->
+                            <!--{{user?.firstName}} {{user?.lastName}}-->
+                    <!--</option>-->
+                <!--</select>-->
+
+                <select class="form-control" [(ngModel)]="ownerId" id="owner" name="owner"   #owner="ngModel">
                     <option *ngFor="let user of usersForOwner"
+                            selected="true"
                             [value]="user?.id"
-                            [selected]="dataCollection?.owner?.id==user?.id ? true : null" >
+                            [selected]="dataCollection?.owner?.id==user?.id ? true : null">
                         {{user?.firstName}} {{user?.lastName}}
                     </option>
                 </select>
@@ -129,7 +155,7 @@
             <div class="form-group">
                 <button type="submit"
                         [disabled]="dataCollectionEditForm.form.invalid"
-                        class="button float-right">
+                        class="button float-left">
                     <span>Save</span>
                 </button>
                 <button type="button"
@@ -137,23 +163,23 @@
                         [routerLink]="['/data-collection-detail', dataCollection.id]">
                     <span>Back</span>
                 </button>
-                <button *ngIf="dataCollection?.publishingStatus?.status=='DRAFT'" class="button float-right" (click)="markAsReview()">
-                    <span class="fa fa-plus"></span> <span>Mark as Review</span>
+                <button *ngIf="dataCollection?.publishingStatus?.status=='DRAFT'" class="button float-left" (click)="markAsReview()">
+                    <span>Mark as Review</span>
                 </button>
-                <button *ngIf="dataCollection?.publishingStatus?.status=='REVIEW'" class="button float-right" (click)="markAsDraft()">
-                    <span class="fa fa-plus"></span> <span>Mark as Draft</span>
+                <button *ngIf="dataCollection?.publishingStatus?.status=='REVIEW'" class="button float-left" (click)="markAsDraft()">
+                    <span>Mark as Draft</span>
                 </button>
-                <button *ngIf="dataCollection?.publishingStatus?.status=='REVIEW'" class="button float-right" (click)="markAsPending()">
-                    <span class="fa fa-plus"></span> <span>Mark as Unpublished</span>
+                <button *ngIf="dataCollection?.publishingStatus?.status=='REVIEW'" class="button float-left" (click)="markAsPending()">
+                    <span>Mark as Unpublished</span>
                 </button>
-                <button *ngIf="dataCollection?.publishingStatus?.status=='UNPUBLISHED'" class="button float-right" (click)="markAsReview()">
-                    <span class="fa fa-plus"></span> <span>Mark as Reviewed</span>
+                <button *ngIf="dataCollection?.publishingStatus?.status=='UNPUBLISHED'" class="button float-left" (click)="markAsReview()">
+                    <span>Mark as Reviewed</span>
                 </button>
-                <button *ngIf="dataCollection?.publishingStatus?.status=='UNPUBLISHED'" class="button float-right" (click)="markAsPublished()">
-                    <span class="fa fa-plus"></span> <span>Publish</span>
+                <button *ngIf="dataCollection?.publishingStatus?.status=='UNPUBLISHED'" class="button float-left" (click)="markAsPublished()">
+                    <span>Publish</span>
                 </button>
-                <button *ngIf="dataCollection?.publishingStatus?.status=='PUBLISHED'" class="button float-right" (click)="markAsPending()">
-                    <span class="fa fa-plus"></span> <span>Mark as Reviewed</span>
+                <button *ngIf="dataCollection?.publishingStatus?.status=='PUBLISHED'" class="button float-left" (click)="markAsPending()">
+                    <span>Mark as Reviewed</span>
                 </button>
             </div>
         </form>

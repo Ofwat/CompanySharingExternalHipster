@@ -8,14 +8,11 @@
 
     </div>
     <div class="col-md-8 offset-md-2" *ngIf="dataInput">
-        <!--<button class="button float-right" [routerLink]="['/data-input-deleted', dataInput.name]">-->
-            <!--<span class="fa fa-plus"></span> <span>Delete Data Input</span>-->
-        <!--</button>-->
-        <button class="button float-right" (click)="delete(dataInput.id)">
-            <span class="fa fa-plus"></span> <span>Delete Data Input</span>
+        <button class="button button-warning float-left" (click)="delete(dataInput.id)">
+            <span>Delete Data Input</span>
         </button>
-        <button class="button button-secondary" [routerLink]="['/data-input-detail', dataInput.id]">
-            <span class="fa fa-plus"></span> <span>Back to Data Input Detail</span>
+        <button class="button button-secondary float-left" [routerLink]="['/data-input-detail', dataInput.id]">
+            <span>Back to Data Input Detail</span>
         </button>
         <p></p>
     </div>

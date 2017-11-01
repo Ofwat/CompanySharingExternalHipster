@@ -88,6 +88,7 @@ export class DataCollectionEditComponent implements OnInit {
         }
 
         this.updateDataCollection();
+
     }
 
     private updateDataCollection() {

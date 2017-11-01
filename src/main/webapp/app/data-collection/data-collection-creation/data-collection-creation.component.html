@@ -1,20 +1,32 @@
 <div>
     <div>
         <h2 class="heading-medium">Create Data Collection</h2>
-
         <div class="alert alert-success" *ngIf="success">
-            <strong>Data Collection created</strong>
-            <button type="button" class="button button-secondary" [routerLink]="['../data-collection-management']"><span class="font-medium">Back to Data Collections</span></button>
+            <p><strong>Data Collection created</strong></p>
+            <button type="button"
+                    class="button button-secondary float-left"
+                    [routerLink]="['../data-collection-management']">
+                <span>Back to Data Collections</span>
+            </button>
         </div>
 
         <div class="alert alert-danger" *ngIf="error">
-            <strong>Data Collection creation failed!</strong> Please try again later.
-            <button type="button" class="button button-secondary" [routerLink]="['../data-collection-management']"><span class="font-medium">Back to Data Collections</span></button>
+            <p><strong>Data Collection creation failed!</strong> Please try again later.</p>
+            <button type="button"
+                        class="button button-secondary float-left"
+                        [routerLink]="['../data-collection-management']">
+                <span>Back to Data Collections</span>
+            </button>
+
         </div>
 
         <div class="alert alert-danger" *ngIf="errorDataCollectionExists">
-            <strong>Data Collection name '{{dataCollection.name}}' is already in use!</strong> Please choose another one.
-            <button type="button" class="button button-secondary" [routerLink]="['../data-collection-management']"><span class="font-medium">Back to Data Collections</span></button>
+            <p><strong>Data Collection name '{{dataCollection.name}}' is already in use!</strong> Please choose another one.</p>
+            <button type="button"
+                    class="button button-secondary float-left"
+                    [routerLink]="['../data-collection-management']">
+                <span>Back to Data Collections</span>
+            </button>
         </div>
     </div>
 
@@ -107,11 +119,11 @@
             <div class="form-group">
                 <button type="submit"
                         [disabled]="dataCollectionCreationForm.form.invalid"
-                        class="button float-right">
+                        class="button float-left">
                     <span>Create Data Collection</span>
                 </button>
                 <button type="button"
-                        class="button button-secondary"
+                        class="button button-secondary float-left"
                         [routerLink]="['../data-collection-management']">
                     <span>Back</span>
                 </button>

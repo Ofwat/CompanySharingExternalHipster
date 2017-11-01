@@ -4,27 +4,27 @@
         <h3 class="heading-small" *ngIf="!success && !errorDataBundleExists">Data Collection: {{dataBundle.dataCollectionName}}</h3>
 
         <div class="alert alert-success" *ngIf="success">
-            <strong>Data Bundle edited</strong>
+            <p><strong>Data Bundle edited</strong></p>
             <button type="button"
-                    class="button button-secondary"
+                    class="button button-secondary float-left"
                     [routerLink]="['/data-bundle-detail', dataBundle.id]">
                 <span>Back to Data Bundle</span>
             </button>
         </div>
 
         <div class="alert alert-danger" *ngIf="error">
-            <strong>Data Bundle edit failed!</strong> Please try again later.
+            <p><strong>Data Bundle edit failed!</strong> Please try again later.</p>
             <button type="button"
-                    class="button button-secondary"
+                    class="button button-secondary float-left"
                     [routerLink]="['/data-bundle-detail', dataBundle.id]">
                 <span>Back to Data Bundle</span>
             </button>
         </div>
 
         <div class="alert alert-danger" *ngIf="errorDataBundleExists">
-            <strong>Data Bundle name '{{dataBundle.name}}' is already in use!</strong> Please choose another one.
+            <p><strong>Data Bundle name '{{dataBundle.name}}' is already in use!</strong> Please choose another one.</p>
             <button type="button"
-                    class="button button-secondary"
+                    class="button button-secondary float-left"
                     [routerLink]="['/data-bundle-detail', dataBundle.id]">
                 <span>Back to Data Bundle</span>
             </button>
@@ -152,31 +152,31 @@
             <div class="form-group">
                 <button type="submit"
                         [disabled]="dataBundleEditForm.form.invalid"
-                        class="button float-right">
+                        class="button float-left">
                     <span>Save</span>
                 </button>
                 <button type="button"
-                        class="button button-secondary"
+                        class="button button-secondary float-left"
                         [routerLink]="['/data-bundle-detail', dataBundle.id]">
                     <span>Back</span>
                 </button>
-                <button *ngIf="dataBundle.statusStatus=='DRAFT'" class="button float-right" (click)="markAsReview()">
-                    <span class="fa fa-plus"></span> <span>Mark as Review</span>
+                <button *ngIf="dataBundle.statusStatus=='DRAFT'" class="button float-left" (click)="markAsReview()">
+                    <span>Mark as Review</span>
                 </button>
-                <button *ngIf="dataBundle.statusStatus=='REVIEW'" class="button float-right" (click)="markAsDraft()">
-                    <span class="fa fa-plus"></span> <span>Mark as Draft</span>
+                <button *ngIf="dataBundle.statusStatus=='REVIEW'" class="button float-left" (click)="markAsDraft()">
+                    <span>Mark as Draft</span>
                 </button>
-                <button *ngIf="dataBundle.statusStatus=='REVIEW'" class="button float-right" (click)="markAsPending()">
-                    <span class="fa fa-plus"></span> <span>Mark as Unpublished</span>
+                <button *ngIf="dataBundle.statusStatus=='REVIEW'" class="button float-left" (click)="markAsPending()">
+                    <span>Mark as Unpublished</span>
                 </button>
-                <button *ngIf="dataBundle.statusStatus=='UNPUBLISHED'" class="button float-right" (click)="markAsReview()">
-                    <span class="fa fa-plus"></span> <span>Mark as Reviewed</span>
+                <button *ngIf="dataBundle.statusStatus=='UNPUBLISHED'" class="button float-left" (click)="markAsReview()">
+                    <span>Mark as Reviewed</span>
                 </button>
-                <button *ngIf="dataBundle.statusStatus=='UNPUBLISHED'" class="button float-right" (click)="markAsPublished()">
-                    <span class="fa fa-plus"></span> <span>Publish</span>
+                <button *ngIf="dataBundle.statusStatus=='UNPUBLISHED'" class="button float-left" (click)="markAsPublished()">
+                    <span>Publish</span>
                 </button>
-                <button *ngIf="dataBundle.statusStatus=='PUBLISHED'" class="button float-right" (click)="markAsPending()">
-                    <span class="fa fa-plus"></span> <span>Mark as Reviewed</span>
+                <button *ngIf="dataBundle.statusStatus=='PUBLISHED'" class="button float-left" (click)="markAsPending()">
+                    <span>Mark as Reviewed</span>
                 </button>
             </div>
         </form>

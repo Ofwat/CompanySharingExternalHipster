@@ -54,12 +54,12 @@
             <div class="form-group">
                 <button type="button"
                         [routerLink]="['/data-collection-edit', dataCollection.id]"
-                        class="button float-right">
+                        class="button float-left">
                     <span class="fa fa-arrow-left"></span>&nbsp;<span>Edit</span>
                 </button>
                 <button type="button"
                         [routerLink]="['/data-collection-deletion-confirmation', dataCollection.id]"
-                        class="button float-right">
+                        class="button float-left">
                     <span class="fa fa-arrow-left"></span>&nbsp;<span>Delete</span>
                 </button>
             </div>
@@ -83,14 +83,14 @@
 
             <div class="form-group">
                 <button type="button"
-                    class="button float-right"
+                    class="button float-left"
                     [routerLink]="['/data-bundle-creation', dataCollection.id]">
                     <span>Add Data Bundle</span>
                 </button>
                 <button type="button"
                         routerLink="/data-collection-management"
-                        class="button button-secondary">
-                    <span class="fa fa-arrow-left"></span>&nbsp;<span>Back</span>
+                        class="button button-secondary float-left">
+                    <span>Back</span>
                 </button>
             </div>
         </div>
