@@ -41,7 +41,7 @@ export class Register {
     }
 
     resendInvite(login: string){
-        return this.http.post('api/resend_invite', login);//.map((res: Response) => this.convertResponse(res));
+        return this.http.post('api/resend_invite', login );// .map((res: Response) => this.convertResponse(res));
     }
 
     private convertResponse(res: Response): ResponseWrapper {

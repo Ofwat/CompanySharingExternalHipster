@@ -80,6 +80,11 @@ export class CompanySelectComponent implements OnInit {
             this.message = 'Show';
         }
     }
+
+    byId(item1: Company, item2: Company) {
+        return item1.id === item2.id;
+    }
+
 }
 
 /*import { ProfileService } from '../profiles/profile.service';

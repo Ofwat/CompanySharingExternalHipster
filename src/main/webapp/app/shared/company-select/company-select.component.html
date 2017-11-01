@@ -6,7 +6,9 @@
             name="currentSelectedCompany"
             #companyInput="ngModel"
             [(ngModel)]="this.selectedCompany"
-            required>
+            required
+            [compareWith]="byId"
+            >
         <option *ngFor="let c of this.companies" [ngValue]="c">{{c.name}}</option>
     </select>
     </span>

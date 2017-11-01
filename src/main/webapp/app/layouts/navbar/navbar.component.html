@@ -159,8 +159,8 @@
     </div>
 </nav>-->
 
-
-
+<span>
+<a href='#proposition-links' class='js-header-toggle menu'>Menu</a>
 <nav id='proposition-menu'>
     <a [routerLink]="['/']" id='proposition-name'>Company Sharing External</a>&nbsp;
     <strong class="phase-tag">Alpha</strong>
@@ -185,11 +185,11 @@
             <a *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_OFWAT_USER', 'ROLE_COMPANY_ADMIN', 'ROLE_USER', 'ROLE_COMPANY_USER']" href='' [routerLink]="['data-collection-management']">Data collections</a></li>
         </li>
         <li *ngSwitchCase="true">
-            <a [routerLink]="['user-profile']">{{userName}}</a>
+            <a [routerLink]="['user-profile']">My Profile</a>
         </li>
         <li>
-            <a href="#">Help</a>
+            <a href="#">Support</a>
         </li>
     </ul>
 </nav>
-
+</span>

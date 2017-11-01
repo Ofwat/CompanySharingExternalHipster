@@ -6,7 +6,8 @@ export const userProfileRoute: Routes = [
         path: 'user-profile',
         component: UserProfileComponent,
         data: {
-            pageTitle: 'User Profile'
+            pageTitle: 'User Profile',
+            authorities: ['ROLE_ADMIN', 'ROLE_USER']
         }
     }
 ];
