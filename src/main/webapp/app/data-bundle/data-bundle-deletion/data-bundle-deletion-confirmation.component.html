@@ -8,11 +8,11 @@
 
     </div>
     <div class="col-md-8 offset-md-2" *ngIf="dataBundle">
-        <button class="button float-right" (click)="delete(dataBundle.id)">
-            <span class="fa fa-plus"></span> <span>Delete Data Bundle</span>
+        <button class="button button-warning float-left" (click)="delete(dataBundle.id)">
+            <span>Delete Data Bundle</span>
         </button>
-        <button class="button button-secondary" [routerLink]="['/data-bundle-detail', dataBundle.id]">
-            <span class="fa fa-plus"></span> <span>Back to Data Bundle Detail</span>
+        <button class="button button-secondary float-left" [routerLink]="['/data-bundle-detail', dataBundle.id]">
+            <span>Back to Data Bundle Detail</span>
         </button>
         <p></p>
     </div>

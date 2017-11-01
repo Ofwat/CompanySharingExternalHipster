@@ -60,12 +60,12 @@
             <div class="form-group">
                 <button type="submit"
                         [routerLink]="['/data-bundle-edit', dataBundle.id]"
-                        class="button float-right">
+                        class="button float-left">
                     <span class="fa fa-arrow-left"></span>&nbsp;<span>Edit</span>
                 </button>
                 <button type="submit"
                         [routerLink]="['/data-bundle-deletion-confirmation', dataBundle.id]"
-                        class="button float-right">
+                        class="button float-left">
                     <span class="fa fa-arrow-left"></span>&nbsp;<span>Delete</span>
                 </button>
             </div>
@@ -89,14 +89,14 @@
 
             <div class="form-group">
                 <button type="button"
-                        class="button float-right"
+                        class="button float-left"
                         [routerLink]="['/data-input-creation', dataBundle.id]">
                     <span>Add Data File</span>
                 </button>
                 <button type="submit"
                         [routerLink]="['/data-collection-detail', dataBundle.dataCollectionId]"
-                        class="button button-secondary">
-                    <span class="fa fa-arrow-left"></span>&nbsp;<span>Back</span>
+                        class="button button-secondary float-left">
+                    </span>&nbsp;<span>Back</span>
                 </button>
             </div>
         </div>

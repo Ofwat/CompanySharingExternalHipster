@@ -3,27 +3,27 @@
         <h2 class="heading-medium">Create Data Input for bundle: {{dataBundle?.name}}</h2>
 
         <div class="alert alert-success" *ngIf="success">
-            <strong>Data Input created</strong>
+            <p><strong>Data Input created</strong></p>
             <button type="button"
-                    class="button button-secondary"
+                    class="button button-secondary float-left"
                     [routerLink]="['/data-bundle-detail', dataInput.dataBundleId]">
                 <span>Back to Data Bundle</span>
             </button>
         </div>
 
         <div class="alert alert-danger" *ngIf="error">
-            <strong>Data Input creation failed!</strong> Please try again later.
+            <p><strong>Data Input creation failed!</strong> Please try again later.</p>
             <button type="button"
-                    class="button button-secondary"
+                    class="button button-secondary float-left"
                     [routerLink]="['/data-bundle-detail', dataInput.dataBundleId]">
                 <span>Back to Data Bundle</span>
             </button>
         </div>
 
         <div class="alert alert-danger" *ngIf="errorDataInputExists">
-            <strong>Data Input name '{{dataInput.name}}' is already in use!</strong> Please choose another one.
+            <p><strong>Data Input name '{{dataInput.name}}' is already in use!</strong> Please choose another one.</p>
             <button type="button"
-                    class="button button-secondary"
+                    class="button button-secondary float-left"
                     [routerLink]="['/data-bundle-detail', dataInput.dataBundleId]">
                 <span>Back to Data Bundle</span>
             </button>
@@ -166,11 +166,11 @@
             <div class="form-group">
                 <button type="submit"
                         [disabled]="dataInputCreationForm.form.invalid"
-                        class="button float-right">
+                        class="button float-left">
                     <span>Create Data Input</span>
                 </button>
                 <button type="button"
-                        class="button button-secondary"
+                        class="button button-secondary float-left"
                         [routerLink]="['/data-bundle-detail', dataBundle?.id]">
                     <span>Back</span>
                 </button>
