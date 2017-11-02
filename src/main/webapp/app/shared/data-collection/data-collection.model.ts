@@ -1,9 +1,11 @@
+import {User} from "../user/user.model";
+
 export class DataCollection {
     public id?: any;
     public name?: string;
     public publishingStatus?: any;
-    public owner?: any;
-    public reviewer?: any;
+    public owner?: User;
+    public reviewer?: User;
     public description?: string;
     public guidance?: string;
     public createdDate?: any;
@@ -16,8 +18,8 @@ export class DataCollection {
         id?: any,
         name?: string,
         publishingStatus?: any,
-        owner?: any,
-        reviewer?: any,
+        owner?: User,
+        reviewer?: User,
         description?: string,
         guidance?: string,
         createdDate?: any,

@@ -57,10 +57,10 @@ export class DataCollectionCreationComponent implements OnInit {
     }
 
     create() {
-        let ownerId = parseInt(this.dataCollection.owner);
-        let reviewerId = parseInt(this.dataCollection.reviewer);
-        this.dataCollection.owner = this.userMap.get(ownerId);
-        this.dataCollection.reviewer = this.userMap.get(reviewerId);
+        // let ownerId = parseInt(this.dataCollection.owner);
+        // let reviewerId = parseInt(this.dataCollection.reviewer);
+        // this.dataCollection.owner = this.userMap.get(ownerId);
+        // this.dataCollection.reviewer = this.userMap.get(reviewerId);
 
         this.dataCollectionService.create(this.dataCollection).subscribe(
             response => {

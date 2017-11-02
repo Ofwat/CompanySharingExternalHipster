@@ -104,36 +104,10 @@
                 <label class="form-label" for="owner">Owner
                     <span class="form-hint">The owner responsible for the Data Collection</span>
                 </label>
-                <!--<select class="form-control" [(ngModel)]="ownerId" id="owner" name="owner"   #owner="ngModel">-->
-                    <!--<option *ngFor="let user of usersForOwner"-->
-                            <!--[value]="user?.id"-->
-                            <!--[compareWith]="">-->
-                        <!--{{user?.firstName}} {{user?.lastName}}-->
-                    <!--</option>-->
-                <!--</select>-->
-
-                <!--<select class="form-control" [(ngModel)]="ownerId" id="owner" name="owner"   #owner="ngModel">-->
-                    <!--<ng-template ngFor let-user [ngForOf]="usersForOwner">-->
-                        <!--<option *ngIf="dataCollection.owner.id == user.id" [value]="user.id" [selected]>{{user.firstName}}</option>-->
-                        <!--<option *ngIf="dataCollection.owner.id != user.id" [value]="user.id">{{user.firstName}}</option>-->
-                    <!--</ng-template>-->
-                <!--</select>-->
-                <!--<ng-template [ngFor]="let user of usersForOwner">-->
-                    <!--<li>{{user.firstName}}</li>-->
-                <!--</ng-template>-->
-                <!--<select class="form-control" [(ngModel)]="ownerId" id="owner" name="owner"   #owner="ngModel">-->
-                    <!--<option *ngFor="let user of usersForOwner"-->
-                            <!--[value]="user?.id"-->
-                            <!--[compareWith]="">-->
-                            <!--{{user?.firstName}} {{user?.lastName}}-->
-                    <!--</option>-->
-                <!--</select>-->
-
-                <select class="form-control" [(ngModel)]="ownerId" id="owner" name="owner"   #owner="ngModel">
-                    <option *ngFor="let user of usersForOwner"
-                            selected="true"
-                            [value]="user?.id"
-                            [selected]="dataCollection?.owner?.id==user?.id ? true : null">
+                <select class="form-control" [(ngModel)]="this.selectedOwner" id="owner" name="owner" #owner="ngModel"
+                        [compareWith]="byId">
+                    <option *ngFor="let user of this.users"
+                            [ngValue]="user">
                         {{user?.firstName}} {{user?.lastName}}
                     </option>
                 </select>
@@ -141,16 +115,17 @@
 
             <div class="form-group">
                 <label class="form-label" for="reviewer">Reviewer
-                    <span class="form-hint">The reviewer responsible for reviewing the Data Collection</span>
+                    <span class="form-hint">The reviewer responsible for the Data Collection</span>
                 </label>
-                <select class="form-control" [(ngModel)]="reviewerId" id="reviewer" name="reviewer" #reviewer="ngModel">
-                    <option *ngFor="let user of usersForReviewer"
-                            [value]="user?.id"
-                            [selected]="dataCollection?.reviewer?.id==user?.id ? true : null" >
+                <select class="form-control" [(ngModel)]="this.selectedReviewer" id="reviewer" name="reviewer" #reviewer="ngModel"
+                        [compareWith]="byId">
+                    <option *ngFor="let user of this.users"
+                            [ngValue]="user">
                         {{user?.firstName}} {{user?.lastName}}
                     </option>
                 </select>
             </div>
+
 
             <div class="form-group">
                 <button type="submit"

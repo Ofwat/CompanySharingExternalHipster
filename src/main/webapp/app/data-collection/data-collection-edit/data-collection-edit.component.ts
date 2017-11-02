@@ -19,12 +19,15 @@ export class DataCollectionEditComponent implements OnInit {
     error: boolean;
     errorDataCollectionExists: boolean;
     dataCollection: DataCollection;
-    usersForOwner: User[];
-    usersForReviewer: User[];
+    users: User[];
+    // usersForOwner: User[];
+    // usersForReviewer: User[];
     userMap: Map<number, {}>;
 
     ownerId: any;
     reviewerId: any;
+    selectedOwner: User;
+    selectedReviewer: User;
     private subscription: Subscription;
 
     constructor(
@@ -35,40 +38,37 @@ export class DataCollectionEditComponent implements OnInit {
     ) {
     }
 
+
+
     ngOnInit() {
         this.success = false;
         this.error = false;
         this.errorDataCollectionExists = false;
         this.dataCollection = {};
-        this.loadUsers();
         this.subscription = this.route.params.subscribe((params) => {
             this.load(params['id']);
         });
+    }
 
+    load(id) {
+        this.dataCollectionService.get(id)
+            .flatMap((dataCollection) => {
+                this.dataCollection = dataCollection;
+                this.selectedOwner = dataCollection.owner;
+                this.selectedReviewer = dataCollection.reviewer;
+                return this.userService.query();
+            })
+            .subscribe(
+                (res: ResponseWrapper) => this.onLoadUsersSuccess(res.json, res.headers),
+                (res: ResponseWrapper) => this.onLoadUsersError(res.json)
+            );
     }
 
     ngAfterViewInit() {
     }
 
-    load(id) {
-        this.dataCollectionService.get(id).subscribe((dataCollection) => {
-            this.dataCollection = dataCollection;
-        });
-    }
-
-    loadUsers() {
-        this.userService.query().subscribe(
-            (res: ResponseWrapper) => this.onLoadUsersSuccess(res.json, res.headers),
-            (res: ResponseWrapper) => this.onLoadUsersError(res.json)
-        );
-    }
-
     private onLoadUsersSuccess(data, headers) {
-        this.usersForOwner = data.map(user => Object.assign(new User, user));
-        this.usersForOwner[1].firstName = "Fred";
-        this.usersForReviewer = data.map(user => Object.assign(new User, user));
-        this.usersForReviewer[1].firstName = "Bert";
-        // Object.assign(this.usersForReviewer, data);
+        this.users = data;
         this.userMap = new Map<number, {}>();
         for (let user of data) {
             this.userMap.set(user.id, user);
@@ -80,15 +80,9 @@ export class DataCollectionEditComponent implements OnInit {
     }
 
     save() {
-        if (this.ownerId) {
-            this.dataCollection.owner = this.userMap.get(parseInt(this.ownerId));
-        }
-        if (this.reviewerId) {
-            this.dataCollection.reviewer = this.userMap.get(parseInt(this.reviewerId));
-        }
-
+        this.dataCollection.owner = this.selectedOwner;
+        this.dataCollection.reviewer = this.selectedReviewer;
         this.updateDataCollection();
-
     }
 
     private updateDataCollection() {
@@ -124,6 +118,10 @@ export class DataCollectionEditComponent implements OnInit {
     markAsPublished() {
         this.dataCollection.publishingStatus.id=4;
         this.updateDataCollection();
+    }
+
+    byId(item1: User, item2: User) {
+        return item1.id === item2.id;
     }
 
 }
