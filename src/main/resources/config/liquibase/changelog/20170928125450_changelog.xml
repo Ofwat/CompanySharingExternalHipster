@@ -9,6 +9,6 @@
         <addForeignKeyConstraint baseColumnNames="publishing_status_id" baseTableName="data_collection" constraintName="FKjs7po7f2s54m8xv3nrhxtf9du" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="publishing_status"/>
     </changeSet>
     <changeSet author="Adam Edgar (generated)" id="1506599710602-3">
-        <dropColumn columnName="PUBLISHING_STATUS" tableName="DATA_COLLECTION"/>
+        <dropColumn columnName="publishing_status" tableName="data_collection"/>
     </changeSet>
 </databaseChangeLog>

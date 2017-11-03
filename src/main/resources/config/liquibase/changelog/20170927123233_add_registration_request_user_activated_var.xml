@@ -15,6 +15,6 @@
         </addColumn>
     </changeSet>
     <changeSet author="james.toddington (generated)" id="1506511967020-3">
-        <dropColumn columnName="APPROVED" tableName="REGISTRATION_REQUEST"/>
+        <dropColumn columnName="approved" tableName="registration_request"/>
     </changeSet>
 </databaseChangeLog>
