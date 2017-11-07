@@ -28,3 +28,6 @@ export * from './data-bundle/data-bundle.model';
 export * from './data-bundle/data-bundle.service';
 export * from './data-input/data-input.model';
 export * from './data-input/data-input.service';
+export * from './publishing-status/publishing-status.model';
+export * from './publishing-status/publishing-status.service';
+export { PublishingStatusSelectComponent } from './publishing-status-select/publishing-status-select.component';

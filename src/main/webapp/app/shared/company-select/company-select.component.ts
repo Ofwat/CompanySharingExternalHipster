@@ -19,6 +19,7 @@ export class CompanySelectComponent implements OnInit {
     selectedCompany: Company;
     display: boolean;
     message: string;
+
     @Output() companyChangedEvent: EventEmitter<Company>;
     @Input() preselectedCompany: Company
 

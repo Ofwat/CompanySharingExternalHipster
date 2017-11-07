@@ -18,6 +18,7 @@
                         <tbody *ngIf ="dataCollections">
                             <tr *ngFor="let dataCollection of dataCollections; trackBy: trackIdentity">
                                 <td>{{dataCollection.name}}</td>
+                                <td>{{dataCollection.publishingStatus.status}}</td>
                                 <td><a href="" [routerLink]="['../data-collection-detail', dataCollection.id]">Details</a></td>
                             </tr>
                         </tbody>
