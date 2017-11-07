@@ -78,7 +78,8 @@ public class DataCollectionResource {
                 .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "publishingStatusMissing", "Publishing status 'Draft' not found in database."))
                 .body(null);
         }
-        dataCollectionDTO.setPublishingStatus(optionalPublishingStatus.get());
+        dataCollectionDTO.setStatusId(optionalPublishingStatus.get().getId());
+        dataCollectionDTO.setStatusStatus(optionalPublishingStatus.get().getStatus());
 
         DataCollectionDTO newDataCollectionDTO = dataCollectionService.saveNew(dataCollectionDTO);
         return ResponseEntity.created(new URI("/api/data-collections/" + newDataCollectionDTO.getId()))

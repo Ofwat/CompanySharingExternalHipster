@@ -22,12 +22,14 @@ export class DataCollectionEditComponent implements OnInit {
     errorDataCollectionExists: boolean;
     dataCollection: DataCollection;
     users: User[];
+    userMap: Map<number, User>;
     selectedOwner: User;
     selectedReviewer: User;
     publishingStatuses: PublishingStatus[];
     selectedPublishingStatus: PublishingStatus;
-
     private subscription: Subscription;
+    ownerIndex: any;
+    reviewerIndex: any;
 
     constructor(
         private alertService: JhiAlertService,
@@ -52,33 +54,33 @@ export class DataCollectionEditComponent implements OnInit {
 
     load(dataCollectionId, statusId) {
 
-        if (statusId) {
+        // if (statusId) {
+        //     this.dataCollectionService.get(dataCollectionId)
+        //         .flatMap((dataCollection) => {
+        //             this.dataCollection = dataCollection;
+        //             // this.selectedOwner = dataCollection.owner;
+        //             // this.selectedReviewer = dataCollection.reviewer;
+        //             this.selectedPublishingStatus = dataCollection.publishingStatus;
+        //             return this.publishingStatusService.query();
+        //         })
+        //         .subscribe(
+        //             (res: ResponseWrapper) => this.onLoadPublishingStatusSuccess(res.json, res.headers),
+        //             (res: ResponseWrapper) => this.onLoadError(res.json)
+        //         );
+        // }
+        // else {
             this.dataCollectionService.get(dataCollectionId)
                 .flatMap((dataCollection) => {
                     this.dataCollection = dataCollection;
-                    // this.selectedOwner = dataCollection.owner;
+                    // this.selectedOwner = dataCollection.ownerId;
                     // this.selectedReviewer = dataCollection.reviewer;
-                    this.selectedPublishingStatus = dataCollection.publishingStatus;
-                    return this.publishingStatusService.query();
-                })
-                .subscribe(
-                    (res: ResponseWrapper) => this.onLoadPublishingStatusSuccess(res.json, res.headers),
-                    (res: ResponseWrapper) => this.onLoadError(res.json)
-                );
-        }
-        else {
-            this.dataCollectionService.get(dataCollectionId)
-                .flatMap((dataCollection) => {
-                    this.dataCollection = dataCollection;
-                    this.selectedOwner = dataCollection.owner;
-                    this.selectedReviewer = dataCollection.reviewer;
                     return this.userService.query();
                 })
                 .subscribe(
                     (res: ResponseWrapper) => this.onLoadUsersSuccess(res.json, res.headers),
                     (res: ResponseWrapper) => this.onLoadError(res.json)
                 );
-            }
+            // }
     }
 
     ngAfterViewInit() {
@@ -103,17 +105,26 @@ export class DataCollectionEditComponent implements OnInit {
     }
 
     save() {
-        this.dataCollection.owner = this.selectedOwner;
-        this.dataCollection.reviewer = this.selectedReviewer;
+        if (this.ownerIndex) {
+            const owner = this.userMap.get(parseInt(this.ownerIndex));
+            this.dataCollection.ownerId = owner.id;
+        }
+        if (this.reviewerIndex) {
+            const reviewer = this.userMap.get(parseInt(this.reviewerIndex));
+            this.dataCollection.reviewerId = reviewer.id;
+        }
+
+        // this.dataCollection.owner = this.selectedOwner;
+        // this.dataCollection.reviewer = this.selectedReviewer;
         this.updateDataCollection();
     }
 
-    savePublishingStatus() {
-        if (this.selectedPublishingStatus) {
-            this.dataCollection.publishingStatus = this.selectedPublishingStatus;
-        }
-        this.updateDataCollection();
-    }
+    // savePublishingStatus() {
+    //     if (this.selectedPublishingStatus) {
+    //         this.dataCollection.publishingStatus = this.selectedPublishingStatus;
+    //     }
+    //     this.updateDataCollection();
+    // }
 
     private updateDataCollection() {
         this.dataCollectionService.update(this.dataCollection).subscribe(
@@ -131,23 +142,6 @@ export class DataCollectionEditComponent implements OnInit {
                 }
             }
         );
-    }
-
-    markAsDraft() {
-        this.dataCollection.publishingStatus.id=1;
-        this.updateDataCollection();
-    }
-    markAsReview() {
-        this.dataCollection.publishingStatus.id=2;
-        this.updateDataCollection();
-    }
-    markAsPending() {
-        this.dataCollection.publishingStatus.id=3;
-        this.updateDataCollection();
-    }
-    markAsPublished() {
-        this.dataCollection.publishingStatus.id=4;
-        this.updateDataCollection();
     }
 
     userById(item1: User, item2: User) {

@@ -6,56 +6,70 @@
                 <span>Data Bundle</span>
             </h2>
 
-            <dl class="govuk-check-your-answers cya-questions-short">
-                <div>
-                    <dt class="cya-question">Name</dt>
-                    <dd class="cya-answer">{{dataBundle.name}}</dd>
-                </div>
-                <div>
-                    <dt class="cya-question">Data Collection</dt>
-                    <dd class="cya-answer">{{dataBundle.dataCollectionName}}</dd>
-                </div>
-                <div>
-                    <dt class="cya-question">Publishing Status</dt>
-                    <dd class="cya-answer">{{dataBundle.statusStatus}}</dd>
-                </div>
-                <div>
-                    <dt class="cya-question">Deadline</dt>
-                    <dd class="cya-answer">{{dataBundle.defaultDeadline | date:'dd LLLL yyyy'}}</dd>
-                </div>
-                <div>
-                    <dt class="cya-question">Owner</dt>
-                    <dd class="cya-answer"><div *ngIf="dataBundle.ownerFirstName && dataBundle.ownerLastName">{{dataBundle.ownerFirstName}} {{dataBundle.ownerLastName}}</div></dd>
-                </div>
-                <div>
-                    <dt class="cya-question">Reviewer</dt>
-                    <dd class="cya-answer"><div *ngIf="dataBundle.reviewerFirstName && dataBundle.reviewerLastName">{{dataBundle.reviewerFirstName}} {{dataBundle.reviewerLastName}}</div></dd>
-                </div>
-                <div>
-                    <dt class="cya-question">Description</dt>
-                    <dd class="cya-answer">{{dataBundle.description}}</dd>
-                </div>
-                <div>
-                    <dt class="cya-question">Guidance</dt>
-                    <dd class="cya-answer">{{dataBundle.guidance}}</dd>
-                </div>
-                <div>
-                    <dt class="cya-question">Created</dt>
-                    <dd class="cya-answer">{{dataBundle.createdDate | date:'dd LLLL yyyy HH:mm'}}</dd>
-                </div>
-                <div>
-                    <dt class="cya-question">Created by</dt>
-                    <dd class="cya-answer">{{dataBundle.createdBy}}</dd>
-                </div>
-                <div>
-                    <dt class="cya-question">Last modified</dt>
-                    <dd class="cya-answer">{{dataBundle.lastModifiedDate | date:'dd LLLL yyyy HH:mm'}}</dd>
-                </div>
-                <div>
-                    <dt class="cya-question">Last modified by</dt>
-                    <dd class="cya-answer"><div *ngIf="dataBundle.lastModifiedBy">{{dataBundle.lastModifiedBy}}</div></dd>
-                </div>
-            </dl>
+            <div class="form-group">
+                <dl class="govuk-check-your-answers cya-questions-short">
+                    <div>
+                        <dd class="cya-question">Name</dd>
+                        <dd class="cya-answer">{{dataBundle.name}}</dd>
+                        <dd></dd>
+                    </div>
+                    <div>
+                        <dd class="cya-question">Data Collection</dd>
+                        <dd class="cya-answer">{{dataBundle.dataCollectionName}}</dd>
+                        <dd></dd>
+                    </div>
+                    <div>
+                        <dd class="cya-question">Publishing Status</dd>
+                        <dd class="cya-answer">{{dataBundle.statusStatus}}</dd>
+                        <dd class="cya-answer"><a href="" [routerLink]="['/publishing-status-modification', 'bundle', dataBundle.id, dataBundle.statusStatus]">Change</a></dd>
+                    </div>
+                    <div>
+                        <dd class="cya-question">Deadline</dd>
+                        <dd class="cya-answer">{{dataBundle.defaultDeadline | date:'dd LLLL yyyy'}}</dd>
+                        <dd></dd>
+                    </div>
+                    <div>
+                        <dd class="cya-question">Owner</dd>
+                        <dd class="cya-answer"><div *ngIf="dataBundle.ownerFirstName && dataBundle.ownerLastName">{{dataBundle.ownerFirstName}} {{dataBundle.ownerLastName}}</div></dd>
+                        <dd></dd>
+                    </div>
+                    <div>
+                        <dd class="cya-question">Reviewer</dd>
+                        <dd class="cya-answer"><div *ngIf="dataBundle.reviewerFirstName && dataBundle.reviewerLastName">{{dataBundle.reviewerFirstName}} {{dataBundle.reviewerLastName}}</div></dd>
+                        <dd></dd>
+                    </div>
+                    <div>
+                        <dd class="cya-question">Description</dd>
+                        <dd class="cya-answer">{{dataBundle.description}}</dd>
+                        <dd></dd>
+                    </div>
+                    <div>
+                        <dd class="cya-question">Guidance</dd>
+                        <dd class="cya-answer">{{dataBundle.guidance}}</dd>
+                        <dd></dd>
+                    </div>
+                    <div>
+                        <dd class="cya-question">Created</dd>
+                        <dd class="cya-answer">{{dataBundle.createdDate | date:'dd LLLL yyyy HH:mm'}}</dd>
+                        <dd></dd>
+                    </div>
+                    <div>
+                        <dd class="cya-question">Created by</dd>
+                        <dd class="cya-answer">{{dataBundle.createdBy}}</dd>
+                        <dd></dd>
+                    </div>
+                    <div>
+                        <dd class="cya-question">Last modified</dd>
+                        <dd class="cya-answer">{{dataBundle.lastModifiedDate | date:'dd LLLL yyyy HH:mm'}}</dd>
+                        <dd></dd>
+                    </div>
+                    <div>
+                        <dd class="cya-question">Last modified by</dd>
+                        <dd class="cya-answer"><div *ngIf="dataBundle.lastModifiedBy">{{dataBundle.lastModifiedBy}}</div></dd>
+                        <dd></dd>
+                    </div>
+                </dl>
+            </div>
 
             <div class="form-group">
                 <button type="submit"

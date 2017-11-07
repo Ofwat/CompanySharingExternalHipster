@@ -17,9 +17,14 @@ public class DataCollectionDTO implements Serializable {
     private Long id;
     @NotNull
     private String name;
-    private PublishingStatus publishingStatus;
-    private User owner;
-    private User reviewer;
+    private Long statusId;
+    private String statusStatus;
+    private Long ownerId;
+    private String ownerFirstName;
+    private String ownerLastName;
+    private Long reviewerId;
+    private String reviewerFirstName;
+    private String reviewerLastName;
     private String description;
     private String guidance;
     private Instant createdDate;
@@ -44,28 +49,68 @@ public class DataCollectionDTO implements Serializable {
         this.name = name;
     }
 
-    public PublishingStatus getPublishingStatus() {
-        return publishingStatus;
+    public Long getStatusId() {
+        return statusId;
     }
 
-    public void setPublishingStatus(PublishingStatus publishingStatus) {
-        this.publishingStatus = publishingStatus;
+    public void setStatusId(Long statusId) {
+        this.statusId = statusId;
     }
 
-    public User getOwner() {
-        return owner;
+    public String getStatusStatus() {
+        return statusStatus;
     }
 
-    public void setOwner(User owner) {
-        this.owner = owner;
+    public void setStatusStatus(String statusStatus) {
+        this.statusStatus = statusStatus;
     }
 
-    public User getReviewer() {
-        return reviewer;
+    public Long getOwnerId() {
+        return ownerId;
     }
 
-    public void setReviewer(User reviewer) {
-        this.reviewer = reviewer;
+    public void setOwnerId(Long ownerId) {
+        this.ownerId = ownerId;
+    }
+
+    public String getOwnerFirstName() {
+        return ownerFirstName;
+    }
+
+    public void setOwnerFirstName(String ownerFirstName) {
+        this.ownerFirstName = ownerFirstName;
+    }
+
+    public String getOwnerLastName() {
+        return ownerLastName;
+    }
+
+    public void setOwnerLastName(String ownerLastName) {
+        this.ownerLastName = ownerLastName;
+    }
+
+    public Long getReviewerId() {
+        return reviewerId;
+    }
+
+    public void setReviewerId(Long reviewerId) {
+        this.reviewerId = reviewerId;
+    }
+
+    public String getReviewerFirstName() {
+        return reviewerFirstName;
+    }
+
+    public void setReviewerFirstName(String reviewerFirstName) {
+        this.reviewerFirstName = reviewerFirstName;
+    }
+
+    public String getReviewerLastName() {
+        return reviewerLastName;
+    }
+
+    public void setReviewerLastName(String reviewerLastName) {
+        this.reviewerLastName = reviewerLastName;
     }
 
     public String getDescription() {
@@ -133,10 +178,20 @@ public class DataCollectionDTO implements Serializable {
 
         if (getId() != null ? !getId().equals(that.getId()) : that.getId() != null) return false;
         if (getName() != null ? !getName().equals(that.getName()) : that.getName() != null) return false;
-        if (getPublishingStatus() != null ? !getPublishingStatus().equals(that.getPublishingStatus()) : that.getPublishingStatus() != null)
+        if (getStatusId() != null ? !getStatusId().equals(that.getStatusId()) : that.getStatusId() != null)
             return false;
-        if (getOwner() != null ? !getOwner().equals(that.getOwner()) : that.getOwner() != null) return false;
-        if (getReviewer() != null ? !getReviewer().equals(that.getReviewer()) : that.getReviewer() != null)
+        if (getStatusStatus() != null ? !getStatusStatus().equals(that.getStatusStatus()) : that.getStatusStatus() != null)
+            return false;
+        if (getOwnerId() != null ? !getOwnerId().equals(that.getOwnerId()) : that.getOwnerId() != null) return false;
+        if (getOwnerFirstName() != null ? !getOwnerFirstName().equals(that.getOwnerFirstName()) : that.getOwnerFirstName() != null)
+            return false;
+        if (getOwnerLastName() != null ? !getOwnerLastName().equals(that.getOwnerLastName()) : that.getOwnerLastName() != null)
+            return false;
+        if (getReviewerId() != null ? !getReviewerId().equals(that.getReviewerId()) : that.getReviewerId() != null)
+            return false;
+        if (getReviewerFirstName() != null ? !getReviewerFirstName().equals(that.getReviewerFirstName()) : that.getReviewerFirstName() != null)
+            return false;
+        if (getReviewerLastName() != null ? !getReviewerLastName().equals(that.getReviewerLastName()) : that.getReviewerLastName() != null)
             return false;
         if (getDescription() != null ? !getDescription().equals(that.getDescription()) : that.getDescription() != null)
             return false;
@@ -158,9 +213,14 @@ public class DataCollectionDTO implements Serializable {
     public int hashCode() {
         int result = getId() != null ? getId().hashCode() : 0;
         result = 31 * result + (getName() != null ? getName().hashCode() : 0);
-        result = 31 * result + (getPublishingStatus() != null ? getPublishingStatus().hashCode() : 0);
-        result = 31 * result + (getOwner() != null ? getOwner().hashCode() : 0);
-        result = 31 * result + (getReviewer() != null ? getReviewer().hashCode() : 0);
+        result = 31 * result + (getStatusId() != null ? getStatusId().hashCode() : 0);
+        result = 31 * result + (getStatusStatus() != null ? getStatusStatus().hashCode() : 0);
+        result = 31 * result + (getOwnerId() != null ? getOwnerId().hashCode() : 0);
+        result = 31 * result + (getOwnerFirstName() != null ? getOwnerFirstName().hashCode() : 0);
+        result = 31 * result + (getOwnerLastName() != null ? getOwnerLastName().hashCode() : 0);
+        result = 31 * result + (getReviewerId() != null ? getReviewerId().hashCode() : 0);
+        result = 31 * result + (getReviewerFirstName() != null ? getReviewerFirstName().hashCode() : 0);
+        result = 31 * result + (getReviewerLastName() != null ? getReviewerLastName().hashCode() : 0);
         result = 31 * result + (getDescription() != null ? getDescription().hashCode() : 0);
         result = 31 * result + (getGuidance() != null ? getGuidance().hashCode() : 0);
         result = 31 * result + (getCreatedDate() != null ? getCreatedDate().hashCode() : 0);
@@ -176,9 +236,14 @@ public class DataCollectionDTO implements Serializable {
         return "DataCollectionDTO{" +
             "id=" + id +
             ", name='" + name + '\'' +
-            ", publishingStatus=" + publishingStatus +
-            ", owner=" + owner +
-            ", reviewer=" + reviewer +
+            ", statusId=" + statusId +
+            ", statusStatus='" + statusStatus + '\'' +
+            ", ownerId=" + ownerId +
+            ", ownerFirstName='" + ownerFirstName + '\'' +
+            ", ownerLastName='" + ownerLastName + '\'' +
+            ", reviewerId=" + reviewerId +
+            ", reviewerFirstName='" + reviewerFirstName + '\'' +
+            ", reviewerLastName='" + reviewerLastName + '\'' +
             ", description='" + description + '\'' +
             ", guidance='" + guidance + '\'' +
             ", createdDate=" + createdDate +

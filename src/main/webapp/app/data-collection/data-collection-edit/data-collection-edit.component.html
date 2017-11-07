@@ -31,38 +31,8 @@
         </div>
     </div>
 
-    <!--[preselectedPublishingStatus]="selectedPublishingStatus"-->
-
     <div>
-        <form name="publishingStatusForm" role="form" (ngSubmit)="savePublishingStatus()" #publishingStatusForm="ngForm">
-            <jhi-ofwat-publishing-status-select
-                [preselectedPublishingStatusId]="dataCollection?.publishingStatus?.id"
-                (statusChangedEvent)="statusChanged($event)">
-            </jhi-ofwat-publishing-status-select>
-            <div class="form-group">
-                <button type="submit"
-                        class="button float-left">
-                    <span>Save</span>
-                </button>
-            </div>
-        </form>
-
         <form name="form" role="form" (ngSubmit)="save()" #dataCollectionEditForm="ngForm" *ngIf="!success && !errorDataCollectionExists">
-            <!--<div *ngIf="selectedPublishingStatus">-->
-                <!--<div class="form-group">-->
-                    <!--<label class="form-label" for="publishingStatus">Publishing Status-->
-                        <!--<span class="form-hint">The publishing status</span>-->
-                    <!--</label>-->
-                    <!--<select class="form-control" [(ngModel)]="this.selectedPublishingStatus" id="publishingStatus" name="publishingStatus" #publishingStatus="ngModel"-->
-                            <!--[compareWith]="publishingStatusById">-->
-                        <!--<option *ngFor="let publishingStatus of this.publishingStatuses"-->
-                                <!--[ngValue]="publishingStatus">-->
-                            <!--{{publishingStatus?.status}}-->
-                        <!--</option>-->
-                    <!--</select>-->
-                <!--</div>-->
-            <!--</div>-->
-
             <div *ngIf="!selectedPublishingStatus">
                 <div class="form-group">
                     <label class="form-label" for="name">Name
@@ -130,31 +100,31 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label class="form-label" for="owner">Owner
-                        <span class="form-hint">The owner responsible for the Data Collection</span>
-                    </label>
-                    <select class="form-control" [(ngModel)]="this.selectedOwner" id="owner" name="owner" #owner="ngModel"
-                            [compareWith]="userById">
-                        <option *ngFor="let user of this.users"
-                                [ngValue]="user">
-                            {{user?.firstName}} {{user?.lastName}}
-                        </option>
-                    </select>
-                </div>
+                <!--<div class="form-group">-->
+                    <!--<label class="form-label" for="owner">Owner-->
+                        <!--<span class="form-hint">The owner responsible for the Data Collection</span>-->
+                    <!--</label>-->
+                    <!--<select class="form-control" [(ngModel)]="this.selectedOwner" id="owner" name="owner" #owner="ngModel"-->
+                            <!--[compareWith]="userById">-->
+                        <!--<option *ngFor="let user of this.users"-->
+                                <!--[ngValue]="user">-->
+                            <!--{{user?.firstName}} {{user?.lastName}}-->
+                        <!--</option>-->
+                    <!--</select>-->
+                <!--</div>-->
 
-                <div class="form-group">
-                    <label class="form-label" for="reviewer">Reviewer
-                        <span class="form-hint">The reviewer responsible for the Data Collection</span>
-                    </label>
-                    <select class="form-control" [(ngModel)]="this.selectedReviewer" id="reviewer" name="reviewer" #reviewer="ngModel"
-                            [compareWith]="userById">
-                        <option *ngFor="let user of this.users"
-                                [ngValue]="user">
-                            {{user?.firstName}} {{user?.lastName}}
-                        </option>
-                    </select>
-                </div>
+                <!--<div class="form-group">-->
+                    <!--<label class="form-label" for="reviewer">Reviewer-->
+                        <!--<span class="form-hint">The reviewer responsible for the Data Collection</span>-->
+                    <!--</label>-->
+                    <!--<select class="form-control" [(ngModel)]="this.selectedReviewer" id="reviewer" name="reviewer" #reviewer="ngModel"-->
+                            <!--[compareWith]="userById">-->
+                        <!--<option *ngFor="let user of this.users"-->
+                                <!--[ngValue]="user">-->
+                            <!--{{user?.firstName}} {{user?.lastName}}-->
+                        <!--</option>-->
+                    <!--</select>-->
+                <!--</div>-->
             </div>
 
             <div class="form-group">
@@ -167,24 +137,6 @@
                         class="button button-secondary"
                         [routerLink]="['/data-collection-detail', dataCollection.id]">
                     <span>Back</span>
-                </button>
-                <button *ngIf="dataCollection?.publishingStatus?.status=='DRAFT'" class="button float-left" (click)="markAsReview()">
-                    <span>Mark as Review</span>
-                </button>
-                <button *ngIf="dataCollection?.publishingStatus?.status=='REVIEW'" class="button float-left" (click)="markAsDraft()">
-                    <span>Mark as Draft</span>
-                </button>
-                <button *ngIf="dataCollection?.publishingStatus?.status=='REVIEW'" class="button float-left" (click)="markAsPending()">
-                    <span>Mark as Unpublished</span>
-                </button>
-                <button *ngIf="dataCollection?.publishingStatus?.status=='UNPUBLISHED'" class="button float-left" (click)="markAsReview()">
-                    <span>Mark as Reviewed</span>
-                </button>
-                <button *ngIf="dataCollection?.publishingStatus?.status=='UNPUBLISHED'" class="button float-left" (click)="markAsPublished()">
-                    <span>Publish</span>
-                </button>
-                <button *ngIf="dataCollection?.publishingStatus?.status=='PUBLISHED'" class="button float-left" (click)="markAsPending()">
-                    <span>Mark as Reviewed</span>
                 </button>
             </div>
         </form>

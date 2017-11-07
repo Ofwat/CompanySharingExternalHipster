@@ -160,24 +160,6 @@
                         [routerLink]="['/data-bundle-detail', dataBundle.id]">
                     <span>Back</span>
                 </button>
-                <button *ngIf="dataBundle.statusStatus=='DRAFT'" class="button float-left" (click)="markAsReview()">
-                    <span>Mark as Review</span>
-                </button>
-                <button *ngIf="dataBundle.statusStatus=='REVIEW'" class="button float-left" (click)="markAsDraft()">
-                    <span>Mark as Draft</span>
-                </button>
-                <button *ngIf="dataBundle.statusStatus=='REVIEW'" class="button float-left" (click)="markAsPending()">
-                    <span>Mark as Unpublished</span>
-                </button>
-                <button *ngIf="dataBundle.statusStatus=='UNPUBLISHED'" class="button float-left" (click)="markAsReview()">
-                    <span>Mark as Reviewed</span>
-                </button>
-                <button *ngIf="dataBundle.statusStatus=='UNPUBLISHED'" class="button float-left" (click)="markAsPublished()">
-                    <span>Publish</span>
-                </button>
-                <button *ngIf="dataBundle.statusStatus=='PUBLISHED'" class="button float-left" (click)="markAsPending()">
-                    <span>Mark as Reviewed</span>
-                </button>
             </div>
         </form>
         <p></p>

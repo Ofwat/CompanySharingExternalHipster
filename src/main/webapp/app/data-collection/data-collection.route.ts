@@ -16,6 +16,7 @@ import {dataCollectionCreationRoute} from "./data-collection-creation/data-colle
 import {dataCollectionDetailRoute} from "./data-collection-detail/data-collection-detail-route";
 import {dataCollectionDeletionRoute} from "./data-collection-deletion/data-collection-deletion-route";
 import {dataCollectionEditRoute} from "./data-collection-edit/data-collection-edit-route";
+import {publishingStatusModificationRoute} from "./publishing-status-modification/publishing-status-modification-route";
 
 const DATA_COLLECTION_ROUTES = [
     auditsRoute,
@@ -28,7 +29,8 @@ const DATA_COLLECTION_ROUTES = [
     dataCollectionCreationRoute,
     dataCollectionDetailRoute,
     ...dataCollectionDeletionRoute,
-    dataCollectionEditRoute
+    dataCollectionEditRoute,
+    publishingStatusModificationRoute
 ];
 
 export const dataCollectionState: Routes = [{

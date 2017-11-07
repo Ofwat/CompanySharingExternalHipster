@@ -32,4 +32,7 @@ export * from './data-collection-edit/data-collection-edit.component';
 export * from './data-collection-edit/data-collection-edit-route';
 export * from './data-collection-detail/data-collection-detail.component';
 export * from './data-collection-detail/data-collection-detail-route';
+export * from './publishing-status-modification/publishing-status-modification.component';
+export * from './publishing-status-modification/publishing-status-modification-route';
+
 

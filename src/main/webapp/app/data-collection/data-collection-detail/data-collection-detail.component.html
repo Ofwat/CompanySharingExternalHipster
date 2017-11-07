@@ -6,68 +6,6 @@
                 <span>Data Collection</span>
             </h2>
 
-            <div *ngIf="this.changeStatus">
-                selection box here
-            </div>
-            <!--<div class="form-group">-->
-                <!--<div>-->
-                    <!--<table>-->
-                        <!--<tbody class="govuk-check-your-answers cya-questions-short">-->
-                        <!--<tr>-->
-                            <!--<td class="cya-question">Name</td>-->
-                            <!--<td class="cya-answer">{{dataCollection.name}}</td>-->
-                            <!--<td></td>-->
-                        <!--</tr>-->
-                        <!--<tr>-->
-                            <!--<td class="cya-question">Publishing Status</td>-->
-                            <!--<td class="cya-answer">{{dataCollection.publishingStatus.status}}</td>-->
-                            <!--<td class="cya-answer"><a href="" [routerLink]="['../data-collection-detail', dataCollection.id]">Details</a></td>-->
-                        <!--</tr>-->
-                        <!--<tr>-->
-                            <!--<td class="cya-question">Owner</td>-->
-                            <!--<td class="cya-answer">{{dataCollection.owner.firstName}} {{dataCollection.owner.lastName}}</td>-->
-                            <!--<td></td>-->
-                        <!--</tr>-->
-                        <!--<tr>-->
-                            <!--<td class="cya-question">Reviewer</td>-->
-                            <!--<td class="cya-answer">{{dataCollection.reviewer.firstName}} {{dataCollection.reviewer.lastName}}</td>-->
-                            <!--<td></td>-->
-                        <!--</tr>-->
-                        <!--<tr>-->
-                            <!--<td class="cya-question">Description</td>-->
-                            <!--<td class="cya-answer">{{dataCollection.description}}</td>-->
-                            <!--<td></td>-->
-                        <!--</tr>-->
-                        <!--<tr>-->
-                            <!--<td class="cya-question">Guidance</td>-->
-                            <!--<td class="cya-answer">{{dataCollection.guidance}}</td>-->
-                            <!--<td></td>-->
-                        <!--</tr>-->
-                        <!--<tr>-->
-                            <!--<td class="cya-question">Created</td>-->
-                            <!--<td class="cya-answer">{{dataCollection.createdDate}}</td>-->
-                            <!--<td></td>-->
-                        <!--</tr>-->
-                        <!--<tr>-->
-                            <!--<td class="cya-question">Created by</td>-->
-                            <!--<td class="cya-answer">{{dataCollection.createdBy}}</td>-->
-                            <!--<td></td>-->
-                        <!--</tr>-->
-                        <!--<tr>-->
-                            <!--<td class="cya-question">Last modified</td>-->
-                            <!--<td class="cya-answer">{{dataCollection.lastModifiedDate}}</td>-->
-                            <!--<td></td>-->
-                        <!--</tr>-->
-                        <!--<tr>-->
-                            <!--<td class="cya-question">Last modified by</td>-->
-                            <!--<td class="cya-answer">{{dataCollection.lastModifiedBy}}</td>-->
-                            <!--<td></td>-->
-                        <!--</tr>-->
-                        <!--</tbody>-->
-                    <!--</table>-->
-                <!--</div>-->
-            <!--</div>-->
-
             <div class="form-group">
                 <dl class="govuk-check-your-answers cya-questions-short">
                     <div>
@@ -77,17 +15,17 @@
                     </div>
                     <div>
                         <dd class="cya-question">Publishing Status</dd>
-                        <dd class="cya-answer">{{dataCollection?.publishingStatus?.status}}</dd>
-                        <dd class="cya-answer"><a href="" [routerLink]="['/data-collection-edit', dataCollection.id, dataCollection.publishingStatus?.status]">Change</a></dd>
+                        <dd class="cya-answer">{{dataCollection.statusStatus}}</dd>
+                        <dd class="cya-answer"><a href="" [routerLink]="['/publishing-status-modification', 'collection', dataCollection.id, dataCollection.statusStatus]">Change</a></dd>
                     </div>
                     <div>
                         <dd class="cya-question">Owner</dd>
-                        <dd class="cya-answer"><div *ngIf="dataCollection.owner">{{dataCollection.owner.firstName}} {{dataCollection.owner.lastName}}</div></dd>
+                        <dd class="cya-answer"><div *ngIf="dataCollection.ownerId">{{dataCollection.ownerFirstName}} {{dataCollection.ownerLastName}}</div></dd>
                         <dd></dd>
                     </div>
                     <div>
                         <dd class="cya-question">Reviewer</dd>
-                        <dd class="cya-answer"><div *ngIf="dataCollection.reviewer">{{dataCollection.reviewer.firstName}} {{dataCollection.reviewer.lastName}}</div></dd>
+                        <dd class="cya-answer"><div *ngIf="dataCollection.reviewerId">{{dataCollection.reviewerFirstName}} {{dataCollection.reviewerLastName}}</div></dd>
                         <dd></dd>
                     </div>
                     <div>

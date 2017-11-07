@@ -28,6 +28,7 @@ import {
     DataCollectionMgmtComponent,
     DataCollectionResolvePagingParams
 } from './';
+import {PublishingStatusModificationComponent} from "./publishing-status-modification/publishing-status-modification.component";
 
 @NgModule({
     imports: [
@@ -41,7 +42,8 @@ import {
         DataCollectionDetailComponent,
         DataCollectionDeletionConfirmationComponent,
         DataCollectionDeletedComponent,
-        DataCollectionEditComponent
+        DataCollectionEditComponent,
+        PublishingStatusModificationComponent
     ],
     entryComponents: [
         JhiHealthModalComponent,

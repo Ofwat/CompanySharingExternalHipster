@@ -162,18 +162,6 @@
                         [routerLink]="['/data-input-detail', dataInput.id]">
                     <span>Back</span>
                 </button>
-                <button *ngIf="dataInput.statusStatus=='DRAFT'" class="button float-left" (click)="markAsReview()">
-                    <span>Mark as Review</span>
-                </button>
-                <button *ngIf="dataInput.statusStatus=='REVIEW'" class="button float-left" (click)="markAsDraft()">
-                    <span>Mark as Draft</span>
-                </button>
-                <button *ngIf="dataInput.statusStatus=='REVIEW'" class="button float-left" (click)="markAsPending()">
-                    <span>Mark as Unpublished</span>
-                </button>
-                <button *ngIf="dataInput.statusStatus=='UNPUBLISHED'" class="button float-left" (click)="markAsReview()">
-                    <span>Mark as Reviewed</span>
-                </button>
             </div>
         </form>
         <p></p>

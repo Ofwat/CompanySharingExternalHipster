@@ -1,13 +1,9 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { JhiAlertService } from 'ng-jhipster';
-import { ITEMS_PER_PAGE, Principal, ResponseWrapper, DataInput, DataInputService } from '../../shared';
+import { ResponseWrapper, DataInput, DataInputService } from '../../shared';
 import { User, UserService } from '../../shared';
-import {map} from 'rxjs/operator/map';
 import {Subscription} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
-import {DataBundle} from '../../shared/data-bundle/data-bundle.model';
-import {Observable} from "rxjs/Observable";
-import {async} from "rxjs/scheduler/async";
 
 @Component({
     selector: 'jhi-data-input-edit',
@@ -23,7 +19,6 @@ export class DataInputEditComponent implements OnInit {
     users: User[];
     userMap: Map<number, User>;
     private subscription: Subscription;
-    // dataBundle: DataBundle;
     ownerIndex: any;
     reviewerIndex: any;
     currentDate: any;
@@ -106,16 +101,4 @@ export class DataInputEditComponent implements OnInit {
         );
     }
 
-    markAsDraft() {
-        this.dataInput.statusId=1;
-        this.updateDataInput();
-    }
-    markAsReview() {
-        this.dataInput.statusId=2;
-        this.updateDataInput();
-    }
-    markAsPending() {
-        this.dataInput.statusId=3;
-        this.updateDataInput();
-    }
 }

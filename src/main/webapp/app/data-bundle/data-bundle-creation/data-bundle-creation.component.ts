@@ -82,16 +82,16 @@ export class DataBundleCreationComponent implements OnInit {
             const owner = this.userMap.get(parseInt(this.ownerIndex));
             this.dataBundle.ownerId = owner.id;
         }
-        else {
-            this.dataBundle.ownerId = this.dataCollection.owner.id;
-        }
+        // else {
+        //     this.dataBundle.ownerId = this.dataCollection.owner.id;
+        // }
         if (this.reviewerIndex) {
             const reviewer = this.userMap.get(parseInt(this.reviewerIndex));
             this.dataBundle.reviewerId = reviewer.id;
         }
-        else {
-            this.dataBundle.reviewerId = this.dataCollection.reviewer.id;
-        }
+        // else {
+        //     this.dataBundle.reviewerId = this.dataCollection.reviewer.id;
+        // }
 
         this.dataBundle.dataCollectionId = this.dataCollection.id;
         this.dataBundle.dataCollectionName = this.dataCollection.name;
