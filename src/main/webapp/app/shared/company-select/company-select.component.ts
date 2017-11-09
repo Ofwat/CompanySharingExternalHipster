@@ -32,7 +32,7 @@ export class CompanySelectComponent implements OnInit {
 
     ngOnInit() {
         this.companies = [];
-        this.display = true;
+        this.display = false;
         this.message = 'Hide';
         this.companyService.query().subscribe(
             (res: ResponseWrapper) => this.onSuccessLoadCompanies(res.json, res.headers),
@@ -51,6 +51,7 @@ export class CompanySelectComponent implements OnInit {
 
     private onSuccessLoadCompanies(data, headers) {
         this.companies = data;
+        this.display = true;
         // console.log( this.$sessionStorage.retrieve( 'selectedCompany' ) );
 /*        if ( this.$sessionStorage.retrieve( 'selectedCompany' ) != null ) {
             // console.log( 'Setting company to stored company' );
@@ -81,8 +82,12 @@ export class CompanySelectComponent implements OnInit {
         }
     }
 
-    byId(item1: Company, item2: Company) {
-        return item1.id === item2.id;
+    compareById(item1: Company, item2: Company) {
+        if(item1 && item2) {
+            return item1.id === item2.id;
+        }else{
+            return false;
+        }
     }
 
 }
