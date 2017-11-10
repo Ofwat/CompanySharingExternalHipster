@@ -1,25 +1,18 @@
-import {Component, OnInit, ElementRef, Input, Output, EventEmitter} from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges,} from '@angular/core';
 import { JhiAlertService } from 'ng-jhipster';
-import { ITEMS_PER_PAGE, Principal, ResponseWrapper, DataCollection, DataCollectionService } from '../';
-import { User, UserService } from '../';
-import {map} from 'rxjs/operator/map';
-import {Subscription} from 'rxjs';
-import {ActivatedRoute} from '@angular/router';
-import { NgModule } from '@angular/core';
+import { ResponseWrapper } from '../';
 import {PublishingStatus} from '../publishing-status/publishing-status.model';
 import {PublishingStatusService} from '../publishing-status/publishing-status.service';
-import {Observable} from "rxjs/Observable";
-// import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 
 @Component({
     selector: 'jhi-ofwat-publishing-status-select',
     template: '' +
-    '                <div class="form-group">\n' +
+    '                <div class="form-group" *ngIf="display">\n' +
     '                    <label class="form-label" for="publishingStatus">Publishing Status\n' +
     '                        <span class="form-hint">The publishing status</span>\n' +
     '                    </label>\n' +
     '                    <select class="form-control" ' +
-    '                            [(ngModel)]="this.selectedPublishingStatus" ' +
+    '                            [(ngModel)]="selectedPublishingStatus" ' +
     '                            (change)="statusChanged(event)"\n' +
     '                            id="publishingStatus" ' +
     '                            name="publishingStatus" ' +
@@ -32,26 +25,35 @@ import {Observable} from "rxjs/Observable";
     '                    </select>\n' +
     '                </div>\n',
 })
-export class PublishingStatusSelectComponent implements OnInit {
+export class PublishingStatusSelectComponent implements OnInit, OnChanges {
 
     success: boolean;
     error: boolean;
+    display: boolean;
     publishingStatuses: PublishingStatus[];
-    selectedPublishingStatus: PublishingStatus;
 
     @Output() statusChangedEvent: EventEmitter<PublishingStatus>;
-    @Input() preselectedPublishingStatusId: any
+    @Input() selectedPublishingStatus: PublishingStatus
     constructor(
         private alertService: JhiAlertService,
         private publishingStatusService: PublishingStatusService,
-        private route: ActivatedRoute,
     ) {
         this.statusChangedEvent = new EventEmitter();
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        console.log("fruit: ngOnChanges " + changes.toString());
+        if (changes['selectedPublishingStatus']) {
+            this.selectedPublishingStatus = changes['selectedPublishingStatus'].currentValue;
+            console.log("fruit: ngOnChanges selectedPublishingStatus.id " + changes['selectedPublishingStatus']);
+            // this.checkDataRequirements();
+        }
     }
 
     ngOnInit() {
         this.success = false;
         this.error = false;
+        this.display = true;
         this.load();
     }
 
@@ -62,6 +64,26 @@ export class PublishingStatusSelectComponent implements OnInit {
         );
     }
 
+    private onLoadPublishingStatusSuccess(data, headers) {
+        this.publishingStatuses = data;
+        // this.statusChangedEvent.emit(this.selectedPublishingStatus);
+        // this.checkDataRequirements();
+    }
+
+    // private checkDataRequirements() {
+    //     console.log("fruit: checkDataRequirements ");
+    //     if (this.publishingStatuses) {
+    //         console.log("fruit: checkDataRequirements this.publishingStatuses: " + this.publishingStatuses.toString());
+    //     }
+    //     if (this.selectedPublishingStatus) {
+    //         console.log("fruit: checkDataRequirements this.selectedPublishingStatus.status: " + this.selectedPublishingStatus.status);
+    //         // this.statusChangedEvent.emit(this.selectedPublishingStatus);
+    //     }
+    //     if (this.publishingStatuses && this.selectedPublishingStatus) {
+    //         this.display = true;
+    //     }
+    // }
+
     statusChanged(event) {
         this.statusChangedEvent.emit(this.selectedPublishingStatus);
     }
@@ -69,16 +91,6 @@ export class PublishingStatusSelectComponent implements OnInit {
     ngAfterViewInit() {
     }
 
-    private onLoadPublishingStatusSuccess(data, headers) {
-        this.publishingStatuses = data;
-        if(this.preselectedPublishingStatusId != null){
-            this.selectedPublishingStatus = this.publishingStatuses.find(publishingStatus => publishingStatus.id == this.preselectedPublishingStatusId);
-            this.statusChangedEvent.emit(this.selectedPublishingStatus);
-        }else {
-            this.statusChangedEvent.emit(this.publishingStatuses[0]);
-        }
-
-    }
 
     private onLoadError(error) {
         this.alertService.error(error.error, error.message, null);
@@ -87,6 +99,10 @@ export class PublishingStatusSelectComponent implements OnInit {
     publishingStatusById(item1: PublishingStatus, item2: PublishingStatus) {
         console.log('fruit item1.id : ' + (item1 ? item1.id : "NO selection  FRUIT PRESENT"));
         console.log('fruit item2.id : ' + (item2 ? item2.id : "NO preslected FRUIT PRESENT"));
+        if (!item1 || !item2) {
+            console.log('fruit          :  ' + (item2 ? item2.id : "NO FRUIT RETURNED"));
+            return false;
+        }
         return item1.id === item2.id;
     }
 

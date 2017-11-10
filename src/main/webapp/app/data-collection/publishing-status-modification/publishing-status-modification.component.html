@@ -1,4 +1,4 @@
-<div>
+<div *ngIf="display">
 
     <div>
         <h2 class="heading-medium">Change Publishing Status</h2>
@@ -25,7 +25,7 @@
     <div>
         <form name="publishingStatusForm" role="form" (ngSubmit)="savePublishingStatus()" #publishingStatusForm="ngForm" *ngIf="!success">
             <jhi-ofwat-publishing-status-select
-                [preselectedPublishingStatusId]="dataResource.statusId"
+                [selectedPublishingStatus]="selectedPublishingStatus"
                 (statusChangedEvent)="statusChanged($event)">
             </jhi-ofwat-publishing-status-select>
             <div class="form-group">

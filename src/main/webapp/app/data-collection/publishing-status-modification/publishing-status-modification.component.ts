@@ -16,6 +16,7 @@ export class PublishingStatusModificationComponent implements OnInit {
 
     success: boolean;
     error: boolean;
+    display: boolean;
     errorDataResourceExists: boolean;
     dataResource: any;
     publishingStatuses: PublishingStatus[];
@@ -42,6 +43,7 @@ export class PublishingStatusModificationComponent implements OnInit {
     ngOnInit() {
         this.success = false;
         this.error = false;
+        this.display = false;
         this.errorDataResourceExists = false;
         this.dataResource = {};
         this.subscription = this.route.params.subscribe((params) => {
@@ -63,21 +65,21 @@ export class PublishingStatusModificationComponent implements OnInit {
         this.resourceService.get(dataResourceId)
             .flatMap((dataResource) => {
                 this.dataResource = dataResource;
-                return this.publishingStatusService.query();
+                return this.publishingStatusService.get(this.dataResource.statusId);
             })
             .subscribe(
-                (res: ResponseWrapper) => this.onLoadPublishingStatusSuccess(res.json, res.headers),
-                (res: ResponseWrapper) => this.onLoadError(res.json)
+                (res: PublishingStatus) => this.onLoadPublishingStatusSuccess(res),
+                (res: PublishingStatus) => this.onLoadError(res)
             );
     }
 
     ngAfterViewInit() {
     }
 
-    private onLoadPublishingStatusSuccess(data, headers) {
-        this.publishingStatuses = data;
+    private onLoadPublishingStatusSuccess(data: PublishingStatus) {
+        this.selectedPublishingStatus = data;
         console.log("this.selectedPublishingStatus: " + this.selectedPublishingStatus.status);
-        console.log("this.publishingStatuses: " + this.publishingStatuses[1].status);
+        this.display = true;
     }
 
     private onLoadError(error) {
@@ -111,22 +113,6 @@ export class PublishingStatusModificationComponent implements OnInit {
                 }
             }
         );
-    }
-
-    publishingStatusById(item1: PublishingStatus, item2: PublishingStatus) {
-        if (item1) {
-            console.log("publishingStatus 1 " + item1.status);
-        }
-        else {
-            console.log("publishingStatus 1 " + "not present");
-        }
-        if (item2) {
-            console.log("publishingStatus 2 " + item2.status);
-        }
-        else {
-            console.log("publishingStatus 2 " + "not present");
-        }
-        return item1.id === item2.id;
     }
 
 }
