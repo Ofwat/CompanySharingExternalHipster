@@ -5,7 +5,6 @@ import org.springframework.security.access.annotation.Secured;
 import uk.gov.ofwat.external.domain.PersistentToken;
 import uk.gov.ofwat.external.domain.RegistrationRequest;
 import uk.gov.ofwat.external.domain.User;
-import uk.gov.ofwat.external.domain.message.NotifyMessageTemplate;
 import uk.gov.ofwat.external.repository.NotifyMessageTemplateRepository;
 import uk.gov.ofwat.external.repository.PersistentTokenRepository;
 import uk.gov.ofwat.external.repository.UserRepository;
@@ -57,6 +56,8 @@ public class AccountResource {
 
     private final CaptchaService captchaService;
 
+    private final RegistrationRequestService registrationRequestService;
+
     private static final String CHECK_ERROR_MESSAGE = "Incorrect password";
 
     private static final String CAPTCHA_ERROR_MESSAGE = "captcha failed";
@@ -64,7 +65,8 @@ public class AccountResource {
     private static final String REGISTRATION_KEY_ERROR_MESSAGE = "invalid key";
 
     public AccountResource(UserRepository userRepository, UserService userService,
-                           MailService mailService, PersistentTokenRepository persistentTokenRepository, CompanyService companyService, NotifyService notifyService, OTPService otpService, CaptchaService captchaService, NotifyMessageTemplateRepository notifyMessageTemplateRepository) {
+                           MailService mailService, PersistentTokenRepository persistentTokenRepository, CompanyService companyService, NotifyService notifyService, OTPService otpService,
+                           CaptchaService captchaService, NotifyMessageTemplateRepository notifyMessageTemplateRepository, RegistrationRequestService registrationRequestService) {
 
         this.userRepository = userRepository;
         this.userService = userService;
@@ -74,6 +76,7 @@ public class AccountResource {
         this.notifyService = notifyService;
         this.otpService = otpService;
         this.captchaService = captchaService;
+        this.registrationRequestService = registrationRequestService;
     }
 
     /**
@@ -403,7 +406,7 @@ public class AccountResource {
             .orElseGet(() -> userRepository.findOneByEmail(managedUserVM.getEmail())
                 .map(user -> new ResponseEntity<>("email address already in use", textPlainHeaders, HttpStatus.BAD_REQUEST))
                 .orElseGet(() -> {
-                    RegistrationRequest rr = userService.createRegistrationRequest(managedUserVM.getLogin(), managedUserVM.getFirstName(), managedUserVM.getLastName(), managedUserVM.getEmail(),
+                    RegistrationRequest rr = registrationRequestService.createRegistrationRequest(managedUserVM.getLogin(), managedUserVM.getFirstName(), managedUserVM.getLastName(), managedUserVM.getEmail(),
                         managedUserVM.getMobileTelephoneNumber(), managedUserVM.getCompanyId());
 
                     mailService.sendRegistrationRequestUserEmail(rr);

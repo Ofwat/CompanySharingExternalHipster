@@ -1,5 +1,6 @@
 package uk.gov.ofwat.external.web.rest;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import uk.gov.ofwat.external.config.Constants;
 import com.codahale.metrics.annotation.Timed;
 import uk.gov.ofwat.external.domain.Company;
@@ -7,6 +8,7 @@ import uk.gov.ofwat.external.domain.RegistrationRequest;
 import uk.gov.ofwat.external.domain.User;
 import uk.gov.ofwat.external.repository.UserRepository;
 import uk.gov.ofwat.external.security.AuthoritiesConstants;
+import uk.gov.ofwat.external.security.SecurityUtils;
 import uk.gov.ofwat.external.service.CompanyService;
 import uk.gov.ofwat.external.service.MailService;
 import uk.gov.ofwat.external.service.RegistrationRequestService;
@@ -32,6 +34,7 @@ import javax.validation.Valid;
 import javax.websocket.server.PathParam;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.security.Principal;
 import java.util.*;
 
 /**
@@ -128,7 +131,7 @@ public class UserResource {
                 .body(null);
         } else {
             User newUser = userService.createUser(managedUserVM);
-            mailService.sendCreationEmail(newUser);
+            //mailService.sendCreationEmail(newUser);
             return ResponseEntity.created(new URI("/api/users/" + newUser.getLogin()))
                 .headers(HeaderUtil.createAlert( "A user is created with identifier " + newUser.getLogin(), newUser.getLogin()))
                 .body(newUser);
@@ -235,10 +238,10 @@ public class UserResource {
     @GetMapping("/users/pending_accounts")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<List<RegistrationRequest>> getAllRegistrationRequests(@ApiParam Pageable pageable, @RequestParam Long companyId) {
+    public ResponseEntity<List<RegistrationRequest>> getAllRegistrationRequests(@ApiParam Pageable pageable, @RequestParam Long companyId, @AuthenticationPrincipal User activeUser) {
         Company company = companyService.findOne(companyId);
         if(company != null) {
-            Boolean isValidAdmin = companyService.isCurrentUserAdminForCompany(company);
+            Boolean isValidAdmin = companyService.isUserAdminForCompany(company, activeUser);
             if(isValidAdmin) {
                 final Page<RegistrationRequest> page = registrationRequestService.getAllRequests(pageable, company);
                 HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/users/pending_accounts");
@@ -257,9 +260,9 @@ public class UserResource {
     @DeleteMapping("/users/pending_accounts/{login:" + Constants.LOGIN_REGEX + "}")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<Void> deleteRegistrationRequest(@PathVariable String login) {
+    public ResponseEntity<Void> deleteRegistrationRequest(@PathVariable String login,@AuthenticationPrincipal User activeUser) {
         log.debug("REST request to delete RegistrationRequest: {}", login);
-        registrationRequestService.deleteRegistrationRequest(login);
+        registrationRequestService.deleteRegistrationRequest(login, activeUser);
         //return ResponseEntity.ok().headers(HeaderUtil.createAlert( "A RegistrationRequest is deleted with identifier " + login, login)).build();
         return  ResponseEntity.ok().build();
     }
@@ -273,17 +276,17 @@ public class UserResource {
     @PostMapping("/users/pending_accounts")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<String> approveRegistrationRequest(@RequestBody String login) {
+    public ResponseEntity<String> approveRegistrationRequest(@RequestBody String login,@AuthenticationPrincipal User activeUser) {
         log.debug("REST request to approve RegistrationRequest: {}", login);
-        return registrationRequestService.approveRegistrationRequest(login).map(registrationRequest -> new ResponseEntity<String>(HttpStatus.OK))
+        return registrationRequestService.approveRegistrationRequest(login, activeUser).map(registrationRequest -> new ResponseEntity<String>(HttpStatus.OK))
             .orElse(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
     }
 
     @Timed
     @PostMapping("/users/companies")
-    public Set<Company> getCompaniesForUser(@RequestBody String login){
+    public List<Company> getCompaniesForUser(@RequestBody String login){
         log.info("REST request to get companies for login: {}", login);
-        return companyService.getListOfCompaniesCurrentUserIsMemberFor(login).get();
+        return companyService.getListOfCompaniesUserIsMemberFor(login).get();
     }
 
     @Timed

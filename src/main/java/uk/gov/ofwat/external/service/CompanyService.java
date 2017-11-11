@@ -10,11 +10,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import uk.gov.ofwat.external.repository.UserRepository;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import uk.gov.ofwat.external.security.AuthoritiesConstants;
+import java.security.Principal;
+import java.util.*;
 
 
 /**
@@ -100,9 +98,9 @@ public class CompanyService {
      * @param company
      * @return
      */
-    public boolean isCurrentUserAdminForCompany(Company company){
+    public boolean isUserAdminForCompany(Company company,  User user){
         // TODO implement this pending Company/User/Role refactoring
-        return true;
+        return user.getAuthorities().stream().anyMatch(authority -> {return authority.getName().equals(AuthoritiesConstants.ADMIN) || authority.getName().equals(AuthoritiesConstants.COMPANY_ADMIN);});
     }
 
     /**
@@ -110,29 +108,32 @@ public class CompanyService {
      * @param company
      * @return
      */
-    public boolean isCurrentUserMemberOfCompany(Company company){
+    public boolean isUserMemberOfCompany(Company company, User user){
         // TODO implement this pending Company/User/Role refactoring
-        return true;
+        return user.getCompanies().stream().anyMatch(c -> {return c.equals(company);});
     }
 
     /**
      * Get a list of companies that the current user has the role ROLE_COMPANY_ADMIN for.
-     * @param company
+     * @param user
      * @return
      */
-    public Optional<List<Company>> getListOfCompaniesCurrentUserIsAdminFor(Company company){
-        // TODO implement this pending Company/User/Role refactoring
-        return Optional.empty();
+    public Optional<List<Company>> getListOfCompaniesUserIsAdminFor(User user){
+        return companyRepository.findAllWhereUserIsAdmin(user.getId());
+    }
+
+    public Optional<List<Company>> getListOfCompaniesUserIsMemberFor(String login){
+        User user = userRepository.findOneByLogin(login).get();
+        return getListOfCompaniesUserIsMemberFor(user);
     }
 
     /**
      * Get a list of companies that the current user has the role ROLE_COMPANY_USER for.
-     * @param login
+     * @param User user
      * @return
      */
-    public Optional<Set<Company>> getListOfCompaniesCurrentUserIsMemberFor(String login){
-        Optional<User> user = userRepository.findOneByLogin(login);
-        return user.map(u -> Optional.of(u.getCompanies()).orElse(Collections.emptySet()));
+    public Optional<List<Company>> getListOfCompaniesUserIsMemberFor(User user){
+        return Optional.of(new ArrayList<Company>(user.getCompanies()));
     }
 
     public Boolean removeUserFromCompany(Long companyId, String login){
