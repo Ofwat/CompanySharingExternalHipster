@@ -5,7 +5,9 @@ import uk.gov.ofwat.external.domain.Authority;
 import uk.gov.ofwat.external.domain.User;
 import uk.gov.ofwat.external.repository.UserRepository;
 import uk.gov.ofwat.external.security.AuthoritiesConstants;
+import uk.gov.ofwat.external.service.CompanyService;
 import uk.gov.ofwat.external.service.MailService;
+import uk.gov.ofwat.external.service.RegistrationRequestService;
 import uk.gov.ofwat.external.service.UserService;
 import uk.gov.ofwat.external.service.dto.UserDTO;
 import uk.gov.ofwat.external.service.mapper.UserMapper;
@@ -72,6 +74,8 @@ public class UserResourceIntTest {
     private static final String DEFAULT_LANGKEY = "en";
     private static final String UPDATED_LANGKEY = "fr";
 
+    private static final String DEFAULT_MOBILE_TELEPHONE_NUMBER = "07000000000";
+
     @Autowired
     private UserRepository userRepository;
 
@@ -92,6 +96,12 @@ public class UserResourceIntTest {
 
     @Autowired
     private ExceptionTranslator exceptionTranslator;
+
+    @Autowired
+    RegistrationRequestService registrationRequestService;
+
+    @Autowired
+    CompanyService companyService;
 
     @Autowired
     private EntityManager em;
@@ -127,6 +137,7 @@ public class UserResourceIntTest {
         user.setLastName(DEFAULT_LASTNAME);
         user.setImageUrl(DEFAULT_IMAGEURL);
         user.setLangKey(DEFAULT_LANGKEY);
+        user.setMobileTelephoneNumber(DEFAULT_MOBILE_TELEPHONE_NUMBER);
         return user;
     }
 
@@ -454,6 +465,7 @@ public class UserResourceIntTest {
         anotherUser.setLastName("hipster");
         anotherUser.setImageUrl("");
         anotherUser.setLangKey("en");
+        anotherUser.setMobileTelephoneNumber("07000000000");
         userRepository.saveAndFlush(anotherUser);
 
         // Update the user
@@ -502,6 +514,7 @@ public class UserResourceIntTest {
         anotherUser.setLastName("hipster");
         anotherUser.setImageUrl("");
         anotherUser.setLangKey("en");
+        anotherUser.setMobileTelephoneNumber("07000000000");
         userRepository.saveAndFlush(anotherUser);
 
         // Update the user
@@ -561,7 +574,7 @@ public class UserResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$").isArray())
-            .andExpect(jsonPath("$").value(containsInAnyOrder("ROLE_USER", "ROLE_ADMIN")));
+            .andExpect(jsonPath("$").value(containsInAnyOrder("ROLE_USER", "ROLE_ADMIN", "PRE_AUTH_ROLE_USER", "ROLE_COMPANY_ADMIN", "ROLE_COMPANY_USER")));
     }
 
     @Test

@@ -105,3 +105,8 @@ jhipster:
 # ===================================================================
 
 application:
+    notify:
+        api-key: XXX
+    recaptcha:
+        secret: XXX
+        url: XXX

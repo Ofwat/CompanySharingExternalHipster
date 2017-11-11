@@ -82,6 +82,7 @@ public class CompanyResourceIntTest {
     public static Company createEntity(EntityManager em) {
         Company company = new Company()
             .name(DEFAULT_NAME);
+            company.setDeleted(false);
         return company;
     }
 
