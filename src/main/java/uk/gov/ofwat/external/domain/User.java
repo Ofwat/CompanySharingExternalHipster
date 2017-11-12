@@ -1,5 +1,6 @@
 package uk.gov.ofwat.external.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import uk.gov.ofwat.external.config.Constants;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -147,6 +148,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<CompanyUserDetails> companyUserDetails = new HashSet<>();
 
+    @JsonBackReference
     public Set<Company> getCompanies() {
         return this.companyUserDetails.stream().map(cud -> cud.getCompany()).collect(Collectors.toSet());
     }

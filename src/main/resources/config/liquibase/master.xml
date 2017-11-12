@@ -46,6 +46,7 @@
     <include file="classpath:config/liquibase/changelog/20171027150703_added_entity_constraints_DataInput.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20171028155028_DataInput_AbstractAuditingEntity.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20171112124953_added_company_user_details.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20171112130000_add_company_user_details_values.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

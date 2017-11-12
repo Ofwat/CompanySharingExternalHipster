@@ -238,10 +238,11 @@ public class UserResource {
     @GetMapping("/users/pending_accounts")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<List<RegistrationRequest>> getAllRegistrationRequests(@ApiParam Pageable pageable, @RequestParam Long companyId, @AuthenticationPrincipal User activeUser) {
+    public ResponseEntity<List<RegistrationRequest>> getAllRegistrationRequests(@ApiParam Pageable pageable, @RequestParam Long companyId) {
         Company company = companyService.findOne(companyId);
+        User currentUser = userService.getUserWithAuthorities();
         if(company != null) {
-            Boolean isValidAdmin = companyService.isUserAdminForCompany(company, activeUser);
+            Boolean isValidAdmin = companyService.isUserAdminForCompany(company, currentUser);
             if(isValidAdmin) {
                 final Page<RegistrationRequest> page = registrationRequestService.getAllRequests(pageable, company);
                 HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/users/pending_accounts");
