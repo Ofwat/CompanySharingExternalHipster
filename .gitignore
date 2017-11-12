@@ -113,6 +113,7 @@ Desktop.ini
 /bin/
 /deploy/*
 !cloudfoundry/
+/out/**
 
 ######################
 # Logs
@@ -148,3 +149,4 @@ yarn.lock
 ######################
 
 keystore.p12
+
