@@ -143,7 +143,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
 
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "user")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "user", fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<CompanyUserDetails> companyUserDetails = new HashSet<>();
 
