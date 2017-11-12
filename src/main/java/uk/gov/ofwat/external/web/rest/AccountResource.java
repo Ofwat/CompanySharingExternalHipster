@@ -118,7 +118,7 @@ public class AccountResource {
                                 managedUserVM.getFirstName(), managedUserVM.getLastName(),
                                 managedUserVM.getEmail().toLowerCase(), managedUserVM.getImageUrl(),
                                 managedUserVM.getLangKey(), managedUserVM.getMobileTelephoneNumber(), registrationRequest.get());
-                        companyService.addUserToCompany(managedUserVM.getCompanyId(), user);
+                        companyService.addUserToCompany(managedUserVM.getCompanyId(), user, AuthoritiesConstants.USER);
                         //mailService.sendActivationEmail(user);
                         otpService.generateOtpCode(user);
                         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -166,7 +166,7 @@ public class AccountResource {
                             managedUserVM.getFirstName(), managedUserVM.getLastName(),
                             managedUserVM.getEmail().toLowerCase(), managedUserVM.getImageUrl(),
                             managedUserVM.getLangKey(), managedUserVM.getMobileTelephoneNumber());
-                    companyService.addUserToCompany(managedUserVM.getCompanyId(), user);
+                    companyService.addUserToCompany(managedUserVM.getCompanyId(), user, AuthoritiesConstants.USER);
                     mailService.sendActivationEmail(user);
                     otpService.generateOtpCode(user);
                     return new ResponseEntity<>(HttpStatus.CREATED);

@@ -94,7 +94,7 @@ public class UserResource {
     public ResponseEntity<String> addCompanyUser(@RequestBody Long companyId, @RequestBody String login){
         log.debug("Addding user {} to company with id {}", login, companyId);
         return userRepository.findOneByLogin(login).map(user -> {
-            companyService.addUserToCompany(companyId, user);
+            companyService.addUserToCompany(companyId, user, AuthoritiesConstants.USER);
             return new ResponseEntity<String>(HttpStatus.CREATED);
         }).orElse(new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR));
     }

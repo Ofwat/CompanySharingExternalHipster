@@ -1,7 +1,11 @@
 package uk.gov.ofwat.external.service;
 
+import groovy.transform.TailRecursive;
+import uk.gov.ofwat.external.domain.Authority;
 import uk.gov.ofwat.external.domain.Company;
+import uk.gov.ofwat.external.domain.CompanyUserDetails;
 import uk.gov.ofwat.external.domain.User;
+import uk.gov.ofwat.external.repository.AuthorityRepository;
 import uk.gov.ofwat.external.repository.CompanyRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,10 +13,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import uk.gov.ofwat.external.repository.CompanyUserDetailsRepository;
 import uk.gov.ofwat.external.repository.UserRepository;
 import uk.gov.ofwat.external.security.AuthoritiesConstants;
-import java.security.Principal;
+
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 /**
@@ -28,9 +34,15 @@ public class CompanyService {
 
     private final UserRepository userRepository;
 
-    public CompanyService(CompanyRepository companyRepository, UserRepository userRepository) {
+    private final AuthorityRepository authorityRepository;
+
+    private final CompanyUserDetailsRepository companyUserDetailsRepository;
+
+    public CompanyService(CompanyRepository companyRepository, UserRepository userRepository, AuthorityRepository authorityRepository, CompanyUserDetailsRepository companyUserDetailsRepository) {
         this.companyRepository = companyRepository;
         this.userRepository = userRepository;
+        this.authorityRepository = authorityRepository;
+        this.companyUserDetailsRepository = companyUserDetailsRepository;
     }
 
 
@@ -74,18 +86,31 @@ public class CompanyService {
      *
      *  @param id the id of the entity
      */
+    @Transactional
     public void delete(Long id) {
         log.debug("Request to delete Company : {}", id);
+        Company c = companyRepository.findOne(id);
+        List<CompanyUserDetails> companyUserDetailsList = companyUserDetailsRepository.findAllByCompany(c);
+        companyUserDetailsList.forEach(companyUserDetails -> {
+            c.getCompanyUserDetails().remove(companyUserDetails);
+            companyUserDetailsRepository.delete(companyUserDetails.getId());
+        });
         companyRepository.delete(id);
     }
 
     @Transactional
-    public void addUserToCompany(Long companyId, User user){
+    public void addUserToCompany(Long companyId, User user, String role){
         Company company = companyRepository.findOne(companyId);
         try{
-            company.addUser(user);
+            //company.addUser(user);
+            CompanyUserDetails companyUserDetails = new CompanyUserDetails();
+            companyUserDetails.setCompany(company);
+            companyUserDetails.setUser(user);
+            companyUserDetails.setAuthority(authorityRepository.findOne(role));
+            companyUserDetailsRepository.save(companyUserDetails);
+            user.getCompanyUserDetails().add(companyUserDetails);
+            company.getCompanyUserDetails().add(companyUserDetails);
             companyRepository.save(company);
-            user.getCompanies().add(company);
             userRepository.save(user);
             log.debug("Added user '{}' to company '{}'", company, user);
         }catch(Exception e){
@@ -110,7 +135,7 @@ public class CompanyService {
      */
     public boolean isUserMemberOfCompany(Company company, User user){
         // TODO implement this pending Company/User/Role refactoring
-        return user.getCompanies().stream().anyMatch(c -> {return c.equals(company);});
+        return user.getCompanyUserDetails().stream().anyMatch(c -> {return c.getCompany().equals(company);});
     }
 
     /**
@@ -129,19 +154,26 @@ public class CompanyService {
 
     /**
      * Get a list of companies that the current user has the role ROLE_COMPANY_USER for.
-     * @param User user
+     * @param user
      * @return
      */
     public Optional<List<Company>> getListOfCompaniesUserIsMemberFor(User user){
-        return Optional.of(new ArrayList<Company>(user.getCompanies()));
+        return Optional.of(user.getCompanyUserDetails().stream()
+            .map(CompanyUserDetails::getCompany)
+            .collect(Collectors.toList()));
     }
 
     public Boolean removeUserFromCompany(Long companyId, String login){
         Optional<User> user = userRepository.findOneByLogin(login);
         return user.map((u) -> {
             Company c = companyRepository.getOne(companyId);
-            c.removeUser(u);
-            u = userRepository.save(u);
+            List<CompanyUserDetails> companyUserDetailsList = companyUserDetailsRepository.findAllByCompanyAndUser(c, u);
+            companyUserDetailsList.forEach(companyUserDetails -> {
+                companyUserDetailsRepository.delete(companyUserDetails.getId());
+                c.getCompanyUserDetails().remove(companyUserDetails);
+                u.getCompanyUserDetails().remove(companyUserDetails);
+            });
+            userRepository.save(u);
             companyRepository.save(c);
             return true;
         }).orElse(false);

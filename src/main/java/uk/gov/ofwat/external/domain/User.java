@@ -17,6 +17,7 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 import java.time.Instant;
+import java.util.stream.Collectors;
 
 /**
  * A user.
@@ -125,8 +126,10 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @JoinTable(name = "company_user",
         joinColumns = @JoinColumn(name="users_id", referencedColumnName="id"),
         inverseJoinColumns = @JoinColumn(name="companies_id", referencedColumnName="id"))*/
+/*
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "users")
     private Set<Company> companies = new HashSet<>();
+*/
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "user")
@@ -137,6 +140,25 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL,
         fetch = FetchType.LAZY, optional = true)
     private RegistrationRequest registrationRequest;
+
+
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "user")
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<CompanyUserDetails> companyUserDetails = new HashSet<>();
+
+    public Set<Company> getCompanies() {
+        return this.companyUserDetails.stream().map(cud -> cud.getCompany()).collect(Collectors.toSet());
+    }
+
+    public Set<CompanyUserDetails> getCompanyUserDetails() {
+        return companyUserDetails;
+    }
+
+    public User setCompanyUserDetails(Set<CompanyUserDetails> companyUserDetails) {
+        this.companyUserDetails = companyUserDetails;
+        return this;
+    }
 
     public RegistrationRequest getRegistrationRequest() {
         return registrationRequest;
@@ -312,14 +334,6 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     public void setPersistentTokens(Set<PersistentToken> persistentTokens) {
         this.persistentTokens = persistentTokens;
-    }
-
-    public Set<Company> getCompanies() {
-        return companies;
-    }
-
-    public void setCompanies(Set<Company> companies) {
-        this.companies = companies;
     }
 
     @Override

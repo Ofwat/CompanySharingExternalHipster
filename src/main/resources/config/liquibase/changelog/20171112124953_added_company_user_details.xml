@@ -1,0 +1,39 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet author="jtodd (generated)" id="1510491002110-1">
+        <createTable tableName="company_user_details">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="company_user_detailsPK"/>
+            </column>
+            <column name="created_by" type="VARCHAR(128)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_by" type="VARCHAR(128)"/>
+            <column name="last_modified_date" type="TIMESTAMP"/>
+            <column name="authority_name" type="VARCHAR(50)"/>
+            <column name="company_id" type="BIGINT"/>
+            <column name="user_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="jtodd (generated)" id="1510491002110-2">
+        <addForeignKeyConstraint baseColumnNames="company_id" baseTableName="company_user_details" constraintName="FKhcmtl6r480dpo1f3wj9le9t8x" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="company"/>
+    </changeSet>
+    <changeSet author="jtodd (generated)" id="1510491002110-3">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="company_user_details" constraintName="FKpdx1dcua8xcd2hqusfp9mf51c" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="jhi_user"/>
+    </changeSet>
+    <changeSet author="jtodd (generated)" id="1510491002110-4">
+        <addForeignKeyConstraint baseColumnNames="authority_name" baseTableName="company_user_details" constraintName="FKt02ha0mml2d8hfnkik8pp4j79" deferrable="false" initiallyDeferred="false" referencedColumnNames="name" referencedTableName="jhi_authority"/>
+    </changeSet>
+    <changeSet author="jtodd (generated)" id="1510491002110-5">
+        <dropForeignKeyConstraint baseTableName="company_user" constraintName="fk_company_user_companies_id"/>
+    </changeSet>
+    <changeSet author="jtodd (generated)" id="1510491002110-6">
+        <dropForeignKeyConstraint baseTableName="company_user" constraintName="fk_company_user_users_id"/>
+    </changeSet>
+    <changeSet author="jtodd (generated)" id="1510491002110-7">
+        <dropTable tableName="company_user"/>
+    </changeSet>
+</databaseChangeLog>

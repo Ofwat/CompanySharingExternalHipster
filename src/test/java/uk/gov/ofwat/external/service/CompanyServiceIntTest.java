@@ -8,13 +8,16 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import uk.gov.ofwat.external.CompanySharingExternalApp;
 import uk.gov.ofwat.external.domain.Company;
-import uk.gov.ofwat.external.domain.RegistrationRequest;
 import uk.gov.ofwat.external.domain.User;
+import uk.gov.ofwat.external.repository.AuthorityRepository;
 import uk.gov.ofwat.external.repository.CompanyRepository;
+import uk.gov.ofwat.external.repository.CompanyUserDetailsRepository;
 import uk.gov.ofwat.external.repository.UserRepository;
+import uk.gov.ofwat.external.security.AuthoritiesConstants;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.*;
+
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
@@ -34,11 +37,17 @@ public class CompanyServiceIntTest {
     @Autowired
     public UserRepository userRepository;
 
+    @Autowired
+    private CompanyUserDetailsRepository companyUserDetailsRepository;
+
+    @Autowired
+    AuthorityRepository authorityRepository;
+
     private CompanyService companyService;
 
     @Before
     public void setup(){
-        this.companyService = new CompanyService(companyRepository, userRepository);
+        this.companyService = new CompanyService(companyRepository, userRepository, authorityRepository, companyUserDetailsRepository);
     }
 
     @Test
@@ -59,7 +68,7 @@ public class CompanyServiceIntTest {
         company = companyService.save(company);
 
         User admin = userRepository.findOneByLogin("admin").get();
-        companyService.addUserToCompany(company.getId(), admin);
+        companyService.addUserToCompany(company.getId(), admin, AuthoritiesConstants.ADMIN);
 
         assertThat(company.getId()).isNotNull();
         Long companyId = company.getId();
@@ -82,9 +91,9 @@ public class CompanyServiceIntTest {
 
         User admin = userRepository.findOneByLogin("admin").get();
         User user = userRepository.findOneByLogin("user").get();
-        companyService.addUserToCompany(company1.getId(), admin);
-        companyService.addUserToCompany(company1.getId(), user);
-        companyService.addUserToCompany(company2.getId(), admin);
+        companyService.addUserToCompany(company1.getId(), admin, AuthoritiesConstants.ADMIN);
+        companyService.addUserToCompany(company1.getId(), user, AuthoritiesConstants.USER);
+        companyService.addUserToCompany(company2.getId(), admin, AuthoritiesConstants.ADMIN);
 
         Company foundCompany1 = companyRepository.findOne(company1.getId());
         assertThat(foundCompany1).isNotNull();
@@ -119,8 +128,8 @@ public class CompanyServiceIntTest {
 
         User admin = userRepository.findOneByLogin("admin").get();
         User user = userRepository.findOneByLogin("user").get();
-        companyService.addUserToCompany(company1.getId(), admin);
-        companyService.addUserToCompany(company1.getId(), user);
+        companyService.addUserToCompany(company1.getId(), admin,AuthoritiesConstants.ADMIN);
+        companyService.addUserToCompany(company1.getId(), user, AuthoritiesConstants.USER);
 
         companyService.removeUserFromCompany(company1.getId(), admin.getLogin());
         companyService.removeUserFromCompany(company1.getId(), user.getLogin());
@@ -155,10 +164,10 @@ public class CompanyServiceIntTest {
 
         User admin = userRepository.findOneByLogin("admin").get();
         User user = userRepository.findOneByLogin("user").get();
-        companyService.addUserToCompany(company1.getId(), admin);
-        companyService.addUserToCompany(company2.getId(), admin);
-        companyService.addUserToCompany(company1.getId(), user);
-        companyService.addUserToCompany(company3.getId(), user);
+        companyService.addUserToCompany(company1.getId(), admin, AuthoritiesConstants.ADMIN);
+        companyService.addUserToCompany(company2.getId(), admin, AuthoritiesConstants.ADMIN);
+        companyService.addUserToCompany(company1.getId(), user, AuthoritiesConstants.USER);
+        companyService.addUserToCompany(company3.getId(), user, AuthoritiesConstants.USER);
 
         Optional<List<Company>> companies = companyService.getListOfCompaniesUserIsAdminFor(admin);
         assertThat(companies.get()).containsExactly(company1, company2);
@@ -186,10 +195,10 @@ public class CompanyServiceIntTest {
 
         User admin = userRepository.findOneByLogin("admin").get();
         User user = userRepository.findOneByLogin("user").get();
-        companyService.addUserToCompany(company1.getId(), admin);
-        companyService.addUserToCompany(company2.getId(), admin);
-        companyService.addUserToCompany(company1.getId(), user);
-        companyService.addUserToCompany(company3.getId(), user);
+        companyService.addUserToCompany(company1.getId(), admin, AuthoritiesConstants.ADMIN);
+        companyService.addUserToCompany(company2.getId(), admin, AuthoritiesConstants.ADMIN);
+        companyService.addUserToCompany(company1.getId(), user, AuthoritiesConstants.USER);
+        companyService.addUserToCompany(company3.getId(), user, AuthoritiesConstants.USER);
 
         assertThat(companyService.isUserAdminForCompany(company1, admin)).isTrue();
         assertThat(companyService.isUserAdminForCompany(company1, user)).isFalse();
@@ -218,10 +227,10 @@ public class CompanyServiceIntTest {
 
         User admin = userRepository.findOneByLogin("admin").get();
         User user = userRepository.findOneByLogin("user").get();
-        companyService.addUserToCompany(company1.getId(), admin);
-        companyService.addUserToCompany(company2.getId(), admin);
-        companyService.addUserToCompany(company1.getId(), user);
-        companyService.addUserToCompany(company3.getId(), user);
+        companyService.addUserToCompany(company1.getId(), admin, AuthoritiesConstants.ADMIN);
+        companyService.addUserToCompany(company2.getId(), admin, AuthoritiesConstants.ADMIN);
+        companyService.addUserToCompany(company1.getId(), user, AuthoritiesConstants.USER);
+        companyService.addUserToCompany(company3.getId(), user, AuthoritiesConstants.USER);
 
         assertThat(companyService.isUserMemberOfCompany(company1, admin)).isTrue();
         assertThat(companyService.isUserMemberOfCompany(company1, user)).isTrue();
@@ -250,13 +259,13 @@ public class CompanyServiceIntTest {
 
         User admin = userRepository.findOneByLogin("admin").get();
         User user = userRepository.findOneByLogin("user").get();
-        companyService.addUserToCompany(company1.getId(), admin);
-        companyService.addUserToCompany(company2.getId(), admin);
-        companyService.addUserToCompany(company1.getId(), user);
-        companyService.addUserToCompany(company3.getId(), user);
+        companyService.addUserToCompany(company1.getId(), admin, AuthoritiesConstants.ADMIN);
+        companyService.addUserToCompany(company2.getId(), admin, AuthoritiesConstants.ADMIN);
+        companyService.addUserToCompany(company1.getId(), user, AuthoritiesConstants.USER);
+        companyService.addUserToCompany(company3.getId(), user, AuthoritiesConstants.USER);
 
-        assertThat(companyService.getListOfCompaniesUserIsMemberFor(admin).get()).containsExactly(company1, company2);
-        assertThat(companyService.getListOfCompaniesUserIsMemberFor(user).get()).containsExactly(company1, company3);
+        assertThat(companyService.getListOfCompaniesUserIsMemberFor(admin).get()).containsExactlyInAnyOrder(company1, company2);
+        assertThat(companyService.getListOfCompaniesUserIsMemberFor(user).get()).containsExactlyInAnyOrder(company1, company3);
 
     }
 
