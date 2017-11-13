@@ -8,6 +8,7 @@ import uk.gov.ofwat.external.domain.User;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface CompanyUserDetailsRepository extends JpaRepository<CompanyUserDetails,Long> {

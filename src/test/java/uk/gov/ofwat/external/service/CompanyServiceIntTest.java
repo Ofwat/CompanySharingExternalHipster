@@ -89,8 +89,8 @@ public class CompanyServiceIntTest {
         company2.setDeleted(false);
         company2 = companyService.save(company2);
 
-        User admin = userRepository.findOneByLogin("admin").get();
-        User user = userRepository.findOneByLogin("user").get();
+        User admin = createTestUser("testAdmin");
+        User user = createTestUser("testUser");
         companyService.addUserToCompany(company1.getId(), admin, AuthoritiesConstants.ADMIN);
         companyService.addUserToCompany(company1.getId(), user, AuthoritiesConstants.USER);
         companyService.addUserToCompany(company2.getId(), admin, AuthoritiesConstants.ADMIN);
@@ -126,8 +126,8 @@ public class CompanyServiceIntTest {
         company1.setDeleted(false);
         company1 = companyService.save(company1);
 
-        User admin = userRepository.findOneByLogin("admin").get();
-        User user = userRepository.findOneByLogin("user").get();
+        User admin = createTestUser("testAdmin");
+        User user = createTestUser("testUser");
         companyService.addUserToCompany(company1.getId(), admin,AuthoritiesConstants.ADMIN);
         companyService.addUserToCompany(company1.getId(), user, AuthoritiesConstants.USER);
 
@@ -162,8 +162,8 @@ public class CompanyServiceIntTest {
         company3.setDeleted(false);
         company3 = companyService.save(company3);
 
-        User admin = userRepository.findOneByLogin("admin").get();
-        User user = userRepository.findOneByLogin("user").get();
+        User admin = createTestUser("testAdmin");
+        User user = createTestUser("testUser");
         companyService.addUserToCompany(company1.getId(), admin, AuthoritiesConstants.ADMIN);
         companyService.addUserToCompany(company2.getId(), admin, AuthoritiesConstants.ADMIN);
         companyService.addUserToCompany(company1.getId(), user, AuthoritiesConstants.USER);
@@ -173,6 +173,10 @@ public class CompanyServiceIntTest {
         assertThat(companies.get()).containsExactly(company1, company2);
 
 
+    }
+
+    private User createTestUser(String login){
+        return userService.createUser(login, "password", "John", "Doe", login + "@localhost", "http://placehold.it/50x50", "en-US", "077777077852");
     }
 
 
@@ -257,8 +261,8 @@ public class CompanyServiceIntTest {
         company3.setDeleted(false);
         company3 = companyService.save(company3);
 
-        User admin = userRepository.findOneByLogin("admin").get();
-        User user = userRepository.findOneByLogin("user").get();
+        User admin = createTestUser("testAdmin");
+        User user = createTestUser("testUser");
         companyService.addUserToCompany(company1.getId(), admin, AuthoritiesConstants.ADMIN);
         companyService.addUserToCompany(company2.getId(), admin, AuthoritiesConstants.ADMIN);
         companyService.addUserToCompany(company1.getId(), user, AuthoritiesConstants.USER);

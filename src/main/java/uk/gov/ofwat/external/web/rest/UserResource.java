@@ -10,6 +10,7 @@ import uk.gov.ofwat.external.repository.UserRepository;
 import uk.gov.ofwat.external.security.AuthoritiesConstants;
 import uk.gov.ofwat.external.security.SecurityUtils;
 import uk.gov.ofwat.external.service.CompanyService;
+import uk.gov.ofwat.external.service.Exception.UnableToRemoveUserException;
 import uk.gov.ofwat.external.service.MailService;
 import uk.gov.ofwat.external.service.RegistrationRequestService;
 import uk.gov.ofwat.external.service.UserService;
@@ -293,10 +294,18 @@ public class UserResource {
     @Timed
     @DeleteMapping("/users/companies/{companyId}/{login}")
     public ResponseEntity<String> removeCompanyUser(@PathVariable Long companyId, @PathVariable String login){
+        try {
+            companyService.removeUserFromCompany(companyId, login);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }catch(UnableToRemoveUserException exception){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+/*
         if(companyService.removeUserFromCompany(companyId, login)){
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+*/
     }
 }

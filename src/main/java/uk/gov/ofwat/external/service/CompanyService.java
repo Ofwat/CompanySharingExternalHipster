@@ -16,10 +16,10 @@ import org.springframework.transaction.annotation.Transactional;
 import uk.gov.ofwat.external.repository.CompanyUserDetailsRepository;
 import uk.gov.ofwat.external.repository.UserRepository;
 import uk.gov.ofwat.external.security.AuthoritiesConstants;
+import uk.gov.ofwat.external.service.Exception.UnableToRemoveUserException;
 
 import java.util.*;
 import java.util.stream.Collectors;
-
 
 /**
  * Service Implementation for managing Company.
@@ -44,7 +44,6 @@ public class CompanyService {
         this.authorityRepository = authorityRepository;
         this.companyUserDetailsRepository = companyUserDetailsRepository;
     }
-
 
     /**
      * Save a company.
@@ -89,33 +88,45 @@ public class CompanyService {
     @Transactional
     public void delete(Long id) {
         log.debug("Request to delete Company : {}", id);
-        Company c = companyRepository.findOne(id);
-        List<CompanyUserDetails> companyUserDetailsList = companyUserDetailsRepository.findAllByCompany(c);
-        companyUserDetailsList.forEach(companyUserDetails -> {
-            c.getCompanyUserDetails().remove(companyUserDetails);
-            companyUserDetailsRepository.delete(companyUserDetails.getId());
-        });
+        Company company = companyRepository.findOne(id);
+        List<CompanyUserDetails> companyUserDetailsList = companyUserDetailsRepository.findAllByCompany(company);
+        deleteAllCompanyUserDetailsForCompany(companyUserDetailsList, company);
         companyRepository.delete(id);
+    }
+
+    private void deleteAllCompanyUserDetailsForCompany(List<CompanyUserDetails> companyUserDetailsList, Company company){
+        companyUserDetailsList.forEach(companyUserDetails -> {
+            removeCompanyDetailsFromCompany(companyUserDetails, company);
+            if (companyUserDetailsRepository.exists(companyUserDetails.getId()))
+                companyUserDetailsRepository.delete(companyUserDetails.getId());
+        });
     }
 
     @Transactional
     public void addUserToCompany(Long companyId, User user, String role){
         Company company = companyRepository.findOne(companyId);
-        try{
-            //company.addUser(user);
-            CompanyUserDetails companyUserDetails = new CompanyUserDetails();
-            companyUserDetails.setCompany(company);
-            companyUserDetails.setUser(user);
-            companyUserDetails.setAuthority(authorityRepository.findOne(role));
-            companyUserDetailsRepository.save(companyUserDetails);
-            user.getCompanyUserDetails().add(companyUserDetails);
-            company.getCompanyUserDetails().add(companyUserDetails);
-            companyRepository.save(company);
-            userRepository.save(user);
-            log.debug("Added user '{}' to company '{}'", company, user);
-        }catch(Exception e){
-            log.error("Unable to add user '{}' to company '{}': {}", user, company, e);
-        }
+        CompanyUserDetails companyUserDetails = createCompanyUserDetailsForCompany(company, user, role);
+        addCompanyDetailsToUser(companyUserDetails, user);
+        addCompanyDetailsToCompany(companyUserDetails, company);
+        log.debug("Added user '{}' to company '{}'", company, user);
+    }
+
+    private CompanyUserDetails createCompanyUserDetailsForCompany(Company company, User user, String role){
+        CompanyUserDetails companyUserDetails = new CompanyUserDetails();
+        companyUserDetails.setCompany(company);
+        companyUserDetails.setUser(user);
+        companyUserDetails.setAuthority(authorityRepository.findOne(role));
+        return companyUserDetailsRepository.save(companyUserDetails);
+    }
+
+    private void addCompanyDetailsToUser(CompanyUserDetails companyUserDetails, User user){
+        user.getCompanyUserDetails().add(companyUserDetails);
+        userRepository.save(user);
+    }
+
+    private void addCompanyDetailsToCompany(CompanyUserDetails companyUserDetails, Company company){
+        company.getCompanyUserDetails().add(companyUserDetails);
+        companyRepository.save(company);
     }
 
     /**
@@ -125,7 +136,10 @@ public class CompanyService {
      */
     public boolean isUserAdminForCompany(Company company,  User user){
         // TODO implement this pending Company/User/Role refactoring
-        return user.getAuthorities().stream().anyMatch(authority -> {return authority.getName().equals(AuthoritiesConstants.ADMIN) || authority.getName().equals(AuthoritiesConstants.COMPANY_ADMIN);});
+        return user.getAuthorities().stream()
+            .anyMatch(authority -> {
+                return authority.getName().equals(AuthoritiesConstants.ADMIN) || authority.getName().equals(AuthoritiesConstants.COMPANY_ADMIN);
+            });
     }
 
     /**
@@ -134,7 +148,6 @@ public class CompanyService {
      * @return
      */
     public boolean isUserMemberOfCompany(Company company, User user){
-        // TODO implement this pending Company/User/Role refactoring
         return user.getCompanyUserDetails().stream().anyMatch(c -> {return c.getCompany().equals(company);});
     }
 
@@ -163,20 +176,38 @@ public class CompanyService {
             .collect(Collectors.toList()));
     }
 
-    public Boolean removeUserFromCompany(Long companyId, String login){
+    public void removeUserFromCompany(Long companyId, String login) throws UnableToRemoveUserException {
         Optional<User> user = userRepository.findOneByLogin(login);
-        return user.map((u) -> {
-            Company c = companyRepository.getOne(companyId);
-            List<CompanyUserDetails> companyUserDetailsList = companyUserDetailsRepository.findAllByCompanyAndUser(c, u);
-            companyUserDetailsList.forEach(companyUserDetails -> {
-                companyUserDetailsRepository.delete(companyUserDetails.getId());
-                c.getCompanyUserDetails().remove(companyUserDetails);
-                u.getCompanyUserDetails().remove(companyUserDetails);
-            });
-            userRepository.save(u);
-            companyRepository.save(c);
-            return true;
-        }).orElse(false);
+        Company company = companyRepository.getOne(companyId);
+        if(user.isPresent())
+            deleteAllCompanyUserDetailsForUserAtCompany(user.get(), company);
     }
+
+    private void deleteAllCompanyUserDetailsForUserAtCompany(User user, Company company){
+        List<CompanyUserDetails> companyUserDetailsList = companyUserDetailsRepository.findAllByCompanyAndUser(company, user);
+        companyUserDetailsList.forEach(companyUserDetails -> {
+            deleteAllCompanyUserDetailsForCompany(companyUserDetailsList, company);
+            deleteAllCompanyUserDetailsForUser(companyUserDetailsList, user);
+        });
+    }
+
+    private void deleteAllCompanyUserDetailsForUser(List<CompanyUserDetails> companyUserDetailsList, User user){
+        companyUserDetailsList.forEach(companyUserDetails -> {
+            removeCompanyDetailsFromUser(companyUserDetails, user);
+            if (companyUserDetailsRepository.exists(companyUserDetails.getId()))
+                companyUserDetailsRepository.delete(companyUserDetails.getId());
+        });
+    }
+
+    private void removeCompanyDetailsFromUser(CompanyUserDetails companyUserDetails, User user){
+        user.getCompanyUserDetails().remove(companyUserDetails);
+        userRepository.save(user);
+    }
+
+    private void removeCompanyDetailsFromCompany(CompanyUserDetails companyUserDetails, Company company){
+        company.getCompanyUserDetails().remove(companyUserDetails);
+        companyRepository.save(company);
+    }
+
 
 }

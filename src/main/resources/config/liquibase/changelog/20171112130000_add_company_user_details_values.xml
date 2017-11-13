@@ -19,8 +19,6 @@
                   file="config/liquibase/company_user_details.csv"
                   separator=";"
                   tableName="company_user_details">
-            <column name="created_date" type="timestamp"/>
-            <column name="last_modified_date" type="timestamp"/>
         </loadData>
     </changeSet>
     <changeSet id="2" author="jtoddington">
