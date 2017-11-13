@@ -31,3 +31,4 @@ export * from './data-input/data-input.service';
 export * from './publishing-status/publishing-status.model';
 export * from './publishing-status/publishing-status.service';
 export { PublishingStatusSelectComponent } from './publishing-status-select/publishing-status-select.component';
+export { UserSelectComponent } from './user-select/user-select.component';

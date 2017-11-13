@@ -2,6 +2,7 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { CompanySelectComponent } from './company-select/company-select.component';
 import { PublishingStatusSelectComponent } from './publishing-status-select/publishing-status-select.component';
+import { UserSelectComponent } from './user-select/user-select.component';
 
 import {
     CompanySharingExternalSharedLibsModule,
@@ -27,7 +28,8 @@ import {
 /*        LoginComponent,*/
         HasAnyAuthorityDirective,
         CompanySelectComponent,
-        PublishingStatusSelectComponent
+        PublishingStatusSelectComponent,
+        UserSelectComponent
     ],
     providers: [
 /*        LoginService,
@@ -47,7 +49,8 @@ import {
         HasAnyAuthorityDirective,
         DatePipe,
         CompanySelectComponent,
-        PublishingStatusSelectComponent
+        PublishingStatusSelectComponent,
+        UserSelectComponent
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 

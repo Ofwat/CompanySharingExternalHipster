@@ -7,7 +7,7 @@ import {PublishingStatusService} from '../publishing-status/publishing-status.se
 @Component({
     selector: 'jhi-ofwat-publishing-status-select',
     template: '' +
-    '                <div class="form-group" *ngIf="display">\n' +
+    '                <div class="form-group">\n' +
     '                    <label class="form-label" for="publishingStatus">Publishing Status\n' +
     '                        <span class="form-hint">The publishing status</span>\n' +
     '                    </label>\n' +
@@ -29,7 +29,6 @@ export class PublishingStatusSelectComponent implements OnInit, OnChanges {
 
     success: boolean;
     error: boolean;
-    display: boolean;
     publishingStatuses: PublishingStatus[];
 
     @Output() statusChangedEvent: EventEmitter<PublishingStatus>;
@@ -42,18 +41,14 @@ export class PublishingStatusSelectComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        console.log("fruit: ngOnChanges " + changes.toString());
         if (changes['selectedPublishingStatus']) {
             this.selectedPublishingStatus = changes['selectedPublishingStatus'].currentValue;
-            console.log("fruit: ngOnChanges selectedPublishingStatus.id " + changes['selectedPublishingStatus']);
-            // this.checkDataRequirements();
         }
     }
 
     ngOnInit() {
         this.success = false;
         this.error = false;
-        this.display = true;
         this.load();
     }
 
@@ -66,23 +61,7 @@ export class PublishingStatusSelectComponent implements OnInit, OnChanges {
 
     private onLoadPublishingStatusSuccess(data, headers) {
         this.publishingStatuses = data;
-        // this.statusChangedEvent.emit(this.selectedPublishingStatus);
-        // this.checkDataRequirements();
     }
-
-    // private checkDataRequirements() {
-    //     console.log("fruit: checkDataRequirements ");
-    //     if (this.publishingStatuses) {
-    //         console.log("fruit: checkDataRequirements this.publishingStatuses: " + this.publishingStatuses.toString());
-    //     }
-    //     if (this.selectedPublishingStatus) {
-    //         console.log("fruit: checkDataRequirements this.selectedPublishingStatus.status: " + this.selectedPublishingStatus.status);
-    //         // this.statusChangedEvent.emit(this.selectedPublishingStatus);
-    //     }
-    //     if (this.publishingStatuses && this.selectedPublishingStatus) {
-    //         this.display = true;
-    //     }
-    // }
 
     statusChanged(event) {
         this.statusChangedEvent.emit(this.selectedPublishingStatus);
@@ -97,10 +76,7 @@ export class PublishingStatusSelectComponent implements OnInit, OnChanges {
     }
 
     publishingStatusById(item1: PublishingStatus, item2: PublishingStatus) {
-        console.log('fruit item1.id : ' + (item1 ? item1.id : "NO selection  FRUIT PRESENT"));
-        console.log('fruit item2.id : ' + (item2 ? item2.id : "NO preslected FRUIT PRESENT"));
         if (!item1 || !item2) {
-            console.log('fruit          :  ' + (item2 ? item2.id : "NO FRUIT RETURNED"));
             return false;
         }
         return item1.id === item2.id;

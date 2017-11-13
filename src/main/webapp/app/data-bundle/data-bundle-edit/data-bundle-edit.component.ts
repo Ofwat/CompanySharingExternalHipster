@@ -17,10 +17,9 @@ export class DataBundleEditComponent implements OnInit {
     errorDataBundleExists: boolean;
     dataBundle: DataBundle;
     users: User[];
-    userMap: Map<number, User>;
+    selectedOwner: User;
+    selectedReviewer: User;
     private subscription: Subscription;
-    ownerIndex: any;
-    reviewerIndex: any;
     currentDate: any;
 
     constructor(
@@ -36,7 +35,6 @@ export class DataBundleEditComponent implements OnInit {
         this.error = false;
         this.errorDataBundleExists = false;
         this.dataBundle = {};
-        this.loadUsers();
         this.currentDate = new Date();
         this.subscription = this.route.params.subscribe((params) => {
             this.load(params['id']);
@@ -46,24 +44,25 @@ export class DataBundleEditComponent implements OnInit {
     ngAfterViewInit() {
     }
 
-    load(id) {
-        this.dataBundleService.get(id).subscribe((dataBundle) => {
-            this.dataBundle = dataBundle;
-        });
+    load(dataBundleId) {
+        this.dataBundleService.get(dataBundleId)
+            .flatMap((dataBundle) => {
+                this.dataBundle = dataBundle;
+                return this.userService.query();
+            })
+            .subscribe(
+                (res: ResponseWrapper) => this.onLoadUsersSuccess(res.json),
+                (res: ResponseWrapper) => this.onLoadUsersError(res.json)
+            );
     }
 
-    loadUsers() {
-        this.userService.query().subscribe(
-            (res: ResponseWrapper) => this.onLoadUsersSuccess(res.json, res.headers),
-            (res: ResponseWrapper) => this.onLoadUsersError(res.json)
-        );
-    }
-
-    private onLoadUsersSuccess(data, headers) {
+    private onLoadUsersSuccess(data) {
         this.users = data;
-        this.userMap = new Map<number, User>();
         for (let user of this.users) {
-            this.userMap.set(user.id, user);
+            if (user.id == this.dataBundle.ownerId)
+                this.selectedOwner = user;
+            if (user.id == this.dataBundle.reviewerId)
+                this.selectedReviewer = user;
         }
     }
 
@@ -71,16 +70,21 @@ export class DataBundleEditComponent implements OnInit {
         this.alertService.error(error.error, error.message, null);
     }
 
-    save() {
-        if (this.ownerIndex) {
-            const owner = this.userMap.get(parseInt(this.ownerIndex));
-            this.dataBundle.ownerId = owner.id;
-        }
-        if (this.reviewerIndex) {
-            const reviewer = this.userMap.get(parseInt(this.reviewerIndex));
-            this.dataBundle.reviewerId = reviewer.id;
-        }
+    ownerChanged(user:User){
+        this.selectedOwner = user;
+    }
 
+    reviewerChanged(user:User){
+        this.selectedReviewer = user;
+    }
+
+    save() {
+        if (this.selectedOwner) {
+            this.dataBundle.ownerId = this.selectedOwner.id;
+        }
+        if (this.selectedReviewer) {
+            this.dataBundle.reviewerId = this.selectedReviewer.id;
+        }
         this.updateDataBundle();
     }
 

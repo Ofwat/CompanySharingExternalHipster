@@ -100,6 +100,20 @@
                     </div>
                 </div>
 
+                <jhi-ofwat-user-select
+                    [selectedUser]="selectedOwner"
+                    [userResponsibility]="'owner'"
+                    [resourceType]="'Collection'"
+                    (userChangedEvent)="ownerChanged($event)">
+                </jhi-ofwat-user-select>
+
+                <jhi-ofwat-user-select
+                    [selectedUser]="selectedReviewer"
+                    [userResponsibility]="'reviewer'"
+                    [resourceType]="'Collection'"
+                    (userChangedEvent)="reviewerChanged($event)">
+                </jhi-ofwat-user-select>
+
                 <!--<div class="form-group">-->
                     <!--<label class="form-label" for="owner">Owner-->
                         <!--<span class="form-hint">The owner responsible for the Data Collection</span>-->

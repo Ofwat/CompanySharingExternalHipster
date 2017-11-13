@@ -16,7 +16,7 @@
                     <div>
                         <dd class="cya-question">Publishing Status</dd>
                         <dd class="cya-answer">{{dataCollection.statusStatus}}</dd>
-                        <dd class="cya-answer"><a href="" [routerLink]="['/publishing-status-modification', 'collection', dataCollection.id, dataCollection.statusStatus]">Change</a></dd>
+                        <dd class="cya-answer"><a href="" [routerLink]="['/publishing-status-modification', 'collection', dataCollection.id]">Change</a></dd>
                     </div>
                     <div>
                         <dd class="cya-question">Owner</dd>
@@ -63,7 +63,7 @@
 
             <div class="form-group">
                 <button type="button"
-                        [routerLink]="['/data-collection-edit', dataCollection.id, '']"
+                        [routerLink]="['/data-collection-edit', dataCollection.id]"
                         class="button float-left">
                     <span class="fa fa-arrow-left"></span>&nbsp;<span>Edit</span>
                 </button>

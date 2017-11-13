@@ -1,9 +1,7 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { JhiAlertService } from 'ng-jhipster';
-import { ITEMS_PER_PAGE, Principal, ResponseWrapper, DataCollection, DataCollectionService } from '../../shared';
+import { ResponseWrapper, DataCollection, DataCollectionService } from '../../shared';
 import { User, UserService } from '../../shared';
-import {map} from "rxjs/operator/map";
-// import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 
 @Component({
     selector: 'jhi-data-collection-creation',
@@ -17,7 +15,8 @@ export class DataCollectionCreationComponent implements OnInit {
     errorDataCollectionExists: boolean;
     dataCollection: DataCollection;
     users: User[];
-    userMap: Map<number, {}>;
+    private selectedOwner: User;
+    private selectedReviewer: User;
 
     constructor(
         private alertService: JhiAlertService,
@@ -31,6 +30,8 @@ export class DataCollectionCreationComponent implements OnInit {
         this.error = false;
         this.errorDataCollectionExists = false;
         this.dataCollection = {};
+        this.selectedOwner = null;
+        this.selectedReviewer = null;
         this.loadUsers();
     }
 
@@ -39,28 +40,30 @@ export class DataCollectionCreationComponent implements OnInit {
 
     loadUsers() {
         this.userService.query().subscribe(
-            (res: ResponseWrapper) => this.onLoadUsersSuccess(res.json, res.headers),
+            (res: ResponseWrapper) => this.onLoadUsersSuccess(res.json),
             (res: ResponseWrapper) => this.onLoadUsersError(res.json)
         );
     }
 
-    private onLoadUsersSuccess(data, headers) {
+    private onLoadUsersSuccess(data) {
         this.users = data;
-        this.userMap = new Map<number, {}>();
-        for (let user of this.users) {
-            this.userMap.set(user.id, user);
-        }
     }
 
     private onLoadUsersError(error) {
         this.alertService.error(error.error, error.message, null);
     }
 
+    ownerChanged(user:User){
+        this.selectedOwner = user;
+    }
+
+    reviewerChanged(user:User){
+        this.selectedReviewer = user;
+    }
+
     create() {
-        // let ownerId = parseInt(this.dataCollection.owner);
-        // let reviewerId = parseInt(this.dataCollection.reviewer);
-        // this.dataCollection.owner = this.userMap.get(ownerId);
-        // this.dataCollection.reviewer = this.userMap.get(reviewerId);
+        this.dataCollection.ownerId = this.selectedOwner.id;
+        this.dataCollection.reviewerId = this.selectedReviewer.id;
 
         this.dataCollectionService.create(this.dataCollection).subscribe(
             response => {

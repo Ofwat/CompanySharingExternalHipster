@@ -6,7 +6,6 @@ import { DataCollectionDetailComponent } from './data-collection-detail/data-col
 import { DataCollectionDeletionConfirmationComponent } from './data-collection-deletion/data-collection-deletion-confirmation.component';
 import { DataCollectionDeletedComponent } from './data-collection-deletion/data-collection-deleted.component';
 import { DataCollectionEditComponent } from './data-collection-edit/data-collection-edit.component';
-// import { PublishingStatusSelectComponent} from "../shared/publishing-status-select/publishing-status-select.component";
 
 /* jhipster-needle-add-admin-module-import - JHipster will add admin modules imports here */
 

@@ -17,10 +17,9 @@ export class DataInputEditComponent implements OnInit {
     errorDataInputExists: boolean;
     dataInput: DataInput;
     users: User[];
-    userMap: Map<number, User>;
+    selectedOwner: User;
+    selectedReviewer: User;
     private subscription: Subscription;
-    ownerIndex: any;
-    reviewerIndex: any;
     currentDate: any;
 
     constructor(
@@ -36,7 +35,6 @@ export class DataInputEditComponent implements OnInit {
         this.error = false;
         this.errorDataInputExists = false;
         this.dataInput = {};
-        this.loadUsers();
         this.currentDate = new Date();
         this.subscription = this.route.params.subscribe((params) => {
             this.load(params['id']);
@@ -46,24 +44,25 @@ export class DataInputEditComponent implements OnInit {
     ngAfterViewInit() {
     }
 
-    load(id) {
-        this.dataInputService.get(id).subscribe((dataInput) => {
-            this.dataInput = dataInput;
-        });
+    load(dataInputId) {
+        this.dataInputService.get(dataInputId)
+            .flatMap((dataInput) => {
+                this.dataInput = dataInput;
+                return this.userService.query();
+            })
+            .subscribe(
+                (res: ResponseWrapper) => this.onLoadUsersSuccess(res.json),
+                (res: ResponseWrapper) => this.onLoadUsersError(res.json)
+            );
     }
 
-    loadUsers() {
-        this.userService.query().subscribe(
-            (res: ResponseWrapper) => this.onLoadUsersSuccess(res.json, res.headers),
-            (res: ResponseWrapper) => this.onLoadUsersError(res.json)
-        );
-    }
-
-    private onLoadUsersSuccess(data, headers) {
+    private onLoadUsersSuccess(data) {
         this.users = data;
-        this.userMap = new Map<number, User>();
-        for (let user of data) {
-            this.userMap.set(user.id, user);
+        for (let user of this.users) {
+            if (user.id == this.dataInput.ownerId)
+                this.selectedOwner = user;
+            if (user.id == this.dataInput.reviewerId)
+                this.selectedReviewer = user;
         }
     }
 
@@ -71,14 +70,20 @@ export class DataInputEditComponent implements OnInit {
         this.alertService.error(error.error, error.message, null);
     }
 
+    ownerChanged(user:User){
+        this.selectedOwner = user;
+    }
+
+    reviewerChanged(user:User){
+        this.selectedReviewer = user;
+    }
+
     save() {
-        if (this.ownerIndex) {
-            const owner = this.userMap.get(parseInt(this.ownerIndex));
-            this.dataInput.ownerId = owner.id;
+        if (this.selectedOwner) {
+            this.dataInput.ownerId = this.selectedOwner.id;
         }
-        if (this.reviewerIndex) {
-            const reviewer = this.userMap.get(parseInt(this.reviewerIndex));
-            this.dataInput.reviewerId = reviewer.id;
+        if (this.selectedReviewer) {
+            this.dataInput.reviewerId = this.selectedReviewer.id;
         }
         this.updateDataInput();
     }

@@ -1,8 +1,7 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { JhiAlertService } from 'ng-jhipster';
-import { ITEMS_PER_PAGE, Principal, ResponseWrapper, DataBundle, DataBundleService, DataCollection, DataCollectionService } from '../../shared';
+import { ResponseWrapper, DataBundle, DataBundleService, DataCollection, DataCollectionService } from '../../shared';
 import { User, UserService } from '../../shared';
-import {map} from "rxjs/operator/map";
 import { Subscription } from 'rxjs/Rx';
 import { ActivatedRoute } from '@angular/router';
 
@@ -18,14 +17,12 @@ export class DataBundleCreationComponent implements OnInit {
     errorDataBundleExists: boolean;
     dataBundle: DataBundle;
     users: User[];
-    userMap: Map<number, User>;
     private subscription: Subscription;
     dataCollection: DataCollection;
-    ownerId: any;
-    reviewerId: any;
     currentDate: any;
-    ownerIndex: any;
-    reviewerIndex: any;
+    private selectedOwner: User;
+    private selectedReviewer: User;
+
 
     constructor(
         private alertService: JhiAlertService,
@@ -41,8 +38,9 @@ export class DataBundleCreationComponent implements OnInit {
         this.error = false;
         this.errorDataBundleExists = false;
         this.dataBundle = {};
-        this.loadUsers();
         this.currentDate = new Date();
+        this.selectedOwner = null;
+        this.selectedReviewer = null;
         this.subscription = this.route.params.subscribe((params) => {
             this.loadDataCollection(params['dataCollectionId']);
         });
@@ -52,24 +50,24 @@ export class DataBundleCreationComponent implements OnInit {
     }
 
     loadDataCollection(dataCollectionId) {
-        this.dataCollectionService.get(dataCollectionId).subscribe((dataCollection) => {
-            this.dataCollection = dataCollection;
-        });
+        this.dataCollectionService.get(dataCollectionId)
+            .flatMap((dataCollection) => {
+                this.dataCollection = dataCollection;
+                return this.userService.query();
+            })
+            .subscribe(
+                (res: ResponseWrapper) => this.onLoadUsersSuccess(res.json),
+                (res: ResponseWrapper) => this.onLoadUsersError(res.json)
+            );
     }
 
-
-    loadUsers() {
-        this.userService.query().subscribe(
-            (res: ResponseWrapper) => this.onLoadUsersSuccess(res.json, res.headers),
-            (res: ResponseWrapper) => this.onLoadUsersError(res.json)
-        );
-    }
-
-    private onLoadUsersSuccess(data, headers) {
+    private onLoadUsersSuccess(data) {
         this.users = data;
-        this.userMap = new Map<number, User>();
         for (let user of this.users) {
-            this.userMap.set(user.id, user);
+            if (user.id == this.dataCollection.ownerId)
+                this.selectedOwner = user;
+            if (user.id == this.dataCollection.reviewerId)
+                this.selectedReviewer = user;
         }
     }
 
@@ -77,24 +75,19 @@ export class DataBundleCreationComponent implements OnInit {
         this.alertService.error(error.error, error.message, null);
     }
 
+    ownerChanged(user:User){
+        this.selectedOwner = user;
+    }
+
+    reviewerChanged(user:User){
+        this.selectedReviewer = user;
+    }
+
     create() {
-        if (this.ownerIndex) {
-            const owner = this.userMap.get(parseInt(this.ownerIndex));
-            this.dataBundle.ownerId = owner.id;
-        }
-        // else {
-        //     this.dataBundle.ownerId = this.dataCollection.owner.id;
-        // }
-        if (this.reviewerIndex) {
-            const reviewer = this.userMap.get(parseInt(this.reviewerIndex));
-            this.dataBundle.reviewerId = reviewer.id;
-        }
-        // else {
-        //     this.dataBundle.reviewerId = this.dataCollection.reviewer.id;
-        // }
+        this.dataBundle.ownerId = this.selectedOwner.id;
+        this.dataBundle.reviewerId = this.selectedReviewer.id;
 
         this.dataBundle.dataCollectionId = this.dataCollection.id;
-        this.dataBundle.dataCollectionName = this.dataCollection.name;
 
         this.dataBundleService.create(this.dataBundle).subscribe(
             response => {

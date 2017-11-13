@@ -1,6 +1,6 @@
 import { Component, OnInit, } from '@angular/core';
 import { JhiAlertService } from 'ng-jhipster';
-import { ResponseWrapper, DataCollectionService, DataBundleService, DataInputService } from '../../shared';
+import { DataCollectionService, DataBundleService, DataInputService } from '../../shared';
 import {Subscription} from "rxjs";
 import {ActivatedRoute, NavigationEnd, NavigationStart, Router} from "@angular/router";
 import {PublishingStatus} from "../../shared/publishing-status/publishing-status.model";
@@ -19,7 +19,6 @@ export class PublishingStatusModificationComponent implements OnInit {
     display: boolean;
     errorDataResourceExists: boolean;
     dataResource: any;
-    publishingStatuses: PublishingStatus[];
     selectedPublishingStatus: PublishingStatus;
     private subscription: Subscription;
     previousUrl: string;
@@ -57,11 +56,11 @@ export class PublishingStatusModificationComponent implements OnInit {
             else if (resourceType === "input") {
                 this.resourceService = this.dataInputService;
             }
-            this.load(params['resourceId'], params['statusId']);
+            this.load(params['resourceId']);
         });
     }
 
-    load(dataResourceId, statusId) {
+    load(dataResourceId) {
         this.resourceService.get(dataResourceId)
             .flatMap((dataResource) => {
                 this.dataResource = dataResource;
@@ -114,5 +113,4 @@ export class PublishingStatusModificationComponent implements OnInit {
             }
         );
     }
-
 }

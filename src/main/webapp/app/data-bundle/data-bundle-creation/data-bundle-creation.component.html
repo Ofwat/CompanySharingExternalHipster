@@ -122,29 +122,19 @@
                 </div>
             </div>
 
-            <div class="form-group">
-                <label class="form-label" for="owner">Owner
-                    <span class="form-hint">The owner responsible for the Data Bundle</span>
-                </label>
-                <select class="form-control" [(ngModel)]="ownerIndex" id="owner" name="owner" #owner="ngModel">
-                    <option *ngFor="let user of users"
-                            [value]="user?.id"
-                        [selected]="dataCollection?.owner?.id==user?.id ? true : null" >
-                        {{user?.firstName}} {{user?.lastName}}</option>
-                </select>
-            </div>
+            <jhi-ofwat-user-select
+                [selectedUser]="selectedOwner"
+                [userResponsibility]="'owner'"
+                [resourceType]="'Bundle'"
+                (userChangedEvent)="ownerChanged($event)">
+            </jhi-ofwat-user-select>
 
-            <div class="form-group">
-                <label class="form-label" for="reviewer">Reviewer
-                    <span class="form-hint">The reviewer responsible for reviewing the Data Bundle</span>
-                </label>
-                <select class="form-control" [(ngModel)]="reviewerIndex" id="reviewer" name="reviewer" #reviewer="ngModel">
-                    <option *ngFor="let user of users"
-                            [value]="user?.id"
-                            [selected]="dataCollection?.reviewer?.id==user?.id ? true : null" >
-                    {{user?.firstName}} {{user?.lastName}}</option>
-                </select>
-            </div>
+            <jhi-ofwat-user-select
+                [selectedUser]="selectedReviewer"
+                [userResponsibility]="'reviewer'"
+                [resourceType]="'Bundle'"
+                (userChangedEvent)="reviewerChanged($event)">
+            </jhi-ofwat-user-select>
 
             <div class="form-group">
                 <button type="submit"

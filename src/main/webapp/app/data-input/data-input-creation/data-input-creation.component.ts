@@ -1,8 +1,7 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { JhiAlertService } from 'ng-jhipster';
-import { ITEMS_PER_PAGE, Principal, ResponseWrapper, DataInput, DataInputService, DataBundle, DataBundleService } from '../../shared';
+import { ResponseWrapper, DataInput, DataInputService, DataBundle, DataBundleService } from '../../shared';
 import { User, UserService } from '../../shared';
-import {map} from "rxjs/operator/map";
 import { Subscription } from 'rxjs/Rx';
 import { ActivatedRoute } from '@angular/router';
 
@@ -18,14 +17,11 @@ export class DataInputCreationComponent implements OnInit {
     errorDataInputExists: boolean;
     dataInput: DataInput;
     users: User[];
-    userMap: Map<number, User>;
     private subscription: Subscription;
     dataBundle: DataBundle;
-    ownerId: any;
-    reviewerId: any;
     currentDate: any;
-    ownerIndex: any;
-    reviewerIndex: any;
+    private selectedOwner: User;
+    private selectedReviewer: User;
 
     constructor(
         private alertService: JhiAlertService,
@@ -41,8 +37,9 @@ export class DataInputCreationComponent implements OnInit {
         this.error = false;
         this.errorDataInputExists = false;
         this.dataInput = {};
-        this.loadUsers();
         this.currentDate = new Date();
+        this.selectedOwner = null;
+        this.selectedReviewer = null;
         this.subscription = this.route.params.subscribe((params) => {
             this.loadDataBundle(params['dataBundleId']);
         });
@@ -52,24 +49,25 @@ export class DataInputCreationComponent implements OnInit {
     }
 
     loadDataBundle(dataBundleId) {
-        this.dataBundleService.get(dataBundleId).subscribe((dataBundle) => {
-            this.dataBundle = dataBundle;
-        });
+        this.dataBundleService.get(dataBundleId)
+            .flatMap((dataBundle) => {
+                this.dataBundle = dataBundle;
+                return this.userService.query();
+            })
+            .subscribe(
+                (res: ResponseWrapper) => this.onLoadUsersSuccess(res.json),
+                (res: ResponseWrapper) => this.onLoadUsersError(res.json)
+            );
     }
 
 
-    loadUsers() {
-        this.userService.query().subscribe(
-            (res: ResponseWrapper) => this.onLoadUsersSuccess(res.json, res.headers),
-            (res: ResponseWrapper) => this.onLoadUsersError(res.json)
-        );
-    }
-
-    private onLoadUsersSuccess(data, headers) {
+    private onLoadUsersSuccess(data) {
         this.users = data;
-        this.userMap = new Map<number, User>();
         for (let user of this.users) {
-            this.userMap.set(user.id, user);
+            if (user.id == this.dataBundle.ownerId)
+                this.selectedOwner = user;
+            if (user.id == this.dataBundle.reviewerId)
+                this.selectedReviewer = user;
         }
     }
 
@@ -77,24 +75,19 @@ export class DataInputCreationComponent implements OnInit {
         this.alertService.error(error.error, error.message, null);
     }
 
+    ownerChanged(user:User){
+        this.selectedOwner = user;
+    }
+
+    reviewerChanged(user:User){
+        this.selectedReviewer = user;
+    }
+
     create() {
-        if (this.ownerIndex) {
-            const owner = this.userMap.get(parseInt(this.ownerIndex));
-            this.dataInput.ownerId = owner.id;
-        }
-        else {
-            this.dataInput.ownerId = this.dataBundle.ownerId;
-        }
-        if (this.reviewerIndex) {
-            const reviewer = this.userMap.get(parseInt(this.reviewerIndex));
-            this.dataInput.reviewerId = reviewer.id;
-        }
-        else {
-            this.dataInput.reviewerId = this.dataBundle.reviewerId;
-        }
+        this.dataInput.ownerId = this.selectedOwner.id;
+        this.dataInput.reviewerId = this.selectedReviewer.id;
 
         this.dataInput.dataBundleId = this.dataBundle.id;
-        this.dataInput.dataBundleName = this.dataBundle.name;
 
         this.dataInput.fileName = "a typical file name";
         this.dataInput.fileLocation = "a typical file location";
