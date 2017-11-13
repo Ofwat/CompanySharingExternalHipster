@@ -243,7 +243,7 @@ public class UserResource {
         Company company = companyService.findOne(companyId);
         User currentUser = userService.getUserWithAuthorities();
         if(company != null) {
-            Boolean isValidAdmin = companyService.isUserAdminForCompany(company, currentUser);
+            Boolean isValidAdmin = companyService.isUserAdminForCompany(company, currentUser.getLogin());
             if(isValidAdmin) {
                 final Page<RegistrationRequest> page = registrationRequestService.getAllRequests(pageable, company);
                 HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/users/pending_accounts");

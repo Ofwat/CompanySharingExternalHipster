@@ -106,8 +106,7 @@ public class CompanyService {
     public void addUserToCompany(Long companyId, User user, String role){
         Company company = companyRepository.findOne(companyId);
         CompanyUserDetails companyUserDetails = createCompanyUserDetailsForCompany(company, user, role);
-        addCompanyDetailsToUser(companyUserDetails, user);
-        addCompanyDetailsToCompany(companyUserDetails, company);
+        addCompanyDetailsToUserAndCompany(companyUserDetails, user, company);
         log.debug("Added user '{}' to company '{}'", company, user);
     }
 
@@ -117,6 +116,11 @@ public class CompanyService {
         companyUserDetails.setUser(user);
         companyUserDetails.setAuthority(authorityRepository.findOne(role));
         return companyUserDetailsRepository.save(companyUserDetails);
+    }
+
+    private void addCompanyDetailsToUserAndCompany(CompanyUserDetails companyUserDetails, User user, Company company){
+        addCompanyDetailsToUser(companyUserDetails, user);
+        addCompanyDetailsToCompany(companyUserDetails, company);
     }
 
     private void addCompanyDetailsToUser(CompanyUserDetails companyUserDetails, User user){
@@ -134,12 +138,15 @@ public class CompanyService {
      * @param company
      * @return
      */
-    public boolean isUserAdminForCompany(Company company,  User user){
-        // TODO implement this pending Company/User/Role refactoring
-        return user.getAuthorities().stream()
-            .anyMatch(authority -> {
-                return authority.getName().equals(AuthoritiesConstants.ADMIN) || authority.getName().equals(AuthoritiesConstants.COMPANY_ADMIN);
-            });
+    public boolean isUserAdminForCompany(Company company,  String login){
+        Optional<User> user = userRepository.findOneByLogin(login);
+        if(user.isPresent()) {
+            return user.get().getCompanyUserDetails().stream()
+                .anyMatch(companyUserDetails -> {
+                    return companyUserDetails.getAuthority().getName().equals(AuthoritiesConstants.ADMIN) || companyUserDetails.getAuthority().getName().equals(AuthoritiesConstants.COMPANY_ADMIN);
+                });
+        }
+        return false;
     }
 
     /**

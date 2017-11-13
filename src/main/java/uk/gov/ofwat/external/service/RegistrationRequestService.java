@@ -59,7 +59,7 @@ public class RegistrationRequestService {
     @Transactional
     public void deleteRegistrationRequest(String login, User currentUser){
         registrationRequestRepository.findOneByLogin(login).ifPresent(registrationRequest -> {
-            if(companyService.isUserAdminForCompany(registrationRequest.getCompany(), currentUser)) {
+            if(companyService.isUserAdminForCompany(registrationRequest.getCompany(), currentUser.getLogin())) {
                 registrationRequestRepository.delete(registrationRequest);
                 log.debug("Deleted RegistrationRequest: {}", registrationRequest);
             }
@@ -69,7 +69,7 @@ public class RegistrationRequestService {
     @Transactional
     public Optional<RegistrationRequest> approveRegistrationRequest(String login, User currentUser){
         return registrationRequestRepository.findOneByLogin(login).map(registrationRequest -> {
-            if(companyService.isUserAdminForCompany(registrationRequest.getCompany(), currentUser)) {
+            if(companyService.isUserAdminForCompany(registrationRequest.getCompany(), currentUser.getLogin())) {
                 registrationRequest.setAdminApproved(true);
                 registrationRequest = registrationRequestRepository.save(registrationRequest);
                 mailService.sendRegistrationRequestApprovalEmail(registrationRequest);

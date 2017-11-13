@@ -204,9 +204,9 @@ public class CompanyServiceIntTest {
         companyService.addUserToCompany(company1.getId(), user, AuthoritiesConstants.USER);
         companyService.addUserToCompany(company3.getId(), user, AuthoritiesConstants.USER);
 
-        assertThat(companyService.isUserAdminForCompany(company1, admin)).isTrue();
-        assertThat(companyService.isUserAdminForCompany(company1, user)).isFalse();
-        assertThat(companyService.isUserAdminForCompany(company2, admin)).isTrue();
+        assertThat(companyService.isUserAdminForCompany(company1, admin.getLogin())).isTrue();
+        assertThat(companyService.isUserAdminForCompany(company1, user.getLogin())).isFalse();
+        assertThat(companyService.isUserAdminForCompany(company2, admin.getLogin())).isTrue();
         //This test will fail until Company/User refactoring.
         //assertThat(companyService.isUserAdminForCompany(company3, admin)).isFalse();
 
