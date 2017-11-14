@@ -6,10 +6,10 @@ import { OfwatUserMgmtDetailComponent } from './ofwat-user-management-detail.com
 import { OfwatUserMgmtPermissionsComponent } from './ofwat-user-management-permissions.component';
 import { Principal } from '../../shared';
 import { ModifyCompaniesComponent } from './config/modify-companies.component';
-import {ModifyLoginComponent} from "./config/modify-login.component";
-import {ModifyMobileComponent} from "./config/modify-mobile.component";
-import {ModifyRolesComponent} from "./config/modify-roles.component";
-import {ModifyEmailComponent} from "./config/modify-email.component";
+import { ModifyLoginComponent } from "./config/modify-login.component";
+import { ModifyMobileComponent } from "./config/modify-mobile.component";
+import { ModifyRolesComponent } from "./config/modify-roles.component";
+import { ModifyEmailComponent } from "./config/modify-email.component";
 
 @Injectable()
 export class UserResolveOfwat implements CanActivate {

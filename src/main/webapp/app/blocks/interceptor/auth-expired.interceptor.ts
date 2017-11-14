@@ -24,17 +24,20 @@ export class AuthExpiredInterceptor extends JhiHttpInterceptor {
             console.log( 'In repsponse interceptor...' );
             if (error.status === 401 && error.text() !== '' && error.json().path && error.json().path.indexOf('/api/account') === -1) {
                 console.log( 'Should be redirecting to the login screen...' );
-                this.stateStorageService.loginFailureCode = error.json().message;
-                console.log('Updated error code to ' + this.stateStorageService.loginFailureCode);
                 const authServerProvider = this.injector.get(AuthServerProvider);
-                const destination = this.stateStorageService.getDestinationState();
-                const to = destination.destination;
-                const toParams = destination.params;
-                authServerProvider.logout();
-                if (to.name === 'accessdenied') {
-                    this.stateStorageService.storePreviousState(to.name, toParams);
-                    console.log(this.stateStorageService.getPreviousState());
+                if(typeof this.stateStorageService !== 'undefined') {
+                    this.stateStorageService.loginFailureCode = error.json().message;
+                    console.log('Updated error code to ' + this.stateStorageService.loginFailureCode);
+                    const destination = this.stateStorageService.getDestinationState();
+                    const to = destination.destination;
+                    const toParams = destination.params;
+                   if (to.name === 'accessdenied') {
+                        this.stateStorageService.storePreviousState(to.name, toParams);
+                        console.log(this.stateStorageService.getPreviousState());
+                    }
                 }
+                authServerProvider.logout();
+
                 // const loginServiceModal = this.injector.get(LoginModalService);
                 // TODO This should redirect to login component.
                 // this.modalRef = this.loginModalService.open();

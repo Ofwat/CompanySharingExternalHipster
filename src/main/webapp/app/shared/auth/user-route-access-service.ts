@@ -38,6 +38,7 @@ export class UserRouteAccessService implements CanActivate {
                 if (!account) {
                     // TODO This should redirect to login component.
                     // this.modalRef = this.loginModalService.open();
+                    this.router.navigate(['/login']);
                 }
             });
             return false;
