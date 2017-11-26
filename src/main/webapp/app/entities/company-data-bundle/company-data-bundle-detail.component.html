@@ -1,0 +1,61 @@
+
+<div *ngIf="companyDataBundle">
+    <h2><span>Company Data Bundle</span> {{companyDataBundle.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span>Name</span></dt>
+        <dd>
+            <span>{{companyDataBundle.name}}</span>
+        </dd>
+        <dt><span>Company Deadline</span></dt>
+        <dd>
+            <span>{{companyDataBundle.companyDeadline | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span>Status</span></dt>
+        <dd>
+            <div *ngIf="companyDataBundle.statusId">
+                <a [routerLink]="['/company-status', companyDataBundle.statusId]">{{companyDataBundle.statusStatus}}</a>
+            </div>
+        </dd>
+        <dt><span>Company</span></dt>
+        <dd>
+            <div *ngIf="companyDataBundle.companyId">
+                <a [routerLink]="['/company', companyDataBundle.companyId]">{{companyDataBundle.companyName}}</a>
+            </div>
+        </dd>
+        <dt><span>Company Data Collection</span></dt>
+        <dd>
+            <div *ngIf="companyDataBundle.companyDataCollectionId">
+                <a [routerLink]="['/company-data-collection', companyDataBundle.companyDataCollectionId]">{{companyDataBundle.companyDataCollectionName}}</a>
+            </div>
+        </dd>
+        <dt><span>Data Bundle</span></dt>
+        <dd>
+            <div *ngIf="companyDataBundle.dataBundleId">
+                <a [routerLink]="['/data-bundle', companyDataBundle.dataBundleId]">{{companyDataBundle.dataBundleName}}</a>
+            </div>
+        </dd>
+        <dt><span>Company Owner</span></dt>
+        <dd>
+            {{companyDataBundle.companyOwnerFirstName}}
+        </dd>
+        <dt><span>Company Reviewer</span></dt>
+        <dd>
+            {{companyDataBundle.companyReviewerFirstName}}
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'company-data-bundle/'+ companyDataBundle.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span> Edit</span>
+    </button>
+</div>

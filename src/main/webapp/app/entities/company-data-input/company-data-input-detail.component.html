@@ -1,0 +1,63 @@
+
+<div *ngIf="companyDataInput">
+    <h2><span>Company Data Input</span> {{companyDataInput.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span>Name</span></dt>
+        <dd>
+            <span>{{companyDataInput.name}}</span>
+        </dd>
+        <dt><span>Status</span></dt>
+        <dd>
+            <div *ngIf="companyDataInput.statusId">
+                <a [routerLink]="['/company-status', companyDataInput.statusId]">{{companyDataInput.statusStatus}}</a>
+            </div>
+        </dd>
+        <dt><span>Company</span></dt>
+        <dd>
+            <div *ngIf="companyDataInput.companyId">
+                <a [routerLink]="['/company', companyDataInput.companyId]">{{companyDataInput.companyName}}</a>
+            </div>
+        </dd>
+        <dt><span>Company Data Bundle</span></dt>
+        <dd>
+            <div *ngIf="companyDataInput.companyDataBundleId">
+                <a [routerLink]="['/company-data-bundle', companyDataInput.companyDataBundleId]">{{companyDataInput.companyDataBundleName}}</a>
+            </div>
+        </dd>
+        <dt><span>Data Input</span></dt>
+        <dd>
+            <div *ngIf="companyDataInput.dataInputId">
+                <a [routerLink]="['/data-input', companyDataInput.dataInputId]">{{companyDataInput.dataInputName}}</a>
+            </div>
+        </dd>
+        <dt><span>Company Owner</span></dt>
+        <dd>
+            {{companyDataInput.companyOwnerFirstName}}
+        </dd>
+        <dt><span>Company Reviewer</span></dt>
+        <dd>
+            {{companyDataInput.companyReviewerFirstName}}
+        </dd>
+        <dt><span>Input Type</span></dt>
+        <dd>
+            <div *ngIf="companyDataInput.inputTypeId">
+                <a [routerLink]="['/input-type', companyDataInput.inputTypeId]">{{companyDataInput.inputTypeType}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'company-data-input/'+ companyDataInput.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span> Edit</span>
+    </button>
+</div>

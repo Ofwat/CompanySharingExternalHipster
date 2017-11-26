@@ -1,0 +1,15 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "type",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20171123000000",
+    "dto": "mapstruct",
+    "service": "serviceClass",
+    "entityTableName": "input_type",
+    "pagination": "no"
+}

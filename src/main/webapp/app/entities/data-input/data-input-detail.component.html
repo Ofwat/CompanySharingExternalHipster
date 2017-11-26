@@ -1,0 +1,69 @@
+
+<div *ngIf="dataInput">
+    <h2><span>Data Input</span> {{dataInput.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span>Name</span></dt>
+        <dd>
+            <span>{{dataInput.name}}</span>
+        </dd>
+        <dt><span>Description</span></dt>
+        <dd>
+            <span>{{dataInput.description}}</span>
+        </dd>
+        <dt><span>Guidance</span></dt>
+        <dd>
+            <span>{{dataInput.guidance}}</span>
+        </dd>
+        <dt><span>Default Deadline</span></dt>
+        <dd>
+            <span>{{dataInput.defaultDeadline | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span>Order Index</span></dt>
+        <dd>
+            <span>{{dataInput.orderIndex}}</span>
+        </dd>
+        <dt><span>File Name</span></dt>
+        <dd>
+            <span>{{dataInput.fileName}}</span>
+        </dd>
+        <dt><span>File Location</span></dt>
+        <dd>
+            <span>{{dataInput.fileLocation}}</span>
+        </dd>
+        <dt><span>Status</span></dt>
+        <dd>
+            <div *ngIf="dataInput.statusId">
+                <a [routerLink]="['/publishing-status', dataInput.statusId]">{{dataInput.statusStatus}}</a>
+            </div>
+        </dd>
+        <dt><span>Data Bundle</span></dt>
+        <dd>
+            <div *ngIf="dataInput.dataBundleId">
+                <a [routerLink]="['/data-bundle', dataInput.dataBundleId]">{{dataInput.dataBundleName}}</a>
+            </div>
+        </dd>
+        <dt><span>Owner</span></dt>
+        <dd>
+            {{dataInput.ownerFirstName}}
+        </dd>
+        <dt><span>Reviewer</span></dt>
+        <dd>
+            {{dataInput.reviewerFirstName}}
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'data-input/'+ dataInput.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span> Edit</span>
+    </button>
+</div>

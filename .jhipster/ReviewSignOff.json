@@ -1,0 +1,41 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "signatory",
+            "otherEntityName": "user",
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": [
+                "required"
+            ],
+            "otherEntityField": "firstName"
+        },
+        {
+            "relationshipName": "companyDataInput",
+            "otherEntityName": "companyDataInput",
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": [
+                "required"
+            ],
+            "otherEntityField": "name"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "status",
+            "fieldType": "Boolean",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "reason",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20171116000150",
+    "dto": "mapstruct",
+    "service": "serviceClass",
+    "entityTableName": "review_sign_off",
+    "pagination": "no"
+}

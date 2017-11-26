@@ -1,0 +1,65 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myReviewSignOffLabel">Create or edit a Review Sign Off</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!reviewSignOff.id">
+            <label for="id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="reviewSignOff.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_status">Status</label>
+            <input type="checkbox" class="form-control" name="status" id="field_status"
+                [(ngModel)]="reviewSignOff.status"  />
+            <div [hidden]="!(editForm.controls.status?.dirty && editForm.controls.status?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.status?.errors?.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_reason">Reason</label>
+            <input type="text" class="form-control" name="reason" id="field_reason"
+                [(ngModel)]="reviewSignOff.reason"  />
+        </div>
+
+        <div class="form-group">
+            <label for="field_signatory">Signatory</label>
+            <select class="form-control" id="field_signatory" name="signatory" [(ngModel)]="reviewSignOff.signatoryId"  required>
+                <option [ngValue]="userOption.id" *ngFor="let userOption of users; trackBy: trackUserById">{{userOption.firstName}}</option>
+            </select>
+        </div>
+        <div [hidden]="!(editForm.controls.signatory?.dirty && editForm.controls.signatory?.invalid)">
+            <small class="form-text text-danger"
+                [hidden]="!editForm.controls.signatory?.errors?.required">
+                This field is required.
+            </small>
+        </div>
+        <div class="form-group">
+            <label for="field_companyDataInput">Company Data Input</label>
+            <select class="form-control" id="field_companyDataInput" name="companyDataInput" [(ngModel)]="reviewSignOff.companyDataInputId"  required>
+                <option [ngValue]="companyDataInputOption.id" *ngFor="let companyDataInputOption of companydatainputs; trackBy: trackCompanyDataInputById">{{companyDataInputOption.name}}</option>
+            </select>
+        </div>
+        <div [hidden]="!(editForm.controls.companyDataInput?.dirty && editForm.controls.companyDataInput?.invalid)">
+            <small class="form-text text-danger"
+                [hidden]="!editForm.controls.companyDataInput?.errors?.required">
+                This field is required.
+            </small>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span>Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span>Save</span>
+        </button>
+    </div>
+</form>

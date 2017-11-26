@@ -1,0 +1,47 @@
+
+<div *ngIf="companyDataCollection">
+    <h2><span>Company Data Collection</span> {{companyDataCollection.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span>Status</span></dt>
+        <dd>
+            <div *ngIf="companyDataCollection.statusId">
+                <a [routerLink]="['/company-status', companyDataCollection.statusId]">{{companyDataCollection.statusStatus}}</a>
+            </div>
+        </dd>
+        <dt><span>Company</span></dt>
+        <dd>
+            <div *ngIf="companyDataCollection.companyId">
+                <a [routerLink]="['/company', companyDataCollection.companyId]">{{companyDataCollection.companyName}}</a>
+            </div>
+        </dd>
+        <dt><span>Data Collection</span></dt>
+        <dd>
+            <div *ngIf="companyDataCollection.dataCollectionId">
+                <a [routerLink]="['/data-collection', companyDataCollection.dataCollectionId]">{{companyDataCollection.dataCollectionName}}</a>
+            </div>
+        </dd>
+        <dt><span>Company Owner</span></dt>
+        <dd>
+            {{companyDataCollection.companyOwnerFirstName}}
+        </dd>
+        <dt><span>Company Reviewer</span></dt>
+        <dd>
+            {{companyDataCollection.companyReviewerFirstName}}
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'company-data-collection/'+ companyDataCollection.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span> Edit</span>
+    </button>
+</div>

@@ -1,0 +1,115 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myCompanyDataInputLabel">Create or edit a Company Data Input</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!companyDataInput.id">
+            <label for="id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="companyDataInput.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_name">Name</label>
+            <input type="text" class="form-control" name="name" id="field_name"
+                [(ngModel)]="companyDataInput.name" required />
+            <div [hidden]="!(editForm.controls.name?.dirty && editForm.controls.name?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.name?.errors?.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="field_status">Status</label>
+            <select class="form-control" id="field_status" name="status" [(ngModel)]="companyDataInput.statusId"  required>
+                <option [ngValue]="companyStatusOption.id" *ngFor="let companyStatusOption of companystatuses; trackBy: trackCompanyStatusById">{{companyStatusOption.status}}</option>
+            </select>
+        </div>
+        <div [hidden]="!(editForm.controls.status?.dirty && editForm.controls.status?.invalid)">
+            <small class="form-text text-danger"
+                [hidden]="!editForm.controls.status?.errors?.required">
+                This field is required.
+            </small>
+        </div>
+        <div class="form-group">
+            <label for="field_company">Company</label>
+            <select class="form-control" id="field_company" name="company" [(ngModel)]="companyDataInput.companyId"  required>
+                <option [ngValue]="companyOption.id" *ngFor="let companyOption of companies; trackBy: trackCompanyById">{{companyOption.name}}</option>
+            </select>
+        </div>
+        <div [hidden]="!(editForm.controls.company?.dirty && editForm.controls.company?.invalid)">
+            <small class="form-text text-danger"
+                [hidden]="!editForm.controls.company?.errors?.required">
+                This field is required.
+            </small>
+        </div>
+        <div class="form-group">
+            <label for="field_companyDataBundle">Company Data Bundle</label>
+            <select class="form-control" id="field_companyDataBundle" name="companyDataBundle" [(ngModel)]="companyDataInput.companyDataBundleId"  required>
+                <option [ngValue]="companyDataBundleOption.id" *ngFor="let companyDataBundleOption of companydatabundles; trackBy: trackCompanyDataBundleById">{{companyDataBundleOption.name}}</option>
+            </select>
+        </div>
+        <div [hidden]="!(editForm.controls.companyDataBundle?.dirty && editForm.controls.companyDataBundle?.invalid)">
+            <small class="form-text text-danger"
+                [hidden]="!editForm.controls.companyDataBundle?.errors?.required">
+                This field is required.
+            </small>
+        </div>
+        <div class="form-group">
+            <label for="field_dataInput">Data Input</label>
+            <select class="form-control" id="field_dataInput" name="dataInput" [(ngModel)]="companyDataInput.dataInputId"  required>
+                <option [ngValue]="dataInputOption.id" *ngFor="let dataInputOption of datainputs; trackBy: trackDataInputById">{{dataInputOption.name}}</option>
+            </select>
+        </div>
+        <div [hidden]="!(editForm.controls.dataInput?.dirty && editForm.controls.dataInput?.invalid)">
+            <small class="form-text text-danger"
+                [hidden]="!editForm.controls.dataInput?.errors?.required">
+                This field is required.
+            </small>
+        </div>
+        <div class="form-group">
+            <label for="field_companyOwner">Company Owner</label>
+            <select class="form-control" id="field_companyOwner" name="companyOwner" [(ngModel)]="companyDataInput.companyOwnerId"  required>
+                <option [ngValue]="userOption.id" *ngFor="let userOption of users; trackBy: trackUserById">{{userOption.firstName}}</option>
+            </select>
+        </div>
+        <div [hidden]="!(editForm.controls.companyOwner?.dirty && editForm.controls.companyOwner?.invalid)">
+            <small class="form-text text-danger"
+                [hidden]="!editForm.controls.companyOwner?.errors?.required">
+                This field is required.
+            </small>
+        </div>
+        <div class="form-group">
+            <label for="field_companyReviewer">Company Reviewer</label>
+            <select class="form-control" id="field_companyReviewer" name="companyReviewer" [(ngModel)]="companyDataInput.companyReviewerId"  required>
+                <option [ngValue]="userOption.id" *ngFor="let userOption of users; trackBy: trackUserById">{{userOption.firstName}}</option>
+            </select>
+        </div>
+        <div [hidden]="!(editForm.controls.companyReviewer?.dirty && editForm.controls.companyReviewer?.invalid)">
+            <small class="form-text text-danger"
+                [hidden]="!editForm.controls.companyReviewer?.errors?.required">
+                This field is required.
+            </small>
+        </div>
+        <div class="form-group">
+            <label for="field_inputType">Input Type</label>
+            <select class="form-control" id="field_inputType" name="inputType" [(ngModel)]="companyDataInput.inputTypeId" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="inputTypeOption.id" *ngFor="let inputTypeOption of inputtypes; trackBy: trackInputTypeById">{{inputTypeOption.type}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span>Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span>Save</span>
+        </button>
+    </div>
+</form>
