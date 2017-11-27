@@ -5,6 +5,7 @@ export class DataFile implements BaseEntity {
         public id?: number,
         public name?: string,
         public location?: string,
+        public companyDataInputId?: number,
     ) {
     }
 }

@@ -106,6 +106,12 @@
                             <span>Company Data Input</span>
                         </a>
                     </li>
+                    <li>
+                        <a class="dropdown-item" routerLink="company" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                            <i class="fa fa-fw fa-asterisk" aria-hidden="true"></i>
+                            <span>Company</span>
+                        </a>
+                    </li>
                     &lt;!&ndash; jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here &ndash;&gt;
                 </ul>
             </li>

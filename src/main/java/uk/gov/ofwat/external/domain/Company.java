@@ -4,7 +4,6 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,7 +15,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "company")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class Company extends AbstractAuditingEntity implements Serializable {
+public class Company implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -27,16 +26,8 @@ public class Company extends AbstractAuditingEntity implements Serializable {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "deleted", nullable = false)
+    @Column(name = "deleted")
     private Boolean deleted;
-
-/*    @ManyToMany
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "company_admin",
-        joinColumns = @JoinColumn(name="companies_id", referencedColumnName="id"),
-        inverseJoinColumns = @JoinColumn(name="users_id", referencedColumnName="id"))*/
-
-
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -66,6 +57,19 @@ public class Company extends AbstractAuditingEntity implements Serializable {
         this.name = name;
     }
 
+    public Boolean isDeleted() {
+        return deleted;
+    }
+
+    public Company deleted(Boolean deleted) {
+        this.deleted = deleted;
+        return this;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
+    }
+
     public Set<User> getUsers() {
         return users;
     }
@@ -89,14 +93,6 @@ public class Company extends AbstractAuditingEntity implements Serializable {
 
     public void setUsers(Set<User> users) {
         this.users = users;
-    }
-
-    public Boolean getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(Boolean deleted) {
-        this.deleted = deleted;
     }
 
     @Override
@@ -124,6 +120,7 @@ public class Company extends AbstractAuditingEntity implements Serializable {
         return "Company{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
+            ", deleted='" + isDeleted() + "'" +
             "}";
     }
 }

@@ -5,6 +5,8 @@ import uk.gov.ofwat.external.CompanySharingExternalApp;
 import uk.gov.ofwat.external.domain.Company;
 import uk.gov.ofwat.external.repository.CompanyRepository;
 import uk.gov.ofwat.external.service.CompanyService;
+import uk.gov.ofwat.external.service.dto.CompanyDTO;
+import uk.gov.ofwat.external.service.mapper.CompanyMapper;
 import uk.gov.ofwat.external.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -41,8 +43,14 @@ public class CompanyResourceIntTest {
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
+    private static final Boolean DEFAULT_DELETED = false;
+    private static final Boolean UPDATED_DELETED = true;
+
     @Autowired
     private CompanyRepository companyRepository;
+
+    @Autowired
+    private CompanyMapper companyMapper;
 
     @Autowired
     private CompanyService companyService;
@@ -81,7 +89,8 @@ public class CompanyResourceIntTest {
      */
     public static Company createEntity(EntityManager em) {
         Company company = new Company()
-            .name(DEFAULT_NAME);
+            .name(DEFAULT_NAME)
+            .deleted(DEFAULT_DELETED);
         return company;
     }
 
@@ -96,9 +105,10 @@ public class CompanyResourceIntTest {
         int databaseSizeBeforeCreate = companyRepository.findAll().size();
 
         // Create the Company
+        CompanyDTO companyDTO = companyMapper.toDto(company);
         restCompanyMockMvc.perform(post("/api/companies")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(company)))
+            .content(TestUtil.convertObjectToJsonBytes(companyDTO)))
             .andExpect(status().isCreated());
 
         // Validate the Company in the database
@@ -106,6 +116,7 @@ public class CompanyResourceIntTest {
         assertThat(companyList).hasSize(databaseSizeBeforeCreate + 1);
         Company testCompany = companyList.get(companyList.size() - 1);
         assertThat(testCompany.getName()).isEqualTo(DEFAULT_NAME);
+        assertThat(testCompany.isDeleted()).isEqualTo(DEFAULT_DELETED);
     }
 
     @Test
@@ -115,11 +126,12 @@ public class CompanyResourceIntTest {
 
         // Create the Company with an existing ID
         company.setId(1L);
+        CompanyDTO companyDTO = companyMapper.toDto(company);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restCompanyMockMvc.perform(post("/api/companies")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(company)))
+            .content(TestUtil.convertObjectToJsonBytes(companyDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the Alice in the database
@@ -138,7 +150,8 @@ public class CompanyResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(company.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())));
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
+            .andExpect(jsonPath("$.[*].deleted").value(hasItem(DEFAULT_DELETED.booleanValue())));
     }
 
     @Test
@@ -152,7 +165,8 @@ public class CompanyResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(company.getId().intValue()))
-            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()));
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
+            .andExpect(jsonPath("$.deleted").value(DEFAULT_DELETED.booleanValue()));
     }
 
     @Test
@@ -167,18 +181,19 @@ public class CompanyResourceIntTest {
     @Transactional
     public void updateCompany() throws Exception {
         // Initialize the database
-        companyService.save(company);
-
+        companyRepository.saveAndFlush(company);
         int databaseSizeBeforeUpdate = companyRepository.findAll().size();
 
         // Update the company
         Company updatedCompany = companyRepository.findOne(company.getId());
         updatedCompany
-            .name(UPDATED_NAME);
+            .name(UPDATED_NAME)
+            .deleted(UPDATED_DELETED);
+        CompanyDTO companyDTO = companyMapper.toDto(updatedCompany);
 
         restCompanyMockMvc.perform(put("/api/companies")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(updatedCompany)))
+            .content(TestUtil.convertObjectToJsonBytes(companyDTO)))
             .andExpect(status().isOk());
 
         // Validate the Company in the database
@@ -186,6 +201,7 @@ public class CompanyResourceIntTest {
         assertThat(companyList).hasSize(databaseSizeBeforeUpdate);
         Company testCompany = companyList.get(companyList.size() - 1);
         assertThat(testCompany.getName()).isEqualTo(UPDATED_NAME);
+        assertThat(testCompany.isDeleted()).isEqualTo(UPDATED_DELETED);
     }
 
     @Test
@@ -194,11 +210,12 @@ public class CompanyResourceIntTest {
         int databaseSizeBeforeUpdate = companyRepository.findAll().size();
 
         // Create the Company
+        CompanyDTO companyDTO = companyMapper.toDto(company);
 
         // If the entity doesn't have an ID, it will be created instead of just being updated
         restCompanyMockMvc.perform(put("/api/companies")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(company)))
+            .content(TestUtil.convertObjectToJsonBytes(companyDTO)))
             .andExpect(status().isCreated());
 
         // Validate the Company in the database
@@ -210,8 +227,7 @@ public class CompanyResourceIntTest {
     @Transactional
     public void deleteCompany() throws Exception {
         // Initialize the database
-        companyService.save(company);
-
+        companyRepository.saveAndFlush(company);
         int databaseSizeBeforeDelete = companyRepository.findAll().size();
 
         // Get the company
@@ -237,5 +253,28 @@ public class CompanyResourceIntTest {
         assertThat(company1).isNotEqualTo(company2);
         company1.setId(null);
         assertThat(company1).isNotEqualTo(company2);
+    }
+
+    @Test
+    @Transactional
+    public void dtoEqualsVerifier() throws Exception {
+        TestUtil.equalsVerifier(CompanyDTO.class);
+        CompanyDTO companyDTO1 = new CompanyDTO();
+        companyDTO1.setId(1L);
+        CompanyDTO companyDTO2 = new CompanyDTO();
+        assertThat(companyDTO1).isNotEqualTo(companyDTO2);
+        companyDTO2.setId(companyDTO1.getId());
+        assertThat(companyDTO1).isEqualTo(companyDTO2);
+        companyDTO2.setId(2L);
+        assertThat(companyDTO1).isNotEqualTo(companyDTO2);
+        companyDTO1.setId(null);
+        assertThat(companyDTO1).isNotEqualTo(companyDTO2);
+    }
+
+    @Test
+    @Transactional
+    public void testEntityFromId() {
+        assertThat(companyMapper.fromId(42L).getId()).isEqualTo(42);
+        assertThat(companyMapper.fromId(null)).isNull();
     }
 }

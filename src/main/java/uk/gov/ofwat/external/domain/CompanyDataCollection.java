@@ -22,6 +22,10 @@ public class CompanyDataCollection implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
+    @Column(name = "name", nullable = false)
+    private String name;
+
     @ManyToOne(optional = false)
     @NotNull
     private CompanyStatus status;
@@ -46,6 +50,19 @@ public class CompanyDataCollection implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public CompanyDataCollection name(String name) {
+        this.name = name;
+        return this;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public CompanyStatus getStatus() {
@@ -137,6 +154,7 @@ public class CompanyDataCollection implements Serializable {
     public String toString() {
         return "CompanyDataCollection{" +
             "id=" + getId() +
+            ", name='" + getName() + "'" +
             "}";
     }
 }

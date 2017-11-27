@@ -23,6 +23,13 @@
                 [(ngModel)]="dataFile.location"  />
         </div>
 
+        <div class="form-group">
+            <label for="field_companyDataInput">Company Data Input</label>
+            <select class="form-control" id="field_companyDataInput" name="companyDataInput" [(ngModel)]="dataFile.companyDataInputId" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="companyDataInputOption.id" *ngFor="let companyDataInputOption of companydatainputs; trackBy: trackCompanyDataInputById">{{companyDataInputOption.name}}</option>
+            </select>
+        </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">

@@ -13,11 +13,11 @@ import java.util.List;
 @SuppressWarnings("unused")
 @Repository
 public interface CompanyRepository extends JpaRepository<Company,Long> {
-    
+
     @Query("select distinct company from Company company left join fetch company.users")
     List<Company> findAllWithEagerRelationships();
 
     @Query("select company from Company company left join fetch company.users where company.id =:id")
     Company findOneWithEagerRelationships(@Param("id") Long id);
-    
+
 }

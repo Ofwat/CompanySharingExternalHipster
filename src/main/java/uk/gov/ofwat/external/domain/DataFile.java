@@ -27,6 +27,9 @@ public class DataFile implements Serializable {
     @Column(name = "location")
     private String location;
 
+    @ManyToOne
+    private CompanyDataInput companyDataInput;
+
     public Long getId() {
         return id;
     }
@@ -59,6 +62,19 @@ public class DataFile implements Serializable {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public CompanyDataInput getCompanyDataInput() {
+        return companyDataInput;
+    }
+
+    public DataFile companyDataInput(CompanyDataInput companyDataInput) {
+        this.companyDataInput = companyDataInput;
+        return this;
+    }
+
+    public void setCompanyDataInput(CompanyDataInput companyDataInput) {
+        this.companyDataInput = companyDataInput;
     }
 
     @Override

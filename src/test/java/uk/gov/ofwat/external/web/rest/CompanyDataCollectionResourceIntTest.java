@@ -43,6 +43,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = CompanySharingExternalApp.class)
 public class CompanyDataCollectionResourceIntTest {
 
+    private static final String DEFAULT_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_NAME = "BBBBBBBBBB";
+
     @Autowired
     private CompanyDataCollectionRepository companyDataCollectionRepository;
 
@@ -85,7 +88,8 @@ public class CompanyDataCollectionResourceIntTest {
      * if they test an entity which requires the current entity.
      */
     public static CompanyDataCollection createEntity(EntityManager em) {
-        CompanyDataCollection companyDataCollection = new CompanyDataCollection();
+        CompanyDataCollection companyDataCollection = new CompanyDataCollection()
+            .name(DEFAULT_NAME);
         // Add required entity
         CompanyStatus status = CompanyStatusResourceIntTest.createEntity(em);
         em.persist(status);
@@ -125,6 +129,7 @@ public class CompanyDataCollectionResourceIntTest {
         List<CompanyDataCollection> companyDataCollectionList = companyDataCollectionRepository.findAll();
         assertThat(companyDataCollectionList).hasSize(databaseSizeBeforeCreate + 1);
         CompanyDataCollection testCompanyDataCollection = companyDataCollectionList.get(companyDataCollectionList.size() - 1);
+        assertThat(testCompanyDataCollection.getName()).isEqualTo(DEFAULT_NAME);
     }
 
     @Test
@@ -149,6 +154,25 @@ public class CompanyDataCollectionResourceIntTest {
 
     @Test
     @Transactional
+    public void checkNameIsRequired() throws Exception {
+        int databaseSizeBeforeTest = companyDataCollectionRepository.findAll().size();
+        // set the field null
+        companyDataCollection.setName(null);
+
+        // Create the CompanyDataCollection, which fails.
+        CompanyDataCollectionDTO companyDataCollectionDTO = companyDataCollectionMapper.toDto(companyDataCollection);
+
+        restCompanyDataCollectionMockMvc.perform(post("/api/company-data-collections")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(companyDataCollectionDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<CompanyDataCollection> companyDataCollectionList = companyDataCollectionRepository.findAll();
+        assertThat(companyDataCollectionList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllCompanyDataCollections() throws Exception {
         // Initialize the database
         companyDataCollectionRepository.saveAndFlush(companyDataCollection);
@@ -157,7 +181,8 @@ public class CompanyDataCollectionResourceIntTest {
         restCompanyDataCollectionMockMvc.perform(get("/api/company-data-collections?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(companyDataCollection.getId().intValue())));
+            .andExpect(jsonPath("$.[*].id").value(hasItem(companyDataCollection.getId().intValue())))
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())));
     }
 
     @Test
@@ -170,7 +195,8 @@ public class CompanyDataCollectionResourceIntTest {
         restCompanyDataCollectionMockMvc.perform(get("/api/company-data-collections/{id}", companyDataCollection.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.id").value(companyDataCollection.getId().intValue()));
+            .andExpect(jsonPath("$.id").value(companyDataCollection.getId().intValue()))
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()));
     }
 
     @Test
@@ -190,6 +216,8 @@ public class CompanyDataCollectionResourceIntTest {
 
         // Update the companyDataCollection
         CompanyDataCollection updatedCompanyDataCollection = companyDataCollectionRepository.findOne(companyDataCollection.getId());
+        updatedCompanyDataCollection
+            .name(UPDATED_NAME);
         CompanyDataCollectionDTO companyDataCollectionDTO = companyDataCollectionMapper.toDto(updatedCompanyDataCollection);
 
         restCompanyDataCollectionMockMvc.perform(put("/api/company-data-collections")
@@ -201,6 +229,7 @@ public class CompanyDataCollectionResourceIntTest {
         List<CompanyDataCollection> companyDataCollectionList = companyDataCollectionRepository.findAll();
         assertThat(companyDataCollectionList).hasSize(databaseSizeBeforeUpdate);
         CompanyDataCollection testCompanyDataCollection = companyDataCollectionList.get(companyDataCollectionList.size() - 1);
+        assertThat(testCompanyDataCollection.getName()).isEqualTo(UPDATED_NAME);
     }
 
     @Test

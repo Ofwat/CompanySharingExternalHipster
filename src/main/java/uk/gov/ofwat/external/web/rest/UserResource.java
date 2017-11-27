@@ -11,7 +11,10 @@ import uk.gov.ofwat.external.service.CompanyService;
 import uk.gov.ofwat.external.service.MailService;
 import uk.gov.ofwat.external.service.RegistrationRequestService;
 import uk.gov.ofwat.external.service.UserService;
+import uk.gov.ofwat.external.service.dto.CompanyDTO;
 import uk.gov.ofwat.external.service.dto.UserDTO;
+import uk.gov.ofwat.external.service.mapper.CompanyDataBundleMapper;
+import uk.gov.ofwat.external.service.mapper.CompanyMapper;
 import uk.gov.ofwat.external.web.rest.vm.ManagedUserVM;
 import uk.gov.ofwat.external.web.rest.util.HeaderUtil;
 import uk.gov.ofwat.external.web.rest.util.PaginationUtil;
@@ -75,15 +78,18 @@ public class UserResource {
     private final RegistrationRequestService registrationRequestService;
 
     private final CompanyService companyService;
+    private final CompanyMapper companyMapper;
 
      public UserResource(UserRepository userRepository, MailService mailService,
-                         UserService userService, RegistrationRequestService registrationRequestService, CompanyService companyService) {
+                         UserService userService, RegistrationRequestService registrationRequestService,
+                         CompanyService companyService, CompanyMapper companyMapper) {
 
          this.userRepository = userRepository;
          this.mailService = mailService;
          this.userService = userService;
          this.registrationRequestService = registrationRequestService;
          this.companyService = companyService;
+         this.companyMapper = companyMapper;
      }
 
     @Timed
@@ -236,8 +242,9 @@ public class UserResource {
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<List<RegistrationRequest>> getAllRegistrationRequests(@ApiParam Pageable pageable, @RequestParam Long companyId) {
-        Company company = companyService.findOne(companyId);
-        if(company != null) {
+        CompanyDTO companyDTO = companyService.findOne(companyId);
+        if(companyDTO != null) {
+            Company company = companyMapper.toEntity(companyDTO);
             Boolean isValidAdmin = companyService.isCurrentUserAdminForCompany(company);
             if(isValidAdmin) {
                 final Page<RegistrationRequest> page = registrationRequestService.getAllRequests(pageable, company);

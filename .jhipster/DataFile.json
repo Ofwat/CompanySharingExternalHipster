@@ -1,6 +1,14 @@
 {
     "fluentMethods": true,
     "relationships": [
+        {
+            "relationshipName": "companyDataInput",
+            "otherEntityName": "companyDataInput",
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": [
+            ],
+            "otherEntityField": "name"
+        }
     ],
     "fields": [
         {

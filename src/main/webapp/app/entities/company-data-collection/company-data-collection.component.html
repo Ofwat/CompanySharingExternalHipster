@@ -17,6 +17,7 @@
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
             <th jhiSortBy="id"><span>ID</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="name"><span>Name</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="statusStatus"><span>Status</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="companyName"><span>Company</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="dataCollectionName"><span>Data Collection</span> <span class="fa fa-sort"></span></th>
@@ -28,6 +29,7 @@
             <tbody>
             <tr *ngFor="let companyDataCollection of companyDataCollections ;trackBy: trackId">
                 <td><a [routerLink]="['../company-data-collection', companyDataCollection.id ]">{{companyDataCollection.id}}</a></td>
+                <td>{{companyDataCollection.name}}</td>
                 <td>
                     <div *ngIf="companyDataCollection.statusId">
                         <a [routerLink]="['../company-status', companyDataCollection.statusId  ]" >{{companyDataCollection.statusStatus}}</a>

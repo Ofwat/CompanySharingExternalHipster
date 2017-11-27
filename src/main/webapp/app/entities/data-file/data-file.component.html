@@ -19,6 +19,7 @@
             <th jhiSortBy="id"><span>ID</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="name"><span>Name</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="location"><span>Location</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="companyDataInputName"><span>Company Data Input</span> <span class="fa fa-sort"></span></th>
             <th></th>
             </tr>
             </thead>
@@ -27,6 +28,11 @@
                 <td><a [routerLink]="['../data-file', dataFile.id ]">{{dataFile.id}}</a></td>
                 <td>{{dataFile.name}}</td>
                 <td>{{dataFile.location}}</td>
+                <td>
+                    <div *ngIf="dataFile.companyDataInputId">
+                        <a [routerLink]="['../company-data-input', dataFile.companyDataInputId  ]" >{{dataFile.companyDataInputName}}</a>
+                    </div>
+                </td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"

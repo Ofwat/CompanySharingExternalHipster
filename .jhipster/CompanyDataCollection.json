@@ -46,6 +46,13 @@
         }
     ],
     "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
     ],
     "changelogDate": "20171116000200",
     "dto": "mapstruct",

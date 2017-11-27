@@ -9,6 +9,8 @@ import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 import { DataFile } from './data-file.model';
 import { DataFilePopupService } from './data-file-popup.service';
 import { DataFileService } from './data-file.service';
+import { CompanyDataInput, CompanyDataInputService } from '../company-data-input';
+import { ResponseWrapper } from '../../shared';
 
 @Component({
     selector: 'jhi-data-file-dialog',
@@ -20,10 +22,13 @@ export class DataFileDialogComponent implements OnInit {
     authorities: any[];
     isSaving: boolean;
 
+    companydatainputs: CompanyDataInput[];
+
     constructor(
         public activeModal: NgbActiveModal,
         private alertService: JhiAlertService,
         private dataFileService: DataFileService,
+        private companyDataInputService: CompanyDataInputService,
         private eventManager: JhiEventManager
     ) {
     }
@@ -31,6 +36,8 @@ export class DataFileDialogComponent implements OnInit {
     ngOnInit() {
         this.isSaving = false;
         this.authorities = ['ROLE_USER', 'ROLE_ADMIN'];
+        this.companyDataInputService.query()
+            .subscribe((res: ResponseWrapper) => { this.companydatainputs = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
     }
 
     clear() {
@@ -76,6 +83,10 @@ export class DataFileDialogComponent implements OnInit {
 
     private onError(error) {
         this.alertService.error(error.message, null, null);
+    }
+
+    trackCompanyDataInputById(index: number, item: CompanyDataInput) {
+        return item.id;
     }
 }
 

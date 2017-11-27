@@ -3,13 +3,15 @@ package uk.gov.ofwat.external.service;
 import uk.gov.ofwat.external.domain.Company;
 import uk.gov.ofwat.external.domain.User;
 import uk.gov.ofwat.external.repository.CompanyRepository;
+import uk.gov.ofwat.external.repository.UserRepository;
+import uk.gov.ofwat.external.service.dto.CompanyDTO;
+import uk.gov.ofwat.external.service.mapper.CompanyMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import uk.gov.ofwat.external.repository.UserRepository;
 
 import java.util.Collections;
 import java.util.List;
@@ -29,22 +31,25 @@ public class CompanyService {
     private final CompanyRepository companyRepository;
 
     private final UserRepository userRepository;
+    private final CompanyMapper companyMapper;
 
-    public CompanyService(CompanyRepository companyRepository, UserRepository userRepository) {
+    public CompanyService(CompanyRepository companyRepository, CompanyMapper companyMapper, UserRepository userRepository) {
         this.companyRepository = companyRepository;
+        this.companyMapper = companyMapper;
         this.userRepository = userRepository;
     }
-
 
     /**
      * Save a company.
      *
-     * @param company the entity to save
+     * @param companyDTO the entity to save
      * @return the persisted entity
      */
-    public Company save(Company company) {
-        log.debug("Request to save Company : {}", company);
-        return companyRepository.save(company);
+    public CompanyDTO save(CompanyDTO companyDTO) {
+        log.debug("Request to save Company : {}", companyDTO);
+        Company company = companyMapper.toEntity(companyDTO);
+        company = companyRepository.save(company);
+        return companyMapper.toDto(company);
     }
 
     /**
@@ -54,9 +59,10 @@ public class CompanyService {
      *  @return the list of entities
      */
     @Transactional(readOnly = true)
-    public Page<Company> findAll(Pageable pageable) {
+    public Page<CompanyDTO> findAll(Pageable pageable) {
         log.debug("Request to get all Companies");
-        return companyRepository.findAll(pageable);
+        return companyRepository.findAll(pageable)
+            .map(companyMapper::toDto);
     }
 
     /**
@@ -66,9 +72,10 @@ public class CompanyService {
      *  @return the entity
      */
     @Transactional(readOnly = true)
-    public Company findOne(Long id) {
+    public CompanyDTO findOne(Long id) {
         log.debug("Request to get Company : {}", id);
-        return companyRepository.findOneWithEagerRelationships(id);
+        Company company = companyRepository.findOneWithEagerRelationships(id);
+        return companyMapper.toDto(company);
     }
 
     /**

@@ -14,6 +14,9 @@ public class CompanyDataCollectionDTO implements Serializable {
 
     private Long id;
 
+    @NotNull
+    private String name;
+
     private Long statusId;
 
     private String statusStatus;
@@ -40,6 +43,14 @@ public class CompanyDataCollectionDTO implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Long getStatusId() {
@@ -147,6 +158,7 @@ public class CompanyDataCollectionDTO implements Serializable {
     public String toString() {
         return "CompanyDataCollectionDTO{" +
             "id=" + getId() +
+            ", name='" + getName() + "'" +
             "}";
     }
 }

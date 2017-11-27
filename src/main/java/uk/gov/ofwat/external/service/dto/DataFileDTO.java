@@ -2,6 +2,8 @@ package uk.gov.ofwat.external.service.dto;
 
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -14,6 +16,10 @@ public class DataFileDTO implements Serializable {
     private String name;
 
     private String location;
+
+    private Long companyDataInputId;
+
+    private String companyDataInputName;
 
     public Long getId() {
         return id;
@@ -37,6 +43,22 @@ public class DataFileDTO implements Serializable {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public Long getCompanyDataInputId() {
+        return companyDataInputId;
+    }
+
+    public void setCompanyDataInputId(Long companyDataInputId) {
+        this.companyDataInputId = companyDataInputId;
+    }
+
+    public String getCompanyDataInputName() {
+        return companyDataInputName;
+    }
+
+    public void setCompanyDataInputName(String companyDataInputName) {
+        this.companyDataInputName = companyDataInputName;
     }
 
     @Override
