@@ -1,6 +1,8 @@
 package uk.gov.ofwat.external.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import uk.gov.ofwat.external.domain.PublishingStatus;
 import uk.gov.ofwat.external.repository.PublishingStatusRepository;
 import uk.gov.ofwat.external.service.DataInputService;
@@ -19,9 +21,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 
@@ -75,15 +81,37 @@ public class DataInputResource {
             .body(result);
     }
 
-    /**
-     * PUT  /data-inputs : Updates an existing dataInput.
-     *
-     * @param dataInputDTO the dataInputDTO to update
-     * @return the ResponseEntity with status 200 (OK) and with body the updated dataInputDTO,
-     * or with status 400 (Bad Request) if the dataInputDTO is not valid,
-     * or with status 500 (Internal Server Error) if the dataInputDTO couldn't be updated
-     * @throws URISyntaxException if the Location URI syntax is incorrect
-     */
+
+    @PostMapping(value = "/data-upload")
+    public ResponseEntity<DataInputDTO> uploadFile(@RequestParam(value = "uploadFiles", required = false) MultipartFile[] files) throws IOException {
+        //-- my stuff with formDataObject and uploaded files
+        log.debug("REST request to upload Data : {}");
+        log.debug(files[0].getOriginalFilename());
+        String directoryName="C:\\Files\\";
+        File directory = new File(String.valueOf(directoryName));
+        if(!directory.exists()) {
+            directory.mkdir();
+        }
+        for(MultipartFile file: files){
+            Path theDestination1 = Paths.get("C:\\Files\\"+file.getOriginalFilename());
+            File newFile = new File(theDestination1.toString());
+            file.transferTo(newFile);
+        }
+        DataInputDTO result = new DataInputDTO();
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, ""))
+            .body(result);
+    }
+
+        /**
+         * PUT  /data-inputs : Updates an existing dataInput.
+         *
+         * @param dataInputDTO the dataInputDTO to update
+         * @return the ResponseEntity with status 200 (OK) and with body the updated dataInputDTO,
+         * or with status 400 (Bad Request) if the dataInputDTO is not valid,
+         * or with status 500 (Internal Server Error) if the dataInputDTO couldn't be updated
+         * @throws URISyntaxException if the Location URI syntax is incorrect
+         */
     @PutMapping("/data-inputs")
     @Timed
     public ResponseEntity<DataInputDTO> updateDataInput(@Valid @RequestBody DataInputDTO dataInputDTO) throws URISyntaxException {

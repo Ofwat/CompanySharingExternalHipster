@@ -44,6 +44,10 @@
                        name="fileName"
                        #fileName="ngModel"
                        placeholder=""
+                       [multiple]="true"
+                       #fileInput
+                       (change)="uploadFiles()"
+                       accept=".pdf,.doc,.docx,.xls,.xlsx,.rtf,.txt"
                 />
             </div>
 
@@ -131,7 +135,8 @@
             <div class="form-group">
                 <button type="submit"
                         [disabled]="dataInputCreationForm.form.invalid"
-                        class="button float-left">
+                        class="button float-left"
+                       >
                     <span>Create Data Input</span>
                 </button>
                 <button type="button"
