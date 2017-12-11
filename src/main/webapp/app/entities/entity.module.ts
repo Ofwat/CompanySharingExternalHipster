@@ -9,7 +9,6 @@ import { CompanySharingExternalCompanyDataCollectionModule } from './company-dat
 import { CompanySharingExternalCompanyStatusModule } from './company-status/company-status.module';
 import { CompanySharingExternalReviewSignOffModule } from './review-sign-off/review-sign-off.module';
 import { CompanySharingExternalSubmissionSignOffModule } from './submission-sign-off/submission-sign-off.module';
-import { CompanySharingExternalDataFileModule } from './data-file/data-file.module';
 import { CompanySharingExternalCompanyDataBundleModule } from './company-data-bundle/company-data-bundle.module';
 import { CompanySharingExternalInputTypeModule } from './input-type/input-type.module';
 import { CompanySharingExternalCompanyDataInputModule } from './company-data-input/company-data-input.module';
@@ -26,7 +25,6 @@ import { CompanySharingExternalCompanyDataInputModule } from './company-data-inp
         CompanySharingExternalCompanyStatusModule,
         CompanySharingExternalReviewSignOffModule,
         CompanySharingExternalSubmissionSignOffModule,
-        CompanySharingExternalDataFileModule,
         CompanySharingExternalCompanyDataBundleModule,
         CompanySharingExternalInputTypeModule,
         CompanySharingExternalCompanyDataInputModule,

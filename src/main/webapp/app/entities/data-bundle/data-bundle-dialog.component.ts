@@ -10,7 +10,6 @@ import { DataBundle } from './data-bundle.model';
 import { DataBundlePopupService } from './data-bundle-popup.service';
 import { DataBundleService } from './data-bundle.service';
 import { PublishingStatus, PublishingStatusService } from '../publishing-status';
-import { JhiUser, JhiUserService } from '../jhi-user';
 import { DataCollection, DataCollectionService } from '../data-collection';
 import { ResponseWrapper } from '../../shared';
 
@@ -26,7 +25,6 @@ export class DataBundleDialogComponent implements OnInit {
 
     publishingstatuses: PublishingStatus[];
 
-    jhiusers: JhiUser[];
 
     datacollections: DataCollection[];
     defaultDeadlineDp: any;
@@ -36,7 +34,6 @@ export class DataBundleDialogComponent implements OnInit {
         private alertService: JhiAlertService,
         private dataBundleService: DataBundleService,
         private publishingStatusService: PublishingStatusService,
-        private jhiUserService: JhiUserService,
         private dataCollectionService: DataCollectionService,
         private eventManager: JhiEventManager
     ) {
@@ -47,8 +44,6 @@ export class DataBundleDialogComponent implements OnInit {
         this.authorities = ['ROLE_USER', 'ROLE_ADMIN'];
         this.publishingStatusService.query()
             .subscribe((res: ResponseWrapper) => { this.publishingstatuses = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
-        this.jhiUserService.query()
-            .subscribe((res: ResponseWrapper) => { this.jhiusers = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
         this.dataCollectionService.query()
             .subscribe((res: ResponseWrapper) => { this.datacollections = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
     }
@@ -102,8 +97,8 @@ export class DataBundleDialogComponent implements OnInit {
         return item.id;
     }
 
-    trackJhiUserById(index: number, item: JhiUser) {
-        return item.id;
+    trackUserById(index: number) {
+        return 1;
     }
 
     trackDataCollectionById(index: number, item: DataCollection) {
