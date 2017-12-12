@@ -147,4 +147,4 @@ Desktop.ini
 ######################
 keystore.p12
 
-out/**
+/out**

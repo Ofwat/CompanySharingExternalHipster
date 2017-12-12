@@ -188,7 +188,7 @@ dependencies {
     compile "com.h2database:h2"
     compile "org.mapstruct:mapstruct-jdk8:${mapstruct_version}"
     compile("uk.gov.service.notify:notifications-java-client:${ukGovNotify_version}")
-
+    compile 'com.microsoft.azure:azure-storage:6.1.0'
     testCompile "org.awaitility:awaitility:${awaitility_version}"
     testCompile "com.jayway.jsonpath:json-path"
     testCompile ("org.springframework.boot:spring-boot-starter-test") {
