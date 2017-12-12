@@ -1,11 +1,9 @@
 import { Component, OnInit,ElementRef, Input, ViewChild } from '@angular/core';
 import { JhiAlertService } from 'ng-jhipster';
-import {Http, RequestOptions, Response,Headers} from '@angular/http';
 import { ResponseWrapper, DataInput, DataInputService, DataBundle, DataBundleService } from '../../shared';
 import { User, UserService } from '../../shared';
 import { Subscription } from 'rxjs/Rx';
 import { ActivatedRoute } from '@angular/router';
-import {Observable} from "rxjs/Observable";
 
 @Component({
     selector: 'jhi-data-input-creation',
@@ -35,7 +33,6 @@ export class DataInputCreationComponent implements OnInit {
         private userService: UserService,
         private route: ActivatedRoute,
         private dataBundleService: DataBundleService,
-        private http: Http
     ) {
     }
 
@@ -88,33 +85,6 @@ export class DataInputCreationComponent implements OnInit {
 
     reviewerChanged(user:User){
         this.selectedReviewer = user;
-    }
-
-    uploadFiles() {
-        // let formData = new FormData();
-
-        let inputEl: HTMLInputElement = this.inputEl.nativeElement;
-        let fileCount: number = inputEl.files.length;
-
-        let formData = new FormData();
-
-        for (let i = 0; i < fileCount; i++) {
-            let file:File=inputEl.files.item(i);
-            //this.allFiles.push(file);
-            formData.append('uploadFiles',file);
-        }
-
-        this.http.post(this.resourceUrls, formData)
-            .map((res: Response) => res.json())
-            .catch(error => Observable.throw(error))
-            .subscribe(
-                data => {
-                    this.data = data;
-                    console.log(this.data);
-                }
-                ,
-                error => console.log(error)
-            )
     }
 
     create() {

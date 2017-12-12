@@ -81,7 +81,7 @@ public class DataInputResource {
             .body(result);
     }
 
-
+/*
     @PostMapping(value = "/data-upload")
     public ResponseEntity<DataInputDTO> uploadFile(@RequestParam(value = "uploadFiles", required = false) MultipartFile[] files) throws IOException {
         //-- my stuff with formDataObject and uploaded files
@@ -101,7 +101,7 @@ public class DataInputResource {
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, ""))
             .body(result);
-    }
+    }*/
 
         /**
          * PUT  /data-inputs : Updates an existing dataInput.
