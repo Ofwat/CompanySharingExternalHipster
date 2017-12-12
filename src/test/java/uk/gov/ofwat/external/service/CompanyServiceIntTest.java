@@ -89,8 +89,8 @@ public class CompanyServiceIntTest {
         company2.setDeleted(false);
         company2 = companyService.save(company2);
 
-        User admin = createTestUser("testAdmin");
-        User user = createTestUser("testUser");
+        User admin = createTestUser("testAdmin1");
+        User user = createTestUser("testUser1");
         companyService.addUserToCompany(company1.getId(), admin, AuthoritiesConstants.ADMIN);
         companyService.addUserToCompany(company1.getId(), user, AuthoritiesConstants.USER);
         companyService.addUserToCompany(company2.getId(), admin, AuthoritiesConstants.ADMIN);
@@ -111,7 +111,7 @@ public class CompanyServiceIntTest {
         assertThat(usersCompany2).contains(admin);
 
         //Check the users have the correct companies.
-        assertThat(admin.getCompanies()).containsExactly(company1, company2);
+        assertThat(admin.getCompanies()).containsExactlyInAnyOrder(company1, company2);
         assertThat(user.getCompanies()).containsExactly(company1);
 
         //Clean up
@@ -126,8 +126,8 @@ public class CompanyServiceIntTest {
         company1.setDeleted(false);
         company1 = companyService.save(company1);
 
-        User admin = createTestUser("testAdmin");
-        User user = createTestUser("testUser");
+        User admin = createTestUser("testAdmin1");
+        User user = createTestUser("testUser1");
         companyService.addUserToCompany(company1.getId(), admin,AuthoritiesConstants.ADMIN);
         companyService.addUserToCompany(company1.getId(), user, AuthoritiesConstants.USER);
 
@@ -146,6 +146,7 @@ public class CompanyServiceIntTest {
 
 
     @Test
+    @Transactional
     public void testGetListOfCompaniesUserIsAdminFor(){
         Company company1 = new Company();
         company1.setName("Company1");
@@ -162,8 +163,8 @@ public class CompanyServiceIntTest {
         company3.setDeleted(false);
         company3 = companyService.save(company3);
 
-        User admin = createTestUser("testAdmin");
-        User user = createTestUser("testUser");
+        User admin = createTestUser("testAdmin1");
+        User user = createTestUser("testUser1");
         companyService.addUserToCompany(company1.getId(), admin, AuthoritiesConstants.ADMIN);
         companyService.addUserToCompany(company2.getId(), admin, AuthoritiesConstants.ADMIN);
         companyService.addUserToCompany(company1.getId(), user, AuthoritiesConstants.USER);
@@ -207,8 +208,7 @@ public class CompanyServiceIntTest {
         assertThat(companyService.isUserAdminForCompany(company1, admin.getLogin())).isTrue();
         assertThat(companyService.isUserAdminForCompany(company1, user.getLogin())).isFalse();
         assertThat(companyService.isUserAdminForCompany(company2, admin.getLogin())).isTrue();
-        //This test will fail until Company/User refactoring.
-        //assertThat(companyService.isUserAdminForCompany(company3, admin)).isFalse();
+        assertThat(companyService.isUserAdminForCompany(company3, admin.getLogin())).isFalse();
 
     }
 
@@ -261,8 +261,8 @@ public class CompanyServiceIntTest {
         company3.setDeleted(false);
         company3 = companyService.save(company3);
 
-        User admin = createTestUser("testAdmin");
-        User user = createTestUser("testUser");
+        User admin = createTestUser("testAdmin1");
+        User user = createTestUser("testUser1");
         companyService.addUserToCompany(company1.getId(), admin, AuthoritiesConstants.ADMIN);
         companyService.addUserToCompany(company2.getId(), admin, AuthoritiesConstants.ADMIN);
         companyService.addUserToCompany(company1.getId(), user, AuthoritiesConstants.USER);
@@ -271,6 +271,63 @@ public class CompanyServiceIntTest {
         assertThat(companyService.getListOfCompaniesUserIsMemberFor(admin).get()).containsExactlyInAnyOrder(company1, company2);
         assertThat(companyService.getListOfCompaniesUserIsMemberFor(user).get()).containsExactlyInAnyOrder(company1, company3);
 
+    }
+
+    @Test
+    public void userShouldHaveRoleForCompany(){
+        Company company1 = new Company();
+        company1.setName("Company1");
+        company1.setDeleted(false);
+        company1 = companyService.save(company1);
+
+        Company company2 = new Company();
+        company2.setName("Company2");
+        company2.setDeleted(false);
+        company2 = companyService.save(company2);
+
+        Company company3 = new Company();
+        company3.setName("Company3");
+        company3.setDeleted(false);
+        company3 = companyService.save(company3);
+
+        User admin = createTestUser("testAdmin1");
+        User user = createTestUser("testUser1");
+        companyService.addUserToCompany(company1.getId(), admin, AuthoritiesConstants.ADMIN);
+        companyService.addUserToCompany(company2.getId(), admin, AuthoritiesConstants.ADMIN);
+        companyService.addUserToCompany(company1.getId(), user, AuthoritiesConstants.USER);
+        companyService.addUserToCompany(company3.getId(), user, AuthoritiesConstants.USER);
+
+        assertThat(companyService.doesUserHaveRoleForCompany(admin.getLogin(), company1, AuthoritiesConstants.ADMIN)).isTrue();
+        assertThat(companyService.doesUserHaveRoleForCompany(user.getLogin(), company1, AuthoritiesConstants.USER)).isTrue();
+
+    }
+
+    @Test
+    public void userDoesNotHaveRoleForCompany(){
+        Company company1 = new Company();
+        company1.setName("Company1");
+        company1.setDeleted(false);
+        company1 = companyService.save(company1);
+
+        Company company2 = new Company();
+        company2.setName("Company2");
+        company2.setDeleted(false);
+        company2 = companyService.save(company2);
+
+        Company company3 = new Company();
+        company3.setName("Company3");
+        company3.setDeleted(false);
+        company3 = companyService.save(company3);
+
+        User admin = createTestUser("testAdmin1");
+        User user = createTestUser("testUser1");
+        companyService.addUserToCompany(company1.getId(), admin, AuthoritiesConstants.ADMIN);
+        companyService.addUserToCompany(company2.getId(), admin, AuthoritiesConstants.ADMIN);
+        companyService.addUserToCompany(company1.getId(), user, AuthoritiesConstants.USER);
+        companyService.addUserToCompany(company3.getId(), user, AuthoritiesConstants.USER);
+
+        assertThat(companyService.doesUserHaveRoleForCompany(admin.getLogin(), company1, AuthoritiesConstants.USER)).isFalse();
+        assertThat(companyService.doesUserHaveRoleForCompany(user.getLogin(), company1, AuthoritiesConstants.ADMIN)).isFalse();
     }
 
 }

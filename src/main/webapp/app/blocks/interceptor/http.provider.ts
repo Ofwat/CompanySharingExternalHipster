@@ -9,6 +9,7 @@ import { NotificationInterceptor } from './notification.interceptor';
 import { AccountVerificationInterceptor } from './account-verification.interceptor';
 import { Router } from '@angular/router';
 import { LoginService } from '../../account/login/login.service';
+import { CompanySelectionInterceptor } from './company-selection-interceptor';
 
 export function interceptableFactory(
     backend: XHRBackend,
@@ -26,7 +27,8 @@ export function interceptableFactory(
             // Other interceptors can be added here
             new ErrorHandlerInterceptor(eventManager),
             new NotificationInterceptor(),
-            new AccountVerificationInterceptor(injector, stateStorageService)
+            new AccountVerificationInterceptor(injector, stateStorageService),
+            new CompanySelectionInterceptor(injector, stateStorageService)
         ]
     );
 };

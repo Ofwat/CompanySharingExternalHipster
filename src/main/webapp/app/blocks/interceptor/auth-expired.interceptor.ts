@@ -29,11 +29,13 @@ export class AuthExpiredInterceptor extends JhiHttpInterceptor {
                     this.stateStorageService.loginFailureCode = error.json().message;
                     console.log('Updated error code to ' + this.stateStorageService.loginFailureCode);
                     const destination = this.stateStorageService.getDestinationState();
-                    const to = destination.destination;
-                    const toParams = destination.params;
-                   if (to.name === 'accessdenied') {
-                        this.stateStorageService.storePreviousState(to.name, toParams);
-                        console.log(this.stateStorageService.getPreviousState());
+                    if(destination != null) {
+                        const to = destination.destination;
+                        const toParams = destination.params;
+                       if (to.name === 'accessdenied') {
+                            this.stateStorageService.storePreviousState(to.name, toParams);
+                            console.log(this.stateStorageService.getPreviousState());
+                       }
                     }
                 }
                 authServerProvider.logout();

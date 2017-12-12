@@ -3,6 +3,13 @@ id;created_by;last_modified_by;authority_name;company_id;user_id;created_date;la
 2;admin;admin;ROLE_USER;1;4;2017-11-12;2017-11-12
 3;admin;admin;ROLE_ADMIN;2;3;2017-11-12;2017-11-12
 4;admin;admin;ROLE_USER;2;4;2017-11-12;2017-11-12
-
+5;admin;admin;ROLE_ADMIN;3;4;2017-11-12;2017-11-12
+6;admin;admin;ROLE_USER;3;3;2017-11-12;2017-11-12
+7;admin;admin;ROLE_ADMIN;5;4;2017-11-12;2017-11-12
+8;admin;admin;ROLE_USER;5;3;2017-11-12;2017-11-12
+9;admin;admin;ROLE_COMPANY_USER;1;5;2017-11-12;2017-11-12
+10;admin;admin;ROLE_COMPANY_ADMIN;1;6;2017-11-12;2017-11-12
+11;admin;admin;ROLE_COMPANY_USER;2;7;2017-11-12;2017-11-12
+12;admin;admin;ROLE_COMPANY_ADMIN;2;8;2017-11-12;2017-11-12
 
 

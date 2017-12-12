@@ -1,6 +1,7 @@
 package uk.gov.ofwat.external.service;
 
 import groovy.transform.TailRecursive;
+import org.springframework.boot.actuate.autoconfigure.ShellProperties;
 import uk.gov.ofwat.external.domain.Authority;
 import uk.gov.ofwat.external.domain.Company;
 import uk.gov.ofwat.external.domain.CompanyUserDetails;
@@ -18,6 +19,7 @@ import uk.gov.ofwat.external.repository.UserRepository;
 import uk.gov.ofwat.external.security.AuthoritiesConstants;
 import uk.gov.ofwat.external.service.Exception.UnableToRemoveUserException;
 
+import java.lang.annotation.IncompleteAnnotationException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -138,15 +140,56 @@ public class CompanyService {
      * @param company
      * @return
      */
+
+    public boolean isUserAdminForCompany(Long companyId,  String login){
+        Company company = companyRepository.getOne(companyId);
+        return isUserAdminForCompany(company, login);
+    }
+
     public boolean isUserAdminForCompany(Company company,  String login){
         Optional<User> user = userRepository.findOneByLogin(login);
         if(user.isPresent()) {
             return user.get().getCompanyUserDetails().stream()
                 .anyMatch(companyUserDetails -> {
-                    return companyUserDetails.getAuthority().getName().equals(AuthoritiesConstants.ADMIN) || companyUserDetails.getAuthority().getName().equals(AuthoritiesConstants.COMPANY_ADMIN);
+                 return checkForAdminRoles(company, companyUserDetails);
                 });
         }
         return false;
+    }
+
+    private Boolean checkForAdminRoles(Company company, CompanyUserDetails companyUserDetails){
+        if(company.equals(companyUserDetails.getCompany()))
+            return checkForAdminRoles(companyUserDetails);
+        return false;
+    }
+
+    @Transactional
+    public Boolean doesUserHaveRoleForCompany(String login, Long companyId, String role){
+        Company company = companyRepository.getOne(companyId);
+        return doesUserHaveRoleForCompany(login, company, role);
+    }
+
+    public Boolean doesUserHaveRoleForCompany(String login, Company company, String role){
+        Optional<User> user = userRepository.findOneByLogin(login);
+        if(user.isPresent()){
+            List<CompanyUserDetails> companyUserDetailsList = companyUserDetailsRepository.findAllByCompanyAndUser(company, user.get());
+            return companyUserDetailsList.stream()
+                .anyMatch(companyUserDetails -> {
+                    return checkForRole(role, companyUserDetails);
+                });
+        }
+        return false;
+    }
+
+    private boolean checkForRole(String role, CompanyUserDetails companyUserDetails){
+        if(companyUserDetails.getAuthority().getName().equals(role))
+            return true;
+        return false;
+    }
+
+    private Boolean checkForAdminRoles(CompanyUserDetails companyUserDetails){
+        String authority = companyUserDetails.getAuthority().getName();
+        return authority.equals(AuthoritiesConstants.ADMIN) || authority.equals(AuthoritiesConstants.COMPANY_ADMIN);
     }
 
     /**

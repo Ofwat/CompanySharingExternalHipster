@@ -1,6 +1,7 @@
 package uk.gov.ofwat.external.web.rest;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import uk.gov.ofwat.external.aop.company.ValidateUserCompany;
 import uk.gov.ofwat.external.config.Constants;
 import com.codahale.metrics.annotation.Timed;
 import uk.gov.ofwat.external.domain.Company;
@@ -174,6 +175,7 @@ public class UserResource {
      */
     @GetMapping("/users")
     @Timed
+    @ValidateUserCompany(roles = {AuthoritiesConstants.COMPANY_USER, AuthoritiesConstants.COMPANY_ADMIN})
     public ResponseEntity<List<UserDTO>> getAllUsers(@ApiParam Pageable pageable) {
         final Page<UserDTO> page = userService.getAllManagedUsers(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/users");
@@ -300,12 +302,5 @@ public class UserResource {
         }catch(UnableToRemoveUserException exception){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-/*
-        if(companyService.removeUserFromCompany(companyId, login)){
-            return new ResponseEntity<>(HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-*/
     }
 }
