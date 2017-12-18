@@ -4,6 +4,7 @@ import com.codahale.metrics.annotation.Timed;
 import uk.gov.ofwat.external.domain.PublishingStatus;
 import uk.gov.ofwat.external.repository.PublishingStatusRepository;
 import uk.gov.ofwat.external.service.DataInputService;
+import uk.gov.ofwat.external.service.ExcelReaderService;
 import uk.gov.ofwat.external.web.rest.util.HeaderUtil;
 import uk.gov.ofwat.external.web.rest.util.PaginationUtil;
 import uk.gov.ofwat.external.service.dto.DataInputDTO;
@@ -36,10 +37,12 @@ public class DataInputResource {
     private static final String ENTITY_NAME = "dataInput";
     private final DataInputService dataInputService;
     private final PublishingStatusRepository publishingStatusRepository;
+    private final ExcelReaderService excelReaderService;
 
-    public DataInputResource(DataInputService dataInputService, PublishingStatusRepository publishingStatusRepository) {
+    public DataInputResource(DataInputService dataInputService, PublishingStatusRepository publishingStatusRepository, ExcelReaderService excelReaderService) {
         this.dataInputService = dataInputService;
         this.publishingStatusRepository = publishingStatusRepository;
+        this.excelReaderService = excelReaderService;
     }
 
     /**
