@@ -123,6 +123,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/content/**")
             .antMatchers("/swagger-ui/index.html")
             .antMatchers("/test/**")
+            .antMatchers("/content/js/download.js")
             .antMatchers("/h2-console/**");
     }
 
@@ -175,14 +176,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/api/resend_invite").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/api/users/pending_accounts/**").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/api/users/companies/**").hasAuthority(AuthoritiesConstants.ADMIN)
+
 /*            .antMatchers("/api/account/verify_captcha").permitAll()*/
             .antMatchers("/api/profile-info").permitAll()
             .antMatchers(HttpMethod.GET, "/api/companies").permitAll()
-            .antMatchers("/api/**").authenticated()
+          /*  .antMatchers("/api/**").authenticated()*/
+            .antMatchers("/api/data-download").permitAll()
+            .antMatchers("/api/data-download-file").permitAll()
             .antMatchers("/management/health").permitAll()
             .antMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/v2/api-docs/**").permitAll()
             .antMatchers("/swagger-resources/confresend_otpiguration/ui").permitAll()
+            .antMatchers("/content/js/download.js").permitAll()
             .antMatchers("/swagger-ui/index.html").hasAuthority(AuthoritiesConstants.ADMIN);
 
     }

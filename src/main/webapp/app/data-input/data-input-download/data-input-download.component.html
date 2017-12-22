@@ -1,0 +1,26 @@
+<div>
+    <div class="grid-row">
+        <div class="column-two-thirds">
+            <h2 class="heading-medium">
+                <span>Uploaded Files</span>
+            </h2>
+            <div *ngIf="fileNameList">
+             <dl class="govuk-check-your-answers cya-questions-short">
+
+                <div *ngFor="let file of fileNameList">
+                    <dd class="cya-question">Name</dd>
+                    <dd class="cya-answer">{{file}}</dd>
+                    <dd class="cya-answer"><a href="" #fileInput (click)="downloadFile()" id="{{file}}" >Download</a></dd>
+                </div>
+
+            </dl>
+            </div>
+            <button type="submit"
+                    [routerLink]="['/data-bundle-detail', dataBundle?.id]"
+                    class="button button-secondary float-left">
+                <span>Back</span>
+            </button>
+        </div>
+    </div>
+</div>
+
