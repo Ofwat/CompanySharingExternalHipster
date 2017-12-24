@@ -146,5 +146,6 @@ yarn.lock
 ######################
 # Dev Keystore
 ######################
-
 keystore.p12
+
+/output/*
