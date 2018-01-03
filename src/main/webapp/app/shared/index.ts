@@ -25,6 +25,8 @@ export { CompanySelectComponent } from './company-select/company-select.componen
 export  { UploadComponent } from './data-upload/data-upload.component';
 export * from './data-collection/data-collection.model';
 export * from './data-collection/data-collection.service';
+export * from './company-data-collection/company-data-collection.model';
+export * from './company-data-collection/company-data-collection.service';
 export * from './data-bundle/data-bundle.model';
 export * from './data-bundle/data-bundle.service';
 export * from './data-download/data-download.model';

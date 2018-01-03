@@ -6,6 +6,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Objects;
 
 /**
@@ -37,6 +38,9 @@ public class CompanyDataCollection implements Serializable {
     @ManyToOne(optional = false)
     @NotNull
     private DataCollection dataCollection;
+
+    @OneToMany(mappedBy="companyDataCollection")
+    private CompanyDataBundle[] companyDataBundles;
 
     @ManyToOne
     private User companyOwner;
@@ -130,31 +134,57 @@ public class CompanyDataCollection implements Serializable {
         this.companyReviewer = user;
     }
 
+    public CompanyDataBundle[] getCompanyDataBundles() {
+        return companyDataBundles;
+    }
+
+    public void setCompanyDataBundles(CompanyDataBundle[] companyDataBundles) {
+        this.companyDataBundles = companyDataBundles;
+    }
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
+        if (this == o) return true;
+        if (!(o instanceof CompanyDataCollection)) return false;
+
+        CompanyDataCollection that = (CompanyDataCollection) o;
+
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (status != null ? !status.equals(that.status) : that.status != null) return false;
+        if (company != null ? !company.equals(that.company) : that.company != null) return false;
+        if (dataCollection != null ? !dataCollection.equals(that.dataCollection) : that.dataCollection != null)
             return false;
-        }
-        CompanyDataCollection companyDataCollection = (CompanyDataCollection) o;
-        if (companyDataCollection.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), companyDataCollection.getId());
+        // Probably incorrect - comparing Object[] arrays with Arrays.equals
+        if (!Arrays.equals(companyDataBundles, that.companyDataBundles)) return false;
+        if (companyOwner != null ? !companyOwner.equals(that.companyOwner) : that.companyOwner != null) return false;
+        return companyReviewer != null ? companyReviewer.equals(that.companyReviewer) : that.companyReviewer == null;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (status != null ? status.hashCode() : 0);
+        result = 31 * result + (company != null ? company.hashCode() : 0);
+        result = 31 * result + (dataCollection != null ? dataCollection.hashCode() : 0);
+        result = 31 * result + Arrays.hashCode(companyDataBundles);
+        result = 31 * result + (companyOwner != null ? companyOwner.hashCode() : 0);
+        result = 31 * result + (companyReviewer != null ? companyReviewer.hashCode() : 0);
+        return result;
     }
 
     @Override
     public String toString() {
         return "CompanyDataCollection{" +
-            "id=" + getId() +
-            ", name='" + getName() + "'" +
-            "}";
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", status=" + status +
+            ", company=" + company +
+            ", dataCollection=" + dataCollection +
+            ", companyDataBundles=" + Arrays.toString(companyDataBundles) +
+            ", companyOwner=" + companyOwner +
+            ", companyReviewer=" + companyReviewer +
+            '}';
     }
 }

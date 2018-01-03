@@ -1,0 +1,84 @@
+<div *ngIf="dataCollection">
+    <div class="grid-row">
+        <div class="column-two-thirds">
+
+            <h2 class="heading-medium">
+                <span>Company Data Collection</span>
+            </h2>
+
+            <div class="form-group">
+                <dl class="govuk-check-your-answers cya-questions-short">
+                    <div>
+                        <dd class="cya-question">Name</dd>
+                        <dd class="cya-answer">{{dataCollection.name}}</dd>
+                        <dd></dd>
+                    </div>
+                    <div>
+                        <dd class="cya-question">Publishing Status</dd>
+                        <dd class="cya-answer">{{dataCollection.statusStatus}}</dd>
+                        <dd class="cya-answer"><a href="" [routerLink]="['/publishing-status-modification', 'collection', dataCollection.id]">Change</a></dd>
+                    </div>
+                    <div>
+                        <dd class="cya-question">Company Name</dd>
+                        <dd class="cya-answer"><div *ngIf="dataCollection.companyName">{{dataCollection.companyName}} </div></dd>
+                        <dd></dd>
+                    </div>
+                    <div>
+                        <dd class="cya-question">Owner First Name</dd>
+                        <dd class="cya-answer"><div *ngIf="dataCollection.companyOwnerFirstName">{{dataCollection.companyOwnerFirstName}}</div></dd>
+                        <dd></dd>
+                    </div>
+                    <div>
+                        <dd class="cya-question">Reviewer First Name</dd>
+                        <dd class="cya-answer"><div *ngIf="dataCollection.companyReviewerFirstName">{{dataCollection.companyReviewerFirstName}}</div></dd>
+                        <dd></dd>
+                    </div>
+                </dl>
+            </div>
+
+            <div class="form-group">
+                <button type="button"
+                        [routerLink]="['/data-collection-edit', dataCollection.id]"
+                        class="button float-left">
+                    <span class="fa fa-arrow-left"></span>&nbsp;<span>Edit</span>
+                </button>
+                <button type="button"
+                        [routerLink]="['/data-collection-deletion-confirmation', dataCollection.id]"
+                        class="button float-left">
+                    <span class="fa fa-arrow-left"></span>&nbsp;<span>Delete</span>
+                </button>
+            </div>
+
+            <h2 class="heading-medium">Company Data Bundles</h2>
+
+            <div class="form-group">
+                <dl class="govuk-check-your-answers cya-questions-short">
+                    <div>
+                        <dt class="cya-question">Name</dt>
+                        <dt class="cya-question">Status</dt>
+                        <dt class="cya-question"></dt>
+                    </div>
+                    <div *ngFor="let db of dataCollection.companyDataBundles">
+                        <dd class="cya-question">{{db.name}}</dd>
+                        <dd class="cya-answer">{{db.statusStatus}}</dd>
+                        <dd class="cya-answer"><a href="" [routerLink]="['/company-data-bundle-detail', db.id]">Details</a></dd>
+                    </div>
+                </dl>
+            </div>
+
+            <div class="form-group">
+                <button type="button"
+                    class="button float-left"
+                    [routerLink]="['/data-bundle-creation', dataCollection.id]">
+                    <span>Add Data Bundle</span>
+                </button>
+                <button type="button"
+                        routerLink="/data-collection-management"
+                        class="button button-secondary float-left">
+                    <span>Back</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+

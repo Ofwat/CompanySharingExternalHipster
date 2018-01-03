@@ -43,10 +43,6 @@ public class CompanyDataBundle implements Serializable {
 
     @ManyToOne(optional = false)
     @NotNull
-    private CompanyDataCollection companyDataCollection;
-
-    @ManyToOne(optional = false)
-    @NotNull
     private DataBundle dataBundle;
 
     @ManyToOne
@@ -54,6 +50,11 @@ public class CompanyDataBundle implements Serializable {
 
     @ManyToOne
     private User companyReviewer;
+
+    @ManyToOne(optional = false)
+    @NotNull
+    private CompanyDataCollection companyDataCollection;
+
 
     @OneToMany(mappedBy = "companyDataBundle")
     @JsonIgnore
@@ -171,7 +172,6 @@ public class CompanyDataBundle implements Serializable {
     public void setCompanyReviewer(User user) {
         this.companyReviewer = user;
     }
-
     public Set<SubmissionSignOff> getSubmissionSignOffs() {
         return submissionSignOffs;
     }
@@ -199,30 +199,47 @@ public class CompanyDataBundle implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
+        if (this == o) return true;
+        if (!(o instanceof CompanyDataBundle)) return false;
+
+        CompanyDataBundle that = (CompanyDataBundle) o;
+
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (companyDeadline != null ? !companyDeadline.equals(that.companyDeadline) : that.companyDeadline != null)
             return false;
-        }
-        CompanyDataBundle companyDataBundle = (CompanyDataBundle) o;
-        if (companyDataBundle.getId() == null || getId() == null) {
+        if (status != null ? !status.equals(that.status) : that.status != null) return false;
+        if (company != null ? !company.equals(that.company) : that.company != null) return false;
+        if (companyOwner != null ? !companyOwner.equals(that.companyOwner) : that.companyOwner != null) return false;
+        if (companyReviewer != null ? !companyReviewer.equals(that.companyReviewer) : that.companyReviewer != null)
             return false;
-        }
-        return Objects.equals(getId(), companyDataBundle.getId());
+        return companyDataCollection != null ? companyDataCollection.equals(that.companyDataCollection) : that.companyDataCollection == null;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (companyDeadline != null ? companyDeadline.hashCode() : 0);
+        result = 31 * result + (status != null ? status.hashCode() : 0);
+        result = 31 * result + (company != null ? company.hashCode() : 0);
+        result = 31 * result + (companyOwner != null ? companyOwner.hashCode() : 0);
+        result = 31 * result + (companyReviewer != null ? companyReviewer.hashCode() : 0);
+        result = 31 * result + (companyDataCollection != null ? companyDataCollection.hashCode() : 0);
+        return result;
     }
 
     @Override
     public String toString() {
         return "CompanyDataBundle{" +
-            "id=" + getId() +
-            ", name='" + getName() + "'" +
-            ", companyDeadline='" + getCompanyDeadline() + "'" +
-            "}";
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", companyDeadline=" + companyDeadline +
+            ", status=" + status +
+            ", company=" + company +
+            ", companyOwner=" + companyOwner +
+            ", companyReviewer=" + companyReviewer +
+            ", companyDataCollection=" + companyDataCollection +
+            '}';
     }
 }

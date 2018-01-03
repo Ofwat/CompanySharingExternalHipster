@@ -1,0 +1,263 @@
+[33mcommit 4fe226327bb12f8605e4353479a245f5b4348996[m[33m ([m[1;36mHEAD -> [m[1;32mUploadDownload[m[33m, [m[1;31morigin/UploadDownload[m[33m)[m
+Author: cmel777 <cmel777@yahoo.com>
+Date:   Fri Dec 22 11:13:51 2017 +0000
+
+    Download functionality - dowloading data but issue with page refresh to be resolved
+
+[33mcommit ee8691341fda539052014ff379a8a12a4f1b8f38[m
+Author: cmel777 <cmel777@yahoo.com>
+Date:   Thu Dec 14 10:48:49 2017 +0000
+
+    Upload and Download functionality
+
+[33mcommit 3a5d9b8edb9b15fe7a2461e960ecb25614355773[m[33m ([m[1;31morigin/DataCollection[m[33m)[m
+Author: cmel777 <cmel777@yahoo.com>
+Date:   Wed Dec 13 12:03:34 2017 +0000
+
+    Change in input attribute multiple
+
+[33mcommit a19dff2245d14930d71f8c4e2c5373f187ee451f[m
+Author: cmel777 <cmel777@yahoo.com>
+Date:   Tue Dec 12 17:26:48 2017 +0000
+
+    File upload component, services, html along with DataUpload.java
+
+[33mcommit 1c6dc9a61df7e8dd6d7d7754811d19864a04738a[m
+Author: cmel777 <cmel777@yahoo.com>
+Date:   Mon Dec 11 18:10:34 2017 +0000
+
+    File Upload basic structure to deploy to C:\Files
+
+[33mcommit c2ba913cbc1f86f58dfc84431ac92f68260535a1[m
+Author: AdamEdgar <adam.ofwat@gmail.com>
+Date:   Mon Dec 11 10:43:06 2017 +0000
+
+    Removed data-file entity from JHipster generated front end.
+
+[33mcommit 192ea33f80c23c7765d68fcf8e01bb7a5012fc1c[m
+Author: AdamEdgar <adam.ofwat@gmail.com>
+Date:   Mon Nov 27 00:00:41 2017 +0000
+
+    Generated company entities. Fixes and corrections.
+
+[33mcommit 281c0d2635a04d77b079606715db5bcd3cd33e16[m
+Author: AdamEdgar <adam.ofwat@gmail.com>
+Date:   Sun Nov 26 16:44:38 2017 +0000
+
+    Generated copany entities
+
+[33mcommit d783c16620955c8f31b46dbf6bfda77a0c5d7ad4[m
+Author: AdamEdgar <adam.ofwat@gmail.com>
+Date:   Mon Nov 13 19:11:05 2017 +0000
+
+    User selection component for owner and reviewer
+
+[33mcommit 1716d218ddb8465b13df137f3637634770e0f13f[m
+Author: AdamEdgar <adam.ofwat@gmail.com>
+Date:   Fri Nov 10 10:26:45 2017 +0000
+
+    publising status selection working
+
+[33mcommit aa0a136473aeeeceb19d6f070c4f2f7f1e0a5967[m
+Author: AdamEdgar <adam.ofwat@gmail.com>
+Date:   Tue Nov 7 23:44:37 2017 +0000
+
+    Publising status selection componentisation.
+
+[33mcommit 29f23f044fda6fe4e4217033ff8a3143aef5be8b[m
+Author: AdamEdgar <adam.ofwat@gmail.com>
+Date:   Tue Nov 7 11:41:34 2017 +0000
+
+    Publising status selection componentisation - ongoing.
+
+[33mcommit 2e0e95d8466ab23928b27f9650e9ee0e53007032[m
+Author: AdamEdgar <adam.ofwat@gmail.com>
+Date:   Thu Nov 2 15:15:35 2017 +0000
+
+    DataCollection edit select box using compareWith.
+
+[33mcommit 96fd4590c2a04b52fdb4bc029da6978ae6f15dd8[m
+Author: James Toddington <jtoddington@gmail.com>
+Date:   Wed Nov 1 19:33:59 2017 +0000
+
+    Misc changes.
+
+[33mcommit 3574796ff255c3eb4b953462098db75b994a0d14[m
+Merge: f620f12 d40dccc
+Author: James Toddington <jtoddington@gmail.com>
+Date:   Wed Nov 1 08:23:44 2017 +0000
+
+    Merged data collection branch
+
+[33mcommit d40dccc9c9125a9f62fa68ce38751e152142bfc0[m
+Author: AdamEdgar <adam.ofwat@gmail.com>
+Date:   Wed Nov 1 00:25:19 2017 +0000
+
+    align buttons, button-warning
+
+[33mcommit f620f12da24d9c7c440e17e961df58d06a370448[m
+Author: James Toddington <jtoddington@gmail.com>
+Date:   Tue Oct 31 19:23:39 2017 +0000
+
+    Tidying up.
+
+[33mcommit 3ad760fe6f391518946b37cc79ebc6b678d166e5[m
+Merge: eb967c2 0f7ae98
+Author: AdamEdgar <adam.ofwat@gmail.com>
+Date:   Tue Oct 31 11:29:18 2017 +0000
+
+    Merge branch 'master' of https://github.com/Ofwat/CompanySharingExternalHipster into DataCollection
+
+[33mcommit eb967c205f5d87ce4ec42ba3b389fe54c359b70c[m
+Author: AdamEdgar <adam.ofwat@gmail.com>
+Date:   Tue Oct 31 11:27:02 2017 +0000
+
+    test commit
+
+[33mcommit 9b277cf6c462635c2ef6b6245b3780c3aae638bf[m
+Author: James Toddington <jtoddington@gmail.com>
+Date:   Tue Oct 31 11:26:48 2017 +0000
+
+    test commit
+
+[33mcommit 2292c9f56f5467ccbde08df6e92b57fea818969c[m
+Author: James Toddington <jtoddington@gmail.com>
+Date:   Tue Oct 31 11:25:57 2017 +0000
+
+    test commit
+
+[33mcommit 0f7ae988c43ed361241e5b0d488b5eb1937984e4[m
+Merge: 51b1d25 5926b58
+Author: James Toddington <jtoddington@gmail.com>
+Date:   Tue Oct 31 11:21:06 2017 +0000
+
+    Merge branch 'DataCollection' into UserAdminCompanySelect
+
+[33mcommit 5926b5824c2be7aaf64b5648a08642a54bf4e887[m
+Author: AdamEdgar <adam.ofwat@gmail.com>
+Date:   Tue Oct 31 11:16:02 2017 +0000
+
+    Publish dialogues. Inherit default owner, reviewer, status.
+
+[33mcommit 51b1d2514fd748dbbb2da16a199f2cdd3728e423[m
+Author: James Toddington <jtoddington@gmail.com>
+Date:   Tue Oct 31 11:13:53 2017 +0000
+
+    Updated user config
+
+[33mcommit 3992c63ebd0a769081b5e26102b3513b5760da65[m
+Author: AdamEdgar <adam.ofwat@gmail.com>
+Date:   Mon Oct 30 10:38:37 2017 +0000
+
+    Data Input. Navigation corrected. All fields working correctly with real data.
+
+[33mcommit 6050ffd1afb79e64d8aed05bf4eece7303e5cc91[m
+Author: AdamEdgar <adam.ofwat@gmail.com>
+Date:   Sat Oct 28 18:18:33 2017 +0100
+
+    Data Input initial scafolding.
+
+[33mcommit dfa71bb927e62d6311cfcca773d3b1f602bc411d[m
+Author: James Toddington <jtoddington@gmail.com>
+Date:   Fri Oct 27 15:48:15 2017 +0100
+
+    Moved check for valid OTP 'enabled' to post valid auth - authentication session not created.
+
+[33mcommit 2e8d9ef452d95c1f042efb24669c0b4855d4e457[m
+Author: AdamEdgar <adam.ofwat@gmail.com>
+Date:   Fri Oct 27 12:35:43 2017 +0100
+
+    Bundle detail, edit, delete.
+
+[33mcommit 9f5cf2772223d09c8239409f688aa2867c913029[m
+Merge: dacd2ab 089f19a
+Author: James Toddington <jtoddington@gmail.com>
+Date:   Wed Oct 25 16:20:48 2017 +0100
+
+    Merged all branches.
+
+[33mcommit dacd2ab97e590304d31a9adbacc059035585a3b7[m
+Author: James Toddington <jtoddington@gmail.com>
+Date:   Wed Oct 25 16:16:23 2017 +0100
+
+    Removed keystore from version control.
+
+[33mcommit 089f19afb2fc663ba7d1873802cde913f695b16a[m
+Author: James Toddington <jtoddington@gmail.com>
+Date:   Wed Oct 25 16:13:25 2017 +0100
+
+    Pre merge to master
+
+[33mcommit 45c1b437acb78cea0f4b94cc6687c6eeb5dc8a03[m
+Merge: 55c3190 aacdb7f
+Author: James Toddington <jtoddington@gmail.com>
+Date:   Wed Oct 25 15:30:29 2017 +0100
+
+    post merge
+
+[33mcommit 55c31907b0ac63b3ecc36ba7b194467fb8b4415b[m[33m ([m[1;31morigin/UserAdminScreen[m[33m)[m
+Merge: b85101f 11dbcd1
+Author: James Toddington <jtoddington@gmail.com>
+Date:   Wed Oct 25 15:23:17 2017 +0100
+
+    Commit pre-merge
+
+[33mcommit b85101fbf3adab6706988dbcb01cb8c64a80e129[m
+Author: James Toddington <jtoddington@gmail.com>
+Date:   Wed Oct 25 15:14:12 2017 +0100
+
+    Commit pre-merge
+
+[33mcommit aacdb7fc74a89be03ace6101deaf73b2dae0fc89[m
+Author: AdamEdgar <adam.ofwat@gmail.com>
+Date:   Wed Oct 25 14:53:25 2017 +0100
+
+    DataBundles display in collection
+
+[33mcommit 5bc3b9ecec48e956133e1ba84680b9089b1b881f[m
+Author: James Toddington <jtoddington@gmail.com>
+Date:   Fri Oct 20 12:56:45 2017 +0100
+
+    Updated pending invites.
+
+[33mcommit b51b9b4db85c4ed969eb3a64b47f57cbf7baa641[m
+Author: James Toddington <jtoddington@gmail.com>
+Date:   Fri Oct 20 12:40:19 2017 +0100
+
+    Intermediate commit pre branch userdetails impl
+
+[33mcommit 7d7df4aab32aef3c0c57bd11e05a025768ed1050[m
+Author: AdamEdgar <adam.ofwat@gmail.com>
+Date:   Thu Oct 19 12:39:13 2017 +0100
+
+    Data Bundle started.
+
+[33mcommit 3e98e894650fb011e25838c69a9402597f6cbc3c[m
+Author: AdamEdgar <adam.ofwat@gmail.com>
+Date:   Mon Oct 16 13:20:32 2017 +0100
+
+    Data Collection edit.
+
+[33mcommit fe06cc2b4219061572c19958812e98f1866e8e26[m
+Author: AdamEdgar <adam.ofwat.gmail.com>
+Date:   Thu Oct 5 13:29:09 2017 +0100
+
+    Publishing status. DataCollection extends AbstractAuditingEntity.
+
+[33mcommit f378499206db621b267aa387d27b24cf6f3ed034[m
+Author: James Toddington <jtoddington@gmail.com>
+Date:   Wed Oct 4 13:26:05 2017 +0100
+
+    Updated config to remove secrets.
+
+[33mcommit 4e77e346d3aa9ead0bc851708b5eab7f0326dcea[m
+Author: James Toddington <jtoddington@gmail.com>
+Date:   Wed Oct 4 11:09:44 2017 +0100
+
+    Updated user login process.
+
+[33mcommit f60b38d43fba200363b86245c68094c8fa8172dd[m
+Author: AdamEdgar <adam.ofwat.gmail.com>
+Date:   Fri Sep 15 15:07:39 2017 +0100
+
+    Dat

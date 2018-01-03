@@ -4,6 +4,7 @@ package uk.gov.ofwat.external.service.dto;
 import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
@@ -72,16 +73,16 @@ public class CompanyDataBundleDTO implements Serializable {
         return statusId;
     }
 
-    public void setStatusId(Long companyStatusId) {
-        this.statusId = companyStatusId;
+    public void setStatusId(Long statusId) {
+        this.statusId = statusId;
     }
 
     public String getStatusStatus() {
         return statusStatus;
     }
 
-    public void setStatusStatus(String companyStatusStatus) {
-        this.statusStatus = companyStatusStatus;
+    public void setStatusStatus(String statusStatus) {
+        this.statusStatus = statusStatus;
     }
 
     public Long getCompanyId() {
@@ -136,61 +137,96 @@ public class CompanyDataBundleDTO implements Serializable {
         return companyOwnerId;
     }
 
-    public void setCompanyOwnerId(Long userId) {
-        this.companyOwnerId = userId;
+    public void setCompanyOwnerId(Long companyOwnerId) {
+        this.companyOwnerId = companyOwnerId;
     }
 
     public String getCompanyOwnerFirstName() {
         return companyOwnerFirstName;
     }
 
-    public void setCompanyOwnerFirstName(String userFirstName) {
-        this.companyOwnerFirstName = userFirstName;
+    public void setCompanyOwnerFirstName(String companyOwnerFirstName) {
+        this.companyOwnerFirstName = companyOwnerFirstName;
     }
 
     public Long getCompanyReviewerId() {
         return companyReviewerId;
     }
 
-    public void setCompanyReviewerId(Long userId) {
-        this.companyReviewerId = userId;
+    public void setCompanyReviewerId(Long companyReviewerId) {
+        this.companyReviewerId = companyReviewerId;
     }
 
     public String getCompanyReviewerFirstName() {
         return companyReviewerFirstName;
     }
 
-    public void setCompanyReviewerFirstName(String userFirstName) {
-        this.companyReviewerFirstName = userFirstName;
+    public void setCompanyReviewerFirstName(String companyReviewerFirstName) {
+        this.companyReviewerFirstName = companyReviewerFirstName;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+        if (this == o) return true;
+        if (!(o instanceof CompanyDataBundleDTO)) return false;
 
-        CompanyDataBundleDTO companyDataBundleDTO = (CompanyDataBundleDTO) o;
-        if(companyDataBundleDTO.getId() == null || getId() == null) {
+        CompanyDataBundleDTO that = (CompanyDataBundleDTO) o;
+
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (companyDeadline != null ? !companyDeadline.equals(that.companyDeadline) : that.companyDeadline != null)
             return false;
-        }
-        return Objects.equals(getId(), companyDataBundleDTO.getId());
+        if (statusId != null ? !statusId.equals(that.statusId) : that.statusId != null) return false;
+        if (statusStatus != null ? !statusStatus.equals(that.statusStatus) : that.statusStatus != null) return false;
+        if (companyId != null ? !companyId.equals(that.companyId) : that.companyId != null) return false;
+        if (companyName != null ? !companyName.equals(that.companyName) : that.companyName != null) return false;
+        if (companyDataCollectionId != null ? !companyDataCollectionId.equals(that.companyDataCollectionId) : that.companyDataCollectionId != null)
+            return false;
+        if (companyDataCollectionName != null ? !companyDataCollectionName.equals(that.companyDataCollectionName) : that.companyDataCollectionName != null)
+            return false;
+        if (companyOwnerId != null ? !companyOwnerId.equals(that.companyOwnerId) : that.companyOwnerId != null)
+            return false;
+        if (companyOwnerFirstName != null ? !companyOwnerFirstName.equals(that.companyOwnerFirstName) : that.companyOwnerFirstName != null)
+            return false;
+        if (companyReviewerId != null ? !companyReviewerId.equals(that.companyReviewerId) : that.companyReviewerId != null)
+            return false;
+        return companyReviewerFirstName != null ? companyReviewerFirstName.equals(that.companyReviewerFirstName) : that.companyReviewerFirstName == null;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (companyDeadline != null ? companyDeadline.hashCode() : 0);
+        result = 31 * result + (statusId != null ? statusId.hashCode() : 0);
+        result = 31 * result + (statusStatus != null ? statusStatus.hashCode() : 0);
+        result = 31 * result + (companyId != null ? companyId.hashCode() : 0);
+        result = 31 * result + (companyName != null ? companyName.hashCode() : 0);
+        result = 31 * result + (companyDataCollectionId != null ? companyDataCollectionId.hashCode() : 0);
+        result = 31 * result + (companyDataCollectionName != null ? companyDataCollectionName.hashCode() : 0);
+        result = 31 * result + (companyOwnerId != null ? companyOwnerId.hashCode() : 0);
+        result = 31 * result + (companyOwnerFirstName != null ? companyOwnerFirstName.hashCode() : 0);
+        result = 31 * result + (companyReviewerId != null ? companyReviewerId.hashCode() : 0);
+        result = 31 * result + (companyReviewerFirstName != null ? companyReviewerFirstName.hashCode() : 0);
+        return result;
     }
 
     @Override
     public String toString() {
         return "CompanyDataBundleDTO{" +
-            "id=" + getId() +
-            ", name='" + getName() + "'" +
-            ", companyDeadline='" + getCompanyDeadline() + "'" +
-            "}";
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", companyDeadline=" + companyDeadline +
+            ", statusId=" + statusId +
+            ", statusStatus='" + statusStatus + '\'' +
+            ", companyId=" + companyId +
+            ", companyName='" + companyName + '\'' +
+            ", companyDataCollectionId=" + companyDataCollectionId +
+            ", companyDataCollectionName='" + companyDataCollectionName + '\'' +
+            ", companyOwnerId=" + companyOwnerId +
+            ", companyOwnerFirstName='" + companyOwnerFirstName + '\'' +
+            ", companyReviewerId=" + companyReviewerId +
+            ", companyReviewerFirstName='" + companyReviewerFirstName + '\'' +
+            '}';
     }
 }

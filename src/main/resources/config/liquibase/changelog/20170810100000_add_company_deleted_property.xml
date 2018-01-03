@@ -5,11 +5,4 @@
     <property name="now" value="now()" dbms="mysql"/>
     <property name="autoIncrement" value="true"/>
 
-    <changeSet id="1" author="jtoddington">
-        <addColumn tableName="company">
-            <column name="deleted" type="bit(1)" defaultValue="0">
-                <constraints nullable="false"/>
-            </column>
-        </addColumn>
-    </changeSet>
 </databaseChangeLog>
