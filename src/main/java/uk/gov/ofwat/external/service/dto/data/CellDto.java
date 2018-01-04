@@ -1,6 +1,4 @@
-package uk.gov.ofwat.external.domain.data;
-
-import java.math.BigDecimal;
+package uk.gov.ofwat.external.service.dto.data;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
@@ -14,22 +12,22 @@ import com.google.gson.annotations.SerializedName;
 @XmlType(propOrder = { "row", "col", "value", "decimalPlaces", "cellFormat", "dataType", "dataFormat", "style", "errorFlag", "errorText", "key", "cellType" })
 public class CellDto implements Cloneable {
 
-	@SerializedName("r")
-	private int row;
-	@SerializedName("c")
-	private int col;
-	@SerializedName("v")
-	private String value;
-	private int decimalPlaces;	// We now have the dataFormat so may not need this.
-	private String cellFormat;	// "percentage", "numeric", "text".
-	private String dataType;	// "calc", "input".
-	private String dataFormat;	// Format string. EG "#,##0".
-	private String style;		// "text", "calc", "input", "error".
-	@SerializedName("e")
-	private boolean errorFlag;
-	private String errorText;
-	private String key;			// data key.
-	private String cellType;
+    @SerializedName("r")
+    private int row;
+    @SerializedName("c")
+    private int col;
+    @SerializedName("v")
+    private String value;
+    private int decimalPlaces;	// We now have the dataFormat so may not need this.
+    private String cellFormat;	// "percentage", "numeric", "text".
+    private String dataType;	// "calc", "input".
+    private String dataFormat;	// Format string. EG "#,##0".
+    private String style;		// "text", "calc", "input", "error".
+    @SerializedName("e")
+    private boolean errorFlag;
+    private String errorText;
+    private String key;			// data key.
+    private String cellType;
 
 	public CellDto(int row, int col, String value, int decimalPlaces,
 			String cellFormat, String dataType, String dataFormat,

@@ -1,4 +1,4 @@
-package uk.gov.ofwat.external.domain.data;
+package uk.gov.ofwat.external.service.dto.data;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -86,17 +86,6 @@ public class RowDto implements Cloneable {
 			}
 		}
 		return true;
-	}
-
-	public TableDto clone() {
-		TableDto clone = null;
-		try {
-			clone = (TableDto) super.clone();
-		} catch (CloneNotSupportedException e) {
-			// Cannot happen as we inherit from Object.
-			e.printStackTrace();
-		}
-		return clone;
 	}
 
 	@Override

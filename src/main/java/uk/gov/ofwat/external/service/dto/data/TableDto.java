@@ -1,4 +1,4 @@
-package uk.gov.ofwat.external.domain.data;
+package uk.gov.ofwat.external.service.dto.data;
 
 import java.util.ArrayList;
 import java.util.Iterator;

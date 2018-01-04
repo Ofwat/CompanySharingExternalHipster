@@ -5,10 +5,11 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import uk.gov.ofwat.external.domain.data.*;
+import uk.gov.ofwat.external.service.dto.data.CellDto;
+import uk.gov.ofwat.external.service.dto.data.RowDto;
+import uk.gov.ofwat.external.service.dto.data.TableDto;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Iterator;

@@ -45,6 +45,9 @@
     <include file="classpath:config/liquibase/changelog/20171027150703_added_entity_DataInput.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20171027150703_added_entity_constraints_DataInput.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20171028155028_DataInput_AbstractAuditingEntity.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20171218173050_added_TableRowCell.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20171219121932_added_fountainId_to_Company.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20180118000000_remove_company_deleted_property.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

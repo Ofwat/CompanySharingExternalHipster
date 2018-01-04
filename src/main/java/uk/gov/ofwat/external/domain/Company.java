@@ -24,6 +24,9 @@ public class Company extends AbstractAuditingEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "fountain-id", nullable = false)
+    private Long fountainId;
+
     @Column(name = "name")
     private String name;
 
@@ -99,31 +102,48 @@ public class Company extends AbstractAuditingEntity implements Serializable {
         this.deleted = deleted;
     }
 
+    public Long getFountainId() {
+        return fountainId;
+    }
+
+    public void setFountainId(Long fountainId) {
+        this.fountainId = fountainId;
+    }
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+        if (this == o) return true;
+        if (!(o instanceof Company)) return false;
+
         Company company = (Company) o;
-        if (company.getId() == null || getId() == null) {
+
+        if (getId() != null ? !getId().equals(company.getId()) : company.getId() != null) return false;
+        if (getFountainId() != null ? !getFountainId().equals(company.getFountainId()) : company.getFountainId() != null)
             return false;
-        }
-        return Objects.equals(getId(), company.getId());
+        if (getName() != null ? !getName().equals(company.getName()) : company.getName() != null) return false;
+        if (getDeleted() != null ? !getDeleted().equals(company.getDeleted()) : company.getDeleted() != null)
+            return false;
+        return getUsers() != null ? getUsers().equals(company.getUsers()) : company.getUsers() == null;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        int result = getId() != null ? getId().hashCode() : 0;
+        result = 31 * result + (getFountainId() != null ? getFountainId().hashCode() : 0);
+        result = 31 * result + (getName() != null ? getName().hashCode() : 0);
+        result = 31 * result + (getDeleted() != null ? getDeleted().hashCode() : 0);
+        result = 31 * result + (getUsers() != null ? getUsers().hashCode() : 0);
+        return result;
     }
 
     @Override
     public String toString() {
         return "Company{" +
-            "id=" + getId() +
-            ", name='" + getName() + "'" +
-            "}";
+            "id=" + id +
+            ", fountainId=" + fountainId +
+            ", name='" + name + '\'' +
+            ", deleted=" + deleted +
+            ", users=" + users +
+            '}';
     }
 }
