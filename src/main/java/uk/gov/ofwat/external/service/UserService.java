@@ -365,4 +365,16 @@ public class UserService {
         });
     }
 
+    public Boolean isUserAdministrator(String login){
+        return userRepository.findOneByLogin(login).get().getAuthorities().stream().anyMatch(authority -> {
+            return authority.getName().equals(AuthoritiesConstants.ADMIN);
+        });
+    }
+
+    public Boolean isUserOfwatAdministrator(String login){
+        return userRepository.findOneByLogin(login).get().getAuthorities().stream().anyMatch(authority -> {
+            return authority.getName().equals(AuthoritiesConstants.OFWAT_ADMIN);
+        });
+    }
+
 }

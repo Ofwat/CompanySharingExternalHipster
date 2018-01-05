@@ -3,13 +3,20 @@ package uk.gov.ofwat.external.aop.company;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
+import uk.gov.ofwat.external.domain.User;
 import uk.gov.ofwat.external.repository.CompanyRepository;
+import uk.gov.ofwat.external.security.AuthoritiesConstants;
 import uk.gov.ofwat.external.security.SecurityUtils;
 import uk.gov.ofwat.external.service.CompanyService;
+import uk.gov.ofwat.external.service.UserService;
+import uk.gov.ofwat.external.web.rest.AccountResource;
+
 import java.util.Arrays;
 import java.util.Optional;
 
@@ -17,7 +24,11 @@ import java.util.Optional;
 @Component
 public class CompanySelectionAspect {
 
+    private final Logger log = LoggerFactory.getLogger(CompanySelectionAspect.class);
+
     private final CompanyService companyService;
+
+    private UserService userService;
 
     private final CompanyRepository companyRepository;
 
@@ -26,6 +37,14 @@ public class CompanySelectionAspect {
     private final CompanyHeaderParser companyHeaderParser;
 
     private Optional<Long> companyId;
+
+    public UserService getUserService() {
+        return userService;
+    }
+
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
 
     public CompanySelectionAspect(CompanyService companyService, CompanyRepository companyRepository, AspectRoleFetcher aspectRoleFetcher, CompanyHeaderParser companyHeaderParser){
         this.companyService = companyService;
@@ -55,9 +74,18 @@ public class CompanySelectionAspect {
     }
 
     private Boolean checkIfUserHasValidRoleForCompany(String[] roles, Long companyId, String currentUserLogin) {
-        return Arrays.stream(roles).anyMatch(role -> {
+        Boolean validUser = false;
+        validUser = Arrays.stream(roles).anyMatch(role -> {
             return companyService.doesUserHaveRoleForCompany(currentUserLogin, companyId, role);
         });
+
+        if(!validUser)
+            validUser = userService.isUserAdministrator(currentUserLogin);
+
+        if(!validUser)
+            validUser = userService.isUserOfwatAdministrator(currentUserLogin);
+
+        return validUser;
     }
 
 

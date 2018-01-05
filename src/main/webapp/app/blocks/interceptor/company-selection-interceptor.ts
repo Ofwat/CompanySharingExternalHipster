@@ -14,7 +14,7 @@ export class CompanySelectionInterceptor extends JhiHttpInterceptor {
     requestIntercept(options?: RequestOptionsArgs): RequestOptionsArgs {
         // console.log( 'In the request interceptor for company selection.' );
         // TODO Add the currently selected company here! //Get from StateStorageService or Something appended to a service?
-        options.headers.append('selectedCompanyId', '2');
+        options.headers.append('selectedCompanyId', '1');
         return options;
     }
 

@@ -42,8 +42,9 @@ export class CompanyService {
         return this.http.delete(`${this.resourceUrl}/${id}`);
     }
 
-    userCompanyCount(): Observable<Response>{
-        return null;
+    getUserCompanies(): Observable<Response>{
+        return this.http.get(`/users/companies`)
+            .map((res: Response) => this.convertResponse(res));
     }
 
     private convertResponse(res: Response): ResponseWrapper {

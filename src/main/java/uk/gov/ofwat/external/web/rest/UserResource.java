@@ -240,7 +240,7 @@ public class UserResource {
      */
     @GetMapping("/users/pending_accounts")
     @Timed
-    @Secured(AuthoritiesConstants.ADMIN)
+    @Secured({AuthoritiesConstants.ADMIN, AuthoritiesConstants.COMPANY_ADMIN})
     public ResponseEntity<List<RegistrationRequest>> getAllRegistrationRequests(@ApiParam Pageable pageable, @RequestParam Long companyId) {
         Company company = companyService.findOne(companyId);
         User currentUser = userService.getUserWithAuthorities();
@@ -288,6 +288,7 @@ public class UserResource {
 
     @Timed
     @PostMapping("/users/companies")
+    @Secured({AuthoritiesConstants.ADMIN, AuthoritiesConstants.COMPANY_ADMIN, AuthoritiesConstants.COMPANY_USER})
     public List<Company> getCompaniesForUser(@RequestBody String login){
         log.info("REST request to get companies for login: {}", login);
         return companyService.getListOfCompaniesUserIsMemberFor(login).get();
