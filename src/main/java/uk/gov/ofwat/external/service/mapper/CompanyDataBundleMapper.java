@@ -29,6 +29,7 @@ public interface CompanyDataBundleMapper extends EntityMapper <CompanyDataBundle
     @Mapping(source = "companyReviewer.id", target = "companyReviewerId")
     @Mapping(source = "companyReviewer.firstName", target = "companyReviewerFirstName")
 
+    @Mapping(source = "companyDataBundle.companyDataInputs", target = "companyDataInputs")
     CompanyDataBundleDTO toDto(CompanyDataBundle companyDataBundle);
 
     @Mapping(source = "statusId", target = "status")
@@ -43,7 +44,9 @@ public interface CompanyDataBundleMapper extends EntityMapper <CompanyDataBundle
 
     @Mapping(source = "companyReviewerId", target = "companyReviewer")
     @Mapping(target = "submissionSignOffs", ignore = true)
+    @Mapping(source = "companyDataInputs", target = "companyDataInputs")
     CompanyDataBundle toEntity(CompanyDataBundleDTO companyDataBundleDTO);
+
     default CompanyDataBundle fromId(Long id) {
         if (id == null) {
             return null;

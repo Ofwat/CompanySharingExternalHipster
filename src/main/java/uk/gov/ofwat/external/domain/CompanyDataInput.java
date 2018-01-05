@@ -38,6 +38,7 @@ public class CompanyDataInput implements Serializable {
     private Company company;
 
     @ManyToOne(optional = false)
+    @JoinColumn(name="COMPANY_DATA_BUNDLE_ID", nullable=false)
     @NotNull
     private CompanyDataBundle companyDataBundle;
 

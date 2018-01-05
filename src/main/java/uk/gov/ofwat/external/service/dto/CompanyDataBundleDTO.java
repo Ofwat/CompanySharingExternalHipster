@@ -45,6 +45,8 @@ public class CompanyDataBundleDTO implements Serializable {
 
     private String companyReviewerFirstName;
 
+    private CompanyDataInputDTO[]  companyDataInput;
+
     public Long getId() {
         return id;
     }
@@ -165,68 +167,11 @@ public class CompanyDataBundleDTO implements Serializable {
         this.companyReviewerFirstName = companyReviewerFirstName;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof CompanyDataBundleDTO)) return false;
-
-        CompanyDataBundleDTO that = (CompanyDataBundleDTO) o;
-
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (companyDeadline != null ? !companyDeadline.equals(that.companyDeadline) : that.companyDeadline != null)
-            return false;
-        if (statusId != null ? !statusId.equals(that.statusId) : that.statusId != null) return false;
-        if (statusStatus != null ? !statusStatus.equals(that.statusStatus) : that.statusStatus != null) return false;
-        if (companyId != null ? !companyId.equals(that.companyId) : that.companyId != null) return false;
-        if (companyName != null ? !companyName.equals(that.companyName) : that.companyName != null) return false;
-        if (companyDataCollectionId != null ? !companyDataCollectionId.equals(that.companyDataCollectionId) : that.companyDataCollectionId != null)
-            return false;
-        if (companyDataCollectionName != null ? !companyDataCollectionName.equals(that.companyDataCollectionName) : that.companyDataCollectionName != null)
-            return false;
-        if (companyOwnerId != null ? !companyOwnerId.equals(that.companyOwnerId) : that.companyOwnerId != null)
-            return false;
-        if (companyOwnerFirstName != null ? !companyOwnerFirstName.equals(that.companyOwnerFirstName) : that.companyOwnerFirstName != null)
-            return false;
-        if (companyReviewerId != null ? !companyReviewerId.equals(that.companyReviewerId) : that.companyReviewerId != null)
-            return false;
-        return companyReviewerFirstName != null ? companyReviewerFirstName.equals(that.companyReviewerFirstName) : that.companyReviewerFirstName == null;
+    public CompanyDataInputDTO[] getCompanyDataInput() {
+        return companyDataInput;
     }
 
-    @Override
-    public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (companyDeadline != null ? companyDeadline.hashCode() : 0);
-        result = 31 * result + (statusId != null ? statusId.hashCode() : 0);
-        result = 31 * result + (statusStatus != null ? statusStatus.hashCode() : 0);
-        result = 31 * result + (companyId != null ? companyId.hashCode() : 0);
-        result = 31 * result + (companyName != null ? companyName.hashCode() : 0);
-        result = 31 * result + (companyDataCollectionId != null ? companyDataCollectionId.hashCode() : 0);
-        result = 31 * result + (companyDataCollectionName != null ? companyDataCollectionName.hashCode() : 0);
-        result = 31 * result + (companyOwnerId != null ? companyOwnerId.hashCode() : 0);
-        result = 31 * result + (companyOwnerFirstName != null ? companyOwnerFirstName.hashCode() : 0);
-        result = 31 * result + (companyReviewerId != null ? companyReviewerId.hashCode() : 0);
-        result = 31 * result + (companyReviewerFirstName != null ? companyReviewerFirstName.hashCode() : 0);
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        return "CompanyDataBundleDTO{" +
-            "id=" + id +
-            ", name='" + name + '\'' +
-            ", companyDeadline=" + companyDeadline +
-            ", statusId=" + statusId +
-            ", statusStatus='" + statusStatus + '\'' +
-            ", companyId=" + companyId +
-            ", companyName='" + companyName + '\'' +
-            ", companyDataCollectionId=" + companyDataCollectionId +
-            ", companyDataCollectionName='" + companyDataCollectionName + '\'' +
-            ", companyOwnerId=" + companyOwnerId +
-            ", companyOwnerFirstName='" + companyOwnerFirstName + '\'' +
-            ", companyReviewerId=" + companyReviewerId +
-            ", companyReviewerFirstName='" + companyReviewerFirstName + '\'' +
-            '}';
+    public void setCompanyDataInput(CompanyDataInputDTO[] companyDataInput) {
+        this.companyDataInput = companyDataInput;
     }
 }

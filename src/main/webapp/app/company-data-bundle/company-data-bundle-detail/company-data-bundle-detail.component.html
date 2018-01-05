@@ -1,0 +1,128 @@
+<div *ngIf="dataBundle">
+    <div class="grid-row">
+        <div class="column-two-thirds">
+
+            <h2 class="heading-medium">
+                <span>Company Data Bundle</span>
+            </h2>
+
+            <div class="form-group">
+                <dl class="govuk-check-your-answers cya-questions-short">
+                    <div>
+                        <dd class="cya-question">Name</dd>
+                        <dd class="cya-answer">{{dataBundle.name}}</dd>
+                        <dd></dd>
+                    </div>
+                    <div>
+                        <dd class="cya-question">Data Collection</dd>
+                        <dd class="cya-answer">{{dataBundle.dataCollectionName}}</dd>
+                        <dd></dd>
+                    </div>
+                    <div>
+                        <dd class="cya-question">Publishing Status</dd>
+                        <dd class="cya-answer">{{dataBundle.statusStatus}}</dd>
+                        <dd class="cya-answer"><a href="" [routerLink]="['/publishing-status-modification', 'bundle', dataBundle.id]">Change</a></dd>
+                    </div>
+                    <div>
+                        <dd class="cya-question">Deadline</dd>
+                        <dd class="cya-answer">{{dataBundle.defaultDeadline | date:'dd LLLL yyyy'}}</dd>
+                        <dd></dd>
+                    </div>
+                    <div>
+                        <dd class="cya-question">Owner</dd>
+                        <dd class="cya-answer"><div *ngIf="dataBundle.ownerFirstName && dataBundle.ownerLastName">{{dataBundle.ownerFirstName}} {{dataBundle.ownerLastName}}</div></dd>
+                        <dd></dd>
+                    </div>
+                    <div>
+                        <dd class="cya-question">Reviewer</dd>
+                        <dd class="cya-answer"><div *ngIf="dataBundle.reviewerFirstName && dataBundle.reviewerLastName">{{dataBundle.reviewerFirstName}} {{dataBundle.reviewerLastName}}</div></dd>
+                        <dd></dd>
+                    </div>
+                    <div>
+                        <dd class="cya-question">Description</dd>
+                        <dd class="cya-answer">{{dataBundle.description}}</dd>
+                        <dd></dd>
+                    </div>
+                    <div>
+                        <dd class="cya-question">Guidance</dd>
+                        <dd class="cya-answer">{{dataBundle.guidance}}</dd>
+                        <dd></dd>
+                    </div>
+                    <div>
+                        <dd class="cya-question">Created</dd>
+                        <dd class="cya-answer">{{dataBundle.createdDate | date:'dd LLLL yyyy HH:mm'}}</dd>
+                        <dd></dd>
+                    </div>
+                    <div>
+                        <dd class="cya-question">Created by</dd>
+                        <dd class="cya-answer">{{dataBundle.createdBy}}</dd>
+                        <dd></dd>
+                    </div>
+                    <div>
+                        <dd class="cya-question">Last modified</dd>
+                        <dd class="cya-answer">{{dataBundle.lastModifiedDate | date:'dd LLLL yyyy HH:mm'}}</dd>
+                        <dd></dd>
+                    </div>
+                    <div>
+                        <dd class="cya-question">Last modified by</dd>
+                        <dd class="cya-answer"><div *ngIf="dataBundle.lastModifiedBy">{{dataBundle.lastModifiedBy}}</div></dd>
+                        <dd></dd>
+                    </div>
+                </dl>
+            </div>
+
+            <div class="form-group">
+                <button type="submit"
+                        [routerLink]="['/data-bundle-edit', dataBundle.id]"
+                        class="button float-left">
+                    <span class="fa fa-arrow-left"></span>&nbsp;<span>Edit</span>
+                </button>
+                <button type="submit"
+                        [routerLink]="['/data-bundle-deletion-confirmation', dataBundle.id]"
+                        class="button float-left">
+                    <span class="fa fa-arrow-left"></span>&nbsp;<span>Delete</span>
+                </button>
+            </div>
+
+            <h2 class="heading-medium">Data Files</h2>
+
+            <div class="form-group">
+                <dl class="govuk-check-your-answers cya-questions-short">
+                    <div>
+                        <dt class="cya-question">Name</dt>
+                        <dt class="cya-question">Description</dt>
+                        <dt class="cya-question"></dt>
+                    </div>
+                    <div *ngFor="let db of dataBundle.companyDataInputs">
+                        <dd class="cya-answer">{{db.name}}</dd>
+                        <dd class="cya-answer">{{db.description}}</dd>
+                        <dd class="cya-answer"><a href="" [routerLink]="['/data-input-detail', db.id]">Details</a></dd>
+                    </div>
+                </dl>
+            </div>
+
+            <div class="form-group">
+                <button type="button"
+                        class="button float-left"
+                        [routerLink]="['/data-input-creation', dataBundle.id]">
+                    <span>Add Data File</span>
+                </button>
+                <button type="submit"
+                        [routerLink]="['/data-collection-detail', dataBundle.dataCollectionId]"
+                        class="button button-secondary float-left">
+                    </span>&nbsp;<span>Back</span>
+                </button>
+<!--                <button type="button"
+                        class="button float-left"
+                        [routerLink]="['/data-input-download', dataBundle.id]">-->
+
+                    <button type="button"
+                            class="button float-left"
+                            [routerLink]="['/data-input-download']">
+                    <span>Download Files</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+

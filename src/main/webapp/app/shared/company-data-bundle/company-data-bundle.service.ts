@@ -7,7 +7,7 @@ import { ResponseWrapper } from '../model/response-wrapper.model';
 import { createRequestOption } from '../model/request-util';
 
 @Injectable()
-export class DataBundleService {
+export class CompanyDataBundleService {
     private resourceUrl = 'api/company-data-bundles';
 
     constructor(private http: Http) { }

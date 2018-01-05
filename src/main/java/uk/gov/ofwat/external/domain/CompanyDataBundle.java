@@ -63,6 +63,9 @@ public class CompanyDataBundle implements Serializable {
     @JoinColumn(name="COMPANY_DATA_COLLECTION_ID", nullable=false)
     private CompanyDataCollection companyDataCollection;
 
+    @OneToMany(mappedBy="companyDataBundle")
+    @OrderColumn(name="order_Index")
+    private CompanyDataInput[] companyDataInputs;
 
     @OneToMany(mappedBy = "companyDataBundle")
     @JsonIgnore
@@ -211,5 +214,13 @@ public class CompanyDataBundle implements Serializable {
 
     public void setOrderIndex(Long orderIndex) {
         this.orderIndex = orderIndex;
+    }
+
+    public CompanyDataInput[] getCompanyDataInputs() {
+        return companyDataInputs;
+    }
+
+    public void setCompanyDataInputs(CompanyDataInput[] companyDataInputs) {
+        this.companyDataInputs = companyDataInputs;
     }
 }
