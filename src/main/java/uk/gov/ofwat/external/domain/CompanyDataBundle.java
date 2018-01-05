@@ -46,13 +46,21 @@ public class CompanyDataBundle implements Serializable {
     private DataBundle dataBundle;
 
     @ManyToOne
+    @JsonIgnore
     private User companyOwner;
 
+    @NotNull
+    @Column(name = "order_Index", nullable = false)
+    private Long orderIndex;
+
     @ManyToOne
+    @JsonIgnore
     private User companyReviewer;
 
     @ManyToOne(optional = false)
     @NotNull
+    @JsonIgnore
+    @JoinColumn(name="COMPANY_DATA_COLLECTION_ID", nullable=false)
     private CompanyDataCollection companyDataCollection;
 
 
@@ -197,49 +205,11 @@ public class CompanyDataBundle implements Serializable {
         this.submissionSignOffs = submissionSignOffs;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof CompanyDataBundle)) return false;
-
-        CompanyDataBundle that = (CompanyDataBundle) o;
-
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (companyDeadline != null ? !companyDeadline.equals(that.companyDeadline) : that.companyDeadline != null)
-            return false;
-        if (status != null ? !status.equals(that.status) : that.status != null) return false;
-        if (company != null ? !company.equals(that.company) : that.company != null) return false;
-        if (companyOwner != null ? !companyOwner.equals(that.companyOwner) : that.companyOwner != null) return false;
-        if (companyReviewer != null ? !companyReviewer.equals(that.companyReviewer) : that.companyReviewer != null)
-            return false;
-        return companyDataCollection != null ? companyDataCollection.equals(that.companyDataCollection) : that.companyDataCollection == null;
+    public Long getOrderIndex() {
+        return orderIndex;
     }
 
-    @Override
-    public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (companyDeadline != null ? companyDeadline.hashCode() : 0);
-        result = 31 * result + (status != null ? status.hashCode() : 0);
-        result = 31 * result + (company != null ? company.hashCode() : 0);
-        result = 31 * result + (companyOwner != null ? companyOwner.hashCode() : 0);
-        result = 31 * result + (companyReviewer != null ? companyReviewer.hashCode() : 0);
-        result = 31 * result + (companyDataCollection != null ? companyDataCollection.hashCode() : 0);
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        return "CompanyDataBundle{" +
-            "id=" + id +
-            ", name='" + name + '\'' +
-            ", companyDeadline=" + companyDeadline +
-            ", status=" + status +
-            ", company=" + company +
-            ", companyOwner=" + companyOwner +
-            ", companyReviewer=" + companyReviewer +
-            ", companyDataCollection=" + companyDataCollection +
-            '}';
+    public void setOrderIndex(Long orderIndex) {
+        this.orderIndex = orderIndex;
     }
 }

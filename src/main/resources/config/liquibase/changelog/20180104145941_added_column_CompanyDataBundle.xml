@@ -1,0 +1,22 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet author="cmel7 (generated)" id="1515077988491-1">
+        <addColumn tableName="company_data_bundle">
+            <column name="order_index" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="cmel7 (generated)" id="1515077988491-2">
+        <dropColumn columnName="CREATED_BY" tableName="COMPANY"/>
+    </changeSet>
+    <changeSet author="cmel7 (generated)" id="1515077988491-3">
+        <dropColumn columnName="CREATED_DATE" tableName="COMPANY"/>
+    </changeSet>
+    <changeSet author="cmel7 (generated)" id="1515077988491-4">
+        <dropColumn columnName="LAST_MODIFIED_BY" tableName="COMPANY"/>
+    </changeSet>
+    <changeSet author="cmel7 (generated)" id="1515077988491-5">
+        <dropColumn columnName="LAST_MODIFIED_DATE" tableName="COMPANY"/>
+    </changeSet>
+</databaseChangeLog>

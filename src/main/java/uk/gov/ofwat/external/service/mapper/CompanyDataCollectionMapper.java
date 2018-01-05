@@ -8,7 +8,7 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity CompanyDataCollection and its DTO CompanyDataCollectionDTO.
  */
-@Mapper(componentModel = "spring", uses = {CompanyStatusMapper.class, CompanyMapper.class, DataCollectionMapper.class, UserMapper.class,CompanyDataBundle.class })
+@Mapper(componentModel = "spring", uses = {CompanyStatusMapper.class, CompanyMapper.class, DataCollectionMapper.class, UserMapper.class,CompanyDataBundleMapper.class })
 public interface CompanyDataCollectionMapper extends EntityMapper <CompanyDataCollectionDTO, CompanyDataCollection> {
 
     @Mapping(source = "status.id", target = "statusId")
@@ -39,6 +39,7 @@ public interface CompanyDataCollectionMapper extends EntityMapper <CompanyDataCo
     @Mapping(source = "companyReviewerId", target = "companyReviewer")
     @Mapping(source = "companyDataBundles", target = "companyDataBundles")
     CompanyDataCollection toEntity(CompanyDataCollectionDTO companyDataCollectionDTO);
+
     default CompanyDataCollection fromId(Long id) {
         if (id == null) {
             return null;
@@ -47,4 +48,5 @@ public interface CompanyDataCollectionMapper extends EntityMapper <CompanyDataCo
         companyDataCollection.setId(id);
         return companyDataCollection;
     }
+
 }

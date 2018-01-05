@@ -10,12 +10,12 @@
                 <dl class="govuk-check-your-answers cya-questions-short">
                     <div>
                         <dd class="cya-question">Name</dd>
-                        <dd class="cya-answer">{{dataCollection.name}}</dd>
+                        <dd class="cya-answer"><div *ngIf="dataCollection.name">{{dataCollection.name}}</div></dd>
                         <dd></dd>
                     </div>
                     <div>
                         <dd class="cya-question">Publishing Status</dd>
-                        <dd class="cya-answer">{{dataCollection.statusStatus}}</dd>
+                        <dd class="cya-answer"><div *ngIf="dataCollection.statusStatus">{{dataCollection.statusStatus}}</div></dd>
                         <dd class="cya-answer"><a href="" [routerLink]="['/publishing-status-modification', 'collection', dataCollection.id]">Change</a></dd>
                     </div>
                     <div>
@@ -58,11 +58,13 @@
                         <dt class="cya-question">Status</dt>
                         <dt class="cya-question"></dt>
                     </div>
-                    <div *ngFor="let db of dataCollection.companyDataBundles">
-                        <dd class="cya-question">{{db.name}}</dd>
-                        <dd class="cya-answer">{{db.statusStatus}}</dd>
-                        <dd class="cya-answer"><a href="" [routerLink]="['/company-data-bundle-detail', db.id]">Details</a></dd>
+
+                    <div *ngFor="let db of dataBundles">
+                        <dd class="cya-question" >{{db.name}}</dd>
+                        <dd class="cya-answer" >{{db.statusStatus}}</dd>
+                        <dd class="cya-answer"><a href="" [routerLink]="['/data-bundle-detail', db.id]">Details</a>   </dd>
                     </div>
+
                 </dl>
             </div>
 

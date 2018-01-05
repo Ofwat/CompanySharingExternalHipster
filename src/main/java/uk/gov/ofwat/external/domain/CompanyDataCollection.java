@@ -1,5 +1,6 @@
 package uk.gov.ofwat.external.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -40,6 +41,8 @@ public class CompanyDataCollection implements Serializable {
     private DataCollection dataCollection;
 
     @OneToMany(mappedBy="companyDataCollection")
+    @OrderColumn(name="order_Index")
+    @JsonIgnore
     private CompanyDataBundle[] companyDataBundles;
 
     @ManyToOne

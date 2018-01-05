@@ -1,5 +1,5 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
-import { ITEMS_PER_PAGE, Principal, ResponseWrapper, CompanyDataCollection, CompanyDataCollectionService } from '../../shared';
+import { Component, OnInit } from '@angular/core';
+import { CompanyDataCollection, CompanyDataCollectionService } from '../../shared';
 import { Subscription } from 'rxjs/Rx';
 import { ActivatedRoute } from '@angular/router';
 
@@ -13,12 +13,14 @@ export class CompanyDataCollectionDetailComponent implements OnInit {
     dataCollection: CompanyDataCollection;
     private subscription: Subscription;
     changeStatus: boolean;
-
+    dataBundles: String[];
     constructor(
         private route: ActivatedRoute,
         private dataCollectionService: CompanyDataCollectionService,
     ) {
         this.changeStatus = false;
+        this.dataBundles = new Array();
+
     }
 
     ngOnInit() {
@@ -30,6 +32,13 @@ export class CompanyDataCollectionDetailComponent implements OnInit {
     load(id) {
         this.dataCollectionService.get(id).subscribe((dataCollection) => {
             this.dataCollection = dataCollection;
+            if (dataCollection.companyDataBundles != null) {
+                dataCollection.companyDataBundles.forEach(bundle => {
+                    if(bundle != null) {
+                        this.dataBundles.push(bundle)
+                    }
+                });
+            }
         });
     }
 
