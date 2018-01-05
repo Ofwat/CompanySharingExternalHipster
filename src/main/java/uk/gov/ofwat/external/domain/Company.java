@@ -41,7 +41,8 @@ public class Company extends AbstractAuditingEntity implements Serializable {
         inverseJoinColumns = @JoinColumn(name="users_id", referencedColumnName="id"))*/
 
 
-/*    @ManyToMany
+    /*
+    @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "company_user",
                joinColumns = @JoinColumn(name="companies_id", referencedColumnName="id"),
@@ -133,6 +134,7 @@ public class Company extends AbstractAuditingEntity implements Serializable {
         return "Company{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
+            ", deleted='" + getDeleted() + "'" +
             "}";
     }
 }

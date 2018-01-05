@@ -10,6 +10,7 @@ import uk.gov.ofwat.external.domain.Company;
 import uk.gov.ofwat.external.domain.RegistrationRequest;
 import uk.gov.ofwat.external.domain.User;
 import uk.gov.ofwat.external.repository.RegistrationRequestRepository;
+import uk.gov.ofwat.external.service.mapper.CompanyMapper;
 import uk.gov.ofwat.external.service.util.RandomUtil;
 
 import java.time.Instant;
@@ -24,12 +25,15 @@ public class RegistrationRequestService {
 
     private MailService mailService;
 
+    private final CompanyMapper companyMapper;
+
     private final Logger log = LoggerFactory.getLogger(RegistrationRequestService.class);
 
-    public RegistrationRequestService(RegistrationRequestRepository registrationRequestRepository, CompanyService companyService, MailService mailService) {
+    public RegistrationRequestService(RegistrationRequestRepository registrationRequestRepository, CompanyService companyService, MailService mailService, CompanyMapper companyMapper) {
         this.registrationRequestRepository = registrationRequestRepository;
         this.companyService = companyService;
         this.mailService = mailService;
+        this.companyMapper = companyMapper;
     }
 
     @Transactional
@@ -46,7 +50,7 @@ public class RegistrationRequestService {
         rr.setAdminApproved(false);
         rr.setUserActivated(false);
         rr.setKeyCreated(Instant.now());
-        Company company = companyService.findOne(companyId);
+        Company company = companyMapper.toEntity(companyService.findOne(companyId));
         rr.setCompany(company);
         return registrationRequestRepository.save(rr);
     }

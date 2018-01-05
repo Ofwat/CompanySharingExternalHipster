@@ -8,6 +8,9 @@ import uk.gov.ofwat.external.domain.CompanyUserDetails;
 import uk.gov.ofwat.external.domain.User;
 import uk.gov.ofwat.external.repository.AuthorityRepository;
 import uk.gov.ofwat.external.repository.CompanyRepository;
+import uk.gov.ofwat.external.repository.UserRepository;
+import uk.gov.ofwat.external.service.dto.CompanyDTO;
+import uk.gov.ofwat.external.service.mapper.CompanyMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -36,16 +39,20 @@ public class CompanyService {
 
     private final UserRepository userRepository;
 
+    private final CompanyMapper companyMapper;
+
     private final AuthorityRepository authorityRepository;
 
     private final CompanyUserDetailsRepository companyUserDetailsRepository;
 
-    public CompanyService(CompanyRepository companyRepository, UserRepository userRepository, AuthorityRepository authorityRepository, CompanyUserDetailsRepository companyUserDetailsRepository) {
+    public CompanyService(CompanyRepository companyRepository, UserRepository userRepository, AuthorityRepository authorityRepository, CompanyUserDetailsRepository companyUserDetailsRepository, CompanyMapper companyMapper) {
         this.companyRepository = companyRepository;
+        this.companyMapper = companyMapper;
         this.userRepository = userRepository;
         this.authorityRepository = authorityRepository;
         this.companyUserDetailsRepository = companyUserDetailsRepository;
     }
+
 
     /**
      * Save a company.
@@ -59,15 +66,41 @@ public class CompanyService {
     }
 
     /**
+     * Save a company.
+     *
+     * @param companyDTO the entity to save
+     * @return the persisted entity
+     */
+    public CompanyDTO save(CompanyDTO companyDTO) {
+        log.debug("Request to save Company : {}", companyDTO);
+        Company company = companyMapper.toEntity(companyDTO);
+        company = companyRepository.save(company);
+        return companyMapper.toDto(company);
+    }
+
+    /**
+     *  Get all the companies.
+     *
+     *  @param pageable the pagination information
+     *  @return the list of entities
+     */
+/*    @Transactional(readOnly = true)
+    public Page<Company> findAll(Pageable pageable) {
+        log.debug("Request to get all Companies");
+        return companyRepository.findAll(pageable);
+    }*/
+
+    /**
      *  Get all the companies.
      *
      *  @param pageable the pagination information
      *  @return the list of entities
      */
     @Transactional(readOnly = true)
-    public Page<Company> findAll(Pageable pageable) {
+    public Page<CompanyDTO> findAll(Pageable pageable) {
         log.debug("Request to get all Companies");
-        return companyRepository.findAll(pageable);
+        return companyRepository.findAll(pageable)
+            .map(companyMapper::toDto);
     }
 
     /**
@@ -76,10 +109,16 @@ public class CompanyService {
      *  @param id the id of the entity
      *  @return the entity
      */
-    @Transactional(readOnly = true)
+/*    @Transactional(readOnly = true)
     public Company findOne(Long id) {
         log.debug("Request to get Company : {}", id);
         return companyRepository.findOneWithEagerRelationships(id);
+    }*/
+
+    public CompanyDTO findOne(Long id) {
+        log.debug("Request to get Company : {}", id);
+        Company company = companyRepository.findOneWithEagerRelationships(id);
+        return companyMapper.toDto(company);
     }
 
     /**
@@ -137,10 +176,9 @@ public class CompanyService {
 
     /**
      * Check if the current user has the ROLE_COMPANY_ADMIN role for a particular company.
-     * @param company
+     * @param companyId, login
      * @return
      */
-
     public boolean isUserAdminForCompany(Long companyId,  String login){
         Company company = companyRepository.getOne(companyId);
         return isUserAdminForCompany(company, login);

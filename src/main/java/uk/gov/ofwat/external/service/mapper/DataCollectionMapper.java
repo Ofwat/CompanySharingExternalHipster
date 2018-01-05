@@ -12,9 +12,21 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring", uses = {PublishingStatusMapper.class, UserMapper.class, DataBundleMapper.class})
 public interface DataCollectionMapper extends EntityMapper <DataCollectionDTO, DataCollection> {
 
+    @Mapping(source = "publishingStatus.id", target = "statusId")
+    @Mapping(source = "publishingStatus.status", target = "statusStatus")
+    @Mapping(source = "owner.id", target = "ownerId")
+    @Mapping(source = "owner.firstName", target = "ownerFirstName")
+    @Mapping(source = "owner.lastName", target = "ownerLastName")
+    @Mapping(source = "reviewer.id", target = "reviewerId")
+    @Mapping(source = "reviewer.firstName", target = "reviewerFirstName")
+    @Mapping(source = "reviewer.lastName", target = "reviewerLastName")
     @Mapping(source = "dataCollection.dataBundles", target = "dataBundles")
     DataCollectionDTO toDto(DataCollection dataCollection);
 
+
+    @Mapping(source = "statusId", target = "publishingStatus")
+    @Mapping(source = "ownerId", target = "owner")
+    @Mapping(source = "reviewerId", target = "reviewer")
     @Mapping(source = "dataBundles", target = "dataBundles")
     DataCollection toEntity(DataCollectionDTO dataCollectionDTO);
 

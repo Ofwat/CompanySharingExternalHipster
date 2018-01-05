@@ -101,55 +101,19 @@
                 </div>
             </div>
 
-            <!--<div class="form-group">-->
-                <!--<label class="form-label" for="deadline">Deadline-->
-                    <!--<span class="form-hint">The deadline by which companies must submit this data input</span>-->
-                    <!--<span class="form-hint">For example, 30 12 2018</span>-->
-                <!--</label>-->
-                <!--<input class="form-control"-->
-                       <!--[(ngModel)]="dataInput.defaultDeadline"-->
-                       <!--id="deadline"-->
-                       <!--name="deadline"-->
-                       <!--#deadline="ngModel"-->
-                       <!--type="date"-->
-                       <!--placeholder="yyyy-MM-dd"-->
-                       <!--min="{{currentDate | date:'yyyy-MM-dd'}}"-->
-                       <!--required />-->
-                <!--<div *ngIf="deadline.dirty && deadline.invalid">-->
-                    <!--<small class="form-text text-danger" *ngIf="deadline.errors.required">-->
-                        <!--Deadline is required for the data input.-->
-                    <!--</small>-->
-                    <!--<small class="form-text text-danger" *ngIf="deadline.errors.date">-->
-                        <!--Please enter a valid date.-->
-                    <!--</small>-->
-                <!--</div>-->
-            <!--</div>-->
+            <jhi-ofwat-user-select
+                [selectedUser]="selectedOwner"
+                [userResponsibility]="'owner'"
+                [resourceType]="'Input'"
+                (userChangedEvent)="ownerChanged($event)">
+            </jhi-ofwat-user-select>
 
-            <div class="form-group">
-                <label class="form-label" for="owner">Owner
-                    <span class="form-hint">The owner responsible for the Data Input</span>
-                </label>
-                <select class="form-control" [(ngModel)]="ownerIndex" id="owner" name="owner" #owner="ngModel">
-                    <option *ngFor="let user of users"
-                            [value]="user?.id"
-                            [selected]="dataInput?.ownerId==user?.id ? true : null" >
-                        {{user?.firstName}} {{user?.lastName}}
-                    </option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label class="form-label" for="reviewer">Reviewer
-                    <span class="form-hint">The reviewer responsible for reviewing the Data Input</span>
-                </label>
-                <select class="form-control" [(ngModel)]="reviewerIndex" id="reviewer" name="reviewer" #reviewer="ngModel">
-                    <option *ngFor="let user of users"
-                            [value]="user?.id"
-                            [selected]="dataInput?.reviewerId==user?.id ? true : null" >
-                        {{user?.firstName}} {{user?.lastName}}
-                    </option>
-                </select>
-            </div>
+            <jhi-ofwat-user-select
+                [selectedUser]="selectedReviewer"
+                [userResponsibility]="'reviewer'"
+                [resourceType]="'Input'"
+                (userChangedEvent)="reviewerChanged($event)">
+            </jhi-ofwat-user-select>
 
             <div class="form-group">
                 <button type="submit"
@@ -161,18 +125,6 @@
                         class="button button-secondary float-left"
                         [routerLink]="['/data-input-detail', dataInput.id]">
                     <span>Back</span>
-                </button>
-                <button *ngIf="dataInput.statusStatus=='DRAFT'" class="button float-left" (click)="markAsReview()">
-                    <span>Mark as Review</span>
-                </button>
-                <button *ngIf="dataInput.statusStatus=='REVIEW'" class="button float-left" (click)="markAsDraft()">
-                    <span>Mark as Draft</span>
-                </button>
-                <button *ngIf="dataInput.statusStatus=='REVIEW'" class="button float-left" (click)="markAsPending()">
-                    <span>Mark as Unpublished</span>
-                </button>
-                <button *ngIf="dataInput.statusStatus=='UNPUBLISHED'" class="button float-left" (click)="markAsReview()">
-                    <span>Mark as Reviewed</span>
                 </button>
             </div>
         </form>

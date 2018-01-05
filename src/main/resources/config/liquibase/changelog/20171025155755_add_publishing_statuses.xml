@@ -8,7 +8,7 @@
             <column name="status" value="REVIEW"></column>
         </insert>
         <insert tableName="publishing_status">
-            <column name="status" value="UNPUBLISHED"></column>
+            <column name="status" value="PENDING"></column>
         </insert>
         <insert tableName="publishing_status">
             <column name="status" value="PUBLISHED"></column>

@@ -14,6 +14,7 @@ import uk.gov.ofwat.external.repository.CompanyRepository;
 import uk.gov.ofwat.external.repository.CompanyUserDetailsRepository;
 import uk.gov.ofwat.external.repository.UserRepository;
 import uk.gov.ofwat.external.security.AuthoritiesConstants;
+import uk.gov.ofwat.external.service.mapper.CompanyMapper;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
@@ -43,11 +44,14 @@ public class CompanyServiceIntTest {
     @Autowired
     AuthorityRepository authorityRepository;
 
+    @Autowired
+    CompanyMapper companyMapper;
+
     private CompanyService companyService;
 
     @Before
     public void setup(){
-        this.companyService = new CompanyService(companyRepository, userRepository, authorityRepository, companyUserDetailsRepository);
+        this.companyService = new CompanyService(companyRepository, userRepository, authorityRepository, companyUserDetailsRepository, companyMapper);
     }
 
     @Test

@@ -1,0 +1,39 @@
+
+<div *ngIf="submissionSignOff">
+    <h2><span>Submission Sign Off</span> {{submissionSignOff.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span>Status</span></dt>
+        <dd>
+            <span>{{submissionSignOff.status}}</span>
+        </dd>
+        <dt><span>Reason</span></dt>
+        <dd>
+            <span>{{submissionSignOff.reason}}</span>
+        </dd>
+        <dt><span>Signatory</span></dt>
+        <dd>
+            {{submissionSignOff.signatoryFirstName}}
+        </dd>
+        <dt><span>Company Data Bundle</span></dt>
+        <dd>
+            <div *ngIf="submissionSignOff.companyDataBundleId">
+                <a [routerLink]="['/company-data-bundle', submissionSignOff.companyDataBundleId]">{{submissionSignOff.companyDataBundleName}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'submission-sign-off/'+ submissionSignOff.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span> Edit</span>
+    </button>
+</div>

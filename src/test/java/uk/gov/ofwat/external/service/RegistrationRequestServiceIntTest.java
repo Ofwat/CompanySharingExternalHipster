@@ -1,5 +1,6 @@
 package uk.gov.ofwat.external.service;
 
+import cucumber.api.java.cs.A;
 import io.github.jhipster.config.JHipsterProperties;
 import org.hibernate.cfg.NotYetImplementedException;
 import org.junit.Before;
@@ -28,6 +29,7 @@ import uk.gov.ofwat.external.repository.NotifyMessageTemplateRepository;
 import uk.gov.ofwat.external.repository.RegistrationRequestRepository;
 import uk.gov.ofwat.external.repository.UserRepository;
 import uk.gov.ofwat.external.security.AuthoritiesConstants;
+import uk.gov.ofwat.external.service.mapper.CompanyMapper;
 import uk.gov.service.notify.NotificationClient;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -76,6 +78,9 @@ public class RegistrationRequestServiceIntTest {
     @Autowired
     UserService userService;
 
+    @Autowired
+    CompanyMapper companyMapper;
+
     @Spy
     NotifyService notifyService = new NotifyService(notificationClient, userRepository);
 
@@ -85,7 +90,7 @@ public class RegistrationRequestServiceIntTest {
     @Before
     public void setup(){
         MockitoAnnotations.initMocks(this);
-        registrationRequestService = new RegistrationRequestService(registrationRequestRepository, companyService, mailService);
+        registrationRequestService = new RegistrationRequestService(registrationRequestRepository, companyService, mailService, companyMapper);
         doNothing().when(notifyService).sendMessage(any(User.class), any(NotifyMessageTemplate.class), any(HashMap.class));
         doNothing().when(notifyService).sendMessage(any(NotifyMessageTemplate.class), any(HashMap.class));
     }

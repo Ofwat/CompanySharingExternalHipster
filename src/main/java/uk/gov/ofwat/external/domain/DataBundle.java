@@ -62,7 +62,6 @@ public class DataBundle extends AbstractAuditingEntity implements Serializable {
     @OrderColumn(name="order_Index")
     private DataInput[] dataInputs;
 
-
     public Long getId() {
         return id;
     }

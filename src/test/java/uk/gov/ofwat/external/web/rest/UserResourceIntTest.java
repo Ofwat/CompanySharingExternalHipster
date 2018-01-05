@@ -10,6 +10,7 @@ import uk.gov.ofwat.external.service.MailService;
 import uk.gov.ofwat.external.service.RegistrationRequestService;
 import uk.gov.ofwat.external.service.UserService;
 import uk.gov.ofwat.external.service.dto.UserDTO;
+import uk.gov.ofwat.external.service.mapper.CompanyMapper;
 import uk.gov.ofwat.external.service.mapper.UserMapper;
 import uk.gov.ofwat.external.web.rest.errors.ExceptionTranslator;
 import uk.gov.ofwat.external.web.rest.vm.ManagedUserVM;
@@ -106,6 +107,9 @@ public class UserResourceIntTest {
     @Autowired
     private EntityManager em;
 
+    @Autowired
+    CompanyMapper companyMapper;
+
     private MockMvc restUserMockMvc;
 
     private User user;
@@ -113,7 +117,7 @@ public class UserResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        UserResource userResource = new UserResource(userRepository, mailService, userService, registrationRequestService, companyService);
+        UserResource userResource = new UserResource(userRepository, mailService, userService, registrationRequestService, companyService, companyMapper);
         this.restUserMockMvc = MockMvcBuilders.standaloneSetup(userResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)

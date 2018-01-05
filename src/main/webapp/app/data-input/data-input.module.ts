@@ -2,6 +2,7 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CompanySharingExternalSharedModule } from '../shared';
 import { DataInputCreationComponent } from './data-input-creation/data-input-creation.component';
+import { DataInputDownloadComponent } from './data-input-download/data-input-download.component';
 import { DataInputDetailComponent } from './data-input-detail/data-input-detail.component';
 import { DataInputDeletionConfirmationComponent } from './data-input-deletion/data-input-deletion-confirmation.component';
 import { DataInputDeletedComponent } from './data-input-deletion/data-input-deleted.component';
@@ -37,6 +38,7 @@ import {
     declarations: [
         DataInputMgmtComponent,
         DataInputCreationComponent,
+        DataInputDownloadComponent,
         DataInputDetailComponent,
         DataInputDeletionConfirmationComponent,
         DataInputDeletedComponent,

@@ -1,0 +1,44 @@
+<div *ngIf="display">
+
+    <div>
+        <h2 class="heading-medium">Change Publishing Status</h2>
+
+        <div class="alert alert-success" *ngIf="success">
+            <p><strong>Publishing Status changed</strong></p>
+            <button type="button"
+                    class="button button-secondary"
+                    (click)="goBack()">
+                <span>Back</span>
+            </button>
+        </div>
+
+        <div class="alert alert-danger" *ngIf="error">
+            <p><strong>Publishing Status changed failed!</strong> Please try again later.</p>
+            <button type="button"
+                    class="button button-secondary"
+                    (click)="goBack()">
+                <span>Back</span>
+            </button>
+        </div>
+    </div>
+
+    <div>
+        <form name="publishingStatusForm" role="form" (ngSubmit)="savePublishingStatus()" #publishingStatusForm="ngForm" *ngIf="!success">
+            <jhi-ofwat-publishing-status-select
+                [selectedPublishingStatus]="selectedPublishingStatus"
+                (statusChangedEvent)="statusChanged($event)">
+            </jhi-ofwat-publishing-status-select>
+            <div class="form-group">
+                <button type="submit"
+                        class="button float-left">
+                    <span>Save</span>
+                </button>
+                <button type="button"
+                        class="button button-secondary"
+                        (click)="goBack()">
+                    <span>Back</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

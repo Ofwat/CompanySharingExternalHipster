@@ -12,11 +12,13 @@ export class DataCollectionDetailComponent implements OnInit {
 
     dataCollection: DataCollection;
     private subscription: Subscription;
+    changeStatus: boolean;
 
     constructor(
         private route: ActivatedRoute,
         private dataCollectionService: DataCollectionService,
     ) {
+        this.changeStatus = false;
     }
 
     ngOnInit() {
@@ -33,5 +35,9 @@ export class DataCollectionDetailComponent implements OnInit {
 
     ngOnDestroy() {
         this.subscription.unsubscribe();
+    }
+
+    change() {
+        this.changeStatus=true;
     }
 }

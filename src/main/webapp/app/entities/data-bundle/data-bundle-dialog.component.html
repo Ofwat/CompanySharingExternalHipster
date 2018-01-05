@@ -1,0 +1,104 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myDataBundleLabel">Create or edit a Data Bundle</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!dataBundle.id">
+            <label for="id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="dataBundle.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_name">Name</label>
+            <input type="text" class="form-control" name="name" id="field_name"
+                [(ngModel)]="dataBundle.name" required />
+            <div [hidden]="!(editForm.controls.name?.dirty && editForm.controls.name?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.name?.errors?.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_description">Description</label>
+            <input type="text" class="form-control" name="description" id="field_description"
+                [(ngModel)]="dataBundle.description"  />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_guidance">Guidance</label>
+            <input type="text" class="form-control" name="guidance" id="field_guidance"
+                [(ngModel)]="dataBundle.guidance"  />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_defaultDeadline">Default Deadline</label>
+            <div class="input-group">
+                <input id="field_defaultDeadline" type="text" class="form-control" name="defaultDeadline" ngbDatepicker  #defaultDeadlineDp="ngbDatepicker" [(ngModel)]="dataBundle.defaultDeadline"
+                />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" (click)="defaultDeadlineDp.toggle()"><i class="fa fa-calendar"></i></button>
+                </span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="field_status">Status</label>
+            <select class="form-control" id="field_status" name="status" [(ngModel)]="dataBundle.statusId"  required>
+                <option [ngValue]="publishingStatusOption.id" *ngFor="let publishingStatusOption of publishingstatuses; trackBy: trackPublishingStatusById">{{publishingStatusOption.status}}</option>
+            </select>
+        </div>
+        <div [hidden]="!(editForm.controls.status?.dirty && editForm.controls.status?.invalid)">
+            <small class="form-text text-danger"
+                [hidden]="!editForm.controls.status?.errors?.required">
+                This field is required.
+            </small>
+        </div>
+        <div class="form-group">
+            <label for="field_owner">Owner</label>
+            <select class="form-control" id="field_owner" name="owner" [(ngModel)]="dataBundle.ownerId"  required>
+                <option [ngValue]="jhiUserOption.id" *ngFor="let jhiUserOption of jhiusers; trackBy: trackJhiUserById">{{jhiUserOption.lastName}}</option>
+            </select>
+        </div>
+        <div [hidden]="!(editForm.controls.owner?.dirty && editForm.controls.owner?.invalid)">
+            <small class="form-text text-danger"
+                [hidden]="!editForm.controls.owner?.errors?.required">
+                This field is required.
+            </small>
+        </div>
+        <div class="form-group">
+            <label for="field_reviewer">Reviewer</label>
+            <select class="form-control" id="field_reviewer" name="reviewer" [(ngModel)]="dataBundle.reviewerId"  required>
+                <option [ngValue]="jhiUserOption.id" *ngFor="let jhiUserOption of jhiusers; trackBy: trackJhiUserById">{{jhiUserOption.lastName}}</option>
+            </select>
+        </div>
+        <div [hidden]="!(editForm.controls.reviewer?.dirty && editForm.controls.reviewer?.invalid)">
+            <small class="form-text text-danger"
+                [hidden]="!editForm.controls.reviewer?.errors?.required">
+                This field is required.
+            </small>
+        </div>
+        <div class="form-group">
+            <label for="field_dataCollection">Data Collection</label>
+            <select class="form-control" id="field_dataCollection" name="dataCollection" [(ngModel)]="dataBundle.dataCollectionId"  required>
+                <option [ngValue]="dataCollectionOption.id" *ngFor="let dataCollectionOption of datacollections; trackBy: trackDataCollectionById">{{dataCollectionOption.name}}</option>
+            </select>
+        </div>
+        <div [hidden]="!(editForm.controls.dataCollection?.dirty && editForm.controls.dataCollection?.invalid)">
+            <small class="form-text text-danger"
+                [hidden]="!editForm.controls.dataCollection?.errors?.required">
+                This field is required.
+            </small>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span>Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span>Save</span>
+        </button>
+    </div>
+</form>

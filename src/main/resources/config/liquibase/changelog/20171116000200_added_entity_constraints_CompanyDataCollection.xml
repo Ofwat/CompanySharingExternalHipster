@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <!--
+        Added the constraints for entity CompanyDataCollection.
+    -->
+    <changeSet id="20171116000200-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="status_id"
+                                 baseTableName="company_data_collection"
+                                 constraintName="fk_company_data_collection_status_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="company_status"/>
+
+        <addForeignKeyConstraint baseColumnNames="company_id"
+                                 baseTableName="company_data_collection"
+                                 constraintName="fk_company_data_collection_company_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="company"/>
+
+        <addForeignKeyConstraint baseColumnNames="data_collection_id"
+                                 baseTableName="company_data_collection"
+                                 constraintName="fk_company_data_collection_data_collection_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="data_collection"/>
+
+        <addForeignKeyConstraint baseColumnNames="company_owner_id"
+                                 baseTableName="company_data_collection"
+                                 constraintName="fk_company_data_collection_company_owner_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="company_reviewer_id"
+                                 baseTableName="company_data_collection"
+                                 constraintName="fk_company_data_collection_company_reviewer_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+
+    </changeSet>
+</databaseChangeLog>

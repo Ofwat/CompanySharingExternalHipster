@@ -1,9 +1,16 @@
+import {User} from "../user/user.model";
+
 export class DataCollection {
     public id?: any;
     public name?: string;
-    public publishingStatus?: any;
-    public owner?: any;
-    public reviewer?: any;
+    public statusId?: any;
+    public statusStatus?: string;
+    public ownerId?: any;
+    public ownerFirstName?: string;
+    public ownerLastName?: string;
+    public reviewerId?: any;
+    public reviewerFirstName?: string;
+    public reviewerLastName?: string;
     public description?: string;
     public guidance?: string;
     public createdDate?: any;
@@ -15,9 +22,14 @@ export class DataCollection {
     constructor(
         id?: any,
         name?: string,
-        publishingStatus?: any,
-        owner?: any,
-        reviewer?: any,
+        statusId?: any,
+        statusStatus?: string,
+        ownerId?: any,
+        ownerFirstName?: string,
+        ownerLastName?: string,
+        reviewerId?: any,
+        reviewerFirstName?: string,
+        reviewerLastName?: string,
         description?: string,
         guidance?: string,
         createdDate?: any,
@@ -28,9 +40,14 @@ export class DataCollection {
     ) {
         this.id = id ? id : null;
         this.name = name ? name : null;
-        this.publishingStatus = publishingStatus ? publishingStatus : null;
-        this.owner = owner ? owner : null;
-        this.reviewer = reviewer ? reviewer : null;
+        this.statusId = statusId ? statusId : null;
+        this.statusStatus = statusStatus ? statusStatus : null;
+        this.ownerId = ownerId ? ownerId : null;
+        this.ownerFirstName = ownerFirstName ? ownerFirstName : null;
+        this.ownerLastName = ownerLastName ? ownerLastName : null;
+        this.reviewerId = reviewerId ? reviewerId : null;
+        this.reviewerFirstName = reviewerFirstName ? reviewerFirstName : null;
+        this.reviewerLastName = reviewerLastName ? reviewerLastName : null;
         this.description = description ? description : null;
         this.guidance = guidance ? guidance : null;
         this.createdDate = createdDate ? createdDate : null;

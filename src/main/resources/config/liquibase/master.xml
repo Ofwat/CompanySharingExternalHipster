@@ -8,7 +8,6 @@
     <include file="classpath:config/liquibase/changelog/20170809160746_add_user_mobile_telephone.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170810084411_added_entity_Company.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170810084411_added_entity_constraints_Company.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20170810100000_add_company_deleted_property.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170811100000_add_user_enabled_property.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170830100000_add_otp_code_user_field.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170830110000_add_user_otp_required_field.xml" relativeToChangelogFile="false"/>
@@ -44,6 +43,20 @@
     <include file="classpath:config/liquibase/changelog/20171028155028_DataInput_AbstractAuditingEntity.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20171112124953_added_company_user_details.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20171112130000_add_company_user_details_values.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20171116000200_added_entity_CompanyDataCollection.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20171116000000_added_entity_CompanyStatus.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20171116000150_added_entity_ReviewSignOff.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20171116000160_added_entity_SubmissionSignOff.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20171122000100_added_entity_DataFile.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20171116000300_added_entity_CompanyDataBundle.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20171123000000_added_entity_InputType.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20171123000100_added_entity_CompanyDataInput.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
+    <include file="classpath:config/liquibase/changelog/20171116000200_added_entity_constraints_CompanyDataCollection.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20171116000150_added_entity_constraints_ReviewSignOff.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20171116000160_added_entity_constraints_SubmissionSignOff.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20171116000300_added_entity_constraints_CompanyDataBundle.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20171123000100_added_entity_constraints_CompanyDataInput.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20171122000100_added_entity_constraints_DataFile.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

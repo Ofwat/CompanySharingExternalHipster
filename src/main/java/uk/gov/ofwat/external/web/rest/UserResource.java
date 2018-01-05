@@ -15,7 +15,10 @@ import uk.gov.ofwat.external.service.Exception.UnableToRemoveUserException;
 import uk.gov.ofwat.external.service.MailService;
 import uk.gov.ofwat.external.service.RegistrationRequestService;
 import uk.gov.ofwat.external.service.UserService;
+import uk.gov.ofwat.external.service.dto.CompanyDTO;
 import uk.gov.ofwat.external.service.dto.UserDTO;
+import uk.gov.ofwat.external.service.mapper.CompanyDataBundleMapper;
+import uk.gov.ofwat.external.service.mapper.CompanyMapper;
 import uk.gov.ofwat.external.web.rest.vm.ManagedUserVM;
 import uk.gov.ofwat.external.web.rest.util.HeaderUtil;
 import uk.gov.ofwat.external.web.rest.util.PaginationUtil;
@@ -81,14 +84,18 @@ public class UserResource {
 
     private final CompanyService companyService;
 
+    private final CompanyMapper companyMapper;
+
      public UserResource(UserRepository userRepository, MailService mailService,
-                         UserService userService, RegistrationRequestService registrationRequestService, CompanyService companyService) {
+                         UserService userService, RegistrationRequestService registrationRequestService,
+                         CompanyService companyService, CompanyMapper companyMapper) {
 
          this.userRepository = userRepository;
          this.mailService = mailService;
          this.userService = userService;
          this.registrationRequestService = registrationRequestService;
          this.companyService = companyService;
+         this.companyMapper = companyMapper;
      }
 
     @Timed
@@ -133,7 +140,7 @@ public class UserResource {
                 .body(null);
         } else {
             User newUser = userService.createUser(managedUserVM);
-            //mailService.sendCreationEmail(newUser);
+            mailService.sendCreationEmail(newUser);
             return ResponseEntity.created(new URI("/api/users/" + newUser.getLogin()))
                 .headers(HeaderUtil.createAlert( "A user is created with identifier " + newUser.getLogin(), newUser.getLogin()))
                 .body(newUser);
@@ -242,7 +249,7 @@ public class UserResource {
     @Timed
     @Secured({AuthoritiesConstants.ADMIN, AuthoritiesConstants.COMPANY_ADMIN})
     public ResponseEntity<List<RegistrationRequest>> getAllRegistrationRequests(@ApiParam Pageable pageable, @RequestParam Long companyId) {
-        Company company = companyService.findOne(companyId);
+        Company company = companyMapper.toEntity(companyService.findOne(companyId));
         User currentUser = userService.getUserWithAuthorities();
         if(company != null) {
             Boolean isValidAdmin = companyService.isUserAdminForCompany(company, currentUser.getLogin());
