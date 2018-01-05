@@ -101,6 +101,7 @@ public class CompanySelectionAspectIntTest {
         when(companyHeaderParser.getCompanyId(requestAttributes)).thenReturn(Optional.of(new Long(company1.getId())));
 
         companySelectionAspect = new CompanySelectionAspect(companyService, companyRepository, aspectRoleFetcher, companyHeaderParser);
+        companySelectionAspect.setUserService(userService);
     }
 
     private User createTestUser(String login){
