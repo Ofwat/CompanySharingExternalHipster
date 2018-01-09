@@ -1,5 +1,5 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
-import { ITEMS_PER_PAGE, Principal, ResponseWrapper, CompanyDataBundle, CompanyDataBundleService } from '../../shared';
+import { Component, OnInit } from '@angular/core';
+import {  CompanyDataBundle, CompanyDataBundleService } from '../../shared';
 import { Subscription } from 'rxjs/Rx';
 import { ActivatedRoute } from '@angular/router';
 

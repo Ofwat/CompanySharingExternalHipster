@@ -8,7 +8,7 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity CompanyDataInput and its DTO CompanyDataInputDTO.
  */
-@Mapper(componentModel = "spring", uses = {CompanyStatusMapper.class, CompanyMapper.class, CompanyDataBundleMapper.class, DataInputMapper.class, UserMapper.class, InputTypeMapper.class, })
+@Mapper(componentModel = "spring", uses = {CompanyStatusMapper.class, CompanyMapper.class, CompanyDataCollectionMapper.class,CompanyDataBundleMapper.class, DataInputMapper.class, UserMapper.class, InputTypeMapper.class, })
 public interface CompanyDataInputMapper extends EntityMapper <CompanyDataInputDTO, CompanyDataInput> {
 
     @Mapping(source = "status.id", target = "statusId")

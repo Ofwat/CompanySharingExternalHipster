@@ -45,7 +45,17 @@ public class CompanyDataBundleDTO implements Serializable {
 
     private String companyReviewerFirstName;
 
-    private CompanyDataInputDTO[]  companyDataInput;
+    private Long orderIndex;
+
+    private CompanyDataInputDTO[]  companyDataInputs;
+
+    public Long getOrderIndex() {
+        return orderIndex;
+    }
+
+    public void setOrderIndex(Long orderIndex) {
+        this.orderIndex = orderIndex;
+    }
 
     public Long getId() {
         return id;
@@ -167,11 +177,91 @@ public class CompanyDataBundleDTO implements Serializable {
         this.companyReviewerFirstName = companyReviewerFirstName;
     }
 
-    public CompanyDataInputDTO[] getCompanyDataInput() {
-        return companyDataInput;
+    public CompanyDataInputDTO[] getCompanyDataInputs() {
+        return companyDataInputs;
     }
 
-    public void setCompanyDataInput(CompanyDataInputDTO[] companyDataInput) {
-        this.companyDataInput = companyDataInput;
+    public void setCompanyDataInputs(CompanyDataInputDTO[] companyDataInputs) {
+        this.companyDataInputs = companyDataInputs;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CompanyDataBundleDTO)) return false;
+
+        CompanyDataBundleDTO that = (CompanyDataBundleDTO) o;
+
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (companyDeadline != null ? !companyDeadline.equals(that.companyDeadline) : that.companyDeadline != null)
+            return false;
+        if (statusId != null ? !statusId.equals(that.statusId) : that.statusId != null) return false;
+        if (statusStatus != null ? !statusStatus.equals(that.statusStatus) : that.statusStatus != null) return false;
+        if (companyId != null ? !companyId.equals(that.companyId) : that.companyId != null) return false;
+        if (companyName != null ? !companyName.equals(that.companyName) : that.companyName != null) return false;
+        if (companyDataCollectionId != null ? !companyDataCollectionId.equals(that.companyDataCollectionId) : that.companyDataCollectionId != null)
+            return false;
+        if (companyDataCollectionName != null ? !companyDataCollectionName.equals(that.companyDataCollectionName) : that.companyDataCollectionName != null)
+            return false;
+        if (dataBundleId != null ? !dataBundleId.equals(that.dataBundleId) : that.dataBundleId != null) return false;
+        if (dataBundleName != null ? !dataBundleName.equals(that.dataBundleName) : that.dataBundleName != null)
+            return false;
+        if (companyOwnerId != null ? !companyOwnerId.equals(that.companyOwnerId) : that.companyOwnerId != null)
+            return false;
+        if (companyOwnerFirstName != null ? !companyOwnerFirstName.equals(that.companyOwnerFirstName) : that.companyOwnerFirstName != null)
+            return false;
+        if (companyReviewerId != null ? !companyReviewerId.equals(that.companyReviewerId) : that.companyReviewerId != null)
+            return false;
+        if (companyReviewerFirstName != null ? !companyReviewerFirstName.equals(that.companyReviewerFirstName) : that.companyReviewerFirstName != null)
+            return false;
+        if (orderIndex != null ? !orderIndex.equals(that.orderIndex) : that.orderIndex != null) return false;
+        // Probably incorrect - comparing Object[] arrays with Arrays.equals
+        return Arrays.equals(companyDataInputs, that.companyDataInputs);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (companyDeadline != null ? companyDeadline.hashCode() : 0);
+        result = 31 * result + (statusId != null ? statusId.hashCode() : 0);
+        result = 31 * result + (statusStatus != null ? statusStatus.hashCode() : 0);
+        result = 31 * result + (companyId != null ? companyId.hashCode() : 0);
+        result = 31 * result + (companyName != null ? companyName.hashCode() : 0);
+        result = 31 * result + (companyDataCollectionId != null ? companyDataCollectionId.hashCode() : 0);
+        result = 31 * result + (companyDataCollectionName != null ? companyDataCollectionName.hashCode() : 0);
+        result = 31 * result + (dataBundleId != null ? dataBundleId.hashCode() : 0);
+        result = 31 * result + (dataBundleName != null ? dataBundleName.hashCode() : 0);
+        result = 31 * result + (companyOwnerId != null ? companyOwnerId.hashCode() : 0);
+        result = 31 * result + (companyOwnerFirstName != null ? companyOwnerFirstName.hashCode() : 0);
+        result = 31 * result + (companyReviewerId != null ? companyReviewerId.hashCode() : 0);
+        result = 31 * result + (companyReviewerFirstName != null ? companyReviewerFirstName.hashCode() : 0);
+        result = 31 * result + (orderIndex != null ? orderIndex.hashCode() : 0);
+        result = 31 * result + Arrays.hashCode(companyDataInputs);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "CompanyDataBundleDTO{" +
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", companyDeadline=" + companyDeadline +
+            ", statusId=" + statusId +
+            ", statusStatus='" + statusStatus + '\'' +
+            ", companyId=" + companyId +
+            ", companyName='" + companyName + '\'' +
+            ", companyDataCollectionId=" + companyDataCollectionId +
+            ", companyDataCollectionName='" + companyDataCollectionName + '\'' +
+            ", dataBundleId=" + dataBundleId +
+            ", dataBundleName='" + dataBundleName + '\'' +
+            ", companyOwnerId=" + companyOwnerId +
+            ", companyOwnerFirstName='" + companyOwnerFirstName + '\'' +
+            ", companyReviewerId=" + companyReviewerId +
+            ", companyReviewerFirstName='" + companyReviewerFirstName + '\'' +
+            ", orderIndex=" + orderIndex +
+            ", companyDataInputs=" + Arrays.toString(companyDataInputs) +
+            '}';
     }
 }

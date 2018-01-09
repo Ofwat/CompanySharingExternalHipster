@@ -8,7 +8,7 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity CompanyDataBundle and its DTO CompanyDataBundleDTO.
  */
-@Mapper(componentModel = "spring", uses = {CompanyStatusMapper.class, CompanyMapper.class, CompanyDataCollectionMapper.class, DataBundleMapper.class,UserMapper.class, })
+@Mapper(componentModel = "spring", uses = {CompanyStatusMapper.class, CompanyMapper.class, CompanyDataCollectionMapper.class, DataBundleMapper.class,UserMapper.class,CompanyDataInputMapper.class})
 public interface CompanyDataBundleMapper extends EntityMapper <CompanyDataBundleDTO, CompanyDataBundle> {
 
     @Mapping(source = "status.id", target = "statusId")
@@ -44,6 +44,7 @@ public interface CompanyDataBundleMapper extends EntityMapper <CompanyDataBundle
 
     @Mapping(source = "companyReviewerId", target = "companyReviewer")
     @Mapping(target = "submissionSignOffs", ignore = true)
+
     @Mapping(source = "companyDataInputs", target = "companyDataInputs")
     CompanyDataBundle toEntity(CompanyDataBundleDTO companyDataBundleDTO);
 
