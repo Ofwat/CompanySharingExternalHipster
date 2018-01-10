@@ -29,6 +29,8 @@ export * from './company-data-collection/company-data-collection.model';
 export * from './company-data-collection/company-data-collection.service';
 export * from './company-data-bundle/company-data-bundle.model';
 export * from './company-data-bundle/company-data-bundle.service';
+export * from './company-data-input/company-data-input.model';
+export * from './company-data-input/company-data-input.service';
 
 export * from './data-bundle/data-bundle.model';
 export * from './data-bundle/data-bundle.service';

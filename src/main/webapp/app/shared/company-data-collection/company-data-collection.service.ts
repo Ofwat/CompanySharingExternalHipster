@@ -39,7 +39,6 @@ export class CompanyDataCollectionService {
 
     delete(id: any): Observable<Response> {
         return this.http.delete(`${this.resourceUrl}/${id}`);
-        // return this.http.delete(`${this.resourceUrl}?name=${name}`);
     }
 
     authorities(): Observable<string[]> {

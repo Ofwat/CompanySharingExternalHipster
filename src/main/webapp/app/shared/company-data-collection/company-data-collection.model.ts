@@ -1,4 +1,3 @@
-import {User} from "../user/user.model";
 
 export class CompanyDataCollection {
     public id?: any;

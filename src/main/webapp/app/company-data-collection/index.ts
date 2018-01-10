@@ -23,7 +23,7 @@ export * from '../admin/metrics/metrics.route';
 export * from './company-data-collection.route';
 export * from './company-data-collection-management/company-data-collection-management.component';
 export * from './company-data-collection-management/company-data-collection-management.route';
-export * from './company-data-collection-detail/company-data-collection-detail-route';
+export * from './company-data-collection-detail/company-data-collection-detail.route';
 export * from './company-data-collection-detail/company-data-collection-detail.component';
 
 

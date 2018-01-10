@@ -1,0 +1,79 @@
+<div *ngIf="dataInput">
+    <div class="grid-row">
+        <div class="column-two-thirds">
+
+            <h2 class="heading-medium">
+                <span>Company Data Input</span>
+            </h2>
+
+            <dl class="govuk-check-your-answers cya-questions-short">
+                <div>
+                    <dd class="cya-question">Name</dd>
+                    <dd class="cya-answer">{{dataInput.name}}</dd>
+                    <dd></dd>
+                </div>
+                <div>
+                    <dd class="cya-question">Data Bundle</dd>
+                    <dd class="cya-answer">{{dataInput.dataBundleName}}</dd>
+                    <dd></dd>
+                </div>
+               <!-- <div>
+                    <dd class="cya-question">Publishing Status</dd>
+                    <dd class="cya-answer">{{dataInput.statusStatus}}</dd>
+                    <dd class="cya-answer"><a href="" [routerLink]="['/publishing-status-modification', 'input', dataInput.id]">Change</a></dd>
+                </div>-->
+                <div>
+                    <dd class="cya-question">Deadline</dd>
+                    <dd class="cya-answer">{{dataInput.defaultDeadline | date:'dd LLLL yyyy'}}</dd>
+                    <dd></dd>
+                </div>
+                <div>
+                    <dd class="cya-question">Owner</dd>
+                    <dd class="cya-answer"><div *ngIf="dataInput.ownerFirstName">{{dataInput.ownerFirstName}}</div></dd>
+                    <dd></dd>
+                </div>
+                <div>
+                    <dd class="cya-question">Reviewer</dd>
+                    <dd class="cya-answer"><div *ngIf="dataInput.reviewerFirstName">{{dataInput.reviewerFirstName}}</div></dd>
+                    <dd></dd>
+                </div>
+                <div>
+                    <dd class="cya-question">Description</dd>
+                    <dd class="cya-answer">{{dataInput.description}}</dd>
+                    <dd></dd>
+                </div>
+                <div>
+                    <dd class="cya-question">Guidance</dd>
+                    <dd class="cya-answer">{{dataInput.guidance}}</dd>
+                    <dd></dd>
+                </div>
+                <div>
+                    <dd class="cya-question">Created</dd>
+                    <dd class="cya-answer">{{dataInput.createdDate | date:'dd LLLL yyyy HH:mm'}}</dd>
+                    <dd></dd>
+                </div>
+                <div>
+                    <dd class="cya-question">Created by</dd>
+                    <dd class="cya-answer">{{dataInput.createdBy}}</dd>
+                    <dd></dd>
+                </div>
+                <div>
+                    <dd class="cya-question">Last modified</dd>
+                    <dd class="cya-answer">{{dataInput.lastModifiedDate | date:'dd LLLL yyyy HH:mm'}}</dd>
+                    <dd></dd>
+                </div>
+                <div>
+                    <dd class="cya-question">Last modified by</dd>
+                    <dd class="cya-answer"><div *ngIf="dataInput.lastModifiedBy">{{dataInput.lastModifiedBy}}</div></dd>
+                    <dd></dd>
+                </div>
+            </dl>
+            <button type="submit"
+                    [routerLink]="['/company-data-bundle-detail', dataInput.dataBundleId]"
+                    class="button button-secondary float-left">
+                <span>Back</span>
+            </button>
+        </div>
+    </div>
+</div>
+

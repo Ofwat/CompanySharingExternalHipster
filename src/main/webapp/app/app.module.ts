@@ -14,6 +14,7 @@ import { CompanySharingExternalDataCollectionModule } from './data-collection/da
 import { CompanySharingExternalDataBundleModule } from './data-bundle/data-bundle.module';
 import { CompanySharingExternalDataInputModule } from './data-input/data-input.module';
 import {CompanySharingExternalCompanyDataBundleModule} from './company-data-bundle/company-data-bundle.module'
+import {CompanySharingExternalCompanyDataInputModule} from './company-data-input/company-data-input.module'
 import { CompanySharingExternalCompanyDataCollectionModule } from './company-data-collection/company-data-collection.module';
 import { customHttpProvider } from './blocks/interceptor/http.provider';
 import { PaginationConfig } from './blocks/config/uib-pagination.config';
@@ -47,6 +48,7 @@ import {
         CompanySharingExternalDataBundleModule,
         CompanySharingExternalDataInputModule,
         CompanySharingExternalCompanyDataBundleModule,
+        CompanySharingExternalCompanyDataInputModule,
         CompanySharingExternalCompanyDataCollectionModule
         // jhipster-needle-angular-add-module JHipster will add new module here
     ],

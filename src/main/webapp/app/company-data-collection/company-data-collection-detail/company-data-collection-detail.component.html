@@ -16,8 +16,7 @@
                     <div>
                         <dd class="cya-question">Publishing Status</dd>
                         <dd class="cya-answer"><div *ngIf="dataCollection.statusStatus">{{dataCollection.statusStatus}}</div></dd>
-                        <dd class="cya-answer"><a href="" [routerLink]="['/publishing-status-modification', 'collection', dataCollection.id]">Change</a></dd>
-                    </div>
+                     </div>
                     <div>
                         <dd class="cya-question">Company Name</dd>
                         <dd class="cya-answer"><div *ngIf="dataCollection.companyName">{{dataCollection.companyName}} </div></dd>
@@ -34,19 +33,6 @@
                         <dd></dd>
                     </div>
                 </dl>
-            </div>
-
-            <div class="form-group">
-                <button type="button"
-                        [routerLink]="['/data-collection-edit', dataCollection.id]"
-                        class="button float-left">
-                    <span class="fa fa-arrow-left"></span>&nbsp;<span>Edit</span>
-                </button>
-                <button type="button"
-                        [routerLink]="['/data-collection-deletion-confirmation', dataCollection.id]"
-                        class="button float-left">
-                    <span class="fa fa-arrow-left"></span>&nbsp;<span>Delete</span>
-                </button>
             </div>
 
             <h2 class="heading-medium">Company Data Bundles</h2>
@@ -70,12 +56,7 @@
 
             <div class="form-group">
                 <button type="button"
-                    class="button float-left"
-                    [routerLink]="['/data-bundle-creation', dataCollection.id]">
-                    <span>Add Data Bundle</span>
-                </button>
-                <button type="button"
-                        routerLink="/data-collection-management"
+                        routerLink="/company-data-collection-management"
                         class="button button-secondary float-left">
                     <span>Back</span>
                 </button>

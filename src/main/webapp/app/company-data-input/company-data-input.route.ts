@@ -9,27 +9,30 @@ import {
     metricsRoute
 } from '../admin';
 
+
 import { UserRouteAccessService } from '../shared';
-import {companyDataBundleDetailRoute} from "./company-data-bundle-detail/company-data-bundle-detail.route";
 
 
-const DATA_BUNDLE_ROUTES = [
+import {companyDataInputDetailRoute} from './company-data-input-detail/company-data-input-detail-route';
+
+
+const DATA_INPUT_ROUTES = [
     auditsRoute,
     configurationRoute,
     docsRoute,
     healthRoute,
     logsRoute,
     metricsRoute,
-    companyDataBundleDetailRoute,
+    companyDataInputDetailRoute,
 
 ];
 
-export const dataBundleState: Routes = [{
+export const dataInputState: Routes = [{
     path: '',
     data: {
         authorities: ['ROLE_ADMIN']
     },
     canActivate: [UserRouteAccessService],
-    children: DATA_BUNDLE_ROUTES
+    children: DATA_INPUT_ROUTES
 }
 ];
