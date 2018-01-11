@@ -1,0 +1,29 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+                   http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <property name="now" value="now()" dbms="h2"/>
+    <property name="now" value="now()" dbms="mysql"/>
+    <property name="autoIncrement" value="true"/>
+
+    <!--    <changeSet id="1507642814735-1" author="jtoddington">
+            <addDefaultValue tableName="company" columnName="created_date" columnDataType="timestamp" defaultValueDate="${now}"/>
+            <addDefaultValue tableName="company" columnName="last_modified_date" columnDataType="timestamp" defaultValueDate="${now}"/>
+            <addDefaultValue tableName="company" columnName="deleted" columnDataType="boolean" defaultValueBoolean="false"/>
+        </changeSet>-->
+    <changeSet author="jtodd (generated)" id="1">
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/company_user_details.csv"
+                  separator=";"
+                  tableName="company_user_details">
+        </loadData>
+    </changeSet>
+    <changeSet id="2" author="jtoddington">
+        <dropDefaultValue tableName="company_user_details" columnName="created_date" columnDataType="timestamp"></dropDefaultValue>
+        <dropDefaultValue tableName="company_user_details" columnName="last_modified_date" columnDataType="timestamp"></dropDefaultValue>
+    </changeSet>
+
+</databaseChangeLog>

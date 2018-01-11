@@ -319,14 +319,6 @@ public class UserService {
     }
 
     /**
-     * Generate a new OTP code for a user and send them a rate limited SMS with the code in it.
-     * @param login
-     */
-    public void generateAndSendOTPCode(String login) {
-        throw new NotYetImplementedException();
-    }
-
-    /**
      * Reset all the OTP counts for users to 0 to allow them to re-send SMS messages.
      * This is to prevent spamming of SMS - see OTPService for rate checks - I.E no more than X messages in a Y time period.
      */
@@ -341,23 +333,6 @@ public class UserService {
         }
     }
 
-    public RegistrationRequest createRegistrationRequest(String login, String firstName, String lastName, String email,
-                                                         String mobileTelephoneNumber, Long companyId){
-        log.debug("Creating new registration request for user: {}", login);
-        RegistrationRequest rr = new RegistrationRequest();
-        rr.setLogin(login);
-        rr.setFirstName("");
-        rr.setLastName("");
-        rr.setEmail(email);
-        rr.setMobileTelephoneNumber(mobileTelephoneNumber);
-        rr.setRegistrationKey(RandomUtil.generateActivationKey());
-        rr.setAdminApproved(false);
-        rr.setUserActivated(false);
-        rr.setKeyCreated(Instant.now());
-        Company company = companyRepository.findOne(companyId);
-        rr.setCompany(company);
-        return registrationRequestRepository.save(rr);
-    }
 
     /**
      * Check for a registration key and if a vlaid key is found return the pre-stored details.
@@ -387,6 +362,18 @@ public class UserService {
             registrationRequest = registrationRequestRepository.save(registrationRequest);
             mailService.sendRegistrationRequestApprovalEmail(registrationRequest);
             return registrationRequest;
+        });
+    }
+
+    public Boolean isUserAdministrator(String login){
+        return userRepository.findOneByLogin(login).get().getAuthorities().stream().anyMatch(authority -> {
+            return authority.getName().equals(AuthoritiesConstants.ADMIN);
+        });
+    }
+
+    public Boolean isUserOfwatAdministrator(String login){
+        return userRepository.findOneByLogin(login).get().getAuthorities().stream().anyMatch(authority -> {
+            return authority.getName().equals(AuthoritiesConstants.OFWAT_ADMIN);
         });
     }
 

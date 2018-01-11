@@ -89,8 +89,8 @@ public class CompanyResourceIntTest {
      */
     public static Company createEntity(EntityManager em) {
         Company company = new Company()
-            .name(DEFAULT_NAME)
-            .deleted(DEFAULT_DELETED);
+            .name(DEFAULT_NAME);
+            company.setDeleted(DEFAULT_DELETED);
         return company;
     }
 
@@ -116,7 +116,7 @@ public class CompanyResourceIntTest {
         assertThat(companyList).hasSize(databaseSizeBeforeCreate + 1);
         Company testCompany = companyList.get(companyList.size() - 1);
         assertThat(testCompany.getName()).isEqualTo(DEFAULT_NAME);
-        assertThat(testCompany.isDeleted()).isEqualTo(DEFAULT_DELETED);
+        assertThat(testCompany.getDeleted()).isEqualTo(DEFAULT_DELETED);
     }
 
     @Test
@@ -187,8 +187,8 @@ public class CompanyResourceIntTest {
         // Update the company
         Company updatedCompany = companyRepository.findOne(company.getId());
         updatedCompany
-            .name(UPDATED_NAME)
-            .deleted(UPDATED_DELETED);
+            .name(UPDATED_NAME);
+            company.setDeleted(UPDATED_DELETED);
         CompanyDTO companyDTO = companyMapper.toDto(updatedCompany);
 
         restCompanyMockMvc.perform(put("/api/companies")
@@ -201,7 +201,7 @@ public class CompanyResourceIntTest {
         assertThat(companyList).hasSize(databaseSizeBeforeUpdate);
         Company testCompany = companyList.get(companyList.size() - 1);
         assertThat(testCompany.getName()).isEqualTo(UPDATED_NAME);
-        assertThat(testCompany.isDeleted()).isEqualTo(UPDATED_DELETED);
+        assertThat(testCompany.getDeleted()).isEqualTo(UPDATED_DELETED);
     }
 
     @Test

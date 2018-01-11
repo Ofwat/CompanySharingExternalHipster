@@ -4,7 +4,10 @@ import uk.gov.ofwat.external.CompanySharingExternalApp;
 
 import uk.gov.ofwat.external.domain.DataCollection;
 import uk.gov.ofwat.external.repository.DataCollectionRepository;
+import uk.gov.ofwat.external.repository.PublishingStatusRepository;
 import uk.gov.ofwat.external.service.DataCollectionService;
+import uk.gov.ofwat.external.service.PublishingStatusService;
+import uk.gov.ofwat.external.service.UserService;
 import uk.gov.ofwat.external.service.dto.DataCollectionDTO;
 import uk.gov.ofwat.external.service.mapper.DataCollectionMapper;
 import uk.gov.ofwat.external.web.rest.errors.ExceptionTranslator;
@@ -64,6 +67,15 @@ public class DataCollectionResourceIntTest {
     @Autowired
     private EntityManager em;
 
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    PublishingStatusService publishingStatusService;
+
+    @Autowired
+    PublishingStatusRepository publishingStatusRepository;
+
     private MockMvc restDataCollectionMockMvc;
 
     private DataCollection dataCollection;
@@ -71,7 +83,7 @@ public class DataCollectionResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        DataCollectionResource dataCollectionResource = new DataCollectionResource(dataCollectionService, dataCollectionRepository);
+        DataCollectionResource dataCollectionResource = new DataCollectionResource(dataCollectionService, dataCollectionRepository, userService, publishingStatusService, publishingStatusRepository);
         this.restDataCollectionMockMvc = MockMvcBuilders.standaloneSetup(dataCollectionResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -85,8 +97,8 @@ public class DataCollectionResourceIntTest {
      * if they test an entity which requires the current entity.
      */
     public static DataCollection createEntity(EntityManager em) {
-        DataCollection dataCollection = new DataCollection()
-            .name(DEFAULT_NAME);
+        DataCollection dataCollection = new DataCollection();
+        dataCollection.setName(DEFAULT_NAME);
         return dataCollection;
     }
 
@@ -199,7 +211,7 @@ public class DataCollectionResourceIntTest {
         // Update the dataCollection
         DataCollection updatedDataCollection = dataCollectionRepository.findOne(dataCollection.getId());
         updatedDataCollection
-            .name(UPDATED_NAME);
+            .setName(UPDATED_NAME);
         DataCollectionDTO dataCollectionDTO = dataCollectionMapper.toDto(updatedDataCollection);
 
         restDataCollectionMockMvc.perform(put("/api/data-collections")

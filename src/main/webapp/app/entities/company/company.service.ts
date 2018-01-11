@@ -42,6 +42,11 @@ export class CompanyService {
         return this.http.delete(`${this.resourceUrl}/${id}`);
     }
 
+    getUserCompanies(): Observable<Response>{
+        return this.http.get(`/users/companies`)
+            .map((res: Response) => this.convertResponse(res));
+    }
+
     private convertResponse(res: Response): ResponseWrapper {
         const jsonResponse = res.json();
         return new ResponseWrapper(res.headers, jsonResponse, res.status);

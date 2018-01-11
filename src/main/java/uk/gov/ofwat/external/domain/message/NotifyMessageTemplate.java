@@ -67,6 +67,11 @@ public class NotifyMessageTemplate implements Serializable {
         this.type = type;
     }
 
+    public NotifyMessageTemplate type(String type) {
+        this.type = type;
+        return this;
+    }
+
     public String getDescription() {
         return description;
     }

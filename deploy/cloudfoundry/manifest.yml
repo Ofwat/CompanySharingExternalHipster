@@ -3,7 +3,7 @@ path: .
 instances: 1
 buildpack: https://github.com/cloudfoundry/java-buildpack
 services:
-- companysharingexternal
+- companysharingexternal_db
 applications:
 - name: companysharingexternal
   path: ../../build/libs/company-sharing-external-0.0.1-SNAPSHOT.war

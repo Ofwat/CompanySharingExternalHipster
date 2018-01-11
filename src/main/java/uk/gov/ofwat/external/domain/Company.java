@@ -1,13 +1,18 @@
 package uk.gov.ofwat.external.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Fetch;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * A Company.
@@ -15,7 +20,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "company")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class Company implements Serializable {
+public class Company extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -26,15 +31,28 @@ public class Company implements Serializable {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "deleted")
+    @Column(name = "deleted", nullable = false)
     private Boolean deleted;
 
+/*    @ManyToMany
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JoinTable(name = "company_admin",
+        joinColumns = @JoinColumn(name="companies_id", referencedColumnName="id"),
+        inverseJoinColumns = @JoinColumn(name="users_id", referencedColumnName="id"))*/
+
+
+    /*
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "company_user",
                joinColumns = @JoinColumn(name="companies_id", referencedColumnName="id"),
                inverseJoinColumns = @JoinColumn(name="users_id", referencedColumnName="id"))
-    private Set<User> users = new HashSet<>();
+    private Set<User> users = new HashSet<>();*/
+
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "company", fetch = FetchType.EAGER)
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<CompanyUserDetails> companyUserDetails = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -57,29 +75,16 @@ public class Company implements Serializable {
         this.name = name;
     }
 
-    public Boolean isDeleted() {
-        return deleted;
+    public Set<CompanyUserDetails> getCompanyUserDetails() {
+        return companyUserDetails;
     }
 
-    public Company deleted(Boolean deleted) {
-        this.deleted = deleted;
+    public Company setCompanyUserDetails(Set<CompanyUserDetails> companyUserDetails) {
+        this.companyUserDetails = companyUserDetails;
         return this;
     }
 
-    public void setDeleted(Boolean deleted) {
-        this.deleted = deleted;
-    }
-
-    public Set<User> getUsers() {
-        return users;
-    }
-
-    public Company users(Set<User> users) {
-        this.users = users;
-        return this;
-    }
-
-    public Company addUser(User user) {
+/*    public Company addUser(User user, Authority authority) {
         this.users.add(user);
         user.getCompanies().add(this);
         return this;
@@ -89,10 +94,19 @@ public class Company implements Serializable {
         this.users.remove(user);
         user.getCompanies().remove(this);
         return this;
+    }*/
+
+    @JsonManagedReference
+    public Set<User> getUsers(){
+        return this.companyUserDetails.stream().map(cud -> cud.getUser()).collect(Collectors.toSet());
     }
 
-    public void setUsers(Set<User> users) {
-        this.users = users;
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
     }
 
     @Override
@@ -120,7 +134,7 @@ public class Company implements Serializable {
         return "Company{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
-            ", deleted='" + isDeleted() + "'" +
+            ", deleted='" + getDeleted() + "'" +
             "}";
     }
 }

@@ -2,6 +2,7 @@ package uk.gov.ofwat.external.web.rest;
 
 import uk.gov.ofwat.external.CompanySharingExternalApp;
 
+import uk.gov.ofwat.external.domain.message.MessageConstants;
 import uk.gov.ofwat.external.domain.message.NotifyMessageTemplate;
 import uk.gov.ofwat.external.repository.NotifyMessageTemplateRepository;
 import uk.gov.ofwat.external.web.rest.errors.ExceptionTranslator;
@@ -85,7 +86,8 @@ public class NotifyMessageTemplateResourceIntTest {
         NotifyMessageTemplate notifyMessageTemplate = new NotifyMessageTemplate()
             .name(DEFAULT_NAME)
             .description(DEFAULT_DESCRIPTION)
-            .templateId(DEFAULT_TEMPLATE_ID);
+            .templateId(DEFAULT_TEMPLATE_ID)
+            .type(MessageConstants.EMAIL);
         return notifyMessageTemplate;
     }
 

@@ -25,6 +25,6 @@
         </loadData>
     </changeSet>
     <changeSet author="jtodd (generated)" id="1507642814735-2">
-        <dropTable tableName="SMS_TEMPLATE"/>
+        <dropTable tableName="sms_template"/>
     </changeSet>
 </databaseChangeLog>

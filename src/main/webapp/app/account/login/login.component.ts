@@ -63,14 +63,12 @@ export class LoginComponent implements AfterViewInit {
 
             // TODO previousState was set in the authExpiredInterceptor before being redirected to login modal.
             // since login is succesful, go to stored previousState and clear previousState
-            // const redirect = this.stateStorageService.getUrl();
-            // if (redirect) {
-            //     this.router.navigate([redirect]);
-            // }
-
-            // TODO We are just going to redirect to user managment for the time being.
-            this.router.navigate(['user-home']);
-
+            const redirect = this.stateStorageService.getUrl();
+            if (redirect) {
+                 this.router.navigate([redirect]);
+            }else{
+                this.router.navigate(['user-home']);
+            }
         }).catch((err) => {
             this.authenticationError = true;
             this.failureMessage = this.stateStorageService.loginFailureCode;

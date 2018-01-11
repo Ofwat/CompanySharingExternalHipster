@@ -1,6 +1,7 @@
 package uk.gov.ofwat.external.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import uk.gov.ofwat.external.aop.company.CompanySelectionAspect;
 import uk.gov.ofwat.external.security.*;
 
 import io.github.jhipster.config.JHipsterProperties;
@@ -46,6 +47,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     UserService userService;
 
+    @Autowired
+    CompanySelectionAspect companySelectionAspect;
+
     public SecurityConfiguration(AuthenticationManagerBuilder authenticationManagerBuilder, UserDetailsService userDetailsService,
                                  JHipsterProperties jHipsterProperties, RememberMeServices rememberMeServices,
                                  CorsFilter corsFilter) {
@@ -63,6 +67,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         try {
             CompanySharingDaoAuthenticationProvider provider = companySharingDaoAuthProvider();
             provider.setUserService(userService);
+            //We are setting this in a PostConstruct to avoid a circular dependency with userService.
+            companySelectionAspect.setUserService(userService);
             authenticationManagerBuilder
                 .authenticationProvider(provider);
 
@@ -174,7 +180,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/api/account/request_details_resend").hasAnyAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/api/invite").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/api/resend_invite").hasAuthority(AuthoritiesConstants.ADMIN)
-            .antMatchers("/api/users/pending_accounts/**").hasAuthority(AuthoritiesConstants.ADMIN)
+            .antMatchers("/api/users/pending_accounts/**").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.COMPANY_ADMIN)
             .antMatchers("/api/users/companies/**").hasAuthority(AuthoritiesConstants.ADMIN)
 
 /*            .antMatchers("/api/account/verify_captcha").permitAll()*/

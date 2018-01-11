@@ -5,13 +5,10 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
     <include file="classpath:config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/00000000000001_add_new_roles.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170809160746_add_user_mobile_telephone.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170810084411_added_entity_Company.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170810084411_added_entity_constraints_Company.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20170810100000_add_company_deleted_property.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170811100000_add_user_enabled_property.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20170825100000_add_user_pre_auth_role.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170830100000_add_otp_code_user_field.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170830110000_add_user_otp_required_field.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170912130000_add_user_otp_date_and_sent_fields.xml" relativeToChangelogFile="false"/>
@@ -26,7 +23,6 @@
     <include file="classpath:config/liquibase/changelog/20171010172622_add_companies.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170824155827_added_entity_DataCollection.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170810084411_added_entity_constraints_Company.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20170810100000_add_company_deleted_property.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170811100000_add_user_enabled_property.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170907140000_added_entity_constraints_DataCollection.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170918161703_changelog.xml" relativeToChangelogFile="false"/>
@@ -45,6 +41,8 @@
     <include file="classpath:config/liquibase/changelog/20171027150703_added_entity_DataInput.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20171027150703_added_entity_constraints_DataInput.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20171028155028_DataInput_AbstractAuditingEntity.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20171112124953_added_company_user_details.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20171112130000_add_company_user_details_values.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20171116000200_added_entity_CompanyDataCollection.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20171116000000_added_entity_CompanyStatus.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20171116000150_added_entity_ReviewSignOff.xml" relativeToChangelogFile="false"/>
