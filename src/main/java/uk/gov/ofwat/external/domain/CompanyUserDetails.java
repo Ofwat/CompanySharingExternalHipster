@@ -2,6 +2,7 @@ package uk.gov.ofwat.external.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Fetch;
 import org.springframework.context.annotation.Role;
 
 import javax.persistence.*;
@@ -17,7 +18,7 @@ public class CompanyUserDetails extends AbstractAuditingEntity implements Serial
     private Long id;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
     @JsonIgnore
