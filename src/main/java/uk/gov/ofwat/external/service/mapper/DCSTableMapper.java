@@ -17,6 +17,8 @@ public interface DCSTableMapper extends EntityMapper <TableDto, DCSTable> {
 
     @Mapping(target = "fountainReportId", ignore = true)
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "company", ignore = true)
+    @Mapping(target = "fountainRunId", ignore = true)
     @Mapping(source = "tableDto.rows", target = "rows")
     DCSTable toEntity(TableDto tableDto);
 

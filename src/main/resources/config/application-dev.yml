@@ -66,12 +66,13 @@ liquibase:
 # Then, modify the server.ssl properties so your "server" configuration looks like:
 #
 server:
-    port: 8443
-    ssl:
-        key-store: keystore.p12
-        key-store-password: password
-        keyStoreType: PKCS12
-        keyAlias: tomcat
+    port: 8080
+#    port: 8443
+#    ssl:
+#        key-store: keystore.p12
+#        key-store-password: password
+#        keyStoreType: PKCS12
+#        keyAlias: tomcat
 # ===================================================================
 # server:
 #    port: 8080
