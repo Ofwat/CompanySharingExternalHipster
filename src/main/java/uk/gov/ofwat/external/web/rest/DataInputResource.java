@@ -59,23 +59,25 @@ public class DataInputResource {
     @Timed
     public ResponseEntity<DataInputDTO> createDataInput(@Valid @RequestBody DataInputDTO dataInputDTO) throws URISyntaxException {
         log.debug("REST request to save DataInput : {}", dataInputDTO);
-        if (dataInputDTO.getId() != null) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new dataInput cannot already have an ID")).body(null);
-        }
 
-        Long maxOrderIndex = dataInputService.getMaxOrderIndex(dataInputDTO.getDataBundleId());
-        log.error("maxOrderIndex = " + maxOrderIndex);
-        Optional<PublishingStatus> optionalPublishingStatus = publishingStatusRepository.findOneByStatus("DRAFT");
-        if (!optionalPublishingStatus.isPresent()) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "publishingStatusMissing", "Publishing status 'Draft' not found in database."))
-                .body(null);
-        }
-        dataInputDTO.setStatusId(optionalPublishingStatus.get().getId());
-        dataInputDTO.setStatusStatus(optionalPublishingStatus.get().getStatus());
-        dataInputDTO.setOrderIndex(new Long(maxOrderIndex+1));
+            if (dataInputDTO.getId() != null) {
+                return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new dataInput cannot already have an ID")).body(null);
+            }
 
-        DataInputDTO result = dataInputService.save(dataInputDTO);
+            Long maxOrderIndex = dataInputService.getMaxOrderIndex(dataInputDTO.getDataBundleId());
+            log.error("maxOrderIndex = " + maxOrderIndex);
+            Optional<PublishingStatus> optionalPublishingStatus = publishingStatusRepository.findOneByStatus("DRAFT");
+            if (!optionalPublishingStatus.isPresent()) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "publishingStatusMissing", "Publishing status 'Draft' not found in database."))
+                    .body(null);
+            }
+            dataInputDTO.setStatusId(optionalPublishingStatus.get().getId());
+            dataInputDTO.setStatusStatus(optionalPublishingStatus.get().getStatus());
+            dataInputDTO.setOrderIndex(new Long(maxOrderIndex + 1));
+
+            DataInputDTO result = dataInputService.save(dataInputDTO);
+
         return ResponseEntity.created(new URI("/api/data-inputs/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);

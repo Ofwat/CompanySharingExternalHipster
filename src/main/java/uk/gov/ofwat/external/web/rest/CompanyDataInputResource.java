@@ -1,7 +1,10 @@
 package uk.gov.ofwat.external.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import uk.gov.ofwat.external.domain.DataInput;
 import uk.gov.ofwat.external.service.CompanyDataInputService;
+import uk.gov.ofwat.external.service.DataInputService;
+import uk.gov.ofwat.external.service.dto.DataDownloadDTO;
 import uk.gov.ofwat.external.web.rest.util.HeaderUtil;
 import uk.gov.ofwat.external.web.rest.util.PaginationUtil;
 import uk.gov.ofwat.external.service.dto.CompanyDataInputDTO;
@@ -17,11 +20,22 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * REST controller for managing CompanyDataInput.
@@ -36,9 +50,16 @@ public class CompanyDataInputResource {
 
     private final CompanyDataInputService companyDataInputService;
 
+
+
+    private static final String ENTITY_NAME_2 = "dataDownloadDTO";
+    private static final String directoryName = "C:\\Files\\";
+    Charset charset = StandardCharsets.UTF_8;
+
+
     public CompanyDataInputResource(CompanyDataInputService companyDataInputService) {
         this.companyDataInputService = companyDataInputService;
-    }
+     }
 
     /**
      * POST  /company-data-inputs : Create a new companyDataInput.
@@ -124,4 +145,5 @@ public class CompanyDataInputResource {
         companyDataInputService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
+
 }

@@ -1,4 +1,4 @@
-import { Component,ElementRef, Input, ViewChild, OnInit  } from '@angular/core';
+import {Component, ElementRef, Input, ViewChild, OnInit, EventEmitter, Output} from '@angular/core';
 import { UploadService } from './data-upload.service';
 
 
@@ -10,15 +10,18 @@ import { UploadService } from './data-upload.service';
 
 
 export class UploadComponent implements OnInit  {
-
+    @Input() valueMultiple: string;
+    @Input() valueCompanyInputId: string;
+    @Output() filesUploaded=new EventEmitter<any[]>();
     success: boolean;
     error: boolean;
     errorDataInputExists: boolean;
-    @Input() multiple: boolean = false;
+    uploadedFileNames: any[];
+
     @ViewChild('fileInput') inputEl: ElementRef;
-
-
     constructor(private uploadService: UploadService) {
+        this.uploadedFileNames = new Array();
+
     }
 
 
@@ -31,13 +34,33 @@ export class UploadComponent implements OnInit  {
         let inputEl: HTMLInputElement = this.inputEl.nativeElement;
         let fileCount: number = inputEl.files.length;
         let formData = new FormData();
-
+        this.uploadedFileNames = new Array();
         for (let i = 0; i < fileCount; i++) {
-            let file:File=inputEl.files.item(i);
-            formData.append('uploadFiles',file);
+            let file: File = inputEl.files.item(i);
+            this.uploadedFileNames.push(inputEl.files.item(i).name);
+            formData.append('uploadFiles', file);
         }
+        if (this.valueCompanyInputId == "") {
+            this.filesUploaded.emit(this.uploadedFileNames);
+            this.uploadService.upload(formData).subscribe(
+                response => {
+                    console.log("success" + response.status);
+                    this.success = true;
+                },
+                errorResponse => {
+                    console.log("error" + errorResponse.status + errorResponse.statusText);
+                    if (409 == errorResponse.status) {
+                        this.errorDataInputExists = true;
+                    }
+                    else {
+                        this.error = true;
+                    }
+                }
+            );
+        } else {
 
-        this.uploadService.upload(formData).subscribe(
+            formData.append('companyInputId', this.valueCompanyInputId);
+            this.uploadService.uploadCompany(formData).subscribe(
             response => {
                 console.log("success" + response.status);
                 this.success = true;
@@ -52,7 +75,7 @@ export class UploadComponent implements OnInit  {
                 }
             }
         );
-
+    }
     }
 
 }

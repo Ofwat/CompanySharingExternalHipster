@@ -78,6 +78,8 @@ public class CompanyUserDetails extends AbstractAuditingEntity implements Serial
     @Override
     public int hashCode() {
         int result = getId() != null ? getId().hashCode() : 0;
+
+
         result = 31 * result + (getUser() != null ? getUser().hashCode() : 0);
         result = 31 * result + (getCompany() != null ? getCompany().hashCode() : 0);
         result = 31 * result + (authority != null ? authority.hashCode() : 0);

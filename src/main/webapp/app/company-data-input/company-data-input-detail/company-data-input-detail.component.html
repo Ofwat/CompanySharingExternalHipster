@@ -14,62 +14,48 @@
                 </div>
                 <div>
                     <dd class="cya-question">Data Bundle</dd>
-                    <dd class="cya-answer">{{dataInput.dataBundleName}}</dd>
+                    <dd class="cya-answer">{{dataInput.companyDataBundleName}}</dd>
                     <dd></dd>
                 </div>
-               <!-- <div>
-                    <dd class="cya-question">Publishing Status</dd>
-                    <dd class="cya-answer">{{dataInput.statusStatus}}</dd>
-                    <dd class="cya-answer"><a href="" [routerLink]="['/publishing-status-modification', 'input', dataInput.id]">Change</a></dd>
-                </div>-->
+                <div >
+                    <dd class="cya-question">Data File</dd>
+                    <dd class="cya-answer"><div *ngIf="dataInput.dataInputId"><a href="" #fileInput (click)="downloadFile($event)" id="{{dataInput.dataInputId}}" >Download</a></div></dd>
+                </div>
+
+                <jhi-upload *ngIf="!success && !errorDataInputExists"  [valueCompanyInputId]="company_data_input_id" [valueMultiple]="true"></jhi-upload>
+                <!-- <div>
+                     <dd class="cya-question">Publishing Status</dd>
+                     <dd class="cya-answer">{{dataInput.statusStatus}}</dd>
+                     <dd class="cya-answer"><a href="" [routerLink]="['/publishing-status-modification', 'input', dataInput.id]">Change</a></dd>
+                 </div>-->
                 <div>
-                    <dd class="cya-question">Deadline</dd>
-                    <dd class="cya-answer">{{dataInput.defaultDeadline | date:'dd LLLL yyyy'}}</dd>
+                    <dd class="cya-question">Status</dd>
+                    <dd class="cya-answer">{{dataInput.statusStatus}}</dd>
                     <dd></dd>
                 </div>
                 <div>
                     <dd class="cya-question">Owner</dd>
-                    <dd class="cya-answer"><div *ngIf="dataInput.ownerFirstName">{{dataInput.ownerFirstName}}</div></dd>
+                    <dd class="cya-answer"><div *ngIf="dataInput.companyOwnerFirstName">{{dataInput.companyOwnerFirstName}}</div></dd>
                     <dd></dd>
                 </div>
                 <div>
                     <dd class="cya-question">Reviewer</dd>
-                    <dd class="cya-answer"><div *ngIf="dataInput.reviewerFirstName">{{dataInput.reviewerFirstName}}</div></dd>
+                    <dd class="cya-answer"><div *ngIf="dataInput.companyReviewerFirstName">{{dataInput.companyReviewerFirstName}}</div></dd>
                     <dd></dd>
                 </div>
                 <div>
-                    <dd class="cya-question">Description</dd>
-                    <dd class="cya-answer">{{dataInput.description}}</dd>
+                    <dd class="cya-question">Company Name</dd>
+                    <dd class="cya-answer">{{dataInput.companyName}}</dd>
                     <dd></dd>
                 </div>
                 <div>
-                    <dd class="cya-question">Guidance</dd>
-                    <dd class="cya-answer">{{dataInput.guidance}}</dd>
-                    <dd></dd>
-                </div>
-                <div>
-                    <dd class="cya-question">Created</dd>
-                    <dd class="cya-answer">{{dataInput.createdDate | date:'dd LLLL yyyy HH:mm'}}</dd>
-                    <dd></dd>
-                </div>
-                <div>
-                    <dd class="cya-question">Created by</dd>
-                    <dd class="cya-answer">{{dataInput.createdBy}}</dd>
-                    <dd></dd>
-                </div>
-                <div>
-                    <dd class="cya-question">Last modified</dd>
-                    <dd class="cya-answer">{{dataInput.lastModifiedDate | date:'dd LLLL yyyy HH:mm'}}</dd>
-                    <dd></dd>
-                </div>
-                <div>
-                    <dd class="cya-question">Last modified by</dd>
-                    <dd class="cya-answer"><div *ngIf="dataInput.lastModifiedBy">{{dataInput.lastModifiedBy}}</div></dd>
+                    <dd class="cya-question">Input Type</dd>
+                    <dd class="cya-answer">{{dataInput.inputTypeType}}</dd>
                     <dd></dd>
                 </div>
             </dl>
             <button type="submit"
-                    [routerLink]="['/company-data-bundle-detail', dataInput.dataBundleId]"
+                    [routerLink]="['/company-data-bundle-detail', dataInput.companyDataBundleId]"
                     class="button button-secondary float-left">
                 <span>Back</span>
             </button>

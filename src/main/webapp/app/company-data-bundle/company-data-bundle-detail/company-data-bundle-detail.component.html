@@ -51,12 +51,12 @@
                 <dl class="govuk-check-your-answers cya-questions-short">
                     <div>
                         <dt class="cya-question">Name</dt>
-                        <dt class="cya-question">Description</dt>
+                        <dt class="cya-question">Status</dt>
                         <dt class="cya-question"></dt>
                     </div>
                     <div *ngFor="let db of dataBundles">
                         <dd class="cya-answer">{{db.name}}</dd>
-                        <dd class="cya-answer">{{db.description}}</dd>
+                        <dd class="cya-answer">{{db.statusStatus}}</dd>
                         <dd class="cya-answer"><a href="" [routerLink]="['/company-data-input-detail', db.id]">Details</a></dd>
                     </div>
                 </dl>
@@ -64,7 +64,7 @@
 
             <div class="form-group">
                 <button type="submit"
-                        [routerLink]="['/company-data-collection-detail', dataBundle.dataBundleId]"
+                        [routerLink]="['/company-data-collection-detail', dataBundle.companyDataCollectionId]"
                         class="button button-secondary float-left">
                     </span>&nbsp;<span>Back</span>
                 </button>

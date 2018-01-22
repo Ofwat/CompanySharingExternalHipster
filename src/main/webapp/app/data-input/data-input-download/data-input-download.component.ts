@@ -1,12 +1,12 @@
 import {Component, OnInit, ElementRef, Input, ViewChild, OnChanges} from '@angular/core';
 import {DataDownloadService} from '../../shared';
 import {User} from '../../shared';
-import { Subscription } from 'rxjs/Rx';
+import {Subscription} from 'rxjs/Rx';
 import {ActivatedRoute} from '@angular/router';
 import {JhiAlertService} from 'ng-jhipster';
-import { saveAs } from 'file-saver/FileSaver';
+import {saveAs} from 'file-saver/FileSaver';
 import 'rxjs/add/operator/toPromise';
-import { Http,  Headers } from '@angular/http';
+import {Http, Headers} from '@angular/http';
 
 
 @Component({
@@ -27,7 +27,7 @@ export class DataInputDownloadComponent implements OnInit {
     private selectedReviewer: User;
     @ViewChild('fileInput') inputEl: ElementRef;
     private subscription: Subscription;
-    dataBundleId:string;
+    dataBundleId: string;
 
     constructor(private route: ActivatedRoute,
                 private dataDownloadService: DataDownloadService,
@@ -38,7 +38,8 @@ export class DataInputDownloadComponent implements OnInit {
 
     ngOnInit() {
         this.subscription = this.route.params.subscribe((params) => {
-            this.dataBundleId=params['dataBundleId'];
+            this.dataBundleId = params['dataBundleId'];
+            this.temp = "";
             this.loadDataBundle();
         });
 
@@ -50,35 +51,23 @@ export class DataInputDownloadComponent implements OnInit {
         this.selectedReviewer = null;
         this.temp = "No value";
         this.servers.push('any3');
-}
+    }
 
-    private downloadFile() {
+    private downloadFile( event: Event) {
+        event.preventDefault();
         let inputEl: HTMLInputElement = this.inputEl.nativeElement;
-        let fileName:string = inputEl.id;
-       // this.dataDownloadService.download(fileName).subscribe((response) => this.onSaveSuccessFile(response), () => this.onSaveError());
+        let fileName: string = (<HTMLInputElement>event.target).id;
         this.saveFile(fileName);
-        //this.loadDataBundle();
     }
 
     saveFile(filename: string) {
-        const headers = new Headers();
-        headers.append('Accept', 'text/plain');
-        this.http.get(`${this.resourceUrlFile}?filename=${filename}`, { headers: headers })
-            .toPromise()
-            .then(response => this.saveToFileSystem(response));
+        this.temp = filename;
+        this.loadDataBundle();
     }
 
-
-    private saveToFileSystem(response) {
-        const contentDispositionHeader: string = response.headers.get('Content-Disposition');
-        const parts: string[] = contentDispositionHeader.split(';');
-        const filename = parts[1].split('=')[1];
-        const blob = new Blob([response._body], { type: 'text/plain' });
-        saveAs(blob, filename);
-    }
 
     loadDataBundle() {
-        this.dataDownloadService.getAllFiles().subscribe((response) => this.onSaveSuccess(response), () => this.onSaveError());
+        this.dataDownloadService.getAllFiles(this.temp).subscribe((response) => this.onSaveSuccess(response), () => this.onSaveError());
     }
 
     private onSaveSuccess(result) {
@@ -87,15 +76,16 @@ export class DataInputDownloadComponent implements OnInit {
                 this.fileNameList.push(file)
             });
         }
+        if (result.fileName != null) {
+            const blob = new Blob([result.fileContent], {type: 'text/plain'});
+            saveAs(blob, result.fileName);
+        }
     }
-
     private onSaveError() {
         this.error = true;
         this.success = false;
     }
-
     ngOnDestroy() {
         this.subscription.unsubscribe();
     }
-
 }

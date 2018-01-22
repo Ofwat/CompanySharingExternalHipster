@@ -26,6 +26,7 @@ export class DataInputCreationComponent implements OnInit {
     @ViewChild('fileInput') inputEl: ElementRef;
     private resourceUrls = 'api/data-upload';
     private data: string;
+    uploadFileNames:any[];
 
     constructor(
         private alertService: JhiAlertService,
@@ -79,6 +80,14 @@ export class DataInputCreationComponent implements OnInit {
         this.alertService.error(error.error, error.message, null);
     }
 
+    onFileUploaded(uploadedFiles: any[]) {
+        this.uploadFileNames = new Array();
+        let fileCount: number = uploadedFiles.length;
+        for (let i = 0; i < fileCount; i++) {
+            this.uploadFileNames.push(uploadedFiles[i]);
+        }
+    }
+
     ownerChanged(user:User){
         this.selectedOwner = user;
     }
@@ -93,8 +102,8 @@ export class DataInputCreationComponent implements OnInit {
 
         this.dataInput.dataBundleId = this.dataBundle.id;
 
-        this.dataInput.fileName = "a typical file name";
-        this.dataInput.fileLocation = "a typical file location";
+        this.dataInput.fileName = this.uploadFileNames[0];
+        this.dataInput.fileLocation = "C:\\Files\\";
         this.dataInput.orderIndex = 0;
         this.dataInput.defaultDeadline =this.dataBundle.defaultDeadline;
 

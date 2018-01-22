@@ -17,9 +17,13 @@ export class DataDownloadService {
         });
     }
 
-    getAllFiles(): Observable<ResponseWrapper> {
-        return this.http.get(this.resourceUrl)
+    getAllFiles(filename: string): Observable<ResponseWrapper> {
+        return this.http.get(`${this.resourceUrl}?filename=${filename}`)
             .map((res: Response) =>  res.json());
     }
 
+    getDownloadAllFiles(filename: string): Observable<ResponseWrapper> {
+        return this.http.get(`${this.resourceUrlFile}?filename=${filename}`)
+            .map((res: Response) =>  res.json());
+    }
 }

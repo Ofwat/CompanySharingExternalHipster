@@ -28,4 +28,7 @@ public interface DataInputRepository extends JpaRepository<DataInput,Long> {
     void updateOrderIndexForId(@Param("orderIndex") Long orderIndex,
                                @Param("dataInputId") Long dataInputId);
 
+    @Query("select data_input from DataInput data_input where data_input.dataBundle.id = ?#{id}")
+    List<DataInput> findByDataBundle(@Param("id") Long id);
+
 }

@@ -29,6 +29,7 @@ public class DataCollectionService {
     private final PublishingStatusRepository publishingStatusRepository;
     private final DataBundleService dataBundleService;
 
+
     public DataCollectionService(DataCollectionRepository dataCollectionRepository, DataCollectionMapper dataCollectionMapper, PublishingStatusRepository publishingStatusRepository, DataBundleService dataBundleService) {
         this.dataCollectionRepository = dataCollectionRepository;
         this.dataCollectionMapper = dataCollectionMapper;

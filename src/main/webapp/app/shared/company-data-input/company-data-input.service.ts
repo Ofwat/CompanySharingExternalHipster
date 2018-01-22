@@ -8,7 +8,8 @@ import { createRequestOption } from '../model/request-util';
 
 @Injectable()
 export class  CompanyDataInputService {
-    private resourceUrl = 'api/data-inputs';
+    private resourceUrl = 'api/company-data-inputs';
+    private resourceUrlDownload = 'api/data-download';
 
     constructor(private http: Http) { }
 
@@ -24,6 +25,10 @@ export class  CompanyDataInputService {
 
     get(id: any): Observable<CompanyDataInput> {
         return this.http.get(`${this.resourceUrl}/${id}`).map((res: Response) => res.json());
+    }
+
+    getAllFiles(id: any): Observable<ResponseWrapper> {
+        return this.http.get(`${this.resourceUrlDownload}/${id}`).map((res: Response) => res.json());
     }
 
     find(name: string): Observable<CompanyDataInput> {

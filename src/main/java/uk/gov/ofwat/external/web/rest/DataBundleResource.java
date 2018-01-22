@@ -1,9 +1,10 @@
 package uk.gov.ofwat.external.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
-import uk.gov.ofwat.external.domain.PublishingStatus;
-import uk.gov.ofwat.external.repository.PublishingStatusRepository;
+import uk.gov.ofwat.external.domain.*;
+import uk.gov.ofwat.external.repository.*;
 import uk.gov.ofwat.external.service.DataBundleService;
+import uk.gov.ofwat.external.service.PublishingService;
 import uk.gov.ofwat.external.web.rest.util.HeaderUtil;
 import uk.gov.ofwat.external.web.rest.util.PaginationUtil;
 import uk.gov.ofwat.external.service.dto.DataBundleDTO;
@@ -35,11 +36,37 @@ public class DataBundleResource {
     private final Logger log = LoggerFactory.getLogger(DataBundleResource.class);
     private static final String ENTITY_NAME = "dataBundle";
     private final DataBundleService dataBundleService;
+    private final CompanyRepository companyRepository;
+    private final DataCollectionRepository dataCollectionRepository;
+    private final DataBundleRepository dataBundleRepository;
+    private final DataInputRepository dataInputRepository;
     private final PublishingStatusRepository publishingStatusRepository;
+    private final UserRepository userRepository;
+    private final CompanyStatusRepository companyStatusRepository;
+    private final CompanyDataCollectionRepository companyDataCollectionRepository;
+    private final CompanyDataBundleRepository companyDataBundleRepository;
+    private final CompanyDataInputRepository companyDataInputRepository;
+    private final InputTypeRepository inputTypeRepository;
+    private final PublishingService publishingService;
 
-    public DataBundleResource(DataBundleService dataBundleService, PublishingStatusRepository publishingStatusRepository) {
+    public DataBundleResource(PublishingService publishingService,DataBundleService dataBundleService, PublishingStatusRepository publishingStatusRepository,
+                              CompanyRepository companyRepository, DataCollectionRepository dataCollectionRepository,
+                              DataInputRepository dataInputRepository, UserRepository userRepository,
+                              CompanyStatusRepository companyStatusRepository,DataBundleRepository dataBundleRepository,CompanyDataBundleRepository companyDataBundleRepository,
+                              CompanyDataCollectionRepository companydataCollectionRepository,  CompanyDataInputRepository companyDataInputRepository, InputTypeRepository inputTypeRepository) {
+        this.publishingService=publishingService;
         this.dataBundleService = dataBundleService;
         this.publishingStatusRepository = publishingStatusRepository;
+        this.companyRepository = companyRepository;
+        this.dataCollectionRepository = dataCollectionRepository;
+        this.dataInputRepository = dataInputRepository;
+        this.userRepository = userRepository;
+        this.companyStatusRepository = companyStatusRepository;
+        this.dataBundleRepository = dataBundleRepository;
+        this.companyDataCollectionRepository =companydataCollectionRepository;
+        this.companyDataBundleRepository =companyDataBundleRepository;
+        this.companyDataInputRepository =companyDataInputRepository;
+        this.inputTypeRepository = inputTypeRepository;
     }
 
     /**
@@ -67,7 +94,7 @@ public class DataBundleResource {
         }
         dataBundleDTO.setStatusId(optionalPublishingStatus.get().getId());
         dataBundleDTO.setStatusStatus(optionalPublishingStatus.get().getStatus());
-        dataBundleDTO.setOrderIndex(new Long(maxOrderIndex+1));
+        dataBundleDTO.setOrderIndex(new Long(maxOrderIndex + 1));
 
         DataBundleDTO result = dataBundleService.save(dataBundleDTO);
         return ResponseEntity.created(new URI("/api/data-bundles/" + result.getId()))
@@ -92,6 +119,60 @@ public class DataBundleResource {
             return createDataBundle(dataBundleDTO);
         }
         DataBundleDTO result = dataBundleService.save(dataBundleDTO);
+
+        //When status has been changed to publish
+        if (dataBundleDTO.getStatusId().equals(new Long(4))) {
+            publishingService.publishDataBundleStatus(dataBundleDTO);
+           /* List<Company> listOfCompanies = companyRepository.findAll();
+
+            for (Company company : listOfCompanies) {
+                //Get data collection
+                DataCollection dataCollection = dataCollectionRepository.findOne(dataBundleDTO.getDataCollectionId());
+                //Get data input
+                //List<DataInput> dataInputList = dataInputRepository.findByDataBundle(dataBundleDTO.getId());
+
+                //Set Company Data Collection
+                CompanyDataCollection companyDataCollection = new CompanyDataCollection();
+                companyDataCollection.setCompany(company);
+                companyDataCollection.setCompanyOwner(userRepository.findOne(dataBundleDTO.getOwnerId()));
+                companyDataCollection.setCompanyReviewer(userRepository.findOne(dataBundleDTO.getReviewerId()));
+                companyDataCollection.setDataCollection(dataCollection);
+                companyDataCollection.setName(company.getName());
+                companyDataCollection.setStatus(companyStatusRepository.findOne(dataCollection.getPublishingStatus().getId()));
+                companyDataCollectionRepository.save(companyDataCollection);
+
+                //Set Company Data Bundles
+                //CompanyDataBundle[] companyDataBundlesList= new  CompanyDataBundle[1];
+                CompanyDataBundle companyDataBundle = new CompanyDataBundle();
+                companyDataBundle.setCompany(company);
+                companyDataBundle.setStatus(companyStatusRepository.findOne(dataCollection.getPublishingStatus().getId()));
+                companyDataBundle.setOrderIndex(new Long(0));
+                companyDataBundle.setCompanyDeadline(dataBundleDTO.getDefaultDeadline());
+                companyDataBundle.setCompanyOwner(userRepository.findOne(dataBundleDTO.getOwnerId()));
+                companyDataBundle.setCompanyReviewer(userRepository.findOne(dataBundleDTO.getReviewerId()));
+                companyDataBundle.setDataBundle(dataBundleRepository.findOne(dataBundleDTO.getId()));
+                companyDataBundle.setName(dataBundleDTO.getName());
+                companyDataBundle.setCompanyDataCollection(companyDataCollection);
+                companyDataBundleRepository.save(companyDataBundle);
+
+                //Set Company Data Inputs
+                for (DataInput dataInput:dataCollection.getDataBundles()[0].getDataInputs()){
+                    CompanyDataInput companyDataInput = new CompanyDataInput();
+                    companyDataInput.setDataInput(dataInput);
+                    companyDataInput.setCompanyReviewer(userRepository.findOne(dataBundleDTO.getReviewerId()));
+                    companyDataInput.setCompany(company);
+                    companyDataInput.setCompanyOwner(userRepository.findOne(dataBundleDTO.getOwnerId()));
+                    InputType inputType = new InputType();
+                    companyDataInput.setInputType(inputTypeRepository.findOne(new Long(1)));
+                    companyDataInput.setName(dataBundleDTO.getName());
+                    companyDataInput.setOrderIndex(new Long(0));
+                    companyDataInput.setStatus(companyStatusRepository.findOne(dataCollection.getPublishingStatus().getId()));
+                    companyDataInput.setCompanyDataBundle(companyDataBundle);
+                    companyDataInputRepository.save(companyDataInput);
+                }
+
+            }*/
+        }
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, dataBundleDTO.getId().toString()))
             .body(result);

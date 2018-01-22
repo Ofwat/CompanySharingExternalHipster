@@ -18,5 +18,5 @@ public interface CompanyDataInputRepository extends JpaRepository<CompanyDataInp
 
     @Query("select company_data_input from CompanyDataInput company_data_input where company_data_input.companyReviewer.login = ?#{principal.username}")
     List<CompanyDataInput> findByCompanyReviewerIsCurrentUser();
-    
+
 }

@@ -28,4 +28,7 @@ public interface CompanyRepository extends JpaRepository<Company,Long> {
     @Query("select company from Company company join company.companyUserDetails cud join cud.authority a join cud.user u where u.id =:userId and a.name ='ROLE_ADMIN'")
     Optional<List<Company>> findAllWhereUserIsAdmin(@Param("userId") Long userId);
 
+    //Get all companies
+    List<Company> findAll();
+
 }

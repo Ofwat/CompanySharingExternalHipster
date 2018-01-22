@@ -1,5 +1,6 @@
 package uk.gov.ofwat.external.service;
 
+import org.springframework.data.repository.query.Param;
 import uk.gov.ofwat.external.domain.DataBundle;
 import uk.gov.ofwat.external.domain.DataInput;
 import uk.gov.ofwat.external.repository.DataInputRepository;
@@ -99,5 +100,11 @@ public class DataInputService {
         return dataInputRepository.getMaxOrderIndex(dataBundleId);
     }
 
-
+    public DataInput findByDataBundle(Long id){
+        log.debug("Request to get Data Input from DataInput");
+        //return dataInputRepository.findByDataBundle(id);
+        log.debug("Request to get DataInput : {}", id);
+        DataInput dataInput = dataInputRepository.findOne(id);
+        return dataInput;
+    }
 }

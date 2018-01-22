@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import uk.gov.ofwat.external.domain.DataFile;
+import uk.gov.ofwat.external.repository.CompanyDataInputRepository;
+import uk.gov.ofwat.external.repository.DataFileRepository;
 import uk.gov.ofwat.external.service.dto.DataInputDTO;
 import uk.gov.ofwat.external.web.rest.util.HeaderUtil;
 
@@ -27,7 +30,12 @@ public class DataUploadResource {
     private final Logger log = LoggerFactory.getLogger(DataUploadResource.class);
     private static final String ENTITY_NAME = "dataUpload";
 
-    public DataUploadResource(){
+    private final DataFileRepository dataFileRepository;
+    private final CompanyDataInputRepository companyDataInputRepository;
+
+    public DataUploadResource(DataFileRepository dataFileRepository,CompanyDataInputRepository companyDataInputRepository){
+        this.dataFileRepository=dataFileRepository;
+        this.companyDataInputRepository=companyDataInputRepository;
     }
 
     /**
@@ -40,6 +48,34 @@ public class DataUploadResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
 
+    @PostMapping(value = "/data-upload-company")
+    public ResponseEntity<DataInputDTO> uploadFile(@RequestParam(value = "uploadFiles", required = false) MultipartFile[] files,
+                                                   @RequestParam(value = "companyInputId", required = false) String companyInputId) throws IOException {
+        //-- my stuff with formDataObject and uploaded files
+        log.debug("REST request to upload Data : {}");
+        String directoryName="C:\\CompanyFiles\\";
+        File directory = new File(String.valueOf(directoryName));
+        if(!directory.exists()) {
+            directory.mkdir();
+        }
+        for(MultipartFile file: files){
+            log.debug("Uploaded File Names :"+file.getOriginalFilename());
+            Path theDestination1 = Paths.get("C:\\CompanyFiles\\"+file.getOriginalFilename());
+            File newFile = new File(theDestination1.toString());
+            file.transferTo(newFile);
+            DataFile dataFIle = new DataFile();
+            dataFIle.setCompanyDataInput(companyDataInputRepository.findOne(Long.parseLong(companyInputId)));
+            dataFIle.setLocation("C:\\CompanyFiles\\");
+            dataFIle.setName(file.getOriginalFilename());
+            dataFileRepository.save(dataFIle);
+        }
+
+        //return dummy obj might change it to empty string and discussion
+        DataInputDTO result = new DataInputDTO();
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, ""))
+            .body(result);
+    }
     @PostMapping(value = "/data-upload")
     public ResponseEntity<DataInputDTO> uploadFile(@RequestParam(value = "uploadFiles", required = false) MultipartFile[] files) throws IOException {
         //-- my stuff with formDataObject and uploaded files
@@ -62,5 +98,4 @@ public class DataUploadResource {
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, ""))
             .body(result);
     }
-
 }

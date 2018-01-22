@@ -30,7 +30,7 @@
         </div>
     </div>
 
-    <jhi-upload></jhi-upload>
+    <jhi-upload *ngIf="!success && !errorDataInputExists" [valueLocation]="" [valueMultiple]="true" (filesUploaded)="onFileUploaded($event)"></jhi-upload>
     <div class="col-md-8 offset-md-2">
         <form name="form" role="form" (ngSubmit)="create()" #dataInputCreationForm="ngForm" *ngIf="!success && !errorDataInputExists">
 
