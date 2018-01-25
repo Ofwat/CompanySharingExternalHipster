@@ -40,7 +40,7 @@ export class UploadComponent implements OnInit  {
             this.uploadedFileNames.push(inputEl.files.item(i).name);
             formData.append('uploadFiles', file);
         }
-        if (this.valueCompanyInputId == "") {
+        if (this.valueCompanyInputId === undefined) {
             this.filesUploaded.emit(this.uploadedFileNames);
             this.uploadService.upload(formData).subscribe(
                 response => {

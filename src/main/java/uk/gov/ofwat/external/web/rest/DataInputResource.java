@@ -6,6 +6,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import uk.gov.ofwat.external.domain.PublishingStatus;
 import uk.gov.ofwat.external.repository.PublishingStatusRepository;
 import uk.gov.ofwat.external.service.DataInputService;
+import uk.gov.ofwat.external.service.PublishingStateTransformationService;
 import uk.gov.ofwat.external.web.rest.util.HeaderUtil;
 import uk.gov.ofwat.external.web.rest.util.PaginationUtil;
 import uk.gov.ofwat.external.service.dto.DataInputDTO;
@@ -42,10 +43,14 @@ public class DataInputResource {
     private static final String ENTITY_NAME = "dataInput";
     private final DataInputService dataInputService;
     private final PublishingStatusRepository publishingStatusRepository;
+    private final PublishingStateTransformationService publishingStateTransformationService;
 
-    public DataInputResource(DataInputService dataInputService, PublishingStatusRepository publishingStatusRepository) {
+    public DataInputResource(DataInputService dataInputService, PublishingStatusRepository publishingStatusRepository,
+                             PublishingStateTransformationService publishingStateTransformationService) {
         this.dataInputService = dataInputService;
         this.publishingStatusRepository = publishingStatusRepository;
+        this.publishingStateTransformationService = publishingStateTransformationService;
+
     }
 
     /**
@@ -122,6 +127,10 @@ public class DataInputResource {
             return createDataInput(dataInputDTO);
         }
         DataInputDTO result = dataInputService.save(dataInputDTO);
+        //When status has been changed to publish
+        if (dataInputDTO.getStatusId().equals(new Long(4))) {
+            publishingStateTransformationService.publishDataInputStatus(dataInputDTO);
+        }
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, dataInputDTO.getId().toString()))
             .body(result);

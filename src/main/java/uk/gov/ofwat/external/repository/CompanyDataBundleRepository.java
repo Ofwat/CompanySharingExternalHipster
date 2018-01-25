@@ -2,7 +2,7 @@ package uk.gov.ofwat.external.repository;
 
 import uk.gov.ofwat.external.domain.CompanyDataBundle;
 import org.springframework.stereotype.Repository;
-
+import org.springframework.data.repository.query.Param;
 import org.springframework.data.jpa.repository.*;
 import java.util.List;
 
@@ -18,5 +18,8 @@ public interface CompanyDataBundleRepository extends JpaRepository<CompanyDataBu
 
     @Query("select company_data_bundle from CompanyDataBundle company_data_bundle where company_data_bundle.companyReviewer.login = ?#{principal.username}")
     List<CompanyDataBundle> findByCompanyReviewerIsCurrentUser();
-    
+
+    @Query("select company_data_bundle from CompanyDataBundle company_data_bundle where company_data_bundle.company.id = :id and company_data_bundle.dataBundle.id = :bundleId")
+    CompanyDataBundle findByCompanyAndBundle(@Param("id") Long id,@Param("bundleId") Long bundleId);
+
 }

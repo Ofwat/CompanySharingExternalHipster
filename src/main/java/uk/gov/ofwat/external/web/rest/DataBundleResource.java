@@ -5,6 +5,7 @@ import uk.gov.ofwat.external.domain.*;
 import uk.gov.ofwat.external.repository.*;
 import uk.gov.ofwat.external.service.DataBundleService;
 import uk.gov.ofwat.external.service.PublishingService;
+import uk.gov.ofwat.external.service.PublishingStateTransformationService;
 import uk.gov.ofwat.external.web.rest.util.HeaderUtil;
 import uk.gov.ofwat.external.web.rest.util.PaginationUtil;
 import uk.gov.ofwat.external.service.dto.DataBundleDTO;
@@ -47,14 +48,14 @@ public class DataBundleResource {
     private final CompanyDataBundleRepository companyDataBundleRepository;
     private final CompanyDataInputRepository companyDataInputRepository;
     private final InputTypeRepository inputTypeRepository;
-    private final PublishingService publishingService;
+    private final PublishingStateTransformationService publishingStateTransformationService;
 
-    public DataBundleResource(PublishingService publishingService,DataBundleService dataBundleService, PublishingStatusRepository publishingStatusRepository,
+    public DataBundleResource(PublishingStateTransformationService publishingStateTransformationService,DataBundleService dataBundleService, PublishingStatusRepository publishingStatusRepository,
                               CompanyRepository companyRepository, DataCollectionRepository dataCollectionRepository,
                               DataInputRepository dataInputRepository, UserRepository userRepository,
                               CompanyStatusRepository companyStatusRepository,DataBundleRepository dataBundleRepository,CompanyDataBundleRepository companyDataBundleRepository,
                               CompanyDataCollectionRepository companydataCollectionRepository,  CompanyDataInputRepository companyDataInputRepository, InputTypeRepository inputTypeRepository) {
-        this.publishingService=publishingService;
+        this.publishingStateTransformationService=publishingStateTransformationService;
         this.dataBundleService = dataBundleService;
         this.publishingStatusRepository = publishingStatusRepository;
         this.companyRepository = companyRepository;
@@ -122,7 +123,7 @@ public class DataBundleResource {
 
         //When status has been changed to publish
         if (dataBundleDTO.getStatusId().equals(new Long(4))) {
-            publishingService.publishDataBundleStatus(dataBundleDTO);
+            publishingStateTransformationService.publishDataBundleStatus(dataBundleDTO);
            /* List<Company> listOfCompanies = companyRepository.findAll();
 
             for (Company company : listOfCompanies) {
