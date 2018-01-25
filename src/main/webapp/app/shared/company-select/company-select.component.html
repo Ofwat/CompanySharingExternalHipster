@@ -1,7 +1,14 @@
 <div>
     <span *ngIf="display">
-    <select style="height: auto; width:150px;" class="form-control" id="currentSelectedCompany" (change)="companyChanged(event)" name="currentSelectedCompany" #companyInput="ngModel"
-            [(ngModel)]="this.selectedCompany" required>
+    <select style="height: auto" class="form-control"
+            id="currentSelectedCompany"
+            (change)="companyChanged(event)"
+            name="currentSelectedCompany"
+            #companyInput="ngModel"
+            [(ngModel)]="this.selectedCompany"
+            required
+            [compareWith]="compareById"
+            >
         <option *ngFor="let c of this.companies" [ngValue]="c">{{c.name}}</option>
     </select>
     </span>

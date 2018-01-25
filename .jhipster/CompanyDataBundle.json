@@ -1,0 +1,82 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "status",
+            "otherEntityName": "companyStatus",
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": [
+                "required"
+            ],
+            "otherEntityField": "status"
+        },
+        {
+            "relationshipName": "company",
+            "otherEntityName": "company",
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": [
+                "required"
+            ],
+            "otherEntityField": "name"
+        },
+        {
+            "relationshipName": "companyDataCollection",
+            "otherEntityName": "companyDataCollection",
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": [
+                "required"
+            ],
+            "otherEntityField": "name"
+        },
+        {
+            "relationshipName": "dataBundle",
+            "otherEntityName": "dataBundle",
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": [
+                "required"
+            ],
+            "otherEntityField": "name"
+        },
+        {
+            "relationshipName": "companyOwner",
+            "otherEntityName": "user",
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": [
+            ],
+            "otherEntityField": "firstName"
+        },
+        {
+            "relationshipName": "companyReviewer",
+            "otherEntityName": "user",
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": [
+            ],
+            "otherEntityField": "firstName"
+        },
+        {
+            "relationshipName": "submissionSignOff",
+            "otherEntityName": "submissionSignOff",
+            "relationshipType": "one-to-many",
+            "otherEntityField": "status",
+            "otherEntityRelationshipName": "companyDataBundle"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "companyDeadline",
+            "fieldType": "LocalDate"
+        }
+    ],
+    "changelogDate": "20171116000300",
+    "dto": "mapstruct",
+    "service": "serviceClass",
+    "entityTableName": "company_data_bundle",
+    "pagination": "pagination"
+}

@@ -96,7 +96,7 @@ jhipster:
             key: 56f0dea10b9d7e2f447d87431b0c2918057f7c5d
     mail: # specific JHipster mail property, for standard properties see MailProperties
         from: CompanySharingExternal@localhost
-        base-url: http://my-server-url-to-change # Modify according to your server's URL
+        base-url: https://companysharingexternal.cloudapps.digital # Modify according to your server's URL
     metrics: # DropWizard Metrics configuration, used by MetricsConfiguration
         jmx.enabled: true
         graphite:

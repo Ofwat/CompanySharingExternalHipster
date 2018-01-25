@@ -8,8 +8,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import uk.gov.ofwat.external.domain.Company;
 import uk.gov.ofwat.external.domain.RegistrationRequest;
+import uk.gov.ofwat.external.domain.User;
 import uk.gov.ofwat.external.repository.RegistrationRequestRepository;
+import uk.gov.ofwat.external.service.mapper.CompanyMapper;
+import uk.gov.ofwat.external.service.util.RandomUtil;
 
+import java.time.Instant;
 import java.util.Optional;
 
 @Service
@@ -21,12 +25,34 @@ public class RegistrationRequestService {
 
     private MailService mailService;
 
+    private final CompanyMapper companyMapper;
+
     private final Logger log = LoggerFactory.getLogger(RegistrationRequestService.class);
 
-    public RegistrationRequestService(RegistrationRequestRepository registrationRequestRepository, CompanyService companyService, MailService mailService) {
+    public RegistrationRequestService(RegistrationRequestRepository registrationRequestRepository, CompanyService companyService, MailService mailService, CompanyMapper companyMapper) {
         this.registrationRequestRepository = registrationRequestRepository;
         this.companyService = companyService;
         this.mailService = mailService;
+        this.companyMapper = companyMapper;
+    }
+
+    @Transactional
+    public RegistrationRequest createRegistrationRequest(String login, String firstName, String lastName, String email,
+                                                         String mobileTelephoneNumber, Long companyId){
+        log.debug("Creating new registration request for user: {}", login);
+        RegistrationRequest rr = new RegistrationRequest();
+        rr.setLogin(login);
+        rr.setFirstName("");
+        rr.setLastName("");
+        rr.setEmail(email);
+        rr.setMobileTelephoneNumber(mobileTelephoneNumber);
+        rr.setRegistrationKey(RandomUtil.generateActivationKey());
+        rr.setAdminApproved(false);
+        rr.setUserActivated(false);
+        rr.setKeyCreated(Instant.now());
+        Company company = companyMapper.toEntity(companyService.findOne(companyId));
+        rr.setCompany(company);
+        return registrationRequestRepository.save(rr);
     }
 
     @Transactional(readOnly = true)
@@ -35,9 +61,9 @@ public class RegistrationRequestService {
     };
 
     @Transactional
-    public void deleteRegistrationRequest(String login){
+    public void deleteRegistrationRequest(String login, User currentUser){
         registrationRequestRepository.findOneByLogin(login).ifPresent(registrationRequest -> {
-            if(companyService.isCurrentUserAdminForCompany(registrationRequest.getCompany())) {
+            if(companyService.isUserAdminForCompany(registrationRequest.getCompany(), currentUser.getLogin())) {
                 registrationRequestRepository.delete(registrationRequest);
                 log.debug("Deleted RegistrationRequest: {}", registrationRequest);
             }
@@ -45,9 +71,9 @@ public class RegistrationRequestService {
     }
 
     @Transactional
-    public Optional<RegistrationRequest> approveRegistrationRequest(String login){
+    public Optional<RegistrationRequest> approveRegistrationRequest(String login, User currentUser){
         return registrationRequestRepository.findOneByLogin(login).map(registrationRequest -> {
-            if(companyService.isCurrentUserAdminForCompany(registrationRequest.getCompany())) {
+            if(companyService.isUserAdminForCompany(registrationRequest.getCompany(), currentUser.getLogin())) {
                 registrationRequest.setAdminApproved(true);
                 registrationRequest = registrationRequestRepository.save(registrationRequest);
                 mailService.sendRegistrationRequestApprovalEmail(registrationRequest);

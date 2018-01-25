@@ -2,6 +2,7 @@ package uk.gov.ofwat.external.domain;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Fetch;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -29,11 +30,11 @@ public class DataCollection extends AbstractAuditingEntity implements Serializab
     @ManyToOne
     private PublishingStatus publishingStatus;
 
-//reinstate    @NotNull
-    @ManyToOne
+    //reinstate    @NotNull
+    @ManyToOne(fetch=FetchType.LAZY)
     private User owner;
 
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     private User reviewer;
 
     @Column(name = "description")

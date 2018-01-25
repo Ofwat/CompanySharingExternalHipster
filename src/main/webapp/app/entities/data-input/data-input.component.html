@@ -1,0 +1,96 @@
+<div>
+    <h2>
+        <span>Data Inputs</span>
+        <button class="btn btn-primary float-right create-data-input" [routerLink]="['/', { outlets: { popup: ['data-input-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span >
+            Create new Data Input
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="dataInputs">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+            <th jhiSortBy="id"><span>ID</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="name"><span>Name</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="description"><span>Description</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="guidance"><span>Guidance</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="defaultDeadline"><span>Default Deadline</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="orderIndex"><span>Order Index</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="fileName"><span>File Name</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="fileLocation"><span>File Location</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="statusStatus"><span>Status</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="dataBundleName"><span>Data Bundle</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="ownerFirstName"><span>Owner</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="reviewerFirstName"><span>Reviewer</span> <span class="fa fa-sort"></span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let dataInput of dataInputs ;trackBy: trackId">
+                <td><a [routerLink]="['../data-input', dataInput.id ]">{{dataInput.id}}</a></td>
+                <td>{{dataInput.name}}</td>
+                <td>{{dataInput.description}}</td>
+                <td>{{dataInput.guidance}}</td>
+                <td>{{dataInput.defaultDeadline | date:'mediumDate'}}</td>
+                <td>{{dataInput.orderIndex}}</td>
+                <td>{{dataInput.fileName}}</td>
+                <td>{{dataInput.fileLocation}}</td>
+                <td>
+                    <div *ngIf="dataInput.statusId">
+                        <a [routerLink]="['../publishing-status', dataInput.statusId  ]" >{{dataInput.statusStatus}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="dataInput.dataBundleId">
+                        <a [routerLink]="['../data-bundle', dataInput.dataBundleId  ]" >{{dataInput.dataBundleName}}</a>
+                    </div>
+                </td>
+                <td>
+                    {{dataInput.ownerFirstName}}
+                </td>
+                <td>
+                    {{dataInput.reviewerFirstName}}
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../data-input', dataInput.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="hidden-md-down">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'data-input/'+ dataInput.id + '/edit'} }]"
+                                replaceUrl="true"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="hidden-md-down">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'data-input/'+ dataInput.id + '/delete'} }]"
+                                replaceUrl="true"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="hidden-md-down">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+        <div *ngIf="dataInputs && dataInputs.length">
+            <div class="row justify-content-center">
+                <jhi-item-count [page]="page" [total]="queryCount" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+            </div>
+            <div class="row justify-content-center">
+                <ngb-pagination [collectionSize]="totalItems" [(page)]="page" (pageChange)="loadPage(page)"></ngb-pagination>
+            </div>
+        </div>
+</div>

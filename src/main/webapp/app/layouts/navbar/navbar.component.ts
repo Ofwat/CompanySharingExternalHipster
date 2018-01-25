@@ -63,12 +63,13 @@ export class NavbarComponent implements OnInit {
 
     isOfwatEmployee() {
         // TODO This should check for the correct type of Role TBA!
-        return this.principal.hasAnyAuthorityDirect(['ROLE_ADMIN']);
+        return this.principal.hasAnyAuthorityDirect(['ROLE_ADMIN', 'ROLE_USER']);
     }
 
     login() {
         // this.modalRef = this.loginModalService.open();
         // this.router.navigateByUrl('login');
+        this.router.navigate(['/login']);
     }
 
     logout() {

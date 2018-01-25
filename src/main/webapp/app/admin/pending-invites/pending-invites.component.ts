@@ -74,8 +74,8 @@ export class PendingInvitesComponent implements OnInit, OnDestroy {
         this.userService.approveInvite( user.login ).subscribe((res: ResponseWrapper) => {
             console.log( 'Approved account' );
             this.loadAll();
+            this.showApproveAccount = false;
         }, ( res: ResponseWrapper ) => this.approveAccountError( res.json ));
-        this.showApproveAccount = false;
     }
 
     confirmDeleteAccount(registrationRequest: RegistrationRequest) {
@@ -90,6 +90,7 @@ export class PendingInvitesComponent implements OnInit, OnDestroy {
                 console.log( 'Deleted pending account' );
                 this.selectedRegistrationRequest = null;
                 this.showDeleteAccount = false;
+                this.loadAll();
             }, ( res: ResponseWrapper ) => this.deleteAccountError( res.json ));
     }
 
@@ -199,7 +200,7 @@ export class PendingInvitesComponent implements OnInit, OnDestroy {
         this.alertService.error(error.error, error.message, null);
     }
 
-    resendActivationLink(registrationRequest:RegistrationRequest) {
+    resendActivationLink(registrationRequest: RegistrationRequest) {
         console.log('Resending link for ' + registrationRequest.login);
     }
 

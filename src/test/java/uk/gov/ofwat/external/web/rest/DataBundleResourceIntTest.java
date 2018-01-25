@@ -8,6 +8,7 @@ import uk.gov.ofwat.external.domain.User;
 import uk.gov.ofwat.external.domain.User;
 import uk.gov.ofwat.external.domain.DataCollection;
 import uk.gov.ofwat.external.repository.DataBundleRepository;
+import uk.gov.ofwat.external.repository.PublishingStatusRepository;
 import uk.gov.ofwat.external.service.DataBundleService;
 import uk.gov.ofwat.external.service.dto.DataBundleDTO;
 import uk.gov.ofwat.external.service.mapper.DataBundleMapper;
@@ -77,6 +78,9 @@ public class DataBundleResourceIntTest {
     private ExceptionTranslator exceptionTranslator;
 
     @Autowired
+    PublishingStatusRepository publishingStatusRepository;
+
+    @Autowired
     private EntityManager em;
 
     private MockMvc restDataBundleMockMvc;
@@ -86,7 +90,7 @@ public class DataBundleResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        DataBundleResource dataBundleResource = new DataBundleResource(dataBundleService);
+        DataBundleResource dataBundleResource = new DataBundleResource(dataBundleService, publishingStatusRepository);
         this.restDataBundleMockMvc = MockMvcBuilders.standaloneSetup(dataBundleResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -117,6 +121,8 @@ public class DataBundleResourceIntTest {
         dataBundle.setOwner(owner);
         // Add required entity
         User reviewer = UserResourceIntTest.createEntity(em);
+        reviewer.setLogin("jane.doe");
+        reviewer.setEmail("jane.doe@localhost");
         em.persist(reviewer);
         em.flush();
         dataBundle.setReviewer(reviewer);

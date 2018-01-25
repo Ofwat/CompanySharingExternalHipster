@@ -50,13 +50,13 @@ public class NotifyService {
         if(notifyMessageTemplate.getType().equals(MessageConstants.SMS)) {
             personalisation = buildPersonalisation(user, personalisation);
             if(checkPersonalisationForValidMobile(personalisation)){
-                sendNotifySms(user, notifyMessageTemplate, personalisation, buildReference());
+                sendNotifySms(user, notifyMessageTemplate, personalisation, buildReference(personalisation));
             }else{
                 log.error("SMS Message could not be sent with reference '{}'", personalisation.get(REFERENCE_NUMBER));
             }
         }else{
             if(checkPersonalisationForValidEmail(personalisation)) {
-                sendNotifyEmail(notifyMessageTemplate, personalisation, buildReference());
+                sendNotifyEmail(notifyMessageTemplate, personalisation, buildReference(personalisation));
             }else{
                 log.error("Email could not be sent with reference '{}'", personalisation.get(REFERENCE_NUMBER));
             }
@@ -73,13 +73,13 @@ public class NotifyService {
         //sendMessageToNotify(notifyMessageTemplate, personalisation);
         if(notifyMessageTemplate.getType().equals(MessageConstants.SMS)) {
             if(checkPersonalisationForValidMobile(personalisation)){
-                sendNotifySms(notifyMessageTemplate, personalisation, buildReference());
+                sendNotifySms(notifyMessageTemplate, personalisation, buildReference(personalisation));
             }else{
                 log.error("SMS Message could not be sent with reference '{}'", personalisation.get(REFERENCE_NUMBER));
             }
         }else{
             if(checkPersonalisationForValidEmail(personalisation)) {
-                sendNotifyEmail(notifyMessageTemplate, personalisation, buildReference());
+                sendNotifyEmail(notifyMessageTemplate, personalisation, buildReference(personalisation));
             }else{
                 log.error("Email could not be sent with reference '{}'", personalisation.get(REFERENCE_NUMBER));
             }
@@ -90,8 +90,12 @@ public class NotifyService {
      * Build up the reference required for the communication.
      * @return
      */
-    private String buildReference(){
+    private String buildReference(HashMap<String, String> personalisation){
+        if(personalisation.get(REFERENCE_NUMBER) == null){
         return "REFERENCE_1";
+        }else{
+            return personalisation.get(REFERENCE_NUMBER);
+        }
     }
 
     private HashMap<String, String> buildPersonalisation(User user, HashMap<String, String> personalisation){

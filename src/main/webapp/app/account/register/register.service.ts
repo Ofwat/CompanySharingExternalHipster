@@ -30,19 +30,18 @@ export class Register {
         return this.http.post('api/account/request_account', account);
     }
 
-    /**
-     * This method takes the key form the url link sent to the user and gets the details of the registration request to populate
-     *  the form for the user to complete.
-     * @param {string} key
-     * @returns {Observable<ResponseWrapper>}
-     */
+
+     // This method takes the key form the url link sent to the user and gets the details of the registration request to populate
+     // the form for the user to complete.
+     // @param {string} key
+     // @returns {Observable<ResponseWrapper>}
     requestAccountDetails(key: string): Observable<ResponseWrapper> {
         console.log('Requesting with Key: ' + key);
         return this.http.post('api/account/request_details', key).map((res: Response) => this.convertResponse(res));
     }
 
     resendInvite(login: string){
-        return this.http.post('api/resend_invite', login).map((res: Response) => res.json());
+        return this.http.post('api/resend_invite', login );// .map((res: Response) => this.convertResponse(res));
     }
 
     private convertResponse(res: Response): ResponseWrapper {

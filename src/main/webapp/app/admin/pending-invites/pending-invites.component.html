@@ -17,16 +17,42 @@
     <jhi-alert></jhi-alert>
     <jhi-alert-error></jhi-alert-error> <!-- Use this one if you want the error returned by the server to be displayed. -->
     <div *ngIf="showApproveAccount">
-        Approve account! for user {{selectedRegistrationRequest.email}}
-        <button (click)="approveAccount(selectedRegistrationRequest)" class="button button-warning">Approve?</button>
+        <div class="grid-row">
+            <div class="column-full">
+                Approve account for user {{selectedRegistrationRequest.email}}?
+            </div>
+        </div>
+        <div class="grid-row">
+            <div class="column-one-quarter">
+                <button (click)="approveAccount(selectedRegistrationRequest)" class="button button-start">Approve?</button>
+            </div>
+            <div class="column-half">
+                <button class="button button-secondary" style="" (click)="showApproveAccount=false">
+                    <span class="">Back to pending users</span>
+                </button>
+            </div>
+            <div class="column-one-quarter"></div>
+        </div>
     </div>
     <div *ngIf="showDeleteAccount">
-        Delete request for user {{selectedRegistrationRequest.email}}
-        <button (click)="deleteAccount(selectedRegistrationRequest)" class="button button-warning">Delete?</button>
-        <!--Confirm delete request here! -->
-
+        <div class="grid-row">
+        <div class="column-full">
+            Delete request for user {{selectedRegistrationRequest.login}}?
+        </div>
+        </div>
+        <div class="grid-row">
+            <div class="column-one-quarter">
+                <button (click)="deleteAccount(selectedRegistrationRequest)" class="button button-warning">Delete?</button>
+            </div>
+            <div class="column-half">
+                <button class="button button-secondary" style="" (click)="showDeleteAccount=false">
+                    <span class="">Back to pending users</span>
+                </button>
+            </div>
+            <div class="column-one-quarter"></div>
+        </div>
     </div>
-    <div class="table-responsive" *ngIf="requests && (!showApproveAccount && !showDeleteAccount)">
+    <div class="table-responsive" *ngIf="requests && !(showApproveAccount || showDeleteAccount)">
         <table class="">
             <thead>
                 <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
@@ -45,16 +71,16 @@
                     <td>{{request.mobileTelephoneNumber}}</td>
                     <td>{{request.createdDate | date:'dd MMMM yyyy HH:mm'}}</td>
                     <td><span *ngIf="request.adminApproved" class="text-pending">Pending user activation</span></td>
-<!--                    <td><span class="multiple-choice" ><input style="opacity: 1; top:-20px;" id="testField{{user.id}}" name="testField{{user.id}}" [ngModel]="user.enabled" type="checkbox" class="" (click)="checkbox(user)"></span></td>-->
-                    <td><span *ngIf="!request.adminApproved" (click)="confirmApproveAccount(request)">Approve</span></td>
-                    <td><span class="page-link" [routerLink]="['../pending-invites-resend', request.login]">Resend Invitation</span></td>
-                    <td><span (click)="confirmDeleteAccount(request)">Delete</span></td>
+<!--                <td><span class="multiple-choice" ><input style="opacity: 1; top:-20px;" id="testField{{user.id}}" name="testField{{user.id}}" [ngModel]="user.enabled" type="checkbox" class="" (click)="checkbox(user)"></span></td>-->
+                    <td><a class="page-link" *ngIf="!request.adminApproved" (click)="confirmApproveAccount(request)">Approve</a></td>
+                    <td><a class="page-link" [routerLink]="['../pending-invites-resend', request.login]">Resend Invitation</a></td>
+                    <td><a class="page-link" (click)="confirmDeleteAccount(request)">Delete</a></td>
                 </tr>
             </tbody>
         </table>
     </div>
+    <div *ngIf="requests && !(showDeleteAccount || showApproveAccount)">
     <div class="row">
-        <div *ngIf="requests">
             <div class="row justify-content-center">
                 <span class="float-left">
                     <jhi-item-count [page]="page" [total]="queryCount" [itemsPerPage]="itemsPerPage"></jhi-item-count>
@@ -63,14 +89,14 @@
                     <ngb-pagination [collectionSize]="totalItems" [(page)]="page" (pageChange)="loadPage(page)"></ngb-pagination>
                 </span>
             </div>
-        </div>
     </div>
-    <div class="row">
+    <div class="grid-row">
         <div class="column-full">
-            <button class="button button-secondary float-right" style="margin-right:30px;" [routerLink]="['../ofwat-user-management']">
+            <button class="button button-secondary" style="" [routerLink]="['../ofwat-user-management']">
                 <span class="">Back to user management</span>
             </button>
         </div>
+    </div>
     </div>
 </div>
 

@@ -4,27 +4,27 @@
         <h3 class="heading-small" *ngIf="!success && !errorDataBundleExists">Data Collection: {{dataBundle.dataCollectionName}}</h3>
 
         <div class="alert alert-success" *ngIf="success">
-            <strong>Data Bundle edited</strong>
+            <p><strong>Data Bundle edited</strong></p>
             <button type="button"
-                    class="button button-secondary"
+                    class="button button-secondary float-left"
                     [routerLink]="['/data-bundle-detail', dataBundle.id]">
                 <span>Back to Data Bundle</span>
             </button>
         </div>
 
         <div class="alert alert-danger" *ngIf="error">
-            <strong>Data Bundle edit failed!</strong> Please try again later.
+            <p><strong>Data Bundle edit failed!</strong> Please try again later.</p>
             <button type="button"
-                    class="button button-secondary"
+                    class="button button-secondary float-left"
                     [routerLink]="['/data-bundle-detail', dataBundle.id]">
                 <span>Back to Data Bundle</span>
             </button>
         </div>
 
         <div class="alert alert-danger" *ngIf="errorDataBundleExists">
-            <strong>Data Bundle name '{{dataBundle.name}}' is already in use!</strong> Please choose another one.
+            <p><strong>Data Bundle name '{{dataBundle.name}}' is already in use!</strong> Please choose another one.</p>
             <button type="button"
-                    class="button button-secondary"
+                    class="button button-secondary float-left"
                     [routerLink]="['/data-bundle-detail', dataBundle.id]">
                 <span>Back to Data Bundle</span>
             </button>
@@ -123,60 +123,31 @@
                 </div>
             </div>
 
-            <div class="form-group">
-                <label class="form-label" for="owner">Owner
-                    <span class="form-hint">The owner responsible for the Data Bundle</span>
-                </label>
-                <select class="form-control" [(ngModel)]="ownerIndex" id="owner" name="owner" #owner="ngModel">
-                    <option *ngFor="let user of users"
-                            [value]="user?.id"
-                            [selected]="dataBundle?.ownerId==user?.id ? true : null" >
-                        {{user?.firstName}} {{user?.lastName}}
-                    </option>
-                </select>
-            </div>
+            <jhi-ofwat-user-select
+                [selectedUser]="selectedOwner"
+                [userResponsibility]="'owner'"
+                [resourceType]="'Bundle'"
+                (userChangedEvent)="ownerChanged($event)">
+            </jhi-ofwat-user-select>
 
-            <div class="form-group">
-                <label class="form-label" for="reviewer">Reviewer
-                    <span class="form-hint">The reviewer responsible for reviewing the Data Bundle</span>
-                </label>
-                <select class="form-control" [(ngModel)]="reviewerIndex" id="reviewer" name="reviewer" #reviewer="ngModel">
-                    <option *ngFor="let user of users"
-                            [value]="user?.id"
-                            [selected]="dataBundle?.reviewerId==user?.id ? true : null" >
-                        {{user?.firstName}} {{user?.lastName}}
-                    </option>
-                </select>
-            </div>
+            <jhi-ofwat-user-select
+                [selectedUser]="selectedReviewer"
+                [userResponsibility]="'reviewer'"
+                [resourceType]="'Bundle'"
+                (userChangedEvent)="reviewerChanged($event)">
+            </jhi-ofwat-user-select>
+
 
             <div class="form-group">
                 <button type="submit"
                         [disabled]="dataBundleEditForm.form.invalid"
-                        class="button float-right">
+                        class="button float-left">
                     <span>Save</span>
                 </button>
                 <button type="button"
-                        class="button button-secondary"
+                        class="button button-secondary float-left"
                         [routerLink]="['/data-bundle-detail', dataBundle.id]">
                     <span>Back</span>
-                </button>
-                <button *ngIf="dataBundle.statusStatus=='DRAFT'" class="button float-right" (click)="markAsReview()">
-                    <span class="fa fa-plus"></span> <span>Mark as Review</span>
-                </button>
-                <button *ngIf="dataBundle.statusStatus=='REVIEW'" class="button float-right" (click)="markAsDraft()">
-                    <span class="fa fa-plus"></span> <span>Mark as Draft</span>
-                </button>
-                <button *ngIf="dataBundle.statusStatus=='REVIEW'" class="button float-right" (click)="markAsPending()">
-                    <span class="fa fa-plus"></span> <span>Mark as Unpublished</span>
-                </button>
-                <button *ngIf="dataBundle.statusStatus=='UNPUBLISHED'" class="button float-right" (click)="markAsReview()">
-                    <span class="fa fa-plus"></span> <span>Mark as Reviewed</span>
-                </button>
-                <button *ngIf="dataBundle.statusStatus=='UNPUBLISHED'" class="button float-right" (click)="markAsPublished()">
-                    <span class="fa fa-plus"></span> <span>Publish</span>
-                </button>
-                <button *ngIf="dataBundle.statusStatus=='PUBLISHED'" class="button float-right" (click)="markAsPending()">
-                    <span class="fa fa-plus"></span> <span>Mark as Reviewed</span>
                 </button>
             </div>
         </form>

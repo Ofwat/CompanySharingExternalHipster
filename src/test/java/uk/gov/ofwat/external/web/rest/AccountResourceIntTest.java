@@ -5,6 +5,7 @@ import uk.gov.ofwat.external.domain.Authority;
 import uk.gov.ofwat.external.domain.PersistentToken;
 import uk.gov.ofwat.external.domain.User;
 import uk.gov.ofwat.external.repository.AuthorityRepository;
+import uk.gov.ofwat.external.repository.NotifyMessageTemplateRepository;
 import uk.gov.ofwat.external.repository.PersistentTokenRepository;
 import uk.gov.ofwat.external.repository.UserRepository;
 import uk.gov.ofwat.external.security.AuthoritiesConstants;
@@ -79,6 +80,15 @@ public class AccountResourceIntTest {
     @Autowired
     private HttpMessageConverter[] httpMessageConverters;
 
+    @Autowired
+    CaptchaService captchaService;
+
+    @Autowired
+    NotifyMessageTemplateRepository notifyMessageTemplateRepository;
+
+    @Autowired
+    RegistrationRequestService registrationRequestService;
+
     @Mock
     private UserService mockUserService;
 
@@ -95,10 +105,11 @@ public class AccountResourceIntTest {
         doNothing().when(mockMailService).sendActivationEmail(anyObject());
 
         AccountResource accountResource =
-            new AccountResource(userRepository, userService, mockMailService, persistentTokenRepository, companyService, notifyService, otpService);
+            new AccountResource(userRepository, userService, mockMailService, persistentTokenRepository, companyService, notifyService, otpService,captchaService, notifyMessageTemplateRepository, registrationRequestService);
 
         AccountResource accountUserMockResource =
-            new AccountResource(userRepository, mockUserService, mockMailService, persistentTokenRepository, companyService, notifyService, otpService);
+            new AccountResource(userRepository, mockUserService, mockMailService, persistentTokenRepository, companyService, notifyService, otpService, captchaService, notifyMessageTemplateRepository, registrationRequestService);
+
 
         this.restMvc = MockMvcBuilders.standaloneSetup(accountResource)
             .setMessageConverters(httpMessageConverters)
@@ -471,6 +482,7 @@ public class AccountResourceIntTest {
         User user = new User();
         user.setLogin("activate-account");
         user.setEmail("activate-account@example.com");
+        user.setMobileTelephoneNumber("07000000000");
         user.setPassword(RandomStringUtils.random(60));
         user.setActivated(false);
         user.setActivationKey(activationKey);
@@ -500,7 +512,7 @@ public class AccountResourceIntTest {
         user.setEmail("save-account@example.com");
         user.setPassword(RandomStringUtils.random(60));
         user.setActivated(true);
-
+        user.setMobileTelephoneNumber("07000000000");
         userRepository.saveAndFlush(user);
 
         UserDTO userDTO = new UserDTO(
@@ -546,6 +558,7 @@ public class AccountResourceIntTest {
         User user = new User();
         user.setLogin("save-invalid-email");
         user.setEmail("save-invalid-email@example.com");
+        user.setMobileTelephoneNumber("07000000000");
         user.setPassword(RandomStringUtils.random(60));
         user.setActivated(true);
 
@@ -588,7 +601,7 @@ public class AccountResourceIntTest {
         user.setEmail("save-existing-email@example.com");
         user.setPassword(RandomStringUtils.random(60));
         user.setActivated(true);
-
+        user.setMobileTelephoneNumber("07000000000");
         userRepository.saveAndFlush(user);
 
         User anotherUser = new User();
@@ -596,7 +609,7 @@ public class AccountResourceIntTest {
         anotherUser.setEmail("save-existing-email2@example.com");
         anotherUser.setPassword(RandomStringUtils.random(60));
         anotherUser.setActivated(true);
-
+        anotherUser.setMobileTelephoneNumber("07000000000");
         userRepository.saveAndFlush(anotherUser);
 
         UserDTO userDTO = new UserDTO(
@@ -637,7 +650,7 @@ public class AccountResourceIntTest {
         user.setEmail("save-existing-email-and-login@example.com");
         user.setPassword(RandomStringUtils.random(60));
         user.setActivated(true);
-
+        user.setMobileTelephoneNumber("07000000000");
         userRepository.saveAndFlush(user);
 
         UserDTO userDTO = new UserDTO(
@@ -677,6 +690,7 @@ public class AccountResourceIntTest {
         user.setPassword(RandomStringUtils.random(60));
         user.setLogin("change-password");
         user.setEmail("change-password@example.com");
+        user.setMobileTelephoneNumber("07000000000");
         userRepository.saveAndFlush(user);
 
         restMvc.perform(post("/api/account/change_password").content("new password"))
@@ -694,6 +708,7 @@ public class AccountResourceIntTest {
         user.setPassword(RandomStringUtils.random(60));
         user.setLogin("change-password-too-small");
         user.setEmail("change-password-too-small@example.com");
+        user.setMobileTelephoneNumber("07000000000");
         userRepository.saveAndFlush(user);
 
         restMvc.perform(post("/api/account/change_password").content("new"))
@@ -711,6 +726,7 @@ public class AccountResourceIntTest {
         user.setPassword(RandomStringUtils.random(60));
         user.setLogin("change-password-too-long");
         user.setEmail("change-password-too-long@example.com");
+        user.setMobileTelephoneNumber("07000000000");
         userRepository.saveAndFlush(user);
 
         restMvc.perform(post("/api/account/change_password").content(RandomStringUtils.random(101)))
@@ -728,6 +744,7 @@ public class AccountResourceIntTest {
         user.setPassword(RandomStringUtils.random(60));
         user.setLogin("change-password-empty");
         user.setEmail("change-password-empty@example.com");
+        user.setMobileTelephoneNumber("07000000000");
         userRepository.saveAndFlush(user);
 
         restMvc.perform(post("/api/account/change_password").content(RandomStringUtils.random(0)))
@@ -745,6 +762,7 @@ public class AccountResourceIntTest {
         user.setPassword(RandomStringUtils.random(60));
         user.setLogin("current-sessions");
         user.setEmail("current-sessions@example.com");
+        user.setMobileTelephoneNumber("07000000000");
         userRepository.saveAndFlush(user);
 
         PersistentToken token = new PersistentToken();
@@ -772,6 +790,7 @@ public class AccountResourceIntTest {
         user.setPassword(RandomStringUtils.random(60));
         user.setLogin("invalidate-session");
         user.setEmail("invalidate-session@example.com");
+        user.setMobileTelephoneNumber("07000000000");
         userRepository.saveAndFlush(user);
 
         PersistentToken token = new PersistentToken();
@@ -799,6 +818,7 @@ public class AccountResourceIntTest {
         user.setActivated(true);
         user.setLogin("password-reset");
         user.setEmail("password-reset@example.com");
+        user.setMobileTelephoneNumber("07000000000");
         userRepository.saveAndFlush(user);
 
         restMvc.perform(post("/api/account/reset_password/init")
@@ -811,7 +831,7 @@ public class AccountResourceIntTest {
         restMvc.perform(
             post("/api/account/reset_password/init")
                 .content("password-reset-wrong-email@example.com"))
-            .andExpect(status().isBadRequest());
+            .andExpect(status().isOk()); //We will always be saying we have done it for security reasons!
     }
 
     @Test
@@ -823,6 +843,7 @@ public class AccountResourceIntTest {
         user.setEmail("finish-password-reset@example.com");
         user.setResetDate(Instant.now().plusSeconds(60));
         user.setResetKey("reset key");
+        user.setMobileTelephoneNumber("07000000000");
         userRepository.saveAndFlush(user);
 
         KeyAndPasswordVM keyAndPassword = new KeyAndPasswordVM();
@@ -848,6 +869,7 @@ public class AccountResourceIntTest {
         user.setEmail("finish-password-reset-too-small@example.com");
         user.setResetDate(Instant.now().plusSeconds(60));
         user.setResetKey("reset key too small");
+        user.setMobileTelephoneNumber("07000000000");
         userRepository.saveAndFlush(user);
 
         KeyAndPasswordVM keyAndPassword = new KeyAndPasswordVM();

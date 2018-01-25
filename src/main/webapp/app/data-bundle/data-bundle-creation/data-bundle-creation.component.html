@@ -3,27 +3,27 @@
         <h2 class="heading-medium">Create Data Bundle for collection: {{dataCollection?.name}}</h2>
 
         <div class="alert alert-success" *ngIf="success">
-            <strong>Data Bundle created</strong>
+            <p><strong>Data Bundle created</strong></p>
             <button type="button"
-                    class="button button-secondary"
+                    class="button button-secondary float-left"
                     [routerLink]="['/data-collection-detail', dataBundle.dataCollectionId]">
                 <span>Back to Data Collection</span>
             </button>
         </div>
 
         <div class="alert alert-danger" *ngIf="error">
-            <strong>Data Bundle creation failed!</strong> Please try again later.
+            <p><strong>Data Bundle creation failed!</strong> Please try again later.</p>
             <button type="button"
-                    class="button button-secondary"
+                    class="button button-secondary float-left"
                     [routerLink]="['/data-collection-detail', dataBundle.dataCollectionId]">
                 <span>Back to Data Collection</span>
             </button>
         </div>
 
         <div class="alert alert-danger" *ngIf="errorDataBundleExists">
-            <strong>Data Bundle name '{{dataBundle.name}}' is already in use!</strong> Please choose another one.
+            <p><strong>Data Bundle name '{{dataBundle.name}}' is already in use!</strong> Please choose another one.</p>
             <button type="button"
-                    class="button button-secondary"
+                    class="button button-secondary float-left"
                     [routerLink]="['/data-collection-detail', dataBundle.dataCollectionId]">
                 <span>Back to Data Collection</span>
             </button>
@@ -122,38 +122,28 @@
                 </div>
             </div>
 
-            <div class="form-group">
-                <label class="form-label" for="owner">Owner
-                    <span class="form-hint">The owner responsible for the Data Bundle</span>
-                </label>
-                <select class="form-control" [(ngModel)]="ownerIndex" id="owner" name="owner" #owner="ngModel">
-                    <option *ngFor="let user of users"
-                            [value]="user?.id"
-                        [selected]="dataCollection?.owner?.id==user?.id ? true : null" >
-                        {{user?.firstName}} {{user?.lastName}}</option>
-                </select>
-            </div>
+            <jhi-ofwat-user-select
+                [selectedUser]="selectedOwner"
+                [userResponsibility]="'owner'"
+                [resourceType]="'Bundle'"
+                (userChangedEvent)="ownerChanged($event)">
+            </jhi-ofwat-user-select>
 
-            <div class="form-group">
-                <label class="form-label" for="reviewer">Reviewer
-                    <span class="form-hint">The reviewer responsible for reviewing the Data Bundle</span>
-                </label>
-                <select class="form-control" [(ngModel)]="reviewerIndex" id="reviewer" name="reviewer" #reviewer="ngModel">
-                    <option *ngFor="let user of users"
-                            [value]="user?.id"
-                            [selected]="dataCollection?.reviewer?.id==user?.id ? true : null" >
-                    {{user?.firstName}} {{user?.lastName}}</option>
-                </select>
-            </div>
+            <jhi-ofwat-user-select
+                [selectedUser]="selectedReviewer"
+                [userResponsibility]="'reviewer'"
+                [resourceType]="'Bundle'"
+                (userChangedEvent)="reviewerChanged($event)">
+            </jhi-ofwat-user-select>
 
             <div class="form-group">
                 <button type="submit"
                         [disabled]="dataBundleCreationForm.form.invalid"
-                        class="button float-right">
+                        class="button float-left">
                     <span>Create Data Bundle</span>
                 </button>
                 <button type="button"
-                        class="button button-secondary"
+                        class="button button-secondary float-left"
                         [routerLink]="['/data-collection-detail', dataCollection?.id]">
                     <span>Back</span>
                 </button>

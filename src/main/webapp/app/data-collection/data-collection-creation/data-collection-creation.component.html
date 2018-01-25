@@ -1,20 +1,32 @@
 <div>
     <div>
         <h2 class="heading-medium">Create Data Collection</h2>
-
         <div class="alert alert-success" *ngIf="success">
-            <strong>Data Collection created</strong>
-            <button type="button" class="button button-secondary" [routerLink]="['../data-collection-management']"><span class="font-medium">Back to Data Collections</span></button>
+            <p><strong>Data Collection created</strong></p>
+            <button type="button"
+                    class="button button-secondary float-left"
+                    [routerLink]="['../data-collection-management']">
+                <span>Back to Data Collections</span>
+            </button>
         </div>
 
         <div class="alert alert-danger" *ngIf="error">
-            <strong>Data Collection creation failed!</strong> Please try again later.
-            <button type="button" class="button button-secondary" [routerLink]="['../data-collection-management']"><span class="font-medium">Back to Data Collections</span></button>
+            <p><strong>Data Collection creation failed!</strong> Please try again later.</p>
+            <button type="button"
+                        class="button button-secondary float-left"
+                        [routerLink]="['../data-collection-management']">
+                <span>Back to Data Collections</span>
+            </button>
+
         </div>
 
         <div class="alert alert-danger" *ngIf="errorDataCollectionExists">
-            <strong>Data Collection name '{{dataCollection.name}}' is already in use!</strong> Please choose another one.
-            <button type="button" class="button button-secondary" [routerLink]="['../data-collection-management']"><span class="font-medium">Back to Data Collections</span></button>
+            <p><strong>Data Collection name '{{dataCollection.name}}' is already in use!</strong> Please choose another one.</p>
+            <button type="button"
+                    class="button button-secondary float-left"
+                    [routerLink]="['../data-collection-management']">
+                <span>Back to Data Collections</span>
+            </button>
         </div>
     </div>
 
@@ -86,32 +98,46 @@
                 </div>
             </div>
 
-            <div class="form-group">
-                <label class="form-label" for="owner">Owner
-                    <span class="form-hint">The owner responsible for the Data Collection</span>
-                </label>
-                <select class="form-control" [(ngModel)]="dataCollection.owner" id="owner" name="owner" #name="ngModel" required>
-                    <option *ngFor="let user of users" [value]="user.id">{{user.firstName}} {{user.lastName}}</option>
-                </select>
-            </div>
+            <jhi-ofwat-user-select
+                [selectedUser]="selectedOwner"
+                [userResponsibility]="'owner'"
+                [resourceType]="'Collection'"
+                (userChangedEvent)="ownerChanged($event)">
+            </jhi-ofwat-user-select>
 
-            <div class="form-group">
-                <label class="form-label" for="reviewer">Reviewer
-                    <span class="form-hint">The reviewer responsible for reviewing the Data Collection</span>
-                </label>
-                <select class="form-control" [(ngModel)]="dataCollection.reviewer" id="reviewer" name="reviewer" #name="ngModel" required>
-                    <option *ngFor="let user of users" [value]="user.id">{{user.firstName}} {{user.lastName}}</option>
-                </select>
-            </div>
+            <jhi-ofwat-user-select
+                [selectedUser]="selectedReviewer"
+                [userResponsibility]="'reviewer'"
+                [resourceType]="'Collection'"
+                (userChangedEvent)="reviewerChanged($event)">
+            </jhi-ofwat-user-select>
+
+            <!--<div class="form-group">-->
+                <!--<label class="form-label" for="owner">Owner-->
+                    <!--<span class="form-hint">The owner responsible for the Data Collection</span>-->
+                <!--</label>-->
+                <!--<select class="form-control" [(ngModel)]="dataCollection.owner" id="owner" name="owner" #name="ngModel" required>-->
+                    <!--<option *ngFor="let user of users" [value]="user.id">{{user.firstName}} {{user.lastName}}</option>-->
+                <!--</select>-->
+            <!--</div>-->
+
+            <!--<div class="form-group">-->
+                <!--<label class="form-label" for="reviewer">Reviewer-->
+                    <!--<span class="form-hint">The reviewer responsible for reviewing the Data Collection</span>-->
+                <!--</label>-->
+                <!--<select class="form-control" [(ngModel)]="dataCollection.reviewer" id="reviewer" name="reviewer" #name="ngModel" required>-->
+                    <!--<option *ngFor="let user of users" [value]="user.id">{{user.firstName}} {{user.lastName}}</option>-->
+                <!--</select>-->
+            <!--</div>-->
 
             <div class="form-group">
                 <button type="submit"
                         [disabled]="dataCollectionCreationForm.form.invalid"
-                        class="button float-right">
+                        class="button float-left">
                     <span>Create Data Collection</span>
                 </button>
                 <button type="button"
-                        class="button button-secondary"
+                        class="button button-secondary float-left"
                         [routerLink]="['../data-collection-management']">
                     <span>Back</span>
                 </button>

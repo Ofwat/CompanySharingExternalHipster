@@ -3,7 +3,7 @@
         "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
         "name": "company-sharing-external"
     },
-    "apps": [{
+    "apps": [{File
         "root": "src/main/webapp/",
         "outDir": "build/www/app",
         "assets": [

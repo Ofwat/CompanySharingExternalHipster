@@ -1,5 +1,9 @@
 <?xml version="1.1" encoding="UTF-8" standalone="no"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <property name="now" value="now()" dbms="h2"/>
+    <property name="now" value="now()" dbms="mysql"/>
+
     <changeSet author="Adam Edgar (generated)" id="1506595359032-1">
         <addColumn tableName="data_collection">
             <column name="created_by" type="varchar(50)">
@@ -9,7 +13,7 @@
     </changeSet>
     <changeSet author="Adam Edgar (generated)" id="1506595359032-2">
         <addColumn tableName="data_collection">
-            <column name="created_date" type="timestamp">
+            <column name="created_date" type="timestamp" defaultValueDate="${now}">
                 <constraints nullable="false"/>
             </column>
         </addColumn>
@@ -21,25 +25,25 @@
     </changeSet>
     <changeSet author="Adam Edgar (generated)" id="1506595359032-4">
         <addColumn tableName="data_collection">
-            <column name="last_modified_date" type="timestamp"/>
+            <column name="last_modified_date" type="timestamp" defaultValueDate="${now}"/>
         </addColumn>
     </changeSet>
     <changeSet author="Adam Edgar (generated)" id="1506595359032-6">
-        <dropForeignKeyConstraint baseTableName="DATA_COLLECTION" constraintName="FK1HCGFUB3QPPR8FC5KSWL5CQI6"/>
+        <dropForeignKeyConstraint baseTableName="data_collection" constraintName="FK1HCGFUB3QPPR8FC5KSWL5CQI6"/>
     </changeSet>
     <changeSet author="Adam Edgar (generated)" id="1506595359032-7">
-        <dropForeignKeyConstraint baseTableName="DATA_COLLECTION" constraintName="FKI4U7NBS27DUTEV6HMIIS99NQL"/>
+        <dropForeignKeyConstraint baseTableName="data_collection" constraintName="FKI4U7NBS27DUTEV6HMIIS99NQL"/>
     </changeSet>
     <changeSet author="Adam Edgar (generated)" id="1506595359032-8">
-        <dropColumn columnName="CREATED" tableName="DATA_COLLECTION"/>
+        <dropColumn columnName="created" tableName="data_collection"/>
     </changeSet>
     <changeSet author="Adam Edgar (generated)" id="1506595359032-9">
-        <dropColumn columnName="CREATED_BY_ID" tableName="DATA_COLLECTION"/>
+        <dropColumn columnName="created_by_id" tableName="data_collection"/>
     </changeSet>
     <changeSet author="Adam Edgar (generated)" id="1506595359032-10">
-        <dropColumn columnName="MODIFIED" tableName="DATA_COLLECTION"/>
+        <dropColumn columnName="modified" tableName="data_collection"/>
     </changeSet>
     <changeSet author="Adam Edgar (generated)" id="1506595359032-11">
-        <dropColumn columnName="MODIFIED_BY_ID" tableName="DATA_COLLECTION"/>
+        <dropColumn columnName="modified_by_id" tableName="data_collection"/>
     </changeSet>
 </databaseChangeLog>

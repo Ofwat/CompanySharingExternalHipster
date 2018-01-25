@@ -1,0 +1,98 @@
+<div>
+    <h2>
+        <span>Company Data Bundles</span>
+        <button class="btn btn-primary float-right create-company-data-bundle" [routerLink]="['/', { outlets: { popup: ['company-data-bundle-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span >
+            Create new Company Data Bundle
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="companyDataBundles">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+            <th jhiSortBy="id"><span>ID</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="name"><span>Name</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="companyDeadline"><span>Company Deadline</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="statusStatus"><span>Status</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="companyName"><span>Company</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="companyDataCollectionName"><span>Company Data Collection</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="dataBundleName"><span>Data Bundle</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="companyOwnerFirstName"><span>Company Owner</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="companyReviewerFirstName"><span>Company Reviewer</span> <span class="fa fa-sort"></span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let companyDataBundle of companyDataBundles ;trackBy: trackId">
+                <td><a [routerLink]="['../company-data-bundle', companyDataBundle.id ]">{{companyDataBundle.id}}</a></td>
+                <td>{{companyDataBundle.name}}</td>
+                <td>{{companyDataBundle.companyDeadline | date:'mediumDate'}}</td>
+                <td>
+                    <div *ngIf="companyDataBundle.statusId">
+                        <a [routerLink]="['../company-status', companyDataBundle.statusId  ]" >{{companyDataBundle.statusStatus}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="companyDataBundle.companyId">
+                        <a [routerLink]="['../company', companyDataBundle.companyId  ]" >{{companyDataBundle.companyName}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="companyDataBundle.companyDataCollectionId">
+                        <a [routerLink]="['../company-data-collection', companyDataBundle.companyDataCollectionId  ]" >{{companyDataBundle.companyDataCollectionName}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="companyDataBundle.dataBundleId">
+                        <a [routerLink]="['../data-bundle', companyDataBundle.dataBundleId  ]" >{{companyDataBundle.dataBundleName}}</a>
+                    </div>
+                </td>
+                <td>
+                    {{companyDataBundle.companyOwnerFirstName}}
+                </td>
+                <td>
+                    {{companyDataBundle.companyReviewerFirstName}}
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../company-data-bundle', companyDataBundle.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="hidden-md-down">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'company-data-bundle/'+ companyDataBundle.id + '/edit'} }]"
+                                replaceUrl="true"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="hidden-md-down">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'company-data-bundle/'+ companyDataBundle.id + '/delete'} }]"
+                                replaceUrl="true"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="hidden-md-down">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+        <div *ngIf="companyDataBundles && companyDataBundles.length">
+            <div class="row justify-content-center">
+                <jhi-item-count [page]="page" [total]="queryCount" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+            </div>
+            <div class="row justify-content-center">
+                <ngb-pagination [collectionSize]="totalItems" [(page)]="page" (pageChange)="loadPage(page)"></ngb-pagination>
+            </div>
+        </div>
+</div>

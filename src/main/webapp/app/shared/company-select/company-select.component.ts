@@ -1,11 +1,11 @@
-import {Component, EventEmitter, OnChanges, OnInit, Output, SimpleChange, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange, SimpleChanges} from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { CompanyService } from '../../entities/company/company.service';
 import { VERSION, DEBUG_INFO_ENABLED } from '../../app.constants';
 import { ResponseWrapper } from '../model/response-wrapper.model';
 import { JhiAlertService } from 'ng-jhipster';
-import {Company} from '../../entities/company/company.model';
+import { Company } from '../../entities/company/company.model';
 import { SessionStorageService } from 'ng2-webstorage';
 
 @Component({
@@ -19,7 +19,9 @@ export class CompanySelectComponent implements OnInit {
     selectedCompany: Company;
     display: boolean;
     message: string;
+
     @Output() companyChangedEvent: EventEmitter<Company>;
+    @Input() preselectedCompany: Company
 
     constructor(
         private companyService: CompanyService,
@@ -31,7 +33,7 @@ export class CompanySelectComponent implements OnInit {
 
     ngOnInit() {
         this.companies = [];
-        this.display = true;
+        this.display = false;
         this.message = 'Hide';
         this.companyService.query().subscribe(
             (res: ResponseWrapper) => this.onSuccessLoadCompanies(res.json, res.headers),
@@ -40,7 +42,7 @@ export class CompanySelectComponent implements OnInit {
     }
 
     companyChanged(event) {
-        this.$sessionStorage.store('selectedCompany', this.selectedCompany);
+        //this.$sessionStorage.store('selectedCompany', this.selectedCompany);
         this.companyChangedEvent.emit(this.selectedCompany);
     }
 
@@ -49,13 +51,10 @@ export class CompanySelectComponent implements OnInit {
     }
 
     private onSuccessLoadCompanies(data, headers) {
-        // this.links = this.parseLinks.parse(headers.get('link'));
-        // this.totalItems = headers.get('X-Total-Count');
-        // this.queryCount = this.totalItems;
-        // this.page = pagingParams.page;
         this.companies = data;
+        this.display = true;
         // console.log( this.$sessionStorage.retrieve( 'selectedCompany' ) );
-        if ( this.$sessionStorage.retrieve( 'selectedCompany' ) != null ) {
+/*        if ( this.$sessionStorage.retrieve( 'selectedCompany' ) != null ) {
             // console.log( 'Setting company to stored company' );
             const storedCompany = this.$sessionStorage.retrieve( 'selectedCompany' ) as Company;
             for ( const entry of this.companies ) {
@@ -63,6 +62,12 @@ export class CompanySelectComponent implements OnInit {
                     this.selectedCompany = entry;
                 }
             }
+        }*/
+        if(this.preselectedCompany != null){
+            this.selectedCompany = this.preselectedCompany;
+            this.companyChangedEvent.emit(this.selectedCompany);
+        }else {
+            this.companyChangedEvent.emit(this.companies[0]);
         }
     }
     private onErrorLoadCompanies(error) {
@@ -77,6 +82,15 @@ export class CompanySelectComponent implements OnInit {
             this.message = 'Show';
         }
     }
+
+    compareById(item1: Company, item2: Company) {
+        if(item1 && item2) {
+            return item1.id === item2.id;
+        }else{
+            return false;
+        }
+    }
+
 }
 
 /*import { ProfileService } from '../profiles/profile.service';

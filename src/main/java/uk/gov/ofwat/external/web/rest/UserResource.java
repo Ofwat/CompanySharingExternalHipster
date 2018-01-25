@@ -1,5 +1,7 @@
 package uk.gov.ofwat.external.web.rest;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import uk.gov.ofwat.external.aop.company.ValidateUserCompany;
 import uk.gov.ofwat.external.config.Constants;
 import com.codahale.metrics.annotation.Timed;
 import uk.gov.ofwat.external.domain.Company;
@@ -7,11 +9,16 @@ import uk.gov.ofwat.external.domain.RegistrationRequest;
 import uk.gov.ofwat.external.domain.User;
 import uk.gov.ofwat.external.repository.UserRepository;
 import uk.gov.ofwat.external.security.AuthoritiesConstants;
+import uk.gov.ofwat.external.security.SecurityUtils;
 import uk.gov.ofwat.external.service.CompanyService;
+import uk.gov.ofwat.external.service.Exception.UnableToRemoveUserException;
 import uk.gov.ofwat.external.service.MailService;
 import uk.gov.ofwat.external.service.RegistrationRequestService;
 import uk.gov.ofwat.external.service.UserService;
+import uk.gov.ofwat.external.service.dto.CompanyDTO;
 import uk.gov.ofwat.external.service.dto.UserDTO;
+import uk.gov.ofwat.external.service.mapper.CompanyDataBundleMapper;
+import uk.gov.ofwat.external.service.mapper.CompanyMapper;
 import uk.gov.ofwat.external.web.rest.vm.ManagedUserVM;
 import uk.gov.ofwat.external.web.rest.util.HeaderUtil;
 import uk.gov.ofwat.external.web.rest.util.PaginationUtil;
@@ -32,6 +39,7 @@ import javax.validation.Valid;
 import javax.websocket.server.PathParam;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.security.Principal;
 import java.util.*;
 
 /**
@@ -76,15 +84,29 @@ public class UserResource {
 
     private final CompanyService companyService;
 
+    private final CompanyMapper companyMapper;
+
      public UserResource(UserRepository userRepository, MailService mailService,
-                         UserService userService, RegistrationRequestService registrationRequestService, CompanyService companyService) {
+                         UserService userService, RegistrationRequestService registrationRequestService,
+                         CompanyService companyService, CompanyMapper companyMapper) {
 
          this.userRepository = userRepository;
          this.mailService = mailService;
          this.userService = userService;
          this.registrationRequestService = registrationRequestService;
          this.companyService = companyService;
+         this.companyMapper = companyMapper;
      }
+
+    @Timed
+    @PutMapping("/users/companies")
+    public ResponseEntity<String> addCompanyUser(@RequestBody Long companyId, @RequestBody String login){
+        log.debug("Addding user {} to company with id {}", login, companyId);
+        return userRepository.findOneByLogin(login).map(user -> {
+            companyService.addUserToCompany(companyId, user, AuthoritiesConstants.USER);
+            return new ResponseEntity<String>(HttpStatus.CREATED);
+        }).orElse(new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR));
+    }
 
     /**
      * POST  /users  : Creates a new user.
@@ -160,6 +182,7 @@ public class UserResource {
      */
     @GetMapping("/users")
     @Timed
+    @ValidateUserCompany(roles = {AuthoritiesConstants.COMPANY_USER, AuthoritiesConstants.COMPANY_ADMIN})
     public ResponseEntity<List<UserDTO>> getAllUsers(@ApiParam Pageable pageable) {
         final Page<UserDTO> page = userService.getAllManagedUsers(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/users");
@@ -224,11 +247,12 @@ public class UserResource {
      */
     @GetMapping("/users/pending_accounts")
     @Timed
-    @Secured(AuthoritiesConstants.ADMIN)
+    @Secured({AuthoritiesConstants.ADMIN, AuthoritiesConstants.COMPANY_ADMIN})
     public ResponseEntity<List<RegistrationRequest>> getAllRegistrationRequests(@ApiParam Pageable pageable, @RequestParam Long companyId) {
-        Company company = companyService.findOne(companyId);
+        Company company = companyMapper.toEntity(companyService.findOne(companyId));
+        User currentUser = userService.getUserWithAuthorities();
         if(company != null) {
-            Boolean isValidAdmin = companyService.isCurrentUserAdminForCompany(company);
+            Boolean isValidAdmin = companyService.isUserAdminForCompany(company, currentUser.getLogin());
             if(isValidAdmin) {
                 final Page<RegistrationRequest> page = registrationRequestService.getAllRequests(pageable, company);
                 HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/users/pending_accounts");
@@ -247,10 +271,11 @@ public class UserResource {
     @DeleteMapping("/users/pending_accounts/{login:" + Constants.LOGIN_REGEX + "}")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<Void> deleteRegistrationRequest(@PathVariable String login) {
+    public ResponseEntity<Void> deleteRegistrationRequest(@PathVariable String login,@AuthenticationPrincipal User activeUser) {
         log.debug("REST request to delete RegistrationRequest: {}", login);
-        registrationRequestService.deleteRegistrationRequest(login);
-        return ResponseEntity.ok().headers(HeaderUtil.createAlert( "A RegistrationRequest is deleted with identifier " + login, login)).build();
+        registrationRequestService.deleteRegistrationRequest(login, activeUser);
+        //return ResponseEntity.ok().headers(HeaderUtil.createAlert( "A RegistrationRequest is deleted with identifier " + login, login)).build();
+        return  ResponseEntity.ok().build();
     }
 
     /**
@@ -262,10 +287,28 @@ public class UserResource {
     @PostMapping("/users/pending_accounts")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<String> approveRegistrationRequest(@RequestBody String login) {
+    public ResponseEntity<String> approveRegistrationRequest(@RequestBody String login,@AuthenticationPrincipal User activeUser) {
         log.debug("REST request to approve RegistrationRequest: {}", login);
-        return registrationRequestService.approveRegistrationRequest(login).map(registrationRequest -> new ResponseEntity<String>(HttpStatus.OK))
+        return registrationRequestService.approveRegistrationRequest(login, activeUser).map(registrationRequest -> new ResponseEntity<String>(HttpStatus.OK))
             .orElse(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
     }
 
+    @Timed
+    @PostMapping("/users/companies")
+    @Secured({AuthoritiesConstants.ADMIN, AuthoritiesConstants.COMPANY_ADMIN, AuthoritiesConstants.COMPANY_USER})
+    public List<Company> getCompaniesForUser(@RequestBody String login){
+        log.info("REST request to get companies for login: {}", login);
+        return companyService.getListOfCompaniesUserIsMemberFor(login).get();
+    }
+
+    @Timed
+    @DeleteMapping("/users/companies/{companyId}/{login}")
+    public ResponseEntity<String> removeCompanyUser(@PathVariable Long companyId, @PathVariable String login){
+        try {
+            companyService.removeUserFromCompany(companyId, login);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }catch(UnableToRemoveUserException exception){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 }

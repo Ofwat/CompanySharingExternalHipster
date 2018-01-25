@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Rx';
 import { User } from './user.model';
 import { ResponseWrapper } from '../model/response-wrapper.model';
 import { createRequestOption } from '../model/request-util';
+import { RegistrationRequest } from '../registration-request/registration-request.model';
 
 @Injectable()
 export class UserService {
@@ -52,11 +53,26 @@ export class UserService {
 
     deleteInvite(login: string) {
         return this.http.delete(`api/users/pending_accounts/${login}`)
-            .map((res: Response) => this.convertResponse(res));
     }
 
     approveInvite(login: string): Observable<ResponseWrapper> {
-        return this.http.post(`api/users/pending_accounts`, login)
+        return this.http.post(`api/users/pending_accounts`, login);
+            //.map((res: Response) => this.convertResponse(res));
+    }
+
+    getUserCompanies(login:String): Observable<ResponseWrapper> {
+        return this.http.post(`api/users/companies`, login)
+            .map((res: Response) => this.convertResponse(res));
+    }
+
+    removeUserFromCompany(companyId:number, login:String): Observable<ResponseWrapper> {
+        return this.http.delete(`api/users/companies/${companyId}/${login}`)
+            .map((res: Response) => this.convertResponse(res));
+    }
+
+    addUserToCompany(companyId:number, login:String): Observable<ResponseWrapper>{
+        console.log("Making put to api/users/companies")
+        return this.http.put('api/users/companies', {'companyId':companyId, 'login':login})
             .map((res: Response) => this.convertResponse(res));
     }
 

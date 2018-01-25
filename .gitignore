@@ -113,6 +113,7 @@ Desktop.ini
 /bin/
 /deploy/*
 !cloudfoundry/
+/out/**
 
 ######################
 # Logs
@@ -126,6 +127,7 @@ Desktop.ini
 *.*~
 *~
 .merge_file*
+yarn.lock
 
 ######################
 # Gradle Wrapper
@@ -145,6 +147,7 @@ Desktop.ini
 ######################
 # Dev Keystore
 ######################
+
 keystore.p12
 
 out/**

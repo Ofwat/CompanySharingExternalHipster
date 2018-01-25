@@ -1,0 +1,61 @@
+
+<div *ngIf="dataBundle">
+    <h2><span>Data Bundle</span> {{dataBundle.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span>Name</span></dt>
+        <dd>
+            <span>{{dataBundle.name}}</span>
+        </dd>
+        <dt><span>Description</span></dt>
+        <dd>
+            <span>{{dataBundle.description}}</span>
+        </dd>
+        <dt><span>Guidance</span></dt>
+        <dd>
+            <span>{{dataBundle.guidance}}</span>
+        </dd>
+        <dt><span>Default Deadline</span></dt>
+        <dd>
+            <span>{{dataBundle.defaultDeadline | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span>Status</span></dt>
+        <dd>
+            <div *ngIf="dataBundle.statusId">
+                <a [routerLink]="['/publishing-status', dataBundle.statusId]">{{dataBundle.statusStatus}}</a>
+            </div>
+        </dd>
+        <dt><span>Owner</span></dt>
+        <dd>
+            <div *ngIf="dataBundle.ownerId">
+                <a [routerLink]="['/jhi-user', dataBundle.ownerId]">{{dataBundle.ownerLastName}}</a>
+            </div>
+        </dd>
+        <dt><span>Reviewer</span></dt>
+        <dd>
+            <div *ngIf="dataBundle.reviewerId">
+                <a [routerLink]="['/jhi-user', dataBundle.reviewerId]">{{dataBundle.reviewerLastName}}</a>
+            </div>
+        </dd>
+        <dt><span>Data Collection</span></dt>
+        <dd>
+            <div *ngIf="dataBundle.dataCollectionId">
+                <a [routerLink]="['/data-collection', dataBundle.dataCollectionId]">{{dataBundle.dataCollectionName}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'data-bundle/'+ dataBundle.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span> Edit</span>
+    </button>
+</div>

@@ -25,6 +25,8 @@ export * from './data-input-management/data-input-management.component';
 export * from './data-input-management/data-input-management.route';
 export * from './data-input-creation/data-input-creation.component';
 export * from './data-input-creation/data-input-creation-route';
+export * from './data-input-download/data-input-download.component';
+export * from './data-input-download/data-input-download-route';
 export * from './data-input-deletion/data-input-deleted.component';
 export * from './data-input-deletion/data-input-deletion-confirmation.component';
 export * from './data-input-deletion/data-input-deletion-route';

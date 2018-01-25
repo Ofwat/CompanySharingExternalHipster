@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes, CanActivate } from '@angular/router';
 import { JhiPaginationUtil } from 'ng-jhipster';
 import { PendingInvitesComponent } from './pending-invites.component';
-import { UserResolveOfwat } from '../ofwat-user-management/ofwat-user-management.route';
 import {PendingInvitesResendComponent} from './pending-invites-resend.component';
+import {Principal} from "../../shared";
 
 @Injectable()
 export class OfwatPendingInviteResolvePagingParams implements Resolve<any> {
@@ -18,6 +18,16 @@ export class OfwatPendingInviteResolvePagingParams implements Resolve<any> {
             predicate: this.paginationUtil.parsePredicate(sort),
             ascending: this.paginationUtil.parseAscending(sort)
         };
+    }
+}
+
+@Injectable()
+export class UserResolveOfwatPendingInvites implements CanActivate {
+
+    constructor(private principal: Principal) { }
+
+    canActivate() {
+        return this.principal.identity().then((account) => this.principal.hasAnyAuthority(['ROLE_ADMIN', 'ROLE_COMPANY_ADMIN']));
     }
 }
 

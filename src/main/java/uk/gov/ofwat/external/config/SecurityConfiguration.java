@@ -1,8 +1,7 @@
 package uk.gov.ofwat.external.config;
 
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
-import org.springframework.security.web.context.SecurityContextRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import uk.gov.ofwat.external.aop.company.CompanySelectionAspect;
 import uk.gov.ofwat.external.security.*;
 
 import io.github.jhipster.config.JHipsterProperties;
@@ -26,6 +25,7 @@ import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.filter.CorsFilter;
+import uk.gov.ofwat.external.service.UserService;
 
 import javax.annotation.PostConstruct;
 
@@ -44,9 +44,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final CorsFilter corsFilter;
 
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    CompanySelectionAspect companySelectionAspect;
+
     public SecurityConfiguration(AuthenticationManagerBuilder authenticationManagerBuilder, UserDetailsService userDetailsService,
-        JHipsterProperties jHipsterProperties, RememberMeServices rememberMeServices,
-        CorsFilter corsFilter) {
+                                 JHipsterProperties jHipsterProperties, RememberMeServices rememberMeServices,
+                                 CorsFilter corsFilter) {
 
         this.authenticationManagerBuilder = authenticationManagerBuilder;
         this.userDetailsService = userDetailsService;
@@ -59,9 +65,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @PostConstruct
     public void init() {
         try {
+            CompanySharingDaoAuthenticationProvider provider = companySharingDaoAuthProvider();
+            provider.setUserService(userService);
+            //We are setting this in a PostConstruct to avoid a circular dependency with userService.
+            companySelectionAspect.setUserService(userService);
             authenticationManagerBuilder
-                .userDetailsService(userDetailsService)
-                    .passwordEncoder(passwordEncoder());
+                .authenticationProvider(provider);
+
         } catch (Exception e) {
             throw new BeanInitializationException("Security configuration failed", e);
         }
@@ -97,6 +107,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+    @Bean
+    public CompanySharingDaoAuthenticationProvider companySharingDaoAuthProvider() throws Exception {
+        CompanySharingDaoAuthenticationProvider provider = new CompanySharingDaoAuthenticationProvider();
+        provider.setPasswordEncoder(passwordEncoder());
+        provider.setUserDetailsService(userDetailsService);
+        return provider;
+    }
+
 /*    @Bean
     public RefreshingUserDetailsSecurityContextRepository refreshingUserDetailsSecurityContextRepository(HttpSessionSecurityContextRepository httpSessionSecurityContextRepository) {
         return new RefreshingUserDetailsSecurityContextRepository(httpSessionSecurityContextRepository, this.userDetailsService);
@@ -111,6 +129,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/content/**")
             .antMatchers("/swagger-ui/index.html")
             .antMatchers("/test/**")
+            .antMatchers("/content/js/download.js")
             .antMatchers("/h2-console/**");
     }
 
@@ -161,15 +180,20 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/api/account/request_details_resend").hasAnyAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/api/invite").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/api/resend_invite").hasAuthority(AuthoritiesConstants.ADMIN)
-            .antMatchers("/api/users/pending_accounts/**").hasAuthority(AuthoritiesConstants.ADMIN)
+            .antMatchers("/api/users/pending_accounts/**").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.COMPANY_ADMIN)
+            .antMatchers("/api/users/companies/**").hasAuthority(AuthoritiesConstants.ADMIN)
+
 /*            .antMatchers("/api/account/verify_captcha").permitAll()*/
             .antMatchers("/api/profile-info").permitAll()
             .antMatchers(HttpMethod.GET, "/api/companies").permitAll()
-            .antMatchers("/api/**").authenticated()
+          /*  .antMatchers("/api/**").authenticated()*/
+            .antMatchers("/api/data-download").permitAll()
+            .antMatchers("/api/data-download-file").permitAll()
             .antMatchers("/management/health").permitAll()
             .antMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/v2/api-docs/**").permitAll()
             .antMatchers("/swagger-resources/confresend_otpiguration/ui").permitAll()
+            .antMatchers("/content/js/download.js").permitAll()
             .antMatchers("/swagger-ui/index.html").hasAuthority(AuthoritiesConstants.ADMIN);
 
     }

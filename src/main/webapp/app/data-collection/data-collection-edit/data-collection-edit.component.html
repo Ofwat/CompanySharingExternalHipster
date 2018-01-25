@@ -4,7 +4,7 @@
         <h2 class="heading-medium">Edit Data Collection</h2>
 
         <div class="alert alert-success" *ngIf="success">
-            <strong>Data Collection edited</strong>
+            <p><strong>Data Collection edited</strong></p>
             <button type="button"
                     class="button button-secondary"
                     [routerLink]="['/data-collection-detail', dataCollection.id]">
@@ -13,7 +13,7 @@
         </div>
 
         <div class="alert alert-danger" *ngIf="error">
-            <strong>Data Collection edit failed!</strong> Please try again later.
+            <p><strong>Data Collection edit failed!</strong> Please try again later.</p>
             <button type="button"
                     class="button button-secondary"
                     [routerLink]="['/data-collection-management']">
@@ -22,7 +22,7 @@
         </div>
 
         <div class="alert alert-danger" *ngIf="errorDataCollectionExists">
-            <strong>Data Collection name '{{dataCollection?.name}}' is already in use!</strong> Please choose another one.
+            <p><strong>Data Collection name '{{dataCollection?.name}}' is already in use!</strong> Please choose another one.</p>
             <button type="button"
                     class="button button-secondary"
                     [routerLink]="['/data-collection-management']">
@@ -32,128 +32,125 @@
     </div>
 
     <div>
-    <!--<div class="col-md-8 offset-md-2">-->
         <form name="form" role="form" (ngSubmit)="save()" #dataCollectionEditForm="ngForm" *ngIf="!success && !errorDataCollectionExists">
-            <div class="form-group">
-                <label class="form-label" for="name">Name
-                    <span class="form-hint">The name of the data collection.</span>
-                </label>
-                <input type="text" class="form-control" [(ngModel)]="dataCollection.name" id="name" name="name" #name="ngModel" placeholder=""
-                       required minlength="1" maxlength="250" pattern="^[^\s]+(\s+[^\s]+)*$"/>
-                <div *ngIf="name.dirty && name.invalid">
-                    <small class="form-text text-danger" *ngIf="name.errors.required">
-                        A name is required for the data collection.
-                    </small>
-                    <small class="form-text text-danger" *ngIf="name.errors.minlength">
-                        The data collection name is required to be at least 1 character.
-                    </small>
-                    <small class="form-text text-danger" *ngIf="name.errors.maxlength">
-                        The data collection name cannot be longer than 250 characters.
-                    </small>
-                    <small class="form-text text-danger" *ngIf="name.errors.pattern">
-                        The data collection name can contain any characters, but must not start or end with white space.
-                    </small>
+            <div *ngIf="!selectedPublishingStatus">
+                <div class="form-group">
+                    <label class="form-label" for="name">Name
+                        <span class="form-hint">The name of the data collection.</span>
+                    </label>
+                    <input type="text" class="form-control" [(ngModel)]="dataCollection.name" id="name" name="name" #name="ngModel" placeholder=""
+                           required minlength="1" maxlength="250" pattern="^[^\s]+(\s+[^\s]+)*$"/>
+                    <div *ngIf="name.dirty && name.invalid">
+                        <small class="form-text text-danger" *ngIf="name.errors.required">
+                            A name is required for the data collection.
+                        </small>
+                        <small class="form-text text-danger" *ngIf="name.errors.minlength">
+                            The data collection name is required to be at least 1 character.
+                        </small>
+                        <small class="form-text text-danger" *ngIf="name.errors.maxlength">
+                            The data collection name cannot be longer than 250 characters.
+                        </small>
+                        <small class="form-text text-danger" *ngIf="name.errors.pattern">
+                            The data collection name can contain any characters, but must not start or end with white space.
+                        </small>
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                <label class="form-label" for="description">Description
-                    <span class="form-hint">The description of the data collection.</span>
-                </label>
-                <textarea rows="3" class="form-control" [(ngModel)]="dataCollection.description" id="description" name="description" #description="ngModel" placeholder=""
-                          required minlength="1" maxlength="250"></textarea>
-                <div *ngIf="description.dirty && description.invalid">
-                    <small class="form-text text-danger" *ngIf="description.errors.required">
-                        A description is required for the data collection.
-                    </small>
-                    <small class="form-text text-danger" *ngIf="description.errors.minlength">
-                        The data collection description is required to be at least 1 character.
-                    </small>
-                    <small class="form-text text-danger" *ngIf="description.errors.maxlength">
-                        The data collection description cannot be longer than 250 characters.
-                    </small>
-                    <small class="form-text text-danger" *ngIf="description.errors.pattern">
-                        The data collection description can contain any characters, but must not start or end with white space.
-                    </small>
+                <div class="form-group">
+                    <label class="form-label" for="description">Description
+                        <span class="form-hint">The description of the data collection.</span>
+                    </label>
+                    <textarea rows="3" class="form-control" [(ngModel)]="dataCollection.description" id="description" name="description" #description="ngModel" placeholder=""
+                              required minlength="1" maxlength="250"></textarea>
+                    <div *ngIf="description.dirty && description.invalid">
+                        <small class="form-text text-danger" *ngIf="description.errors.required">
+                            A description is required for the data collection.
+                        </small>
+                        <small class="form-text text-danger" *ngIf="description.errors.minlength">
+                            The data collection description is required to be at least 1 character.
+                        </small>
+                        <small class="form-text text-danger" *ngIf="description.errors.maxlength">
+                            The data collection description cannot be longer than 250 characters.
+                        </small>
+                        <small class="form-text text-danger" *ngIf="description.errors.pattern">
+                            The data collection description can contain any characters, but must not start or end with white space.
+                        </small>
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                <label class="form-label" for="guidance">Guidance
-                    <span class="form-hint">Guidance for the data collection.</span>
-                </label>
-                <textarea rows="5" class="form-control" [(ngModel)]="dataCollection.guidance" id="guidance" name="guidance" #guidance="ngModel" placeholder=""
-                       required minlength="1" maxlength="250"></textarea>
-                <div *ngIf="guidance.dirty && guidance.invalid">
-                    <small class="form-text text-danger" *ngIf="guidance.errors.required">
-                        Guidance is required for the data collection.
-                    </small>
-                    <small class="form-text text-danger" *ngIf="guidance.errors.minlength">
-                        The data collection guidance is required to be at least 1 character.
-                    </small>
-                    <small class="form-text text-danger" *ngIf="guidance.errors.maxlength">
-                        The data collection guidance cannot be longer than 250 characters.
-                    </small>
-                    <small class="form-text text-danger" *ngIf="guidance.errors.pattern">
-                        The data collection guidance can contain any characters, but must not start or end with white space.
-                    </small>
+                <div class="form-group">
+                    <label class="form-label" for="guidance">Guidance
+                        <span class="form-hint">Guidance for the data collection.</span>
+                    </label>
+                    <textarea rows="5" class="form-control" [(ngModel)]="dataCollection.guidance" id="guidance" name="guidance" #guidance="ngModel" placeholder=""
+                           required minlength="1" maxlength="250"></textarea>
+                    <div *ngIf="guidance.dirty && guidance.invalid">
+                        <small class="form-text text-danger" *ngIf="guidance.errors.required">
+                            Guidance is required for the data collection.
+                        </small>
+                        <small class="form-text text-danger" *ngIf="guidance.errors.minlength">
+                            The data collection guidance is required to be at least 1 character.
+                        </small>
+                        <small class="form-text text-danger" *ngIf="guidance.errors.maxlength">
+                            The data collection guidance cannot be longer than 250 characters.
+                        </small>
+                        <small class="form-text text-danger" *ngIf="guidance.errors.pattern">
+                            The data collection guidance can contain any characters, but must not start or end with white space.
+                        </small>
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                <label class="form-label" for="owner">Owner
-                    <span class="form-hint">The owner responsible for the Data Collection</span>
-                </label>
-                <select class="form-control" [(ngModel)]="ownerId" id="owner" name="owner" #owner="ngModel">
-                    <option *ngFor="let user of usersForOwner"
-                            [value]="user?.id"
-                            [selected]="dataCollection?.owner?.id==user?.id ? true : null" >
-                        {{user?.firstName}} {{user?.lastName}}
-                    </option>
-                </select>
-            </div>
+                <jhi-ofwat-user-select
+                    [selectedUser]="selectedOwner"
+                    [userResponsibility]="'owner'"
+                    [resourceType]="'Collection'"
+                    (userChangedEvent)="ownerChanged($event)">
+                </jhi-ofwat-user-select>
 
-            <div class="form-group">
-                <label class="form-label" for="reviewer">Reviewer
-                    <span class="form-hint">The reviewer responsible for reviewing the Data Collection</span>
-                </label>
-                <select class="form-control" [(ngModel)]="reviewerId" id="reviewer" name="reviewer" #reviewer="ngModel">
-                    <option *ngFor="let user of usersForReviewer"
-                            [value]="user?.id"
-                            [selected]="dataCollection?.reviewer?.id==user?.id ? true : null" >
-                        {{user?.firstName}} {{user?.lastName}}
-                    </option>
-                </select>
+                <jhi-ofwat-user-select
+                    [selectedUser]="selectedReviewer"
+                    [userResponsibility]="'reviewer'"
+                    [resourceType]="'Collection'"
+                    (userChangedEvent)="reviewerChanged($event)">
+                </jhi-ofwat-user-select>
+
+                <!--<div class="form-group">-->
+                    <!--<label class="form-label" for="owner">Owner-->
+                        <!--<span class="form-hint">The owner responsible for the Data Collection</span>-->
+                    <!--</label>-->
+                    <!--<select class="form-control" [(ngModel)]="this.selectedOwner" id="owner" name="owner" #owner="ngModel"-->
+                            <!--[compareWith]="userById">-->
+                        <!--<option *ngFor="let user of this.users"-->
+                                <!--[ngValue]="user">-->
+                            <!--{{user?.firstName}} {{user?.lastName}}-->
+                        <!--</option>-->
+                    <!--</select>-->
+                <!--</div>-->
+
+                <!--<div class="form-group">-->
+                    <!--<label class="form-label" for="reviewer">Reviewer-->
+                        <!--<span class="form-hint">The reviewer responsible for the Data Collection</span>-->
+                    <!--</label>-->
+                    <!--<select class="form-control" [(ngModel)]="this.selectedReviewer" id="reviewer" name="reviewer" #reviewer="ngModel"-->
+                            <!--[compareWith]="userById">-->
+                        <!--<option *ngFor="let user of this.users"-->
+                                <!--[ngValue]="user">-->
+                            <!--{{user?.firstName}} {{user?.lastName}}-->
+                        <!--</option>-->
+                    <!--</select>-->
+                <!--</div>-->
             </div>
 
             <div class="form-group">
                 <button type="submit"
                         [disabled]="dataCollectionEditForm.form.invalid"
-                        class="button float-right">
+                        class="button float-left">
                     <span>Save</span>
                 </button>
                 <button type="button"
                         class="button button-secondary"
                         [routerLink]="['/data-collection-detail', dataCollection.id]">
                     <span>Back</span>
-                </button>
-                <button *ngIf="dataCollection?.publishingStatus?.status=='DRAFT'" class="button float-right" (click)="markAsReview()">
-                    <span class="fa fa-plus"></span> <span>Mark as Review</span>
-                </button>
-                <button *ngIf="dataCollection?.publishingStatus?.status=='REVIEW'" class="button float-right" (click)="markAsDraft()">
-                    <span class="fa fa-plus"></span> <span>Mark as Draft</span>
-                </button>
-                <button *ngIf="dataCollection?.publishingStatus?.status=='REVIEW'" class="button float-right" (click)="markAsPending()">
-                    <span class="fa fa-plus"></span> <span>Mark as Unpublished</span>
-                </button>
-                <button *ngIf="dataCollection?.publishingStatus?.status=='UNPUBLISHED'" class="button float-right" (click)="markAsReview()">
-                    <span class="fa fa-plus"></span> <span>Mark as Reviewed</span>
-                </button>
-                <button *ngIf="dataCollection?.publishingStatus?.status=='UNPUBLISHED'" class="button float-right" (click)="markAsPublished()">
-                    <span class="fa fa-plus"></span> <span>Publish</span>
-                </button>
-                <button *ngIf="dataCollection?.publishingStatus?.status=='PUBLISHED'" class="button float-right" (click)="markAsPending()">
-                    <span class="fa fa-plus"></span> <span>Mark as Reviewed</span>
                 </button>
             </div>
         </form>

@@ -2,7 +2,7 @@
 
     <h1 class="heading-xlarge">Company Sharing</h1>
     <div class="column-whole">
-
+        <!--
         <div class="bottom-gutter-2-3">
             <div class="grid-row">
 
@@ -17,7 +17,6 @@
                     </a>
                 </div>
 
-
                 <div class="column-one-third">
                     <a href="/services/c818b815-c312-4b29-9cf6-2e62cb132034/templates/50f15cae-c313-4828-a97a-b183437f5ddc/edit" class="pill-separate-item">
                         Edit template
@@ -26,11 +25,11 @@
 
             </div>
         </div>
-
+        -->
     </div>
     <div class="text">
-        <p class="lede">
-            Welcome {{account}}
+        <p *ngIf="account" class="lede">
+            Welcome {{account.login}}
         </p>
 
     </div>

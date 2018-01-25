@@ -12,10 +12,10 @@ import { Register } from '../../account/register/register.service';
 })
 export class PendingInvitesResendComponent implements OnInit, OnDestroy {
 
-    request: RegistrationRequest;
+    request: any;
     routeData: any;
     private subscription: Subscription;
-    resendSuccess: boolean = false;
+    resendSuccess = false;
 
     constructor(private registerService: Register,
                 private activatedRoute: ActivatedRoute,
@@ -47,14 +47,14 @@ export class PendingInvitesResendComponent implements OnInit, OnDestroy {
 
     resendInvitation(login: string) {
         console.log('resending inv for ' + login);
-        this.registerService.resendInvite(login).subscribe((registrationRequest) => {
-            this.request = registrationRequest;
+        this.registerService.resendInvite(login).subscribe((res:any) => {
+            this.request = res;
             this.resendSuccess = true;
-        }, (res: ResponseWrapper) => this.onErrorResendInvitation(res.json));
+        }, (res: any) => this.onErrorResendInvitation(res));
     }
 
     onErrorResendInvitation(error) {
-        this.alertService.error(error.message, null, null);
+        this.alertService.error(error, null, null);
     }
 
 }

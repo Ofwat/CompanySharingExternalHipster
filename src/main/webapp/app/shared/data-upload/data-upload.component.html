@@ -1,0 +1,17 @@
+<div class="form-group">
+    <label class="form-label" for="fileName">
+        Upload a file
+    </label>
+    <input type="file"
+           class="form-control"
+           [(ngModel)]="dataInput.fileName"
+           id="fileName"
+           name="fileName"
+           #fileName="ngModel"
+           placeholder=""
+           multiple="true"
+           #fileInput
+           (change)="uploadFiles()"
+           accept=".pdf,.doc,.docx,.xls,.xlsx,.rtf,.txt"
+    />
+</div>

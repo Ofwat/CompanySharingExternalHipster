@@ -31,12 +31,12 @@
                 </div>
                     <input type="submit" class="button" value="Continue">
                 <div>
-                    <span class="page-footer-secondary-link" (click)="notRecievedMessage()">Not received a text message?</span>
+                    <a class="page-footer-secondary-link" (click)="notRecievedMessage()">Not received a text message?</a>
                 </div>
             </form>
         </div>
     </div>
-    <div *ngIf="verifySuccess">
-        It worked do something now!
+    <div class="heading-medium" *ngIf="verifySuccess">
+        Please click on the sign in link above to go to your account.
     </div>
 </main>

@@ -8,14 +8,14 @@
 
     </div>
     <div class="col-md-8 offset-md-2" *ngIf="dataCollection">
-        <!--<button class="button float-right" [routerLink]="['/data-collection-deleted', dataCollection.name]">-->
+        <!--<button class="button float-left" [routerLink]="['/data-collection-deleted', dataCollection.name]">-->
             <!--<span class="fa fa-plus"></span> <span>Delete Data Collection</span>-->
         <!--</button>-->
-        <button class="button float-right" (click)="delete(dataCollection.id)">
-            <span class="fa fa-plus"></span> <span>Delete Data Collection</span>
+        <button class="button button-warning float-left" (click)="delete(dataCollection.id)">
+            <span>Delete Data Collection</span>
         </button>
-        <button class="button button-secondary" [routerLink]="['/data-collection-detail', dataCollection.id]">
-            <span class="fa fa-plus"></span> <span>Back to Data Collection Detail</span>
+        <button class="button button-secondary float-left" [routerLink]="['/data-collection-detail', dataCollection.id]">
+            <span>Back to Data Collection Detail</span>
         </button>
         <p></p>
     </div>

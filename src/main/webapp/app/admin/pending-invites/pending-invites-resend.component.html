@@ -1,8 +1,22 @@
 <main id="content" role="main" tabindex="-1">
 <div *ngIf="request">
-    <h1 class="heading-large">Resend-Invite for [{{request.login}}]</h1>
-    <div>
-        <button class="button" (click)="resendInvitation(request.login)">Re-send</button>
+    <h1 class="heading-large">Ofwat Pending Invites</h1>
+    <div class="grid-row">
+        <div class="column-full">Resend-Invite for [{{request.login}}]</div>
+    </div>
+    <div *ngIf="resendSuccess">
+        Success!
+    </div>
+    <div class="column-full">
+        <div class="column-one-quarter">
+            <button class="button" (click)="resendInvitation(request.login)">Re-send?</button>
+        </div>
+        <div class="column-half">
+            <button class="button button-secondary" style="" [routerLink]="['/pending-invites']">
+                <span class="">Back to pending users</span>
+            </button>
+        </div>
+        <div class="column-one-quarter"></div>
     </div>
 </div>
 </main>

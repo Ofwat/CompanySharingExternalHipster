@@ -39,11 +39,12 @@ public class CacheConfiguration {
             cm.createCache(uk.gov.ofwat.external.domain.User.class.getName(), jcacheConfiguration);
             cm.createCache(uk.gov.ofwat.external.domain.Authority.class.getName(), jcacheConfiguration);
             cm.createCache(uk.gov.ofwat.external.domain.User.class.getName() + ".authorities", jcacheConfiguration);
+            cm.createCache(uk.gov.ofwat.external.domain.User.class.getName() + ".companyUserDetails", jcacheConfiguration);
             cm.createCache(uk.gov.ofwat.external.domain.PersistentToken.class.getName(), jcacheConfiguration);
             cm.createCache(uk.gov.ofwat.external.domain.User.class.getName() + ".persistentTokens", jcacheConfiguration);
             cm.createCache(uk.gov.ofwat.external.domain.User.class.getName() + ".companies", jcacheConfiguration);
             cm.createCache(uk.gov.ofwat.external.domain.Company.class.getName(), jcacheConfiguration);
-            cm.createCache(uk.gov.ofwat.external.domain.Company.class.getName() + ".users", jcacheConfiguration);
+            cm.createCache(uk.gov.ofwat.external.domain.Company.class.getName() + ".companyUserDetails", jcacheConfiguration);
             cm.createCache(NotifyMessageTemplate.class.getName(), jcacheConfiguration);
             cm.createCache(uk.gov.ofwat.external.domain.RegistrationRequest.class.getName(), jcacheConfiguration);
             cm.createCache(uk.gov.ofwat.external.domain.DataCollection.class.getName(), jcacheConfiguration);
@@ -53,7 +54,19 @@ public class CacheConfiguration {
             cm.createCache(uk.gov.ofwat.external.domain.data.DCSTable.class.getName(), jcacheConfiguration);
             cm.createCache(uk.gov.ofwat.external.domain.data.DCSRow.class.getName(), jcacheConfiguration);
             cm.createCache(uk.gov.ofwat.external.domain.data.DCSCell.class.getName(), jcacheConfiguration);
+            cm.createCache(uk.gov.ofwat.external.domain.CompanyUserDetails.class.getName(), jcacheConfiguration);
             cm.createCache(uk.gov.ofwat.external.domain.DataInput.class.getName() + ".reviewers", jcacheConfiguration);
+            cm.createCache(uk.gov.ofwat.external.domain.CompanyDataCollection.class.getName(), jcacheConfiguration);
+            cm.createCache(uk.gov.ofwat.external.domain.CompanyStatus.class.getName(), jcacheConfiguration);
+            cm.createCache(uk.gov.ofwat.external.domain.ReviewSignOff.class.getName(), jcacheConfiguration);
+            cm.createCache(uk.gov.ofwat.external.domain.SubmissionSignOff.class.getName(), jcacheConfiguration);
+            cm.createCache(uk.gov.ofwat.external.domain.DataFile.class.getName(), jcacheConfiguration);
+            cm.createCache(uk.gov.ofwat.external.domain.CompanyDataBundle.class.getName(), jcacheConfiguration);
+            cm.createCache(uk.gov.ofwat.external.domain.CompanyDataBundle.class.getName() + ".submissionSignOffs", jcacheConfiguration);
+            cm.createCache(uk.gov.ofwat.external.domain.InputType.class.getName(), jcacheConfiguration);
+            cm.createCache(uk.gov.ofwat.external.domain.CompanyDataInput.class.getName(), jcacheConfiguration);
+            cm.createCache(uk.gov.ofwat.external.domain.CompanyDataInput.class.getName() + ".reviewSignOffs", jcacheConfiguration);
+            cm.createCache(uk.gov.ofwat.external.domain.CompanyDataInput.class.getName() + ".submissionFiles", jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

@@ -7,7 +7,8 @@ export const USER_HOME_ROUTE: Route = {
     path: 'user-home',
     component: UserHomeComponent,
     data: {
-        authorities: [],
+        authorities: ['ROLE_USER'],
         pageTitle: 'Ofwat | Company Sharing'
-    }
+    },
+    canActivate: [UserRouteAccessService]
 };

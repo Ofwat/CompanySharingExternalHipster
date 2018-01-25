@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <!--
+        Added the constraints for entity SubmissionSignOff.
+    -->
+    <changeSet id="20171116000160-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="signatory_id"
+                                 baseTableName="submission_sign_off"
+                                 constraintName="fk_submission_sign_off_signatory_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="company_data_bundle_id"
+                                 baseTableName="submission_sign_off"
+                                 constraintName="fk_submission_sign_off_company_data_bundle_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="company_data_bundle"/>
+
+    </changeSet>
+</databaseChangeLog>

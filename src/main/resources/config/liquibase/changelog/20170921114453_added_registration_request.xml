@@ -1,5 +1,9 @@
 <?xml version="1.1" encoding="UTF-8" standalone="no"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <property name="now" value="now()" dbms="h2"/>
+    <property name="now" value="now()" dbms="mysql"/>
+
     <changeSet author="james.toddington (generated)" id="1505990706582-1">
         <createTable tableName="registration_request">
             <column autoIncrement="true" name="id" type="BIGINT">
@@ -16,7 +20,7 @@
             <column name="approved" type="BOOLEAN">
                 <constraints nullable="false"/>
             </column>
-            <column name="date_actioned" type="TIMESTAMP">
+            <column name="date_actioned" type="TIMESTAMP" defaultValueDate="${now}">
                 <constraints nullable="false"/>
             </column>
             <column name="email" type="VARCHAR(100)">
