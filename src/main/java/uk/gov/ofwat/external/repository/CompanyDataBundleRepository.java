@@ -19,7 +19,7 @@ public interface CompanyDataBundleRepository extends JpaRepository<CompanyDataBu
     @Query("select company_data_bundle from CompanyDataBundle company_data_bundle where company_data_bundle.companyReviewer.login = ?#{principal.username}")
     List<CompanyDataBundle> findByCompanyReviewerIsCurrentUser();
 
-    @Query("select company_data_bundle from CompanyDataBundle company_data_bundle where company_data_bundle.company.id = :id and company_data_bundle.dataBundle.id = :bundleId")
-    CompanyDataBundle findByCompanyAndBundle(@Param("id") Long id,@Param("bundleId") Long bundleId);
+    @Query("select company_data_bundle from CompanyDataBundle company_data_bundle where company_data_bundle.dataBundle.id = :bundleId")
+    List<CompanyDataBundle> findByCompanyAndBundle(@Param("bundleId") Long bundleId);
 
 }

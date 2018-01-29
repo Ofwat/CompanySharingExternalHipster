@@ -59,10 +59,8 @@
     <include file="classpath:config/liquibase/changelog/20171123000100_added_entity_constraints_CompanyDataInput.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20171122000100_added_entity_constraints_DataFile.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20180104145941_added_column_CompanyDataBundle.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20180109145103_changelog.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20171025155755_add_company_statuses.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20171025155755_add_input_type.xml" relativeToChangelogFile="false"/>
-
+    <include file="classpath:config/liquibase/changelog/20180129153818_mapping_changes.xml" relativeToChangelogFile="false"/>
 
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

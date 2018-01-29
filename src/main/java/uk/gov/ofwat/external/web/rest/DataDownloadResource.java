@@ -114,12 +114,33 @@ public class DataDownloadResource {
                 .sorted(Collections.reverseOrder()).collect(Collectors.toList());
             Path filePath = Paths.get(fileList.get(0).toString());
             if (Files.exists(filePath)) {
-                try (BufferedReader fileReader = Files.newBufferedReader(filePath, charset);) {
+                // try (BufferedReader fileReader = Files.newBufferedReader(filePath, charset);) {
+                try (BufferedReader fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(String.valueOf(filePath)), "utf-8"));) {
                     int glyph;
                     while ((glyph = fileReader.read()) != -1) {
                         temp.append((char) glyph);
                     }
 
+                }
+
+               /* try(FileInputStream fileInputStream = new FileInputStream(String.valueOf(filePath))) {
+
+                    //OutputStream responseOutputStream = response.getOutputStream();
+                    int bytes;
+                    while ((bytes = fileInputStream.read()) != -1) {
+                        //responseOutputStream.write(bytes);
+                        temp.append(bytes);
+                    }
+                    fileInputStream.close();
+                    //responseOutputStream.close();
+/*
+                } */
+            catch (FileNotFoundException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
                 }
             }
             dataDownloadDTO.setFileContent(temp.toString());

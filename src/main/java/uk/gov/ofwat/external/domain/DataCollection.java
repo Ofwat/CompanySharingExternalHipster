@@ -1,5 +1,6 @@
 package uk.gov.ofwat.external.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -45,6 +46,11 @@ public class DataCollection extends AbstractAuditingEntity implements Serializab
     @OneToMany(mappedBy="dataCollection")
     @OrderColumn(name="order_Index")
     private DataBundle[] dataBundles;
+
+    @OneToMany(mappedBy="dataCollection")
+    @OrderColumn(name="company_data_collection_order_Index")
+    private CompanyDataCollection[] companyDataCollections;
+
 
     public Long getId() {
         return id;
@@ -108,6 +114,14 @@ public class DataCollection extends AbstractAuditingEntity implements Serializab
 
     public void setDataBundles(DataBundle[] dataBundles) {
         this.dataBundles = dataBundles;
+    }
+
+    public CompanyDataCollection[] getCompanyDataCollections() {
+        return companyDataCollections;
+    }
+
+    public void setCompanyDataCollections(CompanyDataCollection[] companyDataCollections) {
+        this.companyDataCollections = companyDataCollections;
     }
 
     public boolean equals(Object object) {

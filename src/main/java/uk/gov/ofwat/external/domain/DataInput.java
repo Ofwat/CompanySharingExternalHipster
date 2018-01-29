@@ -1,5 +1,6 @@
 package uk.gov.ofwat.external.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -64,6 +65,10 @@ public class DataInput extends AbstractAuditingEntity implements Serializable {
     @ManyToOne(optional = false)
     @NotNull
     private User reviewer;
+
+    @OneToMany(mappedBy="dataInput")
+    @OrderColumn(name="company_data_input_order_Index")
+    private CompanyDataInput[] companyDataInput;
 
     public Long getId() {
         return id;
@@ -214,6 +219,14 @@ public class DataInput extends AbstractAuditingEntity implements Serializable {
 
     public void setReviewer(User user) {
         this.reviewer = user;
+    }
+
+    public CompanyDataInput[] getCompanyDataInput() {
+        return companyDataInput;
+    }
+
+    public void setCompanyDataInput(CompanyDataInput[] companyDataInput) {
+        this.companyDataInput = companyDataInput;
     }
 
     @Override

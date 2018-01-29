@@ -31,9 +31,6 @@ public class Company extends AbstractAuditingEntity implements Serializable {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "deleted", nullable = false)
-    private Boolean deleted;
-
 /*    @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "company_admin",
@@ -101,14 +98,6 @@ public class Company extends AbstractAuditingEntity implements Serializable {
         return this.companyUserDetails.stream().map(cud -> cud.getUser()).collect(Collectors.toSet());
     }
 
-    public Boolean getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(Boolean deleted) {
-        this.deleted = deleted;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -134,7 +123,6 @@ public class Company extends AbstractAuditingEntity implements Serializable {
         return "Company{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
-            ", deleted='" + getDeleted() + "'" +
             "}";
     }
 }

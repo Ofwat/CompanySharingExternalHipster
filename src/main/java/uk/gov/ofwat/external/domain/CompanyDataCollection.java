@@ -37,6 +37,7 @@ public class CompanyDataCollection implements Serializable {
     private Company company;
 
     @ManyToOne(optional = false)
+    @JoinColumn(name="DATA_COLLECTION_ID", nullable=false)
     @NotNull
     private DataCollection dataCollection;
 
@@ -44,6 +45,10 @@ public class CompanyDataCollection implements Serializable {
     @OrderColumn(name="order_Index")
     @JsonIgnore
     private CompanyDataBundle[] companyDataBundles;
+
+    @NotNull
+    @Column(name = "company_data_collection_order_Index", nullable = false)
+    private Long companyDataCollectionOrderIndex;
 
     @ManyToOne
     private User companyOwner;
@@ -189,5 +194,13 @@ public class CompanyDataCollection implements Serializable {
             ", companyOwner=" + companyOwner +
             ", companyReviewer=" + companyReviewer +
             '}';
+    }
+
+    public Long getCompanyDataCollectionOrderIndex() {
+        return companyDataCollectionOrderIndex;
+    }
+
+    public void setCompanyDataCollectionOrderIndex(Long companyDataCollectionOrderIndex) {
+        this.companyDataCollectionOrderIndex = companyDataCollectionOrderIndex;
     }
 }

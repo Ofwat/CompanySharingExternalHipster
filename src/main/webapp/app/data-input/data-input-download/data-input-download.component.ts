@@ -77,7 +77,7 @@ export class DataInputDownloadComponent implements OnInit {
             });
         }
         if (result.fileName != null) {
-            const blob = new Blob([result.fileContent], {type: 'text/plain'});
+            const blob = new Blob([result.fileContent], {type: 'application/excel'});
             saveAs(blob, result.fileName);
         }
     }

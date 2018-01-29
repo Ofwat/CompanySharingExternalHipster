@@ -45,8 +45,8 @@ public class CompanyDataBundle implements Serializable {
     private Company company;
 
     @ManyToOne(optional = false)
+    @JoinColumn(name="DATA_BUNDLE_ID", nullable=false)
     @NotNull
-    @JsonIgnore
     private DataBundle dataBundle;
 
     @ManyToOne
@@ -69,6 +69,10 @@ public class CompanyDataBundle implements Serializable {
     @OneToMany(mappedBy="companyDataBundle")
     @OrderColumn(name="order_Index")
     private CompanyDataInput[] companyDataInputs;
+
+    @NotNull
+    @Column(name = "company_data_bundle_order_Index", nullable = false)
+    private Long companyDataBundleOrderIndex;
 
     @OneToMany(mappedBy = "companyDataBundle")
     @JsonIgnore
@@ -267,5 +271,13 @@ public class CompanyDataBundle implements Serializable {
         result = 31 * result + Arrays.hashCode(companyDataInputs);
         result = 31 * result + (submissionSignOffs != null ? submissionSignOffs.hashCode() : 0);
         return result;
+    }
+
+    public Long getCompanyDataBundleOrderIndex() {
+        return companyDataBundleOrderIndex;
+    }
+
+    public void setCompanyDataBundleOrderIndex(Long companyDataBundleOrderIndex) {
+        this.companyDataBundleOrderIndex = companyDataBundleOrderIndex;
     }
 }

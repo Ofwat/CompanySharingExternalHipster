@@ -43,6 +43,7 @@ public class CompanyDataInput implements Serializable {
     private CompanyDataBundle companyDataBundle;
 
     @ManyToOne(optional = false)
+    @JoinColumn(name="DATA_INPUT_ID", nullable=false)
     @NotNull
     private DataInput dataInput;
 
@@ -242,6 +243,10 @@ public class CompanyDataInput implements Serializable {
         this.inputType = inputType;
     }
 
+    @NotNull
+    @Column(name = "company_data_input_order_Index", nullable = false)
+    private Long companyDataInputOrderIndex;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -300,5 +305,13 @@ public class CompanyDataInput implements Serializable {
             ", inputType=" + inputType +
             ", orderIndex=" + orderIndex +
             '}';
+    }
+
+    public Long getCompanyDataInputOrderIndex() {
+        return companyDataInputOrderIndex;
+    }
+
+    public void setCompanyDataInputOrderIndex(Long companyDataInputOrderIndex) {
+        this.companyDataInputOrderIndex = companyDataInputOrderIndex;
     }
 }
