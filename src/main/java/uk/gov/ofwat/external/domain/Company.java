@@ -28,7 +28,7 @@ public class Company extends AbstractAuditingEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "fountain-id", nullable = false)
+    @Column(name = "fountain_id", nullable = false)
     private Long fountainId;
 
     @Column(name = "name")
