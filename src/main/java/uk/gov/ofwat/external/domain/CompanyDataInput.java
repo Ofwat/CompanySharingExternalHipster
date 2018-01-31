@@ -38,10 +38,12 @@ public class CompanyDataInput implements Serializable {
     private Company company;
 
     @ManyToOne(optional = false)
+    @JoinColumn(name="COMPANY_DATA_BUNDLE_ID", nullable=false)
     @NotNull
     private CompanyDataBundle companyDataBundle;
 
     @ManyToOne(optional = false)
+    @JoinColumn(name="DATA_INPUT_ID", nullable=false)
     @NotNull
     private DataInput dataInput;
 
@@ -65,6 +67,11 @@ public class CompanyDataInput implements Serializable {
 
     @ManyToOne
     private InputType inputType;
+
+    @NotNull
+    @Column(name = "order_Index", nullable = false)
+    private Long orderIndex;
+
 
     public Long getId() {
         return id;
@@ -224,35 +231,90 @@ public class CompanyDataInput implements Serializable {
         return this;
     }
 
+    public Long getOrderIndex() {
+        return orderIndex;
+    }
+
+    public void setOrderIndex(Long orderIndex) {
+        this.orderIndex = orderIndex;
+    }
+
     public void setInputType(InputType inputType) {
         this.inputType = inputType;
     }
 
+    @NotNull
+    @Column(name = "company_data_input_order_Index", nullable = false)
+    private Long companyDataInputOrderIndex;
+
+    public Long getCompanyDataInputOrderIndex() {
+        return companyDataInputOrderIndex;
+    }
+
+    public void setCompanyDataInputOrderIndex(Long companyDataInputOrderIndex) {
+        this.companyDataInputOrderIndex = companyDataInputOrderIndex;
+    }
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
+        if (this == o) return true;
+        if (!(o instanceof CompanyDataInput)) return false;
+
+        CompanyDataInput that = (CompanyDataInput) o;
+
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (status != null ? !status.equals(that.status) : that.status != null) return false;
+        if (company != null ? !company.equals(that.company) : that.company != null) return false;
+        if (companyDataBundle != null ? !companyDataBundle.equals(that.companyDataBundle) : that.companyDataBundle != null)
             return false;
-        }
-        CompanyDataInput companyDataInput = (CompanyDataInput) o;
-        if (companyDataInput.getId() == null || getId() == null) {
+        if (dataInput != null ? !dataInput.equals(that.dataInput) : that.dataInput != null) return false;
+        if (companyOwner != null ? !companyOwner.equals(that.companyOwner) : that.companyOwner != null) return false;
+        if (companyReviewer != null ? !companyReviewer.equals(that.companyReviewer) : that.companyReviewer != null)
             return false;
-        }
-        return Objects.equals(getId(), companyDataInput.getId());
+        if (reviewSignOffs != null ? !reviewSignOffs.equals(that.reviewSignOffs) : that.reviewSignOffs != null)
+            return false;
+        if (submissionFiles != null ? !submissionFiles.equals(that.submissionFiles) : that.submissionFiles != null)
+            return false;
+        if (inputType != null ? !inputType.equals(that.inputType) : that.inputType != null) return false;
+        if (orderIndex != null ? !orderIndex.equals(that.orderIndex) : that.orderIndex != null) return false;
+        return companyDataInputOrderIndex != null ? companyDataInputOrderIndex.equals(that.companyDataInputOrderIndex) : that.companyDataInputOrderIndex == null;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (status != null ? status.hashCode() : 0);
+        result = 31 * result + (company != null ? company.hashCode() : 0);
+        result = 31 * result + (companyDataBundle != null ? companyDataBundle.hashCode() : 0);
+        result = 31 * result + (dataInput != null ? dataInput.hashCode() : 0);
+        result = 31 * result + (companyOwner != null ? companyOwner.hashCode() : 0);
+        result = 31 * result + (companyReviewer != null ? companyReviewer.hashCode() : 0);
+        result = 31 * result + (reviewSignOffs != null ? reviewSignOffs.hashCode() : 0);
+        result = 31 * result + (submissionFiles != null ? submissionFiles.hashCode() : 0);
+        result = 31 * result + (inputType != null ? inputType.hashCode() : 0);
+        result = 31 * result + (orderIndex != null ? orderIndex.hashCode() : 0);
+        result = 31 * result + (companyDataInputOrderIndex != null ? companyDataInputOrderIndex.hashCode() : 0);
+        return result;
     }
 
     @Override
     public String toString() {
         return "CompanyDataInput{" +
-            "id=" + getId() +
-            ", name='" + getName() + "'" +
-            "}";
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", status=" + status +
+            ", company=" + company +
+            ", companyDataBundle=" + companyDataBundle +
+            ", dataInput=" + dataInput +
+            ", companyOwner=" + companyOwner +
+            ", companyReviewer=" + companyReviewer +
+            ", reviewSignOffs=" + reviewSignOffs +
+            ", submissionFiles=" + submissionFiles +
+            ", inputType=" + inputType +
+            ", orderIndex=" + orderIndex +
+            ", companyDataInputOrderIndex=" + companyDataInputOrderIndex +
+            '}';
     }
 }

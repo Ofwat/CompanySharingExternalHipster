@@ -1,9 +1,12 @@
 package uk.gov.ofwat.external.repository;
 
+import org.springframework.data.repository.query.Param;
 import uk.gov.ofwat.external.domain.CompanyDataInput;
 import org.springframework.stereotype.Repository;
 
 import org.springframework.data.jpa.repository.*;
+import uk.gov.ofwat.external.domain.DataInput;
+
 import java.util.List;
 
 /**
@@ -18,5 +21,8 @@ public interface CompanyDataInputRepository extends JpaRepository<CompanyDataInp
 
     @Query("select company_data_input from CompanyDataInput company_data_input where company_data_input.companyReviewer.login = ?#{principal.username}")
     List<CompanyDataInput> findByCompanyReviewerIsCurrentUser();
-    
+
+    @Query("select company_data_input from CompanyDataInput company_data_input left join fetch  company_data_input.companyDataBundle companyDataBundle where companyDataBundle.id = :id")
+    List<CompanyDataInput> findByCompanyDataBundle(@Param("id") Long id);
+
 }

@@ -45,6 +45,18 @@ public class CompanyDataInputDTO implements Serializable {
 
     private String inputTypeType;
 
+
+
+    private Long orderIndex;
+
+    public Long getOrderIndex() {
+        return orderIndex;
+    }
+
+    public void setOrderIndex(Long orderIndex) {
+        this.orderIndex = orderIndex;
+    }
+
     public Long getId() {
         return id;
     }

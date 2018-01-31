@@ -8,7 +8,7 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity CompanyDataCollection and its DTO CompanyDataCollectionDTO.
  */
-@Mapper(componentModel = "spring", uses = {CompanyStatusMapper.class, CompanyMapper.class, DataCollectionMapper.class, UserMapper.class, })
+@Mapper(componentModel = "spring", uses = {CompanyStatusMapper.class, CompanyMapper.class, DataCollectionMapper.class, UserMapper.class,CompanyDataBundleMapper.class })
 public interface CompanyDataCollectionMapper extends EntityMapper <CompanyDataCollectionDTO, CompanyDataCollection> {
 
     @Mapping(source = "status.id", target = "statusId")
@@ -25,7 +25,8 @@ public interface CompanyDataCollectionMapper extends EntityMapper <CompanyDataCo
 
     @Mapping(source = "companyReviewer.id", target = "companyReviewerId")
     @Mapping(source = "companyReviewer.firstName", target = "companyReviewerFirstName")
-    CompanyDataCollectionDTO toDto(CompanyDataCollection companyDataCollection); 
+    @Mapping(source = "companyDataCollection.companyDataBundles", target = "companyDataBundles")
+    CompanyDataCollectionDTO toDto(CompanyDataCollection companyDataCollection);
 
     @Mapping(source = "statusId", target = "status")
 
@@ -36,7 +37,9 @@ public interface CompanyDataCollectionMapper extends EntityMapper <CompanyDataCo
     @Mapping(source = "companyOwnerId", target = "companyOwner")
 
     @Mapping(source = "companyReviewerId", target = "companyReviewer")
-    CompanyDataCollection toEntity(CompanyDataCollectionDTO companyDataCollectionDTO); 
+    @Mapping(source = "companyDataBundles", target = "companyDataBundles")
+    CompanyDataCollection toEntity(CompanyDataCollectionDTO companyDataCollectionDTO);
+
     default CompanyDataCollection fromId(Long id) {
         if (id == null) {
             return null;
@@ -45,4 +48,5 @@ public interface CompanyDataCollectionMapper extends EntityMapper <CompanyDataCo
         companyDataCollection.setId(id);
         return companyDataCollection;
     }
+
 }

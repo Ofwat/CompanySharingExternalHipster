@@ -7,7 +7,7 @@
         Added the constraints for entity DataFile.
     -->
     <changeSet id="20171122000100-2" author="jhipster">
-        
+
         <addForeignKeyConstraint baseColumnNames="company_data_input_id"
                                  baseTableName="data_file"
                                  constraintName="fk_data_file_company_data_input_id"
@@ -15,4 +15,5 @@
                                  referencedTableName="company_data_input"/>
 
     </changeSet>
+
 </databaseChangeLog>

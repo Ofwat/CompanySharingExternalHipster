@@ -10,7 +10,7 @@
                 <div *ngFor="let file of fileNameList">
                     <dd class="cya-question">Name</dd>
                     <dd class="cya-answer">{{file}}</dd>
-                    <dd class="cya-answer"><a href="" #fileInput (click)="downloadFile()" id="{{file}}" >Download</a></dd>
+                    <dd class="cya-answer"><a href="" #fileInput (click)="downloadFile($event)" id="{{file}}" >Download</a></dd>
                 </div>
 
             </dl>

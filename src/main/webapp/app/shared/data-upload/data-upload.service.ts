@@ -6,6 +6,7 @@ import { ResponseWrapper } from '../model/response-wrapper.model';
 @Injectable()
 export class UploadService {
     private resourceUrl = 'api/data-upload';
+    private resourceUrlCompany = 'api/data-upload-company';
 
     constructor(private http: Http) { }
 
@@ -14,6 +15,12 @@ export class UploadService {
             .map((res: Response) => this.convertResponse(res));
 
     }
+    uploadCompany(formData: FormData): Observable<ResponseWrapper> {
+        return this.http.post(this.resourceUrlCompany, formData)
+            .map((res: Response) => this.convertResponse(res));
+
+    }
+
 
     private convertResponse(res: Response): ResponseWrapper {
         const jsonResponse = res.json();

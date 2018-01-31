@@ -6,6 +6,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import uk.gov.ofwat.external.domain.PublishingStatus;
 import uk.gov.ofwat.external.repository.PublishingStatusRepository;
 import uk.gov.ofwat.external.service.DataInputService;
+import uk.gov.ofwat.external.service.PublishingStateTransformationService;
 import uk.gov.ofwat.external.service.ExcelReaderService;
 import uk.gov.ofwat.external.web.rest.util.HeaderUtil;
 import uk.gov.ofwat.external.web.rest.util.PaginationUtil;
@@ -44,11 +45,15 @@ public class DataInputResource {
     private final DataInputService dataInputService;
     private final PublishingStatusRepository publishingStatusRepository;
     private final ExcelReaderService excelReaderService;
+    private final PublishingStateTransformationService publishingStateTransformationService;
 
-    public DataInputResource(DataInputService dataInputService, PublishingStatusRepository publishingStatusRepository, ExcelReaderService excelReaderService) {
+    public DataInputResource(DataInputService dataInputService, PublishingStatusRepository publishingStatusRepository,
+                             PublishingStateTransformationService publishingStateTransformationService, ExcelReaderService excelReaderService) {
         this.dataInputService = dataInputService;
         this.publishingStatusRepository = publishingStatusRepository;
+        this.publishingStateTransformationService = publishingStateTransformationService;
         this.excelReaderService = excelReaderService;
+
     }
 
     /**
@@ -62,23 +67,25 @@ public class DataInputResource {
     @Timed
     public ResponseEntity<DataInputDTO> createDataInput(@Valid @RequestBody DataInputDTO dataInputDTO) throws URISyntaxException {
         log.debug("REST request to save DataInput : {}", dataInputDTO);
-        if (dataInputDTO.getId() != null) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new dataInput cannot already have an ID")).body(null);
-        }
 
-        Long maxOrderIndex = dataInputService.getMaxOrderIndex(dataInputDTO.getDataBundleId());
-        log.error("maxOrderIndex = " + maxOrderIndex);
-        Optional<PublishingStatus> optionalPublishingStatus = publishingStatusRepository.findOneByStatus("DRAFT");
-        if (!optionalPublishingStatus.isPresent()) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "publishingStatusMissing", "Publishing status 'Draft' not found in database."))
-                .body(null);
-        }
-        dataInputDTO.setStatusId(optionalPublishingStatus.get().getId());
-        dataInputDTO.setStatusStatus(optionalPublishingStatus.get().getStatus());
-        dataInputDTO.setOrderIndex(new Long(maxOrderIndex+1));
+            if (dataInputDTO.getId() != null) {
+                return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new dataInput cannot already have an ID")).body(null);
+            }
 
-        DataInputDTO result = dataInputService.save(dataInputDTO);
+            Long maxOrderIndex = dataInputService.getMaxOrderIndex(dataInputDTO.getDataBundleId());
+            log.error("maxOrderIndex = " + maxOrderIndex);
+            Optional<PublishingStatus> optionalPublishingStatus = publishingStatusRepository.findOneByStatus("DRAFT");
+            if (!optionalPublishingStatus.isPresent()) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "publishingStatusMissing", "Publishing status 'Draft' not found in database."))
+                    .body(null);
+            }
+            dataInputDTO.setStatusId(optionalPublishingStatus.get().getId());
+            dataInputDTO.setStatusStatus(optionalPublishingStatus.get().getStatus());
+            dataInputDTO.setOrderIndex(new Long(maxOrderIndex + 1));
+
+            DataInputDTO result = dataInputService.save(dataInputDTO);
+
         return ResponseEntity.created(new URI("/api/data-inputs/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -123,6 +130,10 @@ public class DataInputResource {
             return createDataInput(dataInputDTO);
         }
         DataInputDTO result = dataInputService.save(dataInputDTO);
+        //When status has been changed to publish
+        if (dataInputDTO.getStatusId().equals(new Long(4))) {
+            publishingStateTransformationService.publishDataInputStatus(dataInputDTO);
+        }
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, dataInputDTO.getId().toString()))
             .body(result);

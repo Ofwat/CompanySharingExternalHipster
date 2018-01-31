@@ -1,0 +1,67 @@
+<div *ngIf="dataCollection">
+    <div class="grid-row">
+        <div class="column-two-thirds">
+
+            <h2 class="heading-medium">
+                <span>Company Data Collection</span>
+            </h2>
+
+            <div class="form-group">
+                <dl class="govuk-check-your-answers cya-questions-short">
+                    <div>
+                        <dd class="cya-question">Name</dd>
+                        <dd class="cya-answer"><div *ngIf="dataCollection.name">{{dataCollection.name}}</div></dd>
+                        <dd></dd>
+                    </div>
+                    <div>
+                        <dd class="cya-question">Publishing Status</dd>
+                        <dd class="cya-answer"><div *ngIf="dataCollection.statusStatus">{{dataCollection.statusStatus}}</div></dd>
+                     </div>
+                    <div>
+                        <dd class="cya-question">Company Name</dd>
+                        <dd class="cya-answer"><div *ngIf="dataCollection.companyName">{{dataCollection.companyName}} </div></dd>
+                        <dd></dd>
+                    </div>
+                    <div>
+                        <dd class="cya-question">Owner First Name</dd>
+                        <dd class="cya-answer"><div *ngIf="dataCollection.companyOwnerFirstName">{{dataCollection.companyOwnerFirstName}}</div></dd>
+                        <dd></dd>
+                    </div>
+                    <div>
+                        <dd class="cya-question">Reviewer First Name</dd>
+                        <dd class="cya-answer"><div *ngIf="dataCollection.companyReviewerFirstName">{{dataCollection.companyReviewerFirstName}}</div></dd>
+                        <dd></dd>
+                    </div>
+                </dl>
+            </div>
+
+            <h2 class="heading-medium">Company Data Bundles</h2>
+
+            <div class="form-group">
+                <dl class="govuk-check-your-answers cya-questions-short">
+                    <div>
+                        <dt class="cya-question">Name</dt>
+                        <dt class="cya-question">Status</dt>
+                        <dt class="cya-question"></dt>
+                    </div>
+
+                    <div *ngFor="let db of dataBundles">
+                        <dd class="cya-question" >{{db.name}}</dd>
+                        <dd class="cya-answer" >{{db.statusStatus}}</dd>
+                        <dd class="cya-answer"><a href="" [routerLink]="['/company-data-bundle-detail', db.id]">Details</a>   </dd>
+                    </div>
+
+                </dl>
+            </div>
+
+            <div class="form-group">
+                <button type="button"
+                        routerLink="/company-data-collection-management"
+                        class="button button-secondary float-left">
+                    <span>Back</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -8,6 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import uk.gov.ofwat.external.domain.DataInput;
+import uk.gov.ofwat.external.service.CompanyDataInputService;
+import uk.gov.ofwat.external.service.DataInputService;
 import uk.gov.ofwat.external.service.dto.DataDownloadDTO;
 import uk.gov.ofwat.external.web.rest.util.HeaderUtil;
 
@@ -36,53 +39,48 @@ public class DataDownloadResource {
     private static final String ENTITY_NAME = "dataDownloadDTO";
     private static final String directoryName = "C:\\Files\\";
     Charset charset = StandardCharsets.UTF_8;
+    private final DataInputService dataInputService;
 
+    public DataDownloadResource(DataInputService dataInputService) {
+        this.dataInputService = dataInputService;
+    }
+/*
     @GetMapping("/data-download")
     @Timed
-    public ResponseEntity<DataDownloadDTO> getAllFiles() throws IOException, URISyntaxException {
+    public ResponseEntity<DataDownloadDTO> getAllFiles(@RequestParam("filename") String filename) throws IOException, URISyntaxException {
         log.debug("REST request to get a page of DataBundles");
         DataDownloadDTO dataDownloadDTO = new DataDownloadDTO();
-        List<String> files = getListofFiles();
-        dataDownloadDTO.setFileNames(files);
+        dataDownloadDTO.setFileContent("");
+        dataDownloadDTO.setFileName("");
+        StringBuilder temp = new StringBuilder("");
+
+        if (!filename.equals(null) && !filename.isEmpty()) {
+            Path theDestination = Paths.get(directoryName);
+            File dir = new File(theDestination.toString());
+            File[] filex = dir.listFiles((d, name) -> name.startsWith(filename));
+            List<File> fileList = Arrays.asList(filex).stream()
+                .sorted(Collections.reverseOrder()).collect(Collectors.toList());
+            Path filePath = Paths.get(fileList.get(0).toString());
+            if (Files.exists(filePath)) {
+                try (BufferedReader fileReader = Files.newBufferedReader(filePath, charset);) {
+                    int glyph;
+                    while ((glyph = fileReader.read()) != -1) {
+                        temp.append((char) glyph);
+                    }
+
+                }
+            }
+            dataDownloadDTO.setFileContent(temp.toString());
+            dataDownloadDTO.setFileName(filename.trim());
+        } else{
+            List<String> files = getListofFiles();
+            dataDownloadDTO.setFileNames(files);
+        }
 
         return ResponseEntity.created(new URI("/api/data-download/"))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, "dataDownloadDTO"))
             .body(dataDownloadDTO);
-    }
-
-
-/*
-        @GetMapping(value = "/data-download-file", params = "filename")
-        @Timed
-        public String downloadFile(@RequestParam("filename") String filename) throws IOException, URISyntaxException {
-*/
-    @GetMapping(value = "/data-download-file", params = "filename", produces = MediaType.TEXT_PLAIN_VALUE)
-    @Timed
-    public ResponseEntity  downloadFile(@RequestParam("filename") String filename) throws IOException, URISyntaxException {
-
-
-        StringBuilder temp = new StringBuilder("");
-        Path theDestination = Paths.get(directoryName);
-        File dir = new File(theDestination.toString());
-        File[] files = dir.listFiles((d, name) -> name.startsWith(filename.trim()));
-        List<File> fileList = Arrays.asList(files).stream()
-            .sorted(Collections.reverseOrder()).collect(Collectors.toList());
-        Path filePath = Paths.get(fileList.get(0).toString());
-        if (Files.exists(filePath)) {
-            try (BufferedReader fileReader = Files.newBufferedReader(filePath, charset);) {
-
-                String nextLine = "";
-                while ((nextLine = fileReader.readLine()) != null) {
-                    temp.append(nextLine.toString());
-                    temp.append('\n');
-                }
-            }
-        }
-            HttpHeaders headers = new HttpHeaders();
-            headers.setAccessControlExposeHeaders(Collections.singletonList("Content-Disposition"));
-            headers.set("Content-Disposition", "attachment; filename=" + filename);
-            return new ResponseEntity<>(temp.toString(), headers, HttpStatus.OK);
-    }
+    }*/
 
     private List<String> getListofFiles() {
         List<String> files = new ArrayList<String>();
@@ -96,5 +94,62 @@ public class DataDownloadResource {
         }
         return files;
     }
+
+
+    @GetMapping("/data-download/{id}")
+    @Timed
+    public ResponseEntity<DataDownloadDTO> getCompanyDataInput(@PathVariable Long id) throws URISyntaxException, IOException {
+        DataInput dataInput = dataInputService.findByDataBundle(id);
+        DataDownloadDTO dataDownloadDTO = new DataDownloadDTO();
+        String fileName=dataInput.getFileName().trim();
+        dataDownloadDTO.setFileContent("");
+        dataDownloadDTO.setFileName(fileName);
+        StringBuilder temp = new StringBuilder("");
+
+        if (!fileName.equals(null) && !fileName.isEmpty()) {
+            Path theDestination = Paths.get(directoryName);
+            File dir = new File(theDestination.toString());
+            File[] filex = dir.listFiles((d, name) -> name.startsWith(fileName));
+            List<File> fileList = Arrays.asList(filex).stream()
+                .sorted(Collections.reverseOrder()).collect(Collectors.toList());
+            Path filePath = Paths.get(fileList.get(0).toString());
+            if (Files.exists(filePath)) {
+                // try (BufferedReader fileReader = Files.newBufferedReader(filePath, charset);) {
+                try (BufferedReader fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(String.valueOf(filePath)), "utf-8"));) {
+                    int glyph;
+                    while ((glyph = fileReader.read()) != -1) {
+                        temp.append((char) glyph);
+                    }
+
+                }
+
+               /* try(FileInputStream fileInputStream = new FileInputStream(String.valueOf(filePath))) {
+
+                    //OutputStream responseOutputStream = response.getOutputStream();
+                    int bytes;
+                    while ((bytes = fileInputStream.read()) != -1) {
+                        //responseOutputStream.write(bytes);
+                        temp.append(bytes);
+                    }
+                    fileInputStream.close();
+                    //responseOutputStream.close();
+/*
+                } */
+            catch (FileNotFoundException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+            dataDownloadDTO.setFileContent(temp.toString());
+            dataDownloadDTO.setFileName(fileName.trim());
+        }
+        return ResponseEntity.created(new URI("/api/data-download/"))
+            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, "dataDownloadDTO"))
+            .body(dataDownloadDTO);
+    }
+
 
 }

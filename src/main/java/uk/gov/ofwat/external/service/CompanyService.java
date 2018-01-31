@@ -53,6 +53,10 @@ public class CompanyService {
         this.companyUserDetailsRepository = companyUserDetailsRepository;
     }
 
+    /*Returns list of all Companies*/
+    List<Company> findAll(){
+        return this.companyRepository.findAll();
+    }
 
     /**
      * Save a company.

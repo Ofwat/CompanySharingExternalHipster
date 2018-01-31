@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
@@ -35,25 +36,43 @@ public class CompanyDataBundle implements Serializable {
 
     @ManyToOne(optional = false)
     @NotNull
+    @JsonIgnore
     private CompanyStatus status;
 
     @ManyToOne(optional = false)
     @NotNull
+    @JsonIgnore
     private Company company;
 
     @ManyToOne(optional = false)
-    @NotNull
-    private CompanyDataCollection companyDataCollection;
-
-    @ManyToOne(optional = false)
+    @JoinColumn(name="DATA_BUNDLE_ID", nullable=false)
     @NotNull
     private DataBundle dataBundle;
 
     @ManyToOne
+    @JsonIgnore
     private User companyOwner;
 
+    @NotNull
+    @Column(name = "order_Index", nullable = false)
+    private Long orderIndex;
+
     @ManyToOne
+    @JsonIgnore
     private User companyReviewer;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name="COMPANY_DATA_COLLECTION_ID", nullable=false)
+    @NotNull
+    private CompanyDataCollection companyDataCollection;
+
+    @OneToMany(mappedBy="companyDataBundle")
+    @OrderColumn(name="order_Index")
+    private CompanyDataInput[] companyDataInputs;
+
+    @NotNull
+    @Column(name = "company_data_bundle_order_Index", nullable = false)
+    private Long companyDataBundleOrderIndex;
 
     @OneToMany(mappedBy = "companyDataBundle")
     @JsonIgnore
@@ -171,7 +190,6 @@ public class CompanyDataBundle implements Serializable {
     public void setCompanyReviewer(User user) {
         this.companyReviewer = user;
     }
-
     public Set<SubmissionSignOff> getSubmissionSignOffs() {
         return submissionSignOffs;
     }
@@ -197,32 +215,89 @@ public class CompanyDataBundle implements Serializable {
         this.submissionSignOffs = submissionSignOffs;
     }
 
+    public Long getOrderIndex() {
+        return orderIndex;
+    }
+
+    public void setOrderIndex(Long orderIndex) {
+        this.orderIndex = orderIndex;
+    }
+
+
+    public CompanyDataInput[] getCompanyDataInputs() {
+        return companyDataInputs;
+    }
+
+    public void setCompanyDataInputs(CompanyDataInput[] companyDataInputs) {
+        this.companyDataInputs = companyDataInputs;
+    }
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
+        if (this == o) return true;
+        if (!(o instanceof CompanyDataBundle)) return false;
+
+        CompanyDataBundle that = (CompanyDataBundle) o;
+
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (companyDeadline != null ? !companyDeadline.equals(that.companyDeadline) : that.companyDeadline != null)
             return false;
-        }
-        CompanyDataBundle companyDataBundle = (CompanyDataBundle) o;
-        if (companyDataBundle.getId() == null || getId() == null) {
+        if (status != null ? !status.equals(that.status) : that.status != null) return false;
+        if (company != null ? !company.equals(that.company) : that.company != null) return false;
+        if (dataBundle != null ? !dataBundle.equals(that.dataBundle) : that.dataBundle != null) return false;
+        if (companyOwner != null ? !companyOwner.equals(that.companyOwner) : that.companyOwner != null) return false;
+        if (orderIndex != null ? !orderIndex.equals(that.orderIndex) : that.orderIndex != null) return false;
+        if (companyReviewer != null ? !companyReviewer.equals(that.companyReviewer) : that.companyReviewer != null)
             return false;
-        }
-        return Objects.equals(getId(), companyDataBundle.getId());
+        if (companyDataCollection != null ? !companyDataCollection.equals(that.companyDataCollection) : that.companyDataCollection != null)
+            return false;
+        // Probably incorrect - comparing Object[] arrays with Arrays.equals
+        if (!Arrays.equals(companyDataInputs, that.companyDataInputs)) return false;
+        return submissionSignOffs != null ? submissionSignOffs.equals(that.submissionSignOffs) : that.submissionSignOffs == null;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (companyDeadline != null ? companyDeadline.hashCode() : 0);
+        result = 31 * result + (status != null ? status.hashCode() : 0);
+        result = 31 * result + (company != null ? company.hashCode() : 0);
+        result = 31 * result + (dataBundle != null ? dataBundle.hashCode() : 0);
+        result = 31 * result + (companyOwner != null ? companyOwner.hashCode() : 0);
+        result = 31 * result + (orderIndex != null ? orderIndex.hashCode() : 0);
+        result = 31 * result + (companyReviewer != null ? companyReviewer.hashCode() : 0);
+        result = 31 * result + (companyDataCollection != null ? companyDataCollection.hashCode() : 0);
+        result = 31 * result + Arrays.hashCode(companyDataInputs);
+        result = 31 * result + (submissionSignOffs != null ? submissionSignOffs.hashCode() : 0);
+        return result;
+    }
+
+    public Long getCompanyDataBundleOrderIndex() {
+        return companyDataBundleOrderIndex;
+    }
+
+    public void setCompanyDataBundleOrderIndex(Long companyDataBundleOrderIndex) {
+        this.companyDataBundleOrderIndex = companyDataBundleOrderIndex;
     }
 
     @Override
     public String toString() {
         return "CompanyDataBundle{" +
-            "id=" + getId() +
-            ", name='" + getName() + "'" +
-            ", companyDeadline='" + getCompanyDeadline() + "'" +
-            "}";
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", companyDeadline=" + companyDeadline +
+            ", status=" + status +
+            ", company=" + company +
+            ", dataBundle=" + dataBundle +
+            ", companyOwner=" + companyOwner +
+            ", orderIndex=" + orderIndex +
+            ", companyReviewer=" + companyReviewer +
+            ", companyDataCollection=" + companyDataCollection +
+            ", companyDataInputs=" + Arrays.toString(companyDataInputs) +
+            ", companyDataBundleOrderIndex=" + companyDataBundleOrderIndex +
+            ", submissionSignOffs=" + submissionSignOffs +
+            '}';
     }
 }

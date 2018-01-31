@@ -14,6 +14,8 @@ public class DataDownloadDTO implements Serializable {
 
     @NotNull private String fileContent;
 
+    private String fileName;
+
     public List<String> getFileNames() {
         return fileNames;
     }
@@ -28,5 +30,13 @@ public class DataDownloadDTO implements Serializable {
 
     public void setFileContent(String fileContent) {
         this.fileContent = fileContent;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 }

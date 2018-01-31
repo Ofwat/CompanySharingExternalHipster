@@ -1,5 +1,6 @@
 package uk.gov.ofwat.external.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Fetch;
@@ -46,6 +47,11 @@ public class DataCollection extends AbstractAuditingEntity implements Serializab
     @OneToMany(mappedBy="dataCollection")
     @OrderColumn(name="order_Index")
     private DataBundle[] dataBundles;
+
+    @OneToMany(mappedBy="dataCollection")
+    @OrderColumn(name="company_data_collection_order_Index")
+    private CompanyDataCollection[] companyDataCollections;
+
 
     public Long getId() {
         return id;
@@ -111,39 +117,46 @@ public class DataCollection extends AbstractAuditingEntity implements Serializab
         this.dataBundles = dataBundles;
     }
 
-    public boolean equals(Object object) {
-        if (this == object) return true;
-        if (!(object instanceof DataCollection)) return false;
-        if (!super.equals(object)) return false;
-
-        DataCollection that = (DataCollection) object;
-
-        if (getId() != null ? !getId().equals(that.getId()) : that.getId() != null) return false;
-        if (getName() != null ? !getName().equals(that.getName()) : that.getName() != null) return false;
-        if (getPublishingStatus() != null ? !getPublishingStatus().equals(that.getPublishingStatus()) : that.getPublishingStatus() != null)
-            return false;
-        if (getOwner() != null ? !getOwner().equals(that.getOwner()) : that.getOwner() != null) return false;
-        if (getReviewer() != null ? !getReviewer().equals(that.getReviewer()) : that.getReviewer() != null)
-            return false;
-        if (getDescription() != null ? !getDescription().equals(that.getDescription()) : that.getDescription() != null)
-            return false;
-        if (getGuidance() != null ? !getGuidance().equals(that.getGuidance()) : that.getGuidance() != null)
-            return false;
-        if (!java.util.Arrays.equals(getDataBundles(), that.getDataBundles())) return false;
-
-        return true;
+    public CompanyDataCollection[] getCompanyDataCollections() {
+        return companyDataCollections;
     }
 
+    public void setCompanyDataCollections(CompanyDataCollection[] companyDataCollections) {
+        this.companyDataCollections = companyDataCollections;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof DataCollection)) return false;
+
+        DataCollection that = (DataCollection) o;
+
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (publishingStatus != null ? !publishingStatus.equals(that.publishingStatus) : that.publishingStatus != null)
+            return false;
+        if (owner != null ? !owner.equals(that.owner) : that.owner != null) return false;
+        if (reviewer != null ? !reviewer.equals(that.reviewer) : that.reviewer != null) return false;
+        if (description != null ? !description.equals(that.description) : that.description != null) return false;
+        if (guidance != null ? !guidance.equals(that.guidance) : that.guidance != null) return false;
+        // Probably incorrect - comparing Object[] arrays with Arrays.equals
+        if (!Arrays.equals(dataBundles, that.dataBundles)) return false;
+        // Probably incorrect - comparing Object[] arrays with Arrays.equals
+        return Arrays.equals(companyDataCollections, that.companyDataCollections);
+    }
+
+    @Override
     public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + (getId() != null ? getId().hashCode() : 0);
-        result = 31 * result + (getName() != null ? getName().hashCode() : 0);
-        result = 31 * result + (getPublishingStatus() != null ? getPublishingStatus().hashCode() : 0);
-        result = 31 * result + (getOwner() != null ? getOwner().hashCode() : 0);
-        result = 31 * result + (getReviewer() != null ? getReviewer().hashCode() : 0);
-        result = 31 * result + (getDescription() != null ? getDescription().hashCode() : 0);
-        result = 31 * result + (getGuidance() != null ? getGuidance().hashCode() : 0);
-        result = 31 * result + java.util.Arrays.hashCode(getDataBundles());
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (publishingStatus != null ? publishingStatus.hashCode() : 0);
+        result = 31 * result + (owner != null ? owner.hashCode() : 0);
+        result = 31 * result + (reviewer != null ? reviewer.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (guidance != null ? guidance.hashCode() : 0);
+        result = 31 * result + Arrays.hashCode(dataBundles);
+        result = 31 * result + Arrays.hashCode(companyDataCollections);
         return result;
     }
 
@@ -158,6 +171,7 @@ public class DataCollection extends AbstractAuditingEntity implements Serializab
             ", description='" + description + '\'' +
             ", guidance='" + guidance + '\'' +
             ", dataBundles=" + Arrays.toString(dataBundles) +
+            ", companyDataCollections=" + Arrays.toString(companyDataCollections) +
             '}';
     }
 }

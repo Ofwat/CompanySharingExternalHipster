@@ -8,7 +8,7 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity CompanyDataInput and its DTO CompanyDataInputDTO.
  */
-@Mapper(componentModel = "spring", uses = {CompanyStatusMapper.class, CompanyMapper.class, CompanyDataBundleMapper.class, DataInputMapper.class, UserMapper.class, InputTypeMapper.class, })
+@Mapper(componentModel = "spring", uses = {CompanyStatusMapper.class, CompanyMapper.class, CompanyDataCollectionMapper.class,CompanyDataBundleMapper.class, DataInputMapper.class, UserMapper.class, InputTypeMapper.class, })
 public interface CompanyDataInputMapper extends EntityMapper <CompanyDataInputDTO, CompanyDataInput> {
 
     @Mapping(source = "status.id", target = "statusId")
@@ -31,7 +31,7 @@ public interface CompanyDataInputMapper extends EntityMapper <CompanyDataInputDT
 
     @Mapping(source = "inputType.id", target = "inputTypeId")
     @Mapping(source = "inputType.type", target = "inputTypeType")
-    CompanyDataInputDTO toDto(CompanyDataInput companyDataInput); 
+    CompanyDataInputDTO toDto(CompanyDataInput companyDataInput);
 
     @Mapping(source = "statusId", target = "status")
 
@@ -48,7 +48,7 @@ public interface CompanyDataInputMapper extends EntityMapper <CompanyDataInputDT
     @Mapping(target = "submissionFiles", ignore = true)
 
     @Mapping(source = "inputTypeId", target = "inputType")
-    CompanyDataInput toEntity(CompanyDataInputDTO companyDataInputDTO); 
+    CompanyDataInput toEntity(CompanyDataInputDTO companyDataInputDTO);
     default CompanyDataInput fromId(Long id) {
         if (id == null) {
             return null;

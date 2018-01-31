@@ -4,14 +4,14 @@
     </label>
     <input type="file"
            class="form-control"
-           [(ngModel)]="dataInput.fileName"
            id="fileName"
-           name="fileName"
-           #fileName="ngModel"
            placeholder=""
-           multiple="true"
            #fileInput
            (change)="uploadFiles()"
+           [multiple]="valueMultiple"
            accept=".pdf,.doc,.docx,.xls,.xlsx,.rtf,.txt"
     />
+    <div *ngFor ="let fileName of uploadedFileNames">
+            <dd class="cya-question">{{fileName}}</dd>
+    </div>
 </div>

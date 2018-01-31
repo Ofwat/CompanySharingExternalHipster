@@ -11,6 +11,7 @@ import uk.gov.ofwat.external.domain.User;
 import uk.gov.ofwat.external.domain.User;
 import uk.gov.ofwat.external.repository.CompanyDataInputRepository;
 import uk.gov.ofwat.external.service.CompanyDataInputService;
+import uk.gov.ofwat.external.service.DataInputService;
 import uk.gov.ofwat.external.service.dto.CompanyDataInputDTO;
 import uk.gov.ofwat.external.service.mapper.CompanyDataInputMapper;
 import uk.gov.ofwat.external.web.rest.errors.ExceptionTranslator;
@@ -74,10 +75,12 @@ public class CompanyDataInputResourceIntTest {
 
     private CompanyDataInput companyDataInput;
 
+    private final DataInputService dataInputService;
+
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        CompanyDataInputResource companyDataInputResource = new CompanyDataInputResource(companyDataInputService);
+        CompanyDataInputResource companyDataInputResource = new CompanyDataInputResource(companyDataInputService,DataInputService dataInputService);
         this.restCompanyDataInputMockMvc = MockMvcBuilders.standaloneSetup(companyDataInputResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)

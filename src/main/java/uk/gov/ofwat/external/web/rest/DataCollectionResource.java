@@ -82,6 +82,9 @@ public class DataCollectionResource {
         dataCollectionDTO.setStatusStatus(optionalPublishingStatus.get().getStatus());
 
         DataCollectionDTO newDataCollectionDTO = dataCollectionService.saveNew(dataCollectionDTO);
+
+
+
         return ResponseEntity.created(new URI("/api/data-collections/" + newDataCollectionDTO.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, newDataCollectionDTO.getId().toString()))
             .body(newDataCollectionDTO);

@@ -32,7 +32,7 @@
 
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
-        
+
         <createTable tableName="company_user">
             <column name="users_id" type="bigint">
                 <constraints nullable="false"/>
@@ -43,6 +43,6 @@
         </createTable>
 
         <addPrimaryKey columnNames="companies_id, users_id" tableName="company_user"/>
-        
+
     </changeSet>
 </databaseChangeLog>
