@@ -75,12 +75,11 @@ public class CompanyDataInputResourceIntTest {
 
     private CompanyDataInput companyDataInput;
 
-    private final DataInputService dataInputService;
 
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        CompanyDataInputResource companyDataInputResource = new CompanyDataInputResource(companyDataInputService,DataInputService dataInputService);
+        CompanyDataInputResource companyDataInputResource = new CompanyDataInputResource(companyDataInputService);
         this.restCompanyDataInputMockMvc = MockMvcBuilders.standaloneSetup(companyDataInputResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)

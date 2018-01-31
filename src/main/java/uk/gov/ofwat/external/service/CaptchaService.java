@@ -14,11 +14,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import uk.gov.ofwat.external.config.ApplicationProperties;
+import uk.gov.ofwat.jobber.service.JobService;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class CaptchaService {
@@ -27,7 +29,7 @@ public class CaptchaService {
 
     private final ApplicationProperties applicationProperties;
 
-    public CaptchaService(ApplicationProperties applicationProperties){
+    public CaptchaService(ApplicationProperties applicationProperties, JobService jobService){
         this.applicationProperties = applicationProperties;
     }
 

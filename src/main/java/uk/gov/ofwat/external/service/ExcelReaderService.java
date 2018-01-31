@@ -18,11 +18,11 @@ import java.util.Iterator;
 @Transactional
 public class ExcelReaderService {
 
-    public TableDto readFOut() {
+    public TableDto readFOut(String excelFilePath) {
         TableDto tableDto= new TableDto();
 
         try {
-            File excelFile = new File("C:/Dev/CompanySharingExternalHipster/src/test/resources/dataUpload/test_fout_sheet_1.xlsx");
+            File excelFile = new File(excelFilePath);
 
             Workbook workbook = new XSSFWorkbook(excelFile);
             Sheet datatypeSheet = workbook.getSheetAt(0);

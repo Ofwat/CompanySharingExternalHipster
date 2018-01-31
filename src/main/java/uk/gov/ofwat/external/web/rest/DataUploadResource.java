@@ -11,8 +11,10 @@ import org.springframework.web.multipart.MultipartFile;
 import uk.gov.ofwat.external.domain.DataFile;
 import uk.gov.ofwat.external.repository.CompanyDataInputRepository;
 import uk.gov.ofwat.external.repository.DataFileRepository;
+import uk.gov.ofwat.external.service.CompanySharingJobService;
 import uk.gov.ofwat.external.service.dto.DataInputDTO;
 import uk.gov.ofwat.external.web.rest.util.HeaderUtil;
+import uk.gov.ofwat.jobber.domain.Job;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,10 +34,14 @@ public class DataUploadResource {
 
     private final DataFileRepository dataFileRepository;
     private final CompanyDataInputRepository companyDataInputRepository;
+    private final CompanySharingJobService companySharingJobService;
 
-    public DataUploadResource(DataFileRepository dataFileRepository,CompanyDataInputRepository companyDataInputRepository){
+    public DataUploadResource(DataFileRepository dataFileRepository,
+                              CompanyDataInputRepository companyDataInputRepository,
+                              CompanySharingJobService companySharingJobService){
         this.dataFileRepository=dataFileRepository;
         this.companyDataInputRepository=companyDataInputRepository;
+        this.companySharingJobService = companySharingJobService;
     }
 
     /**
@@ -68,7 +74,9 @@ public class DataUploadResource {
             dataFIle.setLocation("C:\\CompanyFiles\\");
             dataFIle.setName(file.getOriginalFilename());
             dataFileRepository.save(dataFIle);
+
         }
+
 
         //return dummy obj might change it to empty string and discussion
         DataInputDTO result = new DataInputDTO();
@@ -90,6 +98,11 @@ public class DataUploadResource {
             Path theDestination1 = Paths.get("C:\\Files\\"+file.getOriginalFilename());
             File newFile = new File(theDestination1.toString());
             file.transferTo(newFile);
+
+            //Create the Job.
+            Job job = companySharingJobService.processUpload(theDestination1.toString());
+            log.info(job.getUuid().toString());
+
         }
 
         //return dummy obj might change it to empty string and discussion

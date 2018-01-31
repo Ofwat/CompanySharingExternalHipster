@@ -32,13 +32,12 @@ public class DataTableResource {
     /**
      * GET  /file-data : get the F_out JSON.
      *
-     * @param identifier
      * @return the ResponseEntity with status 200 (OK) and the F_out JSON in body
      */
     @GetMapping("/data-table")
     @Timed
     public ResponseEntity<TableDto> getDataTable() {
-        log.debug("REST request to get a page of DataInputs");
+/*        log.debug("REST request to get a page of DataInputs");
         TableDto tableDto = excelReaderService.readFOut();
         DCSTable dcsTable = dcsTableMapper.toEntity(tableDto);
 //        dcsTable.setCompany(getCompany());
@@ -49,7 +48,8 @@ public class DataTableResource {
         headers.add("auditComment", "Dataload from DCS");
         headers.add("runId", "" + dcsTable.getFountainRunId());
         headers.add("excelMongoDocId", "unknown");
-        return new ResponseEntity<TableDto>(excelReaderService.readFOut(), headers, HttpStatus.OK);
+        return new ResponseEntity<TableDto>(excelReaderService.readFOut(), headers, HttpStatus.OK);*/
+        return null;
     }
 
 
