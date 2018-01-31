@@ -28,6 +28,9 @@ public class Company extends AbstractAuditingEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "fountain_id", nullable = false)
+    private Long fountainId;
+
     @Column(name = "name")
     private String name;
 
@@ -96,6 +99,15 @@ public class Company extends AbstractAuditingEntity implements Serializable {
     @JsonManagedReference
     public Set<User> getUsers(){
         return this.companyUserDetails.stream().map(cud -> cud.getUser()).collect(Collectors.toSet());
+    }
+
+
+    public Long getFountainId() {
+        return fountainId;
+    }
+
+    public void setFountainId(Long fountainId) {
+        this.fountainId = fountainId;
     }
 
     @Override

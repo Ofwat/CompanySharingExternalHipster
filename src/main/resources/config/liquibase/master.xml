@@ -20,6 +20,7 @@
     <include file="classpath:config/liquibase/changelog/20170922120309_rename_registration_request_date_actioned.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170927123233_add_registration_request_user_activated_var.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20171010144005_generalise_message_type.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20171219121932_added_fountainId_to_Company.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20171010172622_add_companies.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170824155827_added_entity_DataCollection.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170810084411_added_entity_constraints_Company.xml" relativeToChangelogFile="false"/>
@@ -41,6 +42,8 @@
     <include file="classpath:config/liquibase/changelog/20171027150703_added_entity_DataInput.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20171027150703_added_entity_constraints_DataInput.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20171028155028_DataInput_AbstractAuditingEntity.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20171218173050_added_TableRowCell.xml" relativeToChangelogFile="false"/>
+    <!--<include file="classpath:config/liquibase/changelog/20180118000000_remove_company_deleted_property.xml" relativeToChangelogFile="false"/>-->
     <include file="classpath:config/liquibase/changelog/20171112124953_added_company_user_details.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20171112130000_add_company_user_details_values.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20171116000200_added_entity_CompanyDataCollection.xml" relativeToChangelogFile="false"/>

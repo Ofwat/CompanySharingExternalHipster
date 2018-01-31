@@ -22,6 +22,7 @@
             <column name="deleted" type="boolean"/>
             <column name="created_date" type="timestamp"/>
             <column name="last_modified_date" type="timestamp"/>
+            <!--<column name="fountain_id" type="numeric"/>-->
         </loadData>
     </changeSet>
     <changeSet id="1507642814735-3" author="jtoddington">
