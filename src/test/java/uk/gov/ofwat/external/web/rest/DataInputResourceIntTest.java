@@ -10,6 +10,7 @@ import uk.gov.ofwat.external.domain.User;
 import uk.gov.ofwat.external.repository.DataInputRepository;
 import uk.gov.ofwat.external.repository.PublishingStatusRepository;
 import uk.gov.ofwat.external.service.DataInputService;
+import uk.gov.ofwat.external.service.ExcelReaderService;
 import uk.gov.ofwat.external.service.dto.DataInputDTO;
 import uk.gov.ofwat.external.service.mapper.DataInputMapper;
 import uk.gov.ofwat.external.web.rest.errors.ExceptionTranslator;
@@ -75,6 +76,9 @@ public class DataInputResourceIntTest {
     private DataInputMapper dataInputMapper;
 
     @Autowired
+    ExcelReaderService excelReaderService;
+
+    @Autowired
     private DataInputService dataInputService;
 
     @Autowired
@@ -99,7 +103,7 @@ public class DataInputResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        DataInputResource dataInputResource = new DataInputResource(dataInputService, publishingStatusRepository);
+        DataInputResource dataInputResource = new DataInputResource(dataInputService, publishingStatusRepository, excelReaderService);
         this.restDataInputMockMvc = MockMvcBuilders.standaloneSetup(dataInputResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
