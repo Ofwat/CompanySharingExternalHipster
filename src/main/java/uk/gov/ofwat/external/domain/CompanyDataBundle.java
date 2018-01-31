@@ -223,6 +223,7 @@ public class CompanyDataBundle implements Serializable {
         this.orderIndex = orderIndex;
     }
 
+
     public CompanyDataInput[] getCompanyDataInputs() {
         return companyDataInputs;
     }
@@ -279,5 +280,24 @@ public class CompanyDataBundle implements Serializable {
 
     public void setCompanyDataBundleOrderIndex(Long companyDataBundleOrderIndex) {
         this.companyDataBundleOrderIndex = companyDataBundleOrderIndex;
+    }
+
+    @Override
+    public String toString() {
+        return "CompanyDataBundle{" +
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", companyDeadline=" + companyDeadline +
+            ", status=" + status +
+            ", company=" + company +
+            ", dataBundle=" + dataBundle +
+            ", companyOwner=" + companyOwner +
+            ", orderIndex=" + orderIndex +
+            ", companyReviewer=" + companyReviewer +
+            ", companyDataCollection=" + companyDataCollection +
+            ", companyDataInputs=" + Arrays.toString(companyDataInputs) +
+            ", companyDataBundleOrderIndex=" + companyDataBundleOrderIndex +
+            ", submissionSignOffs=" + submissionSignOffs +
+            '}';
     }
 }

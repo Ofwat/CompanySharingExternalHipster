@@ -150,6 +150,14 @@ public class CompanyDataCollection implements Serializable {
         this.companyDataBundles = companyDataBundles;
     }
 
+    public Long getCompanyDataCollectionOrderIndex() {
+        return companyDataCollectionOrderIndex;
+    }
+
+    public void setCompanyDataCollectionOrderIndex(Long companyDataCollectionOrderIndex) {
+        this.companyDataCollectionOrderIndex = companyDataCollectionOrderIndex;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -165,6 +173,8 @@ public class CompanyDataCollection implements Serializable {
             return false;
         // Probably incorrect - comparing Object[] arrays with Arrays.equals
         if (!Arrays.equals(companyDataBundles, that.companyDataBundles)) return false;
+        if (companyDataCollectionOrderIndex != null ? !companyDataCollectionOrderIndex.equals(that.companyDataCollectionOrderIndex) : that.companyDataCollectionOrderIndex != null)
+            return false;
         if (companyOwner != null ? !companyOwner.equals(that.companyOwner) : that.companyOwner != null) return false;
         return companyReviewer != null ? companyReviewer.equals(that.companyReviewer) : that.companyReviewer == null;
     }
@@ -177,6 +187,7 @@ public class CompanyDataCollection implements Serializable {
         result = 31 * result + (company != null ? company.hashCode() : 0);
         result = 31 * result + (dataCollection != null ? dataCollection.hashCode() : 0);
         result = 31 * result + Arrays.hashCode(companyDataBundles);
+        result = 31 * result + (companyDataCollectionOrderIndex != null ? companyDataCollectionOrderIndex.hashCode() : 0);
         result = 31 * result + (companyOwner != null ? companyOwner.hashCode() : 0);
         result = 31 * result + (companyReviewer != null ? companyReviewer.hashCode() : 0);
         return result;
@@ -191,16 +202,9 @@ public class CompanyDataCollection implements Serializable {
             ", company=" + company +
             ", dataCollection=" + dataCollection +
             ", companyDataBundles=" + Arrays.toString(companyDataBundles) +
+            ", companyDataCollectionOrderIndex=" + companyDataCollectionOrderIndex +
             ", companyOwner=" + companyOwner +
             ", companyReviewer=" + companyReviewer +
             '}';
-    }
-
-    public Long getCompanyDataCollectionOrderIndex() {
-        return companyDataCollectionOrderIndex;
-    }
-
-    public void setCompanyDataCollectionOrderIndex(Long companyDataCollectionOrderIndex) {
-        this.companyDataCollectionOrderIndex = companyDataCollectionOrderIndex;
     }
 }

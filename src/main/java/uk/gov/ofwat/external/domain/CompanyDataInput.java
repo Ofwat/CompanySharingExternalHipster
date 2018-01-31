@@ -38,8 +38,8 @@ public class CompanyDataInput implements Serializable {
     private Company company;
 
     @ManyToOne(optional = false)
-    @NotNull
     @JoinColumn(name="COMPANY_DATA_BUNDLE_ID", nullable=false)
+    @NotNull
     private CompanyDataBundle companyDataBundle;
 
     @ManyToOne(optional = false)
@@ -247,6 +247,14 @@ public class CompanyDataInput implements Serializable {
     @Column(name = "company_data_input_order_Index", nullable = false)
     private Long companyDataInputOrderIndex;
 
+    public Long getCompanyDataInputOrderIndex() {
+        return companyDataInputOrderIndex;
+    }
+
+    public void setCompanyDataInputOrderIndex(Long companyDataInputOrderIndex) {
+        this.companyDataInputOrderIndex = companyDataInputOrderIndex;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -269,7 +277,8 @@ public class CompanyDataInput implements Serializable {
         if (submissionFiles != null ? !submissionFiles.equals(that.submissionFiles) : that.submissionFiles != null)
             return false;
         if (inputType != null ? !inputType.equals(that.inputType) : that.inputType != null) return false;
-        return orderIndex != null ? orderIndex.equals(that.orderIndex) : that.orderIndex == null;
+        if (orderIndex != null ? !orderIndex.equals(that.orderIndex) : that.orderIndex != null) return false;
+        return companyDataInputOrderIndex != null ? companyDataInputOrderIndex.equals(that.companyDataInputOrderIndex) : that.companyDataInputOrderIndex == null;
     }
 
     @Override
@@ -286,6 +295,7 @@ public class CompanyDataInput implements Serializable {
         result = 31 * result + (submissionFiles != null ? submissionFiles.hashCode() : 0);
         result = 31 * result + (inputType != null ? inputType.hashCode() : 0);
         result = 31 * result + (orderIndex != null ? orderIndex.hashCode() : 0);
+        result = 31 * result + (companyDataInputOrderIndex != null ? companyDataInputOrderIndex.hashCode() : 0);
         return result;
     }
 
@@ -304,14 +314,7 @@ public class CompanyDataInput implements Serializable {
             ", submissionFiles=" + submissionFiles +
             ", inputType=" + inputType +
             ", orderIndex=" + orderIndex +
+            ", companyDataInputOrderIndex=" + companyDataInputOrderIndex +
             '}';
-    }
-
-    public Long getCompanyDataInputOrderIndex() {
-        return companyDataInputOrderIndex;
-    }
-
-    public void setCompanyDataInputOrderIndex(Long companyDataInputOrderIndex) {
-        this.companyDataInputOrderIndex = companyDataInputOrderIndex;
     }
 }

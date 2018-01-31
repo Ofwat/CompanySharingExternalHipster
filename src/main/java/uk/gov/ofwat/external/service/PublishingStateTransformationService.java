@@ -67,6 +67,7 @@ public class PublishingStateTransformationService {
             || (dataCollection.getPublishingStatus().getId().equals(new Long(3)))) {
             Long orderIndexL= new Long(0);
             for (Company company : listOfCompanies) {
+
                 //Get data collection
                 CompanyDataCollection companyDataCollection = new CompanyDataCollection();
                 companyDataCollection.setCompany(company);
@@ -75,7 +76,7 @@ public class PublishingStateTransformationService {
                 companyDataCollection.setDataCollection(dataCollection);
                 companyDataCollection.setName(company.getName());
                 companyDataCollection.setStatus(companyStatusRepository.findOne(dataCollection.getPublishingStatus().getId()));
-                companyDataCollection.setCompanyDataCollectionOrderIndex(orderIndexL+new Long(1));
+                companyDataCollection.setCompanyDataCollectionOrderIndex(orderIndexL);
                 companyDataCollectionRepository.save(companyDataCollection);
 
                 //dataBundleRepository.findByDataCollection()
@@ -117,6 +118,7 @@ public class PublishingStateTransformationService {
                     }
                     success = true;
                 }
+                orderIndexL++;
             }
         }
         return success;
@@ -151,11 +153,12 @@ public class PublishingStateTransformationService {
                         companyDataInput.setCompanyOwner(userRepository.findOne(dataInput.getOwner().getId()));
                         companyDataInput.setInputType(inputTypeRepository.findOne(new Long(1)));
                         companyDataInput.setName(dataInput.getName());
-                        companyDataInput.setOrderIndex(orderIndexL+new Long(1));
+                        companyDataInput.setOrderIndex(orderIndexL);
                         companyDataInput.setStatus(companyStatusRepository.findOne(dataInput.getStatus().getId()));
                         companyDataInput.setCompanyDataBundle(companyDataBundle);
                         companyDataInput.setCompanyDataInputOrderIndex(orderIndexL);
                         companyDataInputRepository.save(companyDataInput);
+                        orderIndexL++;
                     }
                 }
                 success = true;

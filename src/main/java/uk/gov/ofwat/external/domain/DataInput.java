@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.Objects;
 
 /**
@@ -231,35 +232,64 @@ public class DataInput extends AbstractAuditingEntity implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+        if (this == o) return true;
+        if (!(o instanceof DataInput)) return false;
+
         DataInput dataInput = (DataInput) o;
-        if (dataInput.getId() == null || getId() == null) {
+
+        if (id != null ? !id.equals(dataInput.id) : dataInput.id != null) return false;
+        if (name != null ? !name.equals(dataInput.name) : dataInput.name != null) return false;
+        if (description != null ? !description.equals(dataInput.description) : dataInput.description != null)
             return false;
-        }
-        return Objects.equals(getId(), dataInput.getId());
+        if (guidance != null ? !guidance.equals(dataInput.guidance) : dataInput.guidance != null) return false;
+        if (defaultDeadline != null ? !defaultDeadline.equals(dataInput.defaultDeadline) : dataInput.defaultDeadline != null)
+            return false;
+        if (orderIndex != null ? !orderIndex.equals(dataInput.orderIndex) : dataInput.orderIndex != null) return false;
+        if (fileName != null ? !fileName.equals(dataInput.fileName) : dataInput.fileName != null) return false;
+        if (fileLocation != null ? !fileLocation.equals(dataInput.fileLocation) : dataInput.fileLocation != null)
+            return false;
+        if (status != null ? !status.equals(dataInput.status) : dataInput.status != null) return false;
+        if (dataBundle != null ? !dataBundle.equals(dataInput.dataBundle) : dataInput.dataBundle != null) return false;
+        if (owner != null ? !owner.equals(dataInput.owner) : dataInput.owner != null) return false;
+        if (reviewer != null ? !reviewer.equals(dataInput.reviewer) : dataInput.reviewer != null) return false;
+        // Probably incorrect - comparing Object[] arrays with Arrays.equals
+        return Arrays.equals(companyDataInput, dataInput.companyDataInput);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (guidance != null ? guidance.hashCode() : 0);
+        result = 31 * result + (defaultDeadline != null ? defaultDeadline.hashCode() : 0);
+        result = 31 * result + (orderIndex != null ? orderIndex.hashCode() : 0);
+        result = 31 * result + (fileName != null ? fileName.hashCode() : 0);
+        result = 31 * result + (fileLocation != null ? fileLocation.hashCode() : 0);
+        result = 31 * result + (status != null ? status.hashCode() : 0);
+        result = 31 * result + (dataBundle != null ? dataBundle.hashCode() : 0);
+        result = 31 * result + (owner != null ? owner.hashCode() : 0);
+        result = 31 * result + (reviewer != null ? reviewer.hashCode() : 0);
+        result = 31 * result + Arrays.hashCode(companyDataInput);
+        return result;
     }
 
     @Override
     public String toString() {
         return "DataInput{" +
-            "id=" + getId() +
-            ", name='" + getName() + "'" +
-            ", description='" + getDescription() + "'" +
-            ", guidance='" + getGuidance() + "'" +
-            ", defaultDeadline='" + getDefaultDeadline() + "'" +
-            ", orderIndex='" + getOrderIndex() + "'" +
-            ", fileName='" + getFileName() + "'" +
-            ", fileLocation='" + getFileLocation() + "'" +
-            "}";
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", description='" + description + '\'' +
+            ", guidance='" + guidance + '\'' +
+            ", defaultDeadline=" + defaultDeadline +
+            ", orderIndex=" + orderIndex +
+            ", fileName='" + fileName + '\'' +
+            ", fileLocation='" + fileLocation + '\'' +
+            ", status=" + status +
+            ", dataBundle=" + dataBundle +
+            ", owner=" + owner +
+            ", reviewer=" + reviewer +
+            ", companyDataInput=" + Arrays.toString(companyDataInput) +
+            '}';
     }
 }
