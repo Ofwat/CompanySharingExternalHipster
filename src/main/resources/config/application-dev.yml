@@ -137,3 +137,6 @@ jhipster:
 
 application:
 
+jobber:
+    defaultTarget: FOUNTAIN
+    whoAmI: DCS_EXTERNAL

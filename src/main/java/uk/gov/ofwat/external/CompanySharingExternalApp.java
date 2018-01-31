@@ -1,5 +1,6 @@
 package uk.gov.ofwat.external;
 
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import uk.gov.ofwat.external.config.ApplicationProperties;
 import uk.gov.ofwat.external.config.DefaultProfileUtil;
 
@@ -21,7 +22,8 @@ import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.Collection;
 
-@ComponentScan
+@ComponentScan({"uk.gov.ofwat"})
+@EntityScan("uk.gov.ofwat")
 @EnableAutoConfiguration(exclude = {MetricFilterAutoConfiguration.class, MetricRepositoryAutoConfiguration.class})
 @EnableConfigurationProperties({LiquibaseProperties.class, ApplicationProperties.class})
 public class CompanySharingExternalApp {

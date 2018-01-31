@@ -1,1 +1,3 @@
 rootProject.name = 'company-sharing-external'
+
+includeBuild '../jobber' //This is a relative path to the checked out Jobber project.

@@ -247,7 +247,7 @@ public class UserResource {
      */
     @GetMapping("/users/pending_accounts")
     @Timed
-    @Secured({AuthoritiesConstants.ADMIN, AuthoritiesConstants.COMPANY_ADMIN})
+    //@Secured({AuthoritiesConstants.ADMIN, AuthoritiesConstants.COMPANY_ADMIN})
     public ResponseEntity<List<RegistrationRequest>> getAllRegistrationRequests(@ApiParam Pageable pageable, @RequestParam Long companyId) {
         Company company = companyMapper.toEntity(companyService.findOne(companyId));
         User currentUser = userService.getUserWithAuthorities();

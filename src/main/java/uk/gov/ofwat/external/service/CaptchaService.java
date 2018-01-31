@@ -14,6 +14,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import uk.gov.ofwat.external.config.ApplicationProperties;
+import uk.gov.ofwat.jobber.domain.factory.AbstractJobFactory;
+import uk.gov.ofwat.jobber.domain.Job;
+import uk.gov.ofwat.jobber.domain.factory.QueryJobFactory;
+import uk.gov.ofwat.jobber.repository.DefaultJobRepository;
+import uk.gov.ofwat.jobber.service.JobService;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -27,11 +32,17 @@ public class CaptchaService {
 
     private final ApplicationProperties applicationProperties;
 
-    public CaptchaService(ApplicationProperties applicationProperties){
+    private final DefaultJobRepository defaultJobRepository = null;
+
+    private final JobService jobService;
+
+    public CaptchaService(ApplicationProperties applicationProperties, JobService jobService){
         this.applicationProperties = applicationProperties;
+        this.jobService = jobService;
     }
 
     public Boolean verifyCaptcha(String captchaResponse){
+
         String secret = applicationProperties.getRecaptcha().secret;
         String url = applicationProperties.getRecaptcha().url;
         HttpClient client = HttpClientBuilder.create().build();

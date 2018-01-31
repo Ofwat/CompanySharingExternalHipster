@@ -59,6 +59,10 @@ if (OperatingSystem.current().isWindows()) {
 //    } else {
         classpath sourceSets.main.runtimeClasspath
         classpath configurations.liquibase
+        /**
+         * Remeber that you put this here, if liquibase is having issues. 
+         */
+        //classpath files('../jobber/src/main/resources')
 //    }
         main = "liquibase.integration.commandline.Main"
 

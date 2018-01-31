@@ -1,6 +1,7 @@
 package uk.gov.ofwat.external.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import uk.gov.ofwat.external.aop.company.CompanySelectionAspect;
 import uk.gov.ofwat.external.security.*;
 
@@ -115,10 +116,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return provider;
     }
 
-/*    @Bean
+    @Bean
     public RefreshingUserDetailsSecurityContextRepository refreshingUserDetailsSecurityContextRepository(HttpSessionSecurityContextRepository httpSessionSecurityContextRepository) {
         return new RefreshingUserDetailsSecurityContextRepository(httpSessionSecurityContextRepository, this.userDetailsService);
-    }*/
+    }
 
     @Override
     public void configure(WebSecurity web) throws Exception {
@@ -136,8 +137,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-/*            .securityContext().securityContextRepository(this.refreshingUserDetailsSecurityContextRepository(new HttpSessionSecurityContextRepository()))
-        .and()*/
+            .securityContext().securityContextRepository(this.refreshingUserDetailsSecurityContextRepository(new HttpSessionSecurityContextRepository()))
+        .and()
             .csrf()
             .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
         .and()
@@ -168,6 +169,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .disable()
         .and()
             .authorizeRequests()
+            .antMatchers("/api/jobber").permitAll()
             .antMatchers("/api/register").permitAll()
             .antMatchers("/api/activate").permitAll()
             .antMatchers("/api/authenticate").permitAll()

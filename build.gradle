@@ -65,6 +65,7 @@ if (OperatingSystem.current().isWindows()) {
         dependsOn pathingJar
         doFirst {
             classpath = files("$buildDir/classes/main", "$buildDir/resources/main", pathingJar.archivePath)
+            sourceSets.main.runtimeClasspath.each { println it}
         }
     }
 } else {
@@ -193,6 +194,12 @@ dependencies {
     compile 'org.jasypt:jasypt:1.9.2'
     compile 'org.jasypt:jasypt-hibernate4:1.9.2'
 
+    //Not that this is a provided dependency from the 'Jobber' project - A Gradle composite build.
+    //See settings.gradle and https://docs.gradle.org/current/userguide/composite_builds.html
+    compile 'uk.gov.ofwat:jobber'
+    compile('org.quartz-scheduler:quartz:2.2.1')
+    //compile files(project(":jobber").resources.)
+
     testCompile "org.awaitility:awaitility:${awaitility_version}"
     testCompile "com.jayway.jsonpath:json-path"
     testCompile ("org.springframework.boot:spring-boot-starter-test") {
@@ -240,3 +247,4 @@ if (project.hasProperty('nodeInstall')) {
 compileJava.dependsOn processResources
 processResources.dependsOn cleanResources,bootBuildInfo
 bootBuildInfo.mustRunAfter cleanResources
+

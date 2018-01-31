@@ -8,6 +8,7 @@ import org.jasypt.hibernate4.type.EncryptedStringType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+
 @Entity
 @TypeDef(
     name = "encryptedStr",
