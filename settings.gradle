@@ -1,1 +1,3 @@
 rootProject.name = 'company-sharing-external'
+
+includeBuild '../jobber'
