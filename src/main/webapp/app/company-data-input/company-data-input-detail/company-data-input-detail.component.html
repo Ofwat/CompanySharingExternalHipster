@@ -19,7 +19,7 @@
                 </div>
                 <div >
                     <dd class="cya-question">Data File</dd>
-                    <dd class="cya-answer"><div *ngIf="dataInput.dataInputId"><a href="" #fileInput (click)="downloadFile($event)" id="{{dataInput.dataInputId}}" >Download</a></div></dd>
+                    <dd class="cya-answer"><div *ngIf="dataInput.dataInputId"><a href="api/data-download/{{dataInput.dataInputId}}" #fileInput id="{{dataInput.dataInputId}}" >Download</a></div></dd>
                 </div>
 
                 <jhi-upload *ngIf="!success && !errorDataInputExists"  [valueCompanyInputId]="company_data_input_id" [valueMultiple]="true"></jhi-upload>
