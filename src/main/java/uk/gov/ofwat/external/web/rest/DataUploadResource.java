@@ -14,7 +14,7 @@ import uk.gov.ofwat.external.repository.DataFileRepository;
 import uk.gov.ofwat.external.service.CompanySharingJobService;
 import uk.gov.ofwat.external.service.dto.DataInputDTO;
 import uk.gov.ofwat.external.web.rest.util.HeaderUtil;
-import uk.gov.ofwat.jobber.domain.Job;
+import uk.gov.ofwat.jobber.domain.jobs.Job;
 
 import java.io.File;
 import java.io.IOException;
