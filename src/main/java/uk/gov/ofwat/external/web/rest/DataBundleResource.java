@@ -37,37 +37,14 @@ public class DataBundleResource {
     private final Logger log = LoggerFactory.getLogger(DataBundleResource.class);
     private static final String ENTITY_NAME = "dataBundle";
     private final DataBundleService dataBundleService;
-    private final CompanyRepository companyRepository;
-    private final DataCollectionRepository dataCollectionRepository;
-    private final DataBundleRepository dataBundleRepository;
-    private final DataInputRepository dataInputRepository;
     private final PublishingStatusRepository publishingStatusRepository;
-    private final UserRepository userRepository;
-    private final CompanyStatusRepository companyStatusRepository;
-    private final CompanyDataCollectionRepository companyDataCollectionRepository;
-    private final CompanyDataBundleRepository companyDataBundleRepository;
-    private final CompanyDataInputRepository companyDataInputRepository;
-    private final InputTypeRepository inputTypeRepository;
     private final PublishingStateTransformationService publishingStateTransformationService;
 
-    public DataBundleResource(PublishingStateTransformationService publishingStateTransformationService,DataBundleService dataBundleService, PublishingStatusRepository publishingStatusRepository,
-                              CompanyRepository companyRepository, DataCollectionRepository dataCollectionRepository,
-                              DataInputRepository dataInputRepository, UserRepository userRepository,
-                              CompanyStatusRepository companyStatusRepository,DataBundleRepository dataBundleRepository,CompanyDataBundleRepository companyDataBundleRepository,
-                              CompanyDataCollectionRepository companydataCollectionRepository,  CompanyDataInputRepository companyDataInputRepository, InputTypeRepository inputTypeRepository) {
+    public DataBundleResource(PublishingStateTransformationService publishingStateTransformationService,DataBundleService dataBundleService, PublishingStatusRepository publishingStatusRepository
+    ) {
         this.publishingStateTransformationService=publishingStateTransformationService;
         this.dataBundleService = dataBundleService;
         this.publishingStatusRepository = publishingStatusRepository;
-        this.companyRepository = companyRepository;
-        this.dataCollectionRepository = dataCollectionRepository;
-        this.dataInputRepository = dataInputRepository;
-        this.userRepository = userRepository;
-        this.companyStatusRepository = companyStatusRepository;
-        this.dataBundleRepository = dataBundleRepository;
-        this.companyDataCollectionRepository =companydataCollectionRepository;
-        this.companyDataBundleRepository =companyDataBundleRepository;
-        this.companyDataInputRepository =companyDataInputRepository;
-        this.inputTypeRepository = inputTypeRepository;
     }
 
     /**

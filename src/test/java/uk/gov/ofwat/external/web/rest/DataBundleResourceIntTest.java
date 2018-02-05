@@ -10,6 +10,7 @@ import uk.gov.ofwat.external.domain.DataCollection;
 import uk.gov.ofwat.external.repository.DataBundleRepository;
 import uk.gov.ofwat.external.repository.PublishingStatusRepository;
 import uk.gov.ofwat.external.service.DataBundleService;
+import uk.gov.ofwat.external.service.PublishingStateTransformationService;
 import uk.gov.ofwat.external.service.dto.DataBundleDTO;
 import uk.gov.ofwat.external.service.mapper.DataBundleMapper;
 import uk.gov.ofwat.external.web.rest.errors.ExceptionTranslator;
@@ -81,6 +82,9 @@ public class DataBundleResourceIntTest {
     PublishingStatusRepository publishingStatusRepository;
 
     @Autowired
+    PublishingStateTransformationService publishingStateTransformationService;
+
+    @Autowired
     private EntityManager em;
 
     private MockMvc restDataBundleMockMvc;
@@ -90,7 +94,7 @@ public class DataBundleResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        DataBundleResource dataBundleResource = new DataBundleResource(dataBundleService, publishingStatusRepository);
+        DataBundleResource dataBundleResource = new DataBundleResource(publishingStateTransformationService,dataBundleService, publishingStatusRepository);
         this.restDataBundleMockMvc = MockMvcBuilders.standaloneSetup(dataBundleResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
