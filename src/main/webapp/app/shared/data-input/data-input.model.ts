@@ -1,5 +1,6 @@
 export class DataInput {
     public id?: any;
+    public reportId?:any;
     public name?: string;
     public description?: string;
     public guidance?: string;
@@ -25,6 +26,7 @@ export class DataInput {
 
     constructor(
         id?: any,
+        reportId?: any,
         name?: string,
         description?: string,
         guidance?: string,
@@ -48,6 +50,7 @@ export class DataInput {
         fileLocation?: any
     ) {
         this.id = id ? id : null;
+        this.reportId = reportId ? reportId : null;
         this.name = name ? name : null;
         this.description = description ? description : null;
         this.guidance = guidance ? guidance : null;

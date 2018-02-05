@@ -29,6 +29,9 @@ public class DataInput extends AbstractAuditingEntity implements Serializable {
     @Column(name = "name", nullable = false)
     private String name;
 
+    @Column(name = "report_id", nullable = false)
+    private Long reportId;
+
     @Column(name = "description")
     private String description;
 
@@ -230,6 +233,14 @@ public class DataInput extends AbstractAuditingEntity implements Serializable {
         this.companyDataInput = companyDataInput;
     }
 
+    public Long getReportId() {
+        return reportId;
+    }
+
+    public void setReportId(Long reportId) {
+        this.reportId = reportId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -239,6 +250,7 @@ public class DataInput extends AbstractAuditingEntity implements Serializable {
 
         if (id != null ? !id.equals(dataInput.id) : dataInput.id != null) return false;
         if (name != null ? !name.equals(dataInput.name) : dataInput.name != null) return false;
+        if (reportId != null ? !reportId.equals(dataInput.reportId) : dataInput.reportId != null) return false;
         if (description != null ? !description.equals(dataInput.description) : dataInput.description != null)
             return false;
         if (guidance != null ? !guidance.equals(dataInput.guidance) : dataInput.guidance != null) return false;
@@ -260,6 +272,7 @@ public class DataInput extends AbstractAuditingEntity implements Serializable {
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (reportId != null ? reportId.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (guidance != null ? guidance.hashCode() : 0);
         result = 31 * result + (defaultDeadline != null ? defaultDeadline.hashCode() : 0);
@@ -279,6 +292,7 @@ public class DataInput extends AbstractAuditingEntity implements Serializable {
         return "DataInput{" +
             "id=" + id +
             ", name='" + name + '\'' +
+            ", reportId=" + reportId +
             ", description='" + description + '\'' +
             ", guidance='" + guidance + '\'' +
             ", defaultDeadline=" + defaultDeadline +

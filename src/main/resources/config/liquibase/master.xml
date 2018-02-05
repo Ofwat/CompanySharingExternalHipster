@@ -64,6 +64,7 @@
     <include file="classpath:config/liquibase/changelog/20180104145941_added_column_CompanyDataBundle.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20171025155755_add_company_statuses.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20180129153818_mapping_changes.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20180205140317_add_report_id.xml" relativeToChangelogFile="false"/>
 
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 

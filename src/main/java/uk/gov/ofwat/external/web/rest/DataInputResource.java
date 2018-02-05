@@ -1,18 +1,8 @@
 package uk.gov.ofwat.external.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
-import uk.gov.ofwat.external.domain.PublishingStatus;
-import uk.gov.ofwat.external.repository.PublishingStatusRepository;
-import uk.gov.ofwat.external.service.DataInputService;
-import uk.gov.ofwat.external.service.PublishingStateTransformationService;
-import uk.gov.ofwat.external.service.ExcelReaderService;
-import uk.gov.ofwat.external.web.rest.util.HeaderUtil;
-import uk.gov.ofwat.external.web.rest.util.PaginationUtil;
-import uk.gov.ofwat.external.service.dto.DataInputDTO;
-import io.swagger.annotations.ApiParam;
 import io.github.jhipster.web.util.ResponseUtil;
+import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -21,15 +11,18 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import uk.gov.ofwat.external.domain.PublishingStatus;
+import uk.gov.ofwat.external.repository.PublishingStatusRepository;
+import uk.gov.ofwat.external.service.DataInputService;
+import uk.gov.ofwat.external.service.ExcelReaderService;
+import uk.gov.ofwat.external.service.PublishingStateTransformationService;
+import uk.gov.ofwat.external.service.dto.DataInputDTO;
+import uk.gov.ofwat.external.web.rest.util.HeaderUtil;
+import uk.gov.ofwat.external.web.rest.util.PaginationUtil;
 
 import javax.validation.Valid;
-import java.io.File;
-import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 
