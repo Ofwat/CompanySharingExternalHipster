@@ -40,6 +40,7 @@ public class DataInputResource {
     private final ExcelReaderService excelReaderService;
     private final PublishingStateTransformationService publishingStateTransformationService;
 
+
     public DataInputResource(DataInputService dataInputService, PublishingStatusRepository publishingStatusRepository,
                              PublishingStateTransformationService publishingStateTransformationService, ExcelReaderService excelReaderService) {
         this.dataInputService = dataInputService;
@@ -84,27 +85,6 @@ public class DataInputResource {
             .body(result);
     }
 
-/*
-    @PostMapping(value = "/data-upload")
-    public ResponseEntity<DataInputDTO> uploadFile(@RequestParam(value = "uploadFiles", required = false) MultipartFile[] files) throws IOException {
-        //-- my stuff with formDataObject and uploaded files
-        log.debug("REST request to upload Data : {}");
-        log.debug(files[0].getOriginalFilename());
-        String directoryName="C:\\Files\\";
-        File directory = new File(String.valueOf(directoryName));
-        if(!directory.exists()) {
-            directory.mkdir();
-        }
-        for(MultipartFile file: files){
-            Path theDestination1 = Paths.get("C:\\Files\\"+file.getOriginalFilename());
-            File newFile = new File(theDestination1.toString());
-            file.transferTo(newFile);
-        }
-        DataInputDTO result = new DataInputDTO();
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, ""))
-            .body(result);
-    }*/
 
         /**
          * PUT  /data-inputs : Updates an existing dataInput.
