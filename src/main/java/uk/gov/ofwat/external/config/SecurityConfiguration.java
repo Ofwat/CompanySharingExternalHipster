@@ -138,9 +138,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
 /*            .securityContext().securityContextRepository(this.refreshingUserDetailsSecurityContextRepository(new HttpSessionSecurityContextRepository()))
         .and()*/
-            .csrf()
-            .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-        .and()
+            .csrf().disable()
+            //.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+        //.and()
             .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
             .exceptionHandling()
             .authenticationEntryPoint(http401UnauthorizedEntryPoint())
@@ -168,7 +168,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .disable()
         .and()
             .authorizeRequests()
-            .antMatchers("/api/jobber").permitAll()
+            .antMatchers("/api/jobber/**").permitAll()
             .antMatchers("/excel/download").permitAll()
             .antMatchers("/api/register").permitAll()
             .antMatchers("/api/activate").permitAll()
