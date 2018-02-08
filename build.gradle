@@ -73,11 +73,16 @@ if (OperatingSystem.current().isWindows()) {
     }
 }
 
+compileTestJava{
+    include '**/CompanyDataCollectionServiceIntTest*'
+}
+
 test {
-    include '**/*UnitTest*'
+    exclude '**/*UnitTest*'
     include '**/*IntTest*'
-    include '**/*AspectIntTest*'
+    exclude '**/*AspectIntTest*'
     exclude '**/*ResourceIntTest*'
+    include '**/CompanyDataCollectionServiceIntTest*'
     // uncomment if the tests reports are not generated
     // see https://github.com/jhipster/generator-jhipster/pull/2771 and https://github.com/jhipster/generator-jhipster/pull/4484
     // ignoreFailures true
