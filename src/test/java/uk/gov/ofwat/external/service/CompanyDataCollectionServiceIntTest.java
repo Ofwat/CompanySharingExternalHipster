@@ -47,6 +47,9 @@ public class CompanyDataCollectionServiceIntTest {
     @Mock
     CompanyDataCollectionDTO companyDataCollectionDTO;
 
+    @Mock
+    Company company;
+
 
     /**
      * Set up.
@@ -59,7 +62,7 @@ public class CompanyDataCollectionServiceIntTest {
 
     @Test
     @Transactional
-    public void shouldRetrieveDataCollectionById() {
+    public void shouldRetrieveCompanyDataCollectionById() {
         when(companyDataCollectionRepository.findOne(anyLong())).thenReturn(getCompanyDataCollection());
         service.findOne(anyLong());
         verify(companyDataCollectionMapper,times(1)).toDto(any(CompanyDataCollection.class));
@@ -68,7 +71,7 @@ public class CompanyDataCollectionServiceIntTest {
 
     @Test
     @Transactional
-    public void shouldDeleteDataCollectionById() {
+    public void shouldDeleteCompanyDataCollectionById() {
         service.delete(anyLong());
         verify(companyDataCollectionRepository,times(1)).delete(anyLong());
     }
@@ -76,7 +79,7 @@ public class CompanyDataCollectionServiceIntTest {
 
     @Test
     @Transactional
-    public void shouldSaveDataCollection() {
+    public void shouldSaveCompanyDataCollection() {
         when(companyDataCollectionMapper.toEntity(any(CompanyDataCollectionDTO.class))).thenReturn(getCompanyDataCollection());
         when(companyDataCollectionRepository.save(any(CompanyDataCollection.class))).thenReturn(getCompanyDataCollection());
         service.save(companyDataCollectionDTO);
@@ -97,7 +100,7 @@ public class CompanyDataCollectionServiceIntTest {
 
     public CompanyDataCollection getCompanyDataCollection() {
         CompanyDataCollection companyDataCollection = new CompanyDataCollection();
-        companyDataCollection.setCompany(getCompany());
+        companyDataCollection.setCompany(company);
         companyDataCollection.setCompanyDataCollectionOrderIndex(new Long(1));
         companyDataCollection.setName("Test");
         companyDataCollection.setCompanyOwner(user);

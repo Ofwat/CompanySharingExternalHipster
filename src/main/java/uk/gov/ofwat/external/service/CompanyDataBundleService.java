@@ -85,8 +85,6 @@ public class CompanyDataBundleService {
             companyDataBundle.setCompanyDataInputs(companyDataInputArray);
         }catch(Exception e){
             log.debug(e.getMessage());
-            //companyDataInputList = new ArrayList(Arrays.asList(dataCollection.getDataBundles()[0].getDataInputs()));
-            //dataInputList.add(dataInput);
         }
         return companyDataBundleMapper.toDto(companyDataBundle);
     }
