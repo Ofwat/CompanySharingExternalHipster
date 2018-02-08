@@ -127,3 +127,13 @@ jhipster:
 # ===================================================================
 
 application:
+
+jobber:
+    defaultTarget: FOUNTAIN
+    whoAmI: DCS_EXTERNAL
+
+job:
+  startDelay: 0
+  repeatInterval: 60000
+  description: Sample job
+  key: StatisticsJob
