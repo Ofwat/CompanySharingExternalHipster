@@ -12,16 +12,12 @@ import uk.gov.ofwat.external.service.dto.CompanyDataBundleDTO;
 import uk.gov.ofwat.external.service.mapper.CompanyDataBundleMapper;
 
 import javax.transaction.Transactional;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyLong;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class CompanyDataBundleServiceIntTest {
 
@@ -44,9 +40,6 @@ public class CompanyDataBundleServiceIntTest {
     User user;
 
     @Mock
-    CompanyDataInput dataInput;
-
-    @Mock
     CompanyDataBundleDTO companyDataBundleDTO;
 
     @Mock
@@ -66,7 +59,7 @@ public class CompanyDataBundleServiceIntTest {
 
     @Test
     @Transactional
-    public void shouldRetrieveDataCollectionById() {
+    public void shouldRetrieveCompanyDataBundleById() {
         when(companyDataBundleRepository.findOne(anyLong())).thenReturn(getCompanyDataBundle());
         when(companyDataInputRepository.findByCompanyDataBundle(anyLong())).thenReturn(getCompanyDataInputList());
         service.findOne(anyLong());
@@ -75,7 +68,7 @@ public class CompanyDataBundleServiceIntTest {
 
     @Test
     @Transactional
-    public void shouldSaveDataCollection() {
+    public void shouldSaveCompanyDataBundle() {
         when(companyDataBundleMapper.toEntity(any(CompanyDataBundleDTO.class))).thenReturn(getCompanyDataBundle());
         when(companyDataBundleRepository.save(any(CompanyDataBundle.class))).thenReturn(getCompanyDataBundle());
         service.save(companyDataBundleDTO);
@@ -105,7 +98,7 @@ public class CompanyDataBundleServiceIntTest {
 
     public List<CompanyDataInput> getCompanyDataInputList() {
         List<CompanyDataInput> newList = new ArrayList<CompanyDataInput>();
-        newList.add(dataInput);
+        newList.add(companyDataInput);
         return newList;
     }
 
