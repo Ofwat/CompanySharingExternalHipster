@@ -161,3 +161,18 @@ job:
   repeatInterval: 60000
   description: Sample job
   key: StatisticsJob
+
+localUploadCompanyFolder: C:\\CompanyFiles\\
+localUploadOfwatFolder: C:\\Files\\
+ofwatFileName: Template.xlsx
+env: sprint
+
+security:
+  oauth2:
+    client:
+     clientId: db07ea61-47d8-48b1-a0ac-1145da3ee907@42a92f0e-996a-41b2-8512-3ed237ab8313
+     clientSecret: hEZLL7UFHaFohKDy0UtBM1/S9YbftVV0h0mfG6AYT5I=
+     grantType: client_credentials
+     resource: 00000003-0000-0ff1-ce00-000000000000/ofwat.sharepoint.com@42a92f0e-996a-41b2-8512-3ed237ab8313
+     url: https://accounts.accesscontrol.windows.net/42a92f0e-996a-41b2-8512-3ed237ab8313/tokens/OAuth/2
+     uploadFolder: https://ofwat.sharepoint.com/sites/rms/pr-test/Data%20Capture%20System/

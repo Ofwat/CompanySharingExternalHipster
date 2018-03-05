@@ -14,6 +14,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import java.io.File;
@@ -26,20 +27,35 @@ public class SharePointOAuthClient {
 
     private final Logger logger = LoggerFactory.getLogger(SharePointOAuthClient.class);
 
+
+    @Value("${security.oauth2.client.clientId}")
+    private String clientId;
+
+    @Value("${security.oauth2.client.clientSecret}")
+    private String clientSecret;
+
+    @Value("${security.oauth2.client.grantType}")
+    private String grantType;
+
+    @Value("${security.oauth2.client.resource}")
+    private String resource;
+
+    @Value("${security.oauth2.client.url}")
+    private String url;
+
+    @Value("${security.oauth2.client.uploadFolder}")
+    private String uploadFolder;
+
     public String getSharePointAccessToken() throws IOException, JSONException {
 
-        String grant_type = Constants.GRANT_TYPE;
-        String client_id = Constants.CLIENT_ID;
-        String client_secret = Constants.CLIENT_SECRET;
-        String resource = Constants.RESOURCE;
-        String url = Constants.URL;
+
         HttpClient client = HttpClientBuilder.create().build();
         HttpPost post = new HttpPost(url);
         post.setHeader("Content-Type", "application/x-www-form-urlencoded");
         List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
-        urlParameters.add(new BasicNameValuePair("grant_type", grant_type));
-        urlParameters.add(new BasicNameValuePair("client_id", client_id));
-        urlParameters.add(new BasicNameValuePair("client_secret", client_secret));
+        urlParameters.add(new BasicNameValuePair("grant_type", grantType));
+        urlParameters.add(new BasicNameValuePair("client_id", clientId));
+        urlParameters.add(new BasicNameValuePair("client_secret", clientSecret));
         urlParameters.add(new BasicNameValuePair("resource", resource));
         post.setEntity(new UrlEncodedFormEntity(urlParameters));
         HttpResponse response = client.execute(post);
@@ -58,16 +74,14 @@ public class SharePointOAuthClient {
 
         if (!token.equalsIgnoreCase(Constants.OAUTH_FAIL_MESSAGE)) {
 
-            String url = Constants.UPLOAD_FOLDER_URL;
             HttpClient client = HttpClientBuilder.create().build();
-            HttpPost post = new HttpPost("https://ofwat.sharepoint.com/sites/rms/pr-test/_api/web/lists/GetByTitle('DCS')/RootFolder/Files/Add(url='11.xlsx',overwrite=true)");
-            post.setHeader("Authorization", "Bearer " + token);
+            HttpPost post = new HttpPost("https://ofwat.sharepoint.com/sites/rms/pr-test/_api/web/lists/GetByTitle('DCS')/RootFolder/Files/Add(url='"+file.getName()+"',overwrite=true)");
+                post.setHeader("Authorization", "Bearer " + token);
             post.setHeader("Accept", "application/json;odata=verbose");
             post.setHeader("X-RequestDigest", "0x08FFC8FC2CA1FDD7D6D93D4BB87C2E0D65CA904327404A7DD44B8C6B0450D3B352C54E04D51C7D4B34F9FC391A9311DD304B06214B49952751716FEFAA1D8420");
             post.setEntity(new FileEntity(file));
             HttpResponse response = client.execute(post);
             logger.debug("Response Code : " + response.getStatusLine().getStatusCode());
-
             if (response.getStatusLine().getStatusCode() == HttpStatus.OK.value() || response.getStatusLine().getStatusCode() == HttpStatus.ACCEPTED.value()) {
                 return Constants.UPLOAD_SUCCESS_MESSAGE;
             } else {

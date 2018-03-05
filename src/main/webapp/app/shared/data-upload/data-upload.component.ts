@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, ViewChild, OnInit, EventEmitter, Output} from '@angular/core';
+import {Component, ElementRef, Input, ViewChild, OnInit, EventEmitter, Output, Injectable} from '@angular/core';
 import { UploadService } from './data-upload.service';
 
 
@@ -8,7 +8,7 @@ import { UploadService } from './data-upload.service';
     providers: [UploadService]
  })
 
-
+@Injectable()
 export class UploadComponent implements OnInit  {
     @Input() valueMultiple: string;
     @Input() valueCompanyInputId: string;
@@ -17,10 +17,12 @@ export class UploadComponent implements OnInit  {
     error: boolean;
     errorDataInputExists: boolean;
     uploadedFileNames: any[];
+    uploadedFile: any[];
 
     @ViewChild('fileInput') inputEl: ElementRef;
     constructor(private uploadService: UploadService) {
         this.uploadedFileNames = new Array();
+        this.uploadedFile = new Array();
 
     }
 
@@ -35,14 +37,16 @@ export class UploadComponent implements OnInit  {
         let fileCount: number = inputEl.files.length;
         let formData = new FormData();
         this.uploadedFileNames = new Array();
+        this.uploadedFile = new Array();
         for (let i = 0; i < fileCount; i++) {
             let file: File = inputEl.files.item(i);
             this.uploadedFileNames.push(inputEl.files.item(i).name);
+            this.uploadedFile.push(inputEl.files.item(i));
             formData.append('uploadFiles', file);
         }
         if (this.valueCompanyInputId === undefined) {
-            this.filesUploaded.emit(this.uploadedFileNames);
-            this.uploadService.upload(formData).subscribe(
+            this.filesUploaded.emit(this.uploadedFile);
+           /* this.uploadService.upload(formData).subscribe(
                 response => {
                     console.log("success" + response.status);
                     this.success = true;
@@ -56,7 +60,7 @@ export class UploadComponent implements OnInit  {
                         this.error = true;
                     }
                 }
-            );
+            );*/
         } else {
 
             formData.append('companyInputId', this.valueCompanyInputId);

@@ -1,14 +1,15 @@
 import { Component, OnInit,ElementRef, Input, ViewChild } from '@angular/core';
 import { JhiAlertService } from 'ng-jhipster';
-import { ResponseWrapper, DataInput, DataInputService, DataBundle, DataBundleService } from '../../shared';
+import { ResponseWrapper, DataInput, DataInputService,  DataBundle, DataBundleService } from '../../shared';
 import { User, UserService } from '../../shared';
 import { Subscription } from 'rxjs/Rx';
 import { ActivatedRoute } from '@angular/router';
+import { UploadService } from '../../shared/data-upload/data-upload.service';
 
 @Component({
     selector: 'jhi-data-input-creation',
     templateUrl: './data-input-creation.component.html',
-    providers: [DataInputService, DataBundleService]
+    providers: [DataInputService, DataBundleService, UploadService]
 })
 export class DataInputCreationComponent implements OnInit {
 
@@ -31,6 +32,7 @@ export class DataInputCreationComponent implements OnInit {
     constructor(
         private alertService: JhiAlertService,
         private dataInputService: DataInputService,
+        private uploadService: UploadService,
         private userService: UserService,
         private route: ActivatedRoute,
         private dataBundleService: DataBundleService,
@@ -97,30 +99,51 @@ export class DataInputCreationComponent implements OnInit {
     }
 
     create() {
+        let formData = new FormData();
         this.dataInput.ownerId = this.selectedOwner.id;
         this.dataInput.reviewerId = this.selectedReviewer.id;
 
         this.dataInput.dataBundleId = this.dataBundle.id;
 
-        this.dataInput.fileName = this.uploadFileNames[0];
         this.dataInput.fileLocation = "C:\\Files\\";
         this.dataInput.orderIndex = 0;
         this.dataInput.defaultDeadline =this.dataBundle.defaultDeadline;
+        formData.append('uploadFiles', this.uploadFileNames[0]);
 
-        this.dataInputService.create(this.dataInput).subscribe(
-            response => {
-                console.log("success" + response.status);
-                this.success = true;
-            },
-            errorResponse => {
-                console.log("error" + errorResponse.status + errorResponse.statusText);
-                if (409 == errorResponse.status) {
-                    this.errorDataInputExists = true;
+         this.uploadService.upload(formData).subscribe(
+                response => {
+                    console.log("   success" + response.status);
+                    this.success = true;
+                    this.dataInput.fileName = "Template.xlsx";
+                    this.dataInputService.create(this.dataInput).subscribe(
+                        response => {
+                            console.log("success" + response.status);
+                            this.success = true;
+                        },
+                        errorResponse => {
+                            console.log("error" + errorResponse.status + errorResponse.statusText);
+                            if (409 == errorResponse.status) {
+                                this.errorDataInputExists = true;
+                            }
+                            else {
+                                this.error = true;
+                            }
+                        }
+                    );
+
+
+                },
+                errorResponse => {
+                    console.log("error" + errorResponse.status + errorResponse.statusText);
+                    if (409 == errorResponse.status) {
+                        this.errorDataInputExists = true;
+                    }
+                    else {
+                        this.error = true;
+                    }
                 }
-                else {
-                    this.error = true;
-                }
-            }
-        );
+            );
+
+
     }
 }
