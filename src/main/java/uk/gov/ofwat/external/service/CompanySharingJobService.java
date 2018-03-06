@@ -3,6 +3,7 @@ package uk.gov.ofwat.external.service;
 import com.google.gson.Gson;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import uk.gov.ofwat.external.domain.CompanyDataInput;
 import uk.gov.ofwat.external.domain.TableMetadata;
 import uk.gov.ofwat.external.domain.data.DCSTable;
 import uk.gov.ofwat.external.service.dto.data.TableDto;
@@ -29,11 +30,11 @@ public class CompanySharingJobService {
         this.dcsTableMapper = dcsTableMapper;
     }
 
-    public Job processUpload(String pathToStoredFile, TableMetadata tableMetadata){
+    public Job processUpload(String pathToStoredFile, TableMetadata tableMetadata, CompanyDataInput companyDataInput){
         TableDto tableDto = excelReaderService.readFOut(pathToStoredFile, tableMetadata);
         DCSTable dcsTable = dcsTableMapper.toEntity(tableDto);
         String jobData = convertTableDtoToJson(tableDto);
-        JobInformation jobInformation = createDataJobInformation(jobData, tableMetadata);
+        JobInformation jobInformation = createDataJobInformation(jobData, tableMetadata, companyDataInput);
         Job job = jobService.createJob(jobInformation);
         return job;
     }
@@ -44,7 +45,7 @@ public class CompanySharingJobService {
         return json;
     }
 
-    private JobInformation createDataJobInformation(String jobData, TableMetadata tableMetadata){
+    private JobInformation createDataJobInformation(String jobData, TableMetadata tableMetadata, CompanyDataInput companyDataInput){
         JobInformation jobInformation = new JobInformation.Builder(JobTargetPlatformConstants.FOUNTAIN)
             .type(JobTypeConstants.DATA_JOB)
             .data(jobData)
@@ -54,6 +55,8 @@ public class CompanySharingJobService {
             .addMetaData("auditComment", tableMetadata.getAuditComment())
             .addMetaData("runId", tableMetadata.getRunId().toString())
             .addMetaData("excelDocMongoId", tableMetadata.getExcelDocMongoId())
+            .addMetaData("companyDataInputId", tableMetadata.getCompanyDataInputId())
+            .addJobObserver(companyDataInput)
             .build();
         return jobInformation;
     }

@@ -7,13 +7,15 @@ public class TableMetadata {
     private Long runId;
     private Long fountainReportId;
     private String excelDocMongoId;
+    private String companyDataInputId;
 
-    public TableMetadata(Long companyId, String auditComment, Long runId, Long fountainReportId, String excelDocMongoId) {
+    public TableMetadata(Long companyId, String auditComment, Long runId, Long fountainReportId, String excelDocMongoId, String companyDataInputId) {
         this.companyId = companyId;
         this.auditComment = auditComment;
         this.runId = runId;
         this.fountainReportId = fountainReportId;
         this.excelDocMongoId = excelDocMongoId;
+        this.companyDataInputId = companyDataInputId;
     }
 
     public Long getCompanyId() {
@@ -54,5 +56,13 @@ public class TableMetadata {
 
     public void setExcelDocMongoId(String excelDocMongoId) {
         this.excelDocMongoId = excelDocMongoId;
+    }
+
+    public String getCompanyDataInputId() {
+        return companyDataInputId;
+    }
+
+    public void setCompanyDataInputId(String companyDataInputId) {
+        this.companyDataInputId = companyDataInputId;
     }
 }

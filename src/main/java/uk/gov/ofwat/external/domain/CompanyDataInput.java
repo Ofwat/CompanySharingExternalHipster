@@ -3,13 +3,19 @@ package uk.gov.ofwat.external.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.springframework.beans.factory.annotation.Autowired;
+import uk.gov.ofwat.external.domain.message.CompanyStatusEnum;
+import uk.gov.ofwat.external.repository.CompanyStatusRepository;
+import uk.gov.ofwat.jobber.domain.constants.JobStatusConstants;
+import uk.gov.ofwat.jobber.domain.jobs.Job;
+import uk.gov.ofwat.jobber.domain.observer.JobObservationSubject;
+import uk.gov.ofwat.jobber.domain.observer.JobObserver;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.Objects;
 
 /**
  * A CompanyDataInput.
@@ -17,9 +23,13 @@ import java.util.Objects;
 @Entity
 @Table(name = "company_data_input")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class CompanyDataInput implements Serializable {
+public class CompanyDataInput implements Serializable, JobObserver {
 
     private static final long serialVersionUID = 1L;
+
+    @Autowired
+    @Transient
+    private CompanyStatusRepository companyStatusRepository;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -72,6 +82,9 @@ public class CompanyDataInput implements Serializable {
     @Column(name = "order_Index", nullable = false)
     private Long orderIndex;
 
+//    @OneToOne
+//    @Column(name = "dataJobUuid")
+//    private String dataJobUuid;
 
     public Long getId() {
         return id;
@@ -255,6 +268,14 @@ public class CompanyDataInput implements Serializable {
         this.companyDataInputOrderIndex = companyDataInputOrderIndex;
     }
 
+//    public String getDataJobUuid() {
+//        return dataJobUuid;
+//    }
+//
+//    public void setDataJobUuid(String dataJobUuid) {
+//        this.dataJobUuid = dataJobUuid;
+//    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -316,5 +337,31 @@ public class CompanyDataInput implements Serializable {
             ", orderIndex=" + orderIndex +
             ", companyDataInputOrderIndex=" + companyDataInputOrderIndex +
             '}';
+    }
+
+    @Override
+    public void jobUpdateOccurred(JobObservationSubject jos) {
+        Job job = (Job) jos;
+
+        switch (job.getJobStatus().getName()) {
+            case JobStatusConstants.RESPONSE_UNKNOWN:
+                this.setStatus(companyStatusRepository.findOneByStatus(CompanyStatusEnum.PUBLISHED.toString()));
+            case JobStatusConstants.RESPONSE_SUCCESS:
+                this.setStatus(companyStatusRepository.findOneByStatus(CompanyStatusEnum.COMPLETE.toString()));
+            case JobStatusConstants.RESPONSE_FAILURE:
+                this.setStatus(companyStatusRepository.findOneByStatus(CompanyStatusEnum.PUBLISHED.toString()));
+            case JobStatusConstants.RESPONSE_TARGET_PROCESSING:
+                this.setStatus(companyStatusRepository.findOneByStatus(CompanyStatusEnum.PUBLISHED.toString()));
+            case JobStatusConstants.RESPONSE_TARGET_ACCEPTED:
+                this.setStatus(companyStatusRepository.findOneByStatus(CompanyStatusEnum.COMPLETE.toString()));
+            case JobStatusConstants.RESPONSE_TARGET_REJECTED:
+                this.setStatus(companyStatusRepository.findOneByStatus(CompanyStatusEnum.PUBLISHED.toString()));
+            case JobStatusConstants.RESPONSE_PENDING_ACTION:
+                this.setStatus(companyStatusRepository.findOneByStatus(CompanyStatusEnum.PUBLISHED.toString()));
+            case JobStatusConstants.RESPONSE_JOB_CREATED:
+                this.setStatus(companyStatusRepository.findOneByStatus(CompanyStatusEnum.PUBLISHED.toString()));
+            case JobStatusConstants.RESPONSE_LINKED:
+                this.setStatus(companyStatusRepository.findOneByStatus(CompanyStatusEnum.PUBLISHED.toString()));
+        }
     }
 }

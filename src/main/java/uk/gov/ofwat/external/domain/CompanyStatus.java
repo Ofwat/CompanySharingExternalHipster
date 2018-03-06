@@ -2,6 +2,7 @@ package uk.gov.ofwat.external.domain;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import uk.gov.ofwat.external.domain.message.CompanyStatusEnum;
 
 import javax.persistence.*;
 import java.io.Serializable;

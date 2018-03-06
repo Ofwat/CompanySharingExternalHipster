@@ -12,5 +12,6 @@ import org.springframework.data.jpa.repository.*;
 @SuppressWarnings("unused")
 @Repository
 public interface CompanyStatusRepository extends JpaRepository<CompanyStatus,Long> {
-    
+
+    CompanyStatus findOneByStatus(String status);
 }
