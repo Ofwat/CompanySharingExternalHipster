@@ -49,7 +49,7 @@ public class SharePointOAuthClientTest {
     }
 
 
-    @Test
+ /*   @Test
     @Transactional
     public void getSharePointAccessTokenTest() throws IOException, JSONException {
         when(client.execute(any(HttpPost.class))).thenReturn(response);
@@ -57,7 +57,7 @@ public class SharePointOAuthClientTest {
         when(statusLine.getStatusCode()).thenReturn(200);
         service.getSharePointAccessToken();
         assertThat(statusLine.getStatusCode()).isEqualTo(200);
-    }
+    }*/
 
 /*    @Test
     @Transactional

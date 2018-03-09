@@ -1,3 +1,92 @@
+
+// This CSS will print because %message-shared is extended.
+%message-shared {
+    border: 1px solid #ccc;
+    padding: 10px;
+    color: #333;
+    min-width: 25em;
+    display:inline-block;
+    margin-top: 1.875em;
+    margin-bottom: 0.83333em;
+    overflow: auto;
+}
+
+.info {
+    @extend %message-shared;
+    color: #3a87ad;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+}
+
+.success {
+    @extend %message-shared;
+    border-color: green;
+    color: #468847;
+    background-color: #dff0d8;
+
+}
+
+.error {
+    @extend %message-shared;
+    border-color: red;
+    color: #b94a48;
+    background-color: #f2dede;
+
+}
+
+.warning {
+    @extend %message-shared;
+    border-color: yellow;
+    color: #8a6d3b;
+    background-color: #fcf8e3;
+}
+.btn {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 9px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    margin-left: 2em;
+    float: right;
+
+}
+
+.btn-success {
+    color: #fff;
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+}
+
+.btn-error {
+    color: #fff;
+    background-color: #d9534f;
+    border-color: #d43f3a;
+}
+
+.btn-warning {
+    color: #fff;
+    background-color: #f0ad4e;
+    border-color: #eea236;
+}
+
+.btn-information {
+    color: #fff;
+    background-color: #428bca;
+    border-color: #357ebd;
+}
+
 // Form validation
 // ==========================================================================
 

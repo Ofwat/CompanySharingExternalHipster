@@ -1,5 +1,12 @@
 <div>
+
     <div>
+       <!-- <jhi-message *ngIf="dspMsg"  [message]="msg" [successCode]="successCode" [errorCode]="errorCode" [infoCode]="infoCode" [warningCode]="warningCode"   (msgStatusChange)="onMessageStatusChange($event)"></jhi-message>-->
+
+        <warningmsg [message]="msg" [hidden]="warnShown" (warningStatusChange)="onMessageStatusChange($event)"></warningmsg>
+        <errormsg [message]="msg" [hidden]="errorShown" (errorStatusChange)="onMessageStatusChange($event)"></errormsg>
+        <successmsg [message]="msg" [hidden]="successShown" (successStatusChange)="onMessageStatusChange($event)"></successmsg>
+        <infomsg [message]="msg" [hidden]="infoShown" (infoStatusChange)="onMessageStatusChange($event)"></infomsg>
         <h2 class="heading-medium">Create Data Input for bundle: {{dataBundle?.name}}</h2>
 
         <div class="alert alert-success" *ngIf="success">

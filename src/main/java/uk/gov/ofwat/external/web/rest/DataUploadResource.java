@@ -1,15 +1,16 @@
 package uk.gov.ofwat.external.web.rest;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import uk.gov.ofwat.external.config.SharePointOAuthClient;
 import uk.gov.ofwat.external.domain.CompanyDataInput;
@@ -19,6 +20,7 @@ import uk.gov.ofwat.external.repository.CompanyDataInputRepository;
 import uk.gov.ofwat.external.repository.DataFileRepository;
 import uk.gov.ofwat.external.service.CompanySharingJobService;
 import uk.gov.ofwat.external.service.dto.DataInputDTO;
+import uk.gov.ofwat.external.web.rest.errors.DcsServerMessage;
 import uk.gov.ofwat.external.web.rest.util.HeaderUtil;
 import uk.gov.ofwat.jobber.domain.jobs.Job;
 
@@ -28,7 +30,6 @@ import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Instant;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -39,6 +40,7 @@ import java.util.concurrent.TimeUnit;
 @RestController
 @RequestMapping("/api")
 public class DataUploadResource {
+
 
     private final Logger log = LoggerFactory.getLogger(DataUploadResource.class);
     private static final String ENTITY_NAME = "dataUpload";
@@ -145,9 +147,13 @@ public class DataUploadResource {
     }
 
     @PostMapping(value = "/data-upload")
-    public ResponseEntity uploadFile(@RequestParam(value = "uploadFiles", required = false) MultipartFile[] files) throws IOException, JSONException {
+    public ResponseEntity<DataInputDTO> uploadFile(@RequestParam(value = "uploadFiles", required = false) MultipartFile[] files) throws IOException, JSONException {
         //-- my stuff with formDataObject and uploaded files
         log.debug("REST request to upload Data : {}");
+
+        HttpHeaders textPlainHeaders = new HttpHeaders();
+        textPlainHeaders.setContentType(MediaType.TEXT_PLAIN);
+
         File directory = new File(String.valueOf(localUploadOfwatFolder));
         if (!directory.exists()) {
             directory.mkdir();
@@ -156,29 +162,37 @@ public class DataUploadResource {
             log.debug("Uploaded File Names :" + file.getOriginalFilename());
             Path theDestination1 = Paths.get("C:\\Files\\" + ofwatFileName);
             File newFile = new File(theDestination1.toString());
-            try {
-                file.transferTo(newFile);
-            } catch (Exception e) {
-                //do nothing
-                throw e;
-            }
+
+            file.transferTo(newFile);
+
             sharePointOAuthClient.uploadFileToSharePoint(newFile);
         }
 
         //return dummy obj might change it to empty string and discussion
         DataInputDTO result = new DataInputDTO();
         result.setFileName(ofwatFileName);
-     /*   return ResponseEntity.ok()
+           return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, ""))
-            .body(result);*/
-
-        return new ResponseEntity<>("Failure to Upload", HttpStatus.BAD_REQUEST);
+            .body(result);
     }
 
 
+    private ResponseEntity<String> buildResponseEntity(DcsServerMessage dcsServerMessage) throws JsonProcessingException {
+        ObjectMapper obm = new ObjectMapper();
+        String x = obm.writeValueAsString(dcsServerMessage);
+        return new ResponseEntity<>(x, dcsServerMessage.getStatus());
+    }
+
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleException(final Exception exception) throws JsonProcessingException {
+        log.debug("handling Exception", exception);
+        return buildResponseEntity(new DcsServerMessage(HttpStatus.INTERNAL_SERVER_ERROR, exception.getLocalizedMessage(), new Throwable(new Exception("exception"))));
+    }
+
     String getUniqueFileName(String companyName, String reportId, String runId, String name) {
         String temp = String.valueOf(Instant.now());
-        return temp.substring(0, temp.indexOf(":")) + "_" + companyName + "_" + reportId + "_" + runId + "_" + env+ name.substring(name.indexOf('.'), name.length());
+        return temp.substring(0, temp.indexOf(":")) + "_" + companyName + "_" + reportId + "_" + runId + "_" + env + name.substring(name.indexOf('.'), name.length());
     }
 
 }
