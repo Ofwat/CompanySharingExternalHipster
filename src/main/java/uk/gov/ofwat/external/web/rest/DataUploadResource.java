@@ -187,7 +187,7 @@ public class DataUploadResource {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleException(final Exception exception) throws JsonProcessingException {
         log.debug("handling Exception", exception);
-        return buildResponseEntity(new DcsServerMessage(HttpStatus.INTERNAL_SERVER_ERROR, exception.getLocalizedMessage(), new Throwable(new Exception("exception"))));
+        return buildResponseEntity(new DcsServerMessage(HttpStatus.INTERNAL_SERVER_ERROR, "Upload failed", new Throwable(new Exception("exception"))));
     }
 
     String getUniqueFileName(String companyName, String reportId, String runId, String name) {
