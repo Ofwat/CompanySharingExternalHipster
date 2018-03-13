@@ -44,7 +44,7 @@ public class CompanyDataBundle implements Serializable {
     @JsonIgnore
     private Company company;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false,fetch = FetchType.LAZY)
     @JoinColumn(name="DATA_BUNDLE_ID", nullable=false)
     @NotNull
     private DataBundle dataBundle;
@@ -61,12 +61,12 @@ public class CompanyDataBundle implements Serializable {
     @JsonIgnore
     private User companyReviewer;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false,fetch = FetchType.LAZY)
     @JoinColumn(name="COMPANY_DATA_COLLECTION_ID", nullable=false)
     @NotNull
     private CompanyDataCollection companyDataCollection;
 
-    @OneToMany(mappedBy="companyDataBundle")
+    @OneToMany(mappedBy="companyDataBundle",fetch = FetchType.LAZY, cascade= CascadeType.ALL)
     @OrderColumn(name="order_Index")
     private CompanyDataInput[] companyDataInputs;
 

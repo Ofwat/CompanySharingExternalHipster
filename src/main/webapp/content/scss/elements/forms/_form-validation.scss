@@ -5,10 +5,20 @@
     padding: 10px;
     color: #333;
     min-width: 25em;
+    max-width: 50em;
     display:inline-block;
     margin-top: 1.875em;
     margin-bottom: 0.83333em;
     overflow: auto;
+    position: fixed;
+    top: 155px;
+    opacity: 1;
+    transform: scale(1);
+    -webkit-transition: opacity 2s ease-in;
+    -moz-transition: opacity 2s ease-in;
+    -ms-transition: opacity 2s ease-in;
+    -o-transition: opacity 2s ease-in;
+    transition: opacity 2s ease-in;
 }
 
 .info {

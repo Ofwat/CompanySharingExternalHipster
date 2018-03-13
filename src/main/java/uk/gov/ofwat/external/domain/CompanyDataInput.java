@@ -37,12 +37,12 @@ public class CompanyDataInput implements Serializable {
     @NotNull
     private Company company;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false,fetch = FetchType.LAZY)
     @JoinColumn(name="COMPANY_DATA_BUNDLE_ID", nullable=false)
     @NotNull
     private CompanyDataBundle companyDataBundle;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false,fetch = FetchType.LAZY)
     @JoinColumn(name="DATA_INPUT_ID", nullable=false)
     @NotNull
     private DataInput dataInput;

@@ -54,16 +54,16 @@ public class DataBundle extends AbstractAuditingEntity implements Serializable {
     @NotNull
     private User reviewer;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false,fetch = FetchType.LAZY)
     @JoinColumn(name="DATA_COLLECTION_ID", nullable=false)
     @NotNull
     private DataCollection dataCollection;
 
-    @OneToMany(mappedBy="dataBundle")
+    @OneToMany(mappedBy="dataBundle",fetch = FetchType.LAZY, cascade= CascadeType.ALL)
     @OrderColumn(name="order_Index")
     private DataInput[] dataInputs;
 
-    @OneToMany(mappedBy="dataBundle")
+    @OneToMany(mappedBy="dataBundle",fetch = FetchType.LAZY, cascade= CascadeType.ALL)
     @OrderColumn(name="company_data_bundle_order_Index")
     private CompanyDataBundle[] companyDataBundle;
 
