@@ -74,7 +74,7 @@ public class CompanyDataBundle implements Serializable {
     @Column(name = "company_data_bundle_order_Index", nullable = false)
     private Long companyDataBundleOrderIndex;
 
-    @OneToMany(mappedBy = "companyDataBundle")
+    @OneToMany(mappedBy = "companyDataBundle",fetch = FetchType.LAZY, cascade= CascadeType.ALL)
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<SubmissionSignOff> submissionSignOffs = new HashSet<>();

@@ -55,12 +55,12 @@ public class CompanyDataInput implements Serializable {
     @NotNull
     private User companyReviewer;
 
-    @OneToMany(mappedBy = "companyDataInput")
+    @OneToMany(mappedBy = "companyDataInput",fetch = FetchType.LAZY, cascade= CascadeType.ALL)
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<ReviewSignOff> reviewSignOffs = new HashSet<>();
 
-    @OneToMany(mappedBy = "companyDataInput")
+    @OneToMany(mappedBy = "companyDataInput",fetch = FetchType.LAZY, cascade= CascadeType.ALL)
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<DataFile> submissionFiles = new HashSet<>();
