@@ -29,11 +29,12 @@ public class CompanyDataInput implements Serializable {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false,fetch = FetchType.LAZY)
     @NotNull
     private CompanyStatus status;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false,fetch = FetchType.LAZY)
+    @JoinColumn(name="COMPANY_ID", nullable=false)
     @NotNull
     private Company company;
 

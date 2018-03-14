@@ -34,7 +34,7 @@ public class SubmissionSignOff implements Serializable {
     private User signatory;
 
     @ManyToOne(optional = false,fetch = FetchType.LAZY)
-    @JoinColumn(name="DATA_BUNDLE_ID", nullable=false)
+    @JoinColumn(name="COMPANY_DATA_BUNDLE_ID", nullable=false)
     @NotNull
     private CompanyDataBundle companyDataBundle;
 

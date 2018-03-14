@@ -77,7 +77,7 @@ public class CompanyDataBundleService {
         log.debug("Request to get CompanyDataBundle : {}", id);
         CompanyDataBundle companyDataBundle = companyDataBundleRepository.findOne(id);
 
-        List<CompanyDataInput> companyDataInputList = null;
+    /*    List<CompanyDataInput> companyDataInputList = null;
         try {
             companyDataInputList = companyDataInputRepository.findByCompanyDataBundle(companyDataBundle.getId());
             CompanyDataInput[] companyDataInputArray = new CompanyDataInput[companyDataInputList.size()];
@@ -85,7 +85,7 @@ public class CompanyDataBundleService {
             companyDataBundle.setCompanyDataInputs(companyDataInputArray);
         }catch(Exception e){
             log.debug(e.getMessage());
-        }
+        }*/
         return companyDataBundleMapper.toDto(companyDataBundle);
     }
 
