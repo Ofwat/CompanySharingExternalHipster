@@ -65,7 +65,8 @@ public class CompanyDataInput implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<DataFile> submissionFiles = new HashSet<>();
 
-    @ManyToOne
+    @ManyToOne(optional = false,fetch = FetchType.LAZY)
+    @JoinColumn(name="INPUT_TYPE_ID", nullable=false)
     private InputType inputType;
 
     @NotNull
