@@ -36,12 +36,12 @@ public class CompanyDataCollection implements Serializable {
     @NotNull
     private Company company;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false,fetch = FetchType.LAZY)
     @JoinColumn(name="DATA_COLLECTION_ID", nullable=false)
     @NotNull
     private DataCollection dataCollection;
 
-    @OneToMany(mappedBy="companyDataCollection")
+    @OneToMany(mappedBy="companyDataCollection",fetch = FetchType.LAZY, cascade= CascadeType.ALL)
     @OrderColumn(name="order_Index")
     @JsonIgnore
     private CompanyDataBundle[] companyDataBundles;

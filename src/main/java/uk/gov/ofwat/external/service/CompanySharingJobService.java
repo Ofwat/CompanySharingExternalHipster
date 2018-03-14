@@ -30,7 +30,7 @@ public class CompanySharingJobService {
     }
 
     public Job processUpload(String pathToStoredFile, TableMetadata tableMetadata){
-        TableDto tableDto = excelReaderService.readFOut(pathToStoredFile, tableMetadata);
+        TableDto tableDto = excelReaderService.readFOut(pathToStoredFile);
         DCSTable dcsTable = dcsTableMapper.toEntity(tableDto);
         String jobData = convertTableDtoToJson(tableDto);
         JobInformation jobInformation = createDataJobInformation(jobData, tableMetadata);

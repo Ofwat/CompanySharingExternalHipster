@@ -7,6 +7,7 @@ import { NgJhipsterModule } from 'ng-jhipster';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { CookieModule } from 'ngx-cookie';
 
+
 @NgModule({
     imports: [
         NgbModule.forRoot(),
@@ -24,6 +25,7 @@ import { CookieModule } from 'ngx-cookie';
         NgbModule,
         NgJhipsterModule,
         InfiniteScrollModule
-    ]
+    ],
+
 })
 export class CompanySharingExternalSharedLibsModule {}

@@ -57,7 +57,7 @@ public class DataInput extends AbstractAuditingEntity implements Serializable {
     @NotNull
     private PublishingStatus status;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false,fetch = FetchType.LAZY)
     @JoinColumn(name="DATA_BUNDLE_ID", nullable=false)
     @NotNull
     private DataBundle dataBundle;
@@ -66,11 +66,11 @@ public class DataInput extends AbstractAuditingEntity implements Serializable {
     @NotNull
     private User owner;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false,fetch = FetchType.LAZY)
     @NotNull
     private User reviewer;
 
-    @OneToMany(mappedBy="dataInput")
+    @OneToMany(mappedBy="dataInput",fetch = FetchType.LAZY, cascade= CascadeType.ALL)
     @OrderColumn(name="company_data_input_order_Index")
     private CompanyDataInput[] companyDataInput;
 

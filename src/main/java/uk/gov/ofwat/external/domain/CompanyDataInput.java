@@ -29,20 +29,21 @@ public class CompanyDataInput implements Serializable {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false,fetch = FetchType.LAZY)
     @NotNull
     private CompanyStatus status;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false,fetch = FetchType.LAZY)
+    @JoinColumn(name="COMPANY_ID", nullable=false)
     @NotNull
     private Company company;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false,fetch = FetchType.LAZY)
     @JoinColumn(name="COMPANY_DATA_BUNDLE_ID", nullable=false)
     @NotNull
     private CompanyDataBundle companyDataBundle;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false,fetch = FetchType.LAZY)
     @JoinColumn(name="DATA_INPUT_ID", nullable=false)
     @NotNull
     private DataInput dataInput;
@@ -55,17 +56,18 @@ public class CompanyDataInput implements Serializable {
     @NotNull
     private User companyReviewer;
 
-    @OneToMany(mappedBy = "companyDataInput")
+    @OneToMany(mappedBy = "companyDataInput",fetch = FetchType.LAZY, cascade= CascadeType.ALL)
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<ReviewSignOff> reviewSignOffs = new HashSet<>();
 
-    @OneToMany(mappedBy = "companyDataInput")
+    @OneToMany(mappedBy = "companyDataInput",fetch = FetchType.LAZY, cascade= CascadeType.ALL)
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<DataFile> submissionFiles = new HashSet<>();
 
-    @ManyToOne
+    @ManyToOne(optional = false,fetch = FetchType.LAZY)
+    @JoinColumn(name="INPUT_TYPE_ID", nullable=false)
     private InputType inputType;
 
     @NotNull

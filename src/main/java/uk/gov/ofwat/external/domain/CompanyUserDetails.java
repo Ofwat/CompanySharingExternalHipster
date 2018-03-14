@@ -22,7 +22,7 @@ public class CompanyUserDetails extends AbstractAuditingEntity implements Serial
     private User user;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Company company;
 
     @ManyToOne

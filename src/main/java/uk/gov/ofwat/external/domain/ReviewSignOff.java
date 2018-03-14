@@ -33,8 +33,8 @@ public class ReviewSignOff implements Serializable {
     @NotNull
     private User signatory;
 
-    @ManyToOne(optional = false)
-    @NotNull
+    @ManyToOne(optional = false,fetch = FetchType.LAZY)
+    @JoinColumn(name="COMPANY_DATA_INPUT_ID", nullable=false)
     private CompanyDataInput companyDataInput;
 
     public Long getId() {

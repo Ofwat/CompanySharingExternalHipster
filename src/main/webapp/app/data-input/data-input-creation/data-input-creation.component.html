@@ -1,9 +1,15 @@
 <div>
+
     <div>
+       <!-- <jhi-message *ngIf="dspMsg"  [message]="msg" [successCode]="successCode" [errorCode]="errorCode" [infoCode]="infoCode" [warningCode]="warningCode"   (msgStatusChange)="onMessageStatusChange($event)"></jhi-message>-->
+
+        <warningmsg [message]="msg" [hidden]="warnHide" (warningStatusChange)="onMessageStatusChange($event)"></warningmsg>
+        <errormsg [message]="msg" [hidden]="errorHide" (errorStatusChange)="onMessageStatusChange($event)"></errormsg>
+        <successmsg [message]="msg" [hidden]="successHide" (successStatusChange)="onMessageStatusChange($event)"></successmsg>
+        <infomsg [message]="msg" [hidden]="infoHide" (infoStatusChange)="onMessageStatusChange($event)"></infomsg>
         <h2 class="heading-medium">Create Data Input for bundle: {{dataBundle?.name}}</h2>
 
         <div class="alert alert-success" *ngIf="success">
-            <p><strong>Data Input created</strong></p>
             <button type="button"
                     class="button button-secondary float-left"
                     [routerLink]="['/data-bundle-detail', dataInput.dataBundleId]">
@@ -12,7 +18,6 @@
         </div>
 
         <div class="alert alert-danger" *ngIf="error">
-            <p><strong>Data Input creation failed!</strong> Please try again later.</p>
             <button type="button"
                     class="button button-secondary float-left"
                     [routerLink]="['/data-bundle-detail', dataInput.dataBundleId]">

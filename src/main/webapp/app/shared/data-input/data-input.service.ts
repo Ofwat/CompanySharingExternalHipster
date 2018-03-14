@@ -14,7 +14,7 @@ export class DataInputService {
 
     create(dataInput: DataInput): Observable<ResponseWrapper> {
         return this.http.post(this.resourceUrl, dataInput)
-            .map((res: Response) => this.convertResponse(res));
+            .map((res: Response) => this.convertResponse(res)).catch((error:any) => Observable.throw(error.json().error()));
     }
 
     update(dataInput: DataInput): Observable<ResponseWrapper> {

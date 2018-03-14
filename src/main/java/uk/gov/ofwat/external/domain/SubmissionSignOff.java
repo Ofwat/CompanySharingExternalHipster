@@ -33,9 +33,11 @@ public class SubmissionSignOff implements Serializable {
     @NotNull
     private User signatory;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false,fetch = FetchType.LAZY)
+    @JoinColumn(name="COMPANY_DATA_BUNDLE_ID", nullable=false)
     @NotNull
     private CompanyDataBundle companyDataBundle;
+
 
     public Long getId() {
         return id;
