@@ -5,11 +5,10 @@ import {User, UserService} from '../../shared';
 import {Subscription} from 'rxjs/Rx';
 import {ActivatedRoute} from '@angular/router';
 import {UploadService} from '../../shared/data-upload/data-upload.service';
-import {WarningMessageComponent} from "../../shared/messages/warning.message";
-import {ErrorMessageComponent} from "../../shared/messages/error.message";
-import {SuccessMessageComponent} from "../../shared/messages/success.message";
-import {InfoMessageComponent} from "../../shared/messages/info.message";
-
+import {WarningMessageComponent} from '../../shared/messages/warning.message';
+import {ErrorMessageComponent} from '../../shared/messages/error.message';
+import {SuccessMessageComponent} from '../../shared/messages/success.message';
+import {InfoMessageComponent} from '../../shared/messages/info.message';
 
 @Component({
     selector: 'jhi-data-input-creation',
@@ -32,10 +31,10 @@ export class DataInputCreationComponent implements OnInit {
     @ViewChild('fileInput') inputEl: ElementRef;
     uploadFileNames: any[];
     msg: string;
-    warnShown:boolean = true;
-    errorShown:boolean = true;
-    successShown:boolean=true;
-    infoShown:boolean=true;
+    warnHide = true;
+    errorHide = true;
+    successHide = true;
+    infoHide = true;
 
     constructor(private alertService: JhiAlertService,
                 private dataInputService: DataInputService,
@@ -63,15 +62,15 @@ export class DataInputCreationComponent implements OnInit {
             this.loadDataBundle(params['dataBundleId']);
         });
 
-        this.msg = "Hi there";
+        this.msg = 'You are creating data collection';
+        this.infoHide = false;
      }
 
-
     onMessageStatusChange() {
-        this.warnShown=true;
-        this.errorShown=true;
-        this.successShown=true;
-        this.infoShown=true;
+        this.warnHide = true;
+        this.errorHide = true;
+        this.successHide = true;
+        this.infoHide = true;
     }
 
     loadDataBundle(dataBundleId) {
@@ -102,6 +101,9 @@ export class DataInputCreationComponent implements OnInit {
     }
 
     onFileUploaded(uploadedFiles: any[]) {
+        this.msg = 'Please upload only excel files';
+        this.warnHide = false;
+
         this.uploadFileNames = new Array();
         let fileCount: number = uploadedFiles.length;
         for (let i = 0; i < fileCount; i++) {
@@ -120,10 +122,10 @@ export class DataInputCreationComponent implements OnInit {
     private processError(response) {
         let obj = JSON.parse(response);
         this.msg = obj.message;
-        this.warnShown=true;
-        this.errorShown=false;
-        this.successShown=true;
-        this.infoShown=true;
+        this.warnHide = true;
+        this.errorHide = false;
+        this.successHide = true;
+        this.infoHide = true;
     }
 
     create() {
@@ -141,16 +143,22 @@ export class DataInputCreationComponent implements OnInit {
 
         this.uploadService.upload(formData).subscribe(
             response => {
-                console.log("   success" + response.status);
+                console.log('   success' + response.status);
                 this.success = true;
-                this.dataInput.fileName = "Template.xlsx";
+                this.dataInput.fileName = 'Template.xlsx';
+                this.msg = 'File Upload Successful';
+                this.successHide = false;
+
                 this.dataInputService.create(this.dataInput).subscribe(
                     response => {
                         console.log("success" + response.status);
                         this.success = true;
+
                     },
                     errorResponse => {
                         console.log("error" + errorResponse.status + errorResponse.statusText);
+                        this.msg = errorResponse.statusText;
+                        this.errorHide = false;
                         if (409 == errorResponse.status) {
                             this.errorDataInputExists = true;
                         }
