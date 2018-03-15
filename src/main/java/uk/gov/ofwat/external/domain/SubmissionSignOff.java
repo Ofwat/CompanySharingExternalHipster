@@ -99,6 +99,10 @@ public class SubmissionSignOff implements Serializable {
         this.companyDataBundle = companyDataBundle;
     }
 
+    public Boolean getStatus() {
+        return status;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

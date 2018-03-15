@@ -69,6 +69,19 @@ public class CompanyDataInputService {
         return companyDataInputMapper.toDto(companyDataInput);
     }
 
+
+    /**
+     *  Get one companyDataInput by id.
+     *
+     *  @param id the id of the entity
+     *  @return the entity
+     */
+    @Transactional(readOnly = true)
+    public CompanyDataInput findCompanyDataInput(Long id) {
+        log.debug("Request to get CompanyDataInput : {}", id);
+        CompanyDataInput companyDataInput = companyDataInputRepository.findOne(id);
+        return companyDataInput;
+    }
     /**
      *  Delete the  companyDataInput by id.
      *

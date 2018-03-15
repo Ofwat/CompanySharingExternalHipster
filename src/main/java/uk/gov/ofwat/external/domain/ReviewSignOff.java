@@ -97,6 +97,10 @@ public class ReviewSignOff implements Serializable {
         this.companyDataInput = companyDataInput;
     }
 
+    public Boolean getStatus() {
+        return status;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

@@ -258,50 +258,6 @@ public class CompanyDataInput implements Serializable {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof CompanyDataInput)) return false;
-
-        CompanyDataInput that = (CompanyDataInput) o;
-
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (status != null ? !status.equals(that.status) : that.status != null) return false;
-        if (company != null ? !company.equals(that.company) : that.company != null) return false;
-        if (companyDataBundle != null ? !companyDataBundle.equals(that.companyDataBundle) : that.companyDataBundle != null)
-            return false;
-        if (dataInput != null ? !dataInput.equals(that.dataInput) : that.dataInput != null) return false;
-        if (companyOwner != null ? !companyOwner.equals(that.companyOwner) : that.companyOwner != null) return false;
-        if (companyReviewer != null ? !companyReviewer.equals(that.companyReviewer) : that.companyReviewer != null)
-            return false;
-        if (reviewSignOffs != null ? !reviewSignOffs.equals(that.reviewSignOffs) : that.reviewSignOffs != null)
-            return false;
-        if (submissionFiles != null ? !submissionFiles.equals(that.submissionFiles) : that.submissionFiles != null)
-            return false;
-        if (inputType != null ? !inputType.equals(that.inputType) : that.inputType != null) return false;
-        if (orderIndex != null ? !orderIndex.equals(that.orderIndex) : that.orderIndex != null) return false;
-        return companyDataInputOrderIndex != null ? companyDataInputOrderIndex.equals(that.companyDataInputOrderIndex) : that.companyDataInputOrderIndex == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (status != null ? status.hashCode() : 0);
-        result = 31 * result + (company != null ? company.hashCode() : 0);
-        result = 31 * result + (companyDataBundle != null ? companyDataBundle.hashCode() : 0);
-        result = 31 * result + (dataInput != null ? dataInput.hashCode() : 0);
-        result = 31 * result + (companyOwner != null ? companyOwner.hashCode() : 0);
-        result = 31 * result + (companyReviewer != null ? companyReviewer.hashCode() : 0);
-        result = 31 * result + (reviewSignOffs != null ? reviewSignOffs.hashCode() : 0);
-        result = 31 * result + (submissionFiles != null ? submissionFiles.hashCode() : 0);
-        result = 31 * result + (inputType != null ? inputType.hashCode() : 0);
-        result = 31 * result + (orderIndex != null ? orderIndex.hashCode() : 0);
-        result = 31 * result + (companyDataInputOrderIndex != null ? companyDataInputOrderIndex.hashCode() : 0);
-        return result;
-    }
-
-    @Override
     public String toString() {
         return "CompanyDataInput{" +
             "id=" + id +
@@ -318,5 +274,53 @@ public class CompanyDataInput implements Serializable {
             ", orderIndex=" + orderIndex +
             ", companyDataInputOrderIndex=" + companyDataInputOrderIndex +
             '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CompanyDataInput)) return false;
+
+        CompanyDataInput that = (CompanyDataInput) o;
+
+        if (getId() != null ? !getId().equals(that.getId()) : that.getId() != null) return false;
+        if (getName() != null ? !getName().equals(that.getName()) : that.getName() != null) return false;
+        if (getStatus() != null ? !getStatus().equals(that.getStatus()) : that.getStatus() != null) return false;
+        if (getCompany() != null ? !getCompany().equals(that.getCompany()) : that.getCompany() != null) return false;
+        if (getCompanyDataBundle() != null ? !getCompanyDataBundle().equals(that.getCompanyDataBundle()) : that.getCompanyDataBundle() != null)
+            return false;
+        if (getDataInput() != null ? !getDataInput().equals(that.getDataInput()) : that.getDataInput() != null)
+            return false;
+        if (getCompanyOwner() != null ? !getCompanyOwner().equals(that.getCompanyOwner()) : that.getCompanyOwner() != null)
+            return false;
+        if (getCompanyReviewer() != null ? !getCompanyReviewer().equals(that.getCompanyReviewer()) : that.getCompanyReviewer() != null)
+            return false;
+        if (getReviewSignOffs() != null ? !getReviewSignOffs().equals(that.getReviewSignOffs()) : that.getReviewSignOffs() != null)
+            return false;
+        if (getSubmissionFiles() != null ? !getSubmissionFiles().equals(that.getSubmissionFiles()) : that.getSubmissionFiles() != null)
+            return false;
+        if (getInputType() != null ? !getInputType().equals(that.getInputType()) : that.getInputType() != null)
+            return false;
+        if (getOrderIndex() != null ? !getOrderIndex().equals(that.getOrderIndex()) : that.getOrderIndex() != null)
+            return false;
+        return getCompanyDataInputOrderIndex() != null ? getCompanyDataInputOrderIndex().equals(that.getCompanyDataInputOrderIndex()) : that.getCompanyDataInputOrderIndex() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getId() != null ? getId().hashCode() : 0;
+        result = 31 * result + (getName() != null ? getName().hashCode() : 0);
+        result = 31 * result + (getStatus() != null ? getStatus().hashCode() : 0);
+        result = 31 * result + (getCompany() != null ? getCompany().hashCode() : 0);
+        result = 31 * result + (getCompanyDataBundle() != null ? getCompanyDataBundle().hashCode() : 0);
+        result = 31 * result + (getDataInput() != null ? getDataInput().hashCode() : 0);
+        result = 31 * result + (getCompanyOwner() != null ? getCompanyOwner().hashCode() : 0);
+        result = 31 * result + (getCompanyReviewer() != null ? getCompanyReviewer().hashCode() : 0);
+        result = 31 * result + (getReviewSignOffs() != null ? getReviewSignOffs().hashCode() : 0);
+        result = 31 * result + (getSubmissionFiles() != null ? getSubmissionFiles().hashCode() : 0);
+        result = 31 * result + (getInputType() != null ? getInputType().hashCode() : 0);
+        result = 31 * result + (getOrderIndex() != null ? getOrderIndex().hashCode() : 0);
+        result = 31 * result + (getCompanyDataInputOrderIndex() != null ? getCompanyDataInputOrderIndex().hashCode() : 0);
+        return result;
     }
 }
