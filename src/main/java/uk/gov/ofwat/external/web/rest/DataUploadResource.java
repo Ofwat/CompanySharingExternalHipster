@@ -18,6 +18,7 @@ import uk.gov.ofwat.external.domain.DataFile;
 import uk.gov.ofwat.external.domain.TableMetadata;
 import uk.gov.ofwat.external.repository.CompanyDataInputRepository;
 import uk.gov.ofwat.external.repository.DataFileRepository;
+import uk.gov.ofwat.external.service.CompanyDataInputService;
 import uk.gov.ofwat.external.service.CompanySharingJobService;
 import uk.gov.ofwat.external.service.dto.DataInputDTO;
 import uk.gov.ofwat.external.web.rest.errors.DcsServerMessage;
@@ -46,7 +47,7 @@ public class DataUploadResource {
     private static final String ENTITY_NAME = "dataUpload";
     private volatile boolean running = false;
     private final DataFileRepository dataFileRepository;
-    private final CompanyDataInputRepository companyDataInputRepository;
+    private final CompanyDataInputService companyDataInputService;
     private final CompanySharingJobService companySharingJobService;
     private final SharePointOAuthClient sharePointOAuthClient;
 
@@ -64,11 +65,11 @@ public class DataUploadResource {
 
 
     public DataUploadResource(DataFileRepository dataFileRepository,
-                              CompanyDataInputRepository companyDataInputRepository,
+                              CompanyDataInputService companyDataInputService,
                               CompanySharingJobService companySharingJobService,
                               SharePointOAuthClient sharePointOAuthClient) {
         this.dataFileRepository = dataFileRepository;
-        this.companyDataInputRepository = companyDataInputRepository;
+        this.companyDataInputService = companyDataInputService;
         this.companySharingJobService = companySharingJobService;
         this.sharePointOAuthClient = sharePointOAuthClient;
     }
@@ -85,7 +86,7 @@ public class DataUploadResource {
 
     @PostMapping(value = "/data-upload-company")
     public ResponseEntity<DataInputDTO> uploadFile(@RequestParam(value = "uploadFiles", required = false) MultipartFile[] files,
-                                                   @RequestParam(value = "companyInputId", required = false) String companyInputId) throws IOException, JSONException {
+                                                   @RequestParam(value = "companyInputId", required = false) String companyInputId) throws IOException, JSONException, InterruptedException {
         //-- my stuff with formDataObject and uploaded files
         log.debug("REST request to upload Data : {}");
         File directory = new File(String.valueOf(localUploadCompanyFolder));
@@ -97,8 +98,8 @@ public class DataUploadResource {
             log.debug("Uploaded File Names :" + file.getOriginalFilename());
 
             DataFile dataFile = new DataFile();
-            CompanyDataInput companyDataInput = companyDataInputRepository.findOne(Long.parseLong(companyInputId));
-            String newFileName = getUniqueFileName(companyDataInput.getCompany().getName(), String.valueOf(companyDataInput.getDataInput().getReportId()), "0", file.getOriginalFilename()).trim();
+            CompanyDataInput companyDataInput = companyDataInputService.findCompanyDataInput(Long.parseLong(companyInputId));
+            String newFileName = getUniqueFileName(companyDataInput.getCompany().getName().trim(), String.valueOf(companyDataInput.getDataInput().getReportId()), "0", file.getOriginalFilename().trim()).trim();
             newFileName = newFileName.replaceAll(" ", "%20");
             Path theDestination1 = Paths.get("C:\\CompanyFiles\\" + newFileName);
             File newFile = new File(theDestination1.toString());
@@ -130,15 +131,11 @@ public class DataUploadResource {
                     });
                     executorService.shutdown();
                 }).start();
-                TimeUnit.SECONDS.sleep(5);
-                while (!running) {
-                    current.sleep(20);
-                }
-                TimeUnit.SECONDS.sleep(2);
             } catch (Exception e) {
                 // TODO Auto-generated catch block
                 log.error(String.valueOf(e));
             }
+            current.sleep(1000);
         }
 
         //return dummy obj might change it to empty string and discussion

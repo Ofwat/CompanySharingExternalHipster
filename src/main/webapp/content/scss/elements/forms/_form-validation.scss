@@ -1,7 +1,33 @@
 
+.animated {
+    background-image: url(/css/images/logo.png);
+    background-repeat: no-repeat;
+    background-position: left top;
+    padding-top:95px;
+    margin-bottom:60px;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+@-webkit-keyframes fadeIn {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+}
+
+@keyframes fadeIn {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+}
+
+.fadeIn {
+    -webkit-animation-name: fadeIn;
+    animation-name: fadeIn;
+}
+
 // This CSS will print because %message-shared is extended.
 %message-shared {
-    border: 1px solid #ccc;
     padding: 10px;
     color: #333;
     min-width: 25em;
@@ -26,12 +52,10 @@
     @extend %message-shared;
     color: #3a87ad;
     background-color: #d9edf7;
-    border-color: #bce8f1;
 }
 
 .success {
     @extend %message-shared;
-    border-color: green;
     color: #468847;
     background-color: #dff0d8;
 
@@ -39,7 +63,6 @@
 
 .error {
     @extend %message-shared;
-    border-color: red;
     color: #b94a48;
     background-color: #f2dede;
 
@@ -47,9 +70,8 @@
 
 .warning {
     @extend %message-shared;
-    border-color: yellow;
     color: #8a6d3b;
-    background-color: #fcf8e3;
+    background-color: #f5e79e;
 }
 .btn {
     display: inline-block;
