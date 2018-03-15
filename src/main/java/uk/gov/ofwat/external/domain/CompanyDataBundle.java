@@ -47,6 +47,7 @@ public class CompanyDataBundle implements Serializable {
     @ManyToOne(optional = false)
     @JoinColumn(name="DATA_BUNDLE_ID", nullable=false)
     @NotNull
+    @JsonIgnore
     private DataBundle dataBundle;
 
     @ManyToOne
@@ -64,10 +65,12 @@ public class CompanyDataBundle implements Serializable {
     @ManyToOne(optional = false)
     @JoinColumn(name="COMPANY_DATA_COLLECTION_ID", nullable=false)
     @NotNull
+    @JsonIgnore
     private CompanyDataCollection companyDataCollection;
 
     @OneToMany(mappedBy="companyDataBundle")
     @OrderColumn(name="order_Index")
+    @JsonIgnore
     private CompanyDataInput[] companyDataInputs;
 
     @NotNull

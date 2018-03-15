@@ -41,6 +41,7 @@ public class CompanyDataInput implements Serializable, JobObserver {
 
     @ManyToOne(optional = false)
     @NotNull
+    @JsonIgnore
     private CompanyStatus status;
 
     @ManyToOne(optional = false)
@@ -50,11 +51,13 @@ public class CompanyDataInput implements Serializable, JobObserver {
     @ManyToOne(optional = false)
     @JoinColumn(name="COMPANY_DATA_BUNDLE_ID", nullable=false)
     @NotNull
+    @JsonIgnore
     private CompanyDataBundle companyDataBundle;
 
     @ManyToOne(optional = false)
     @JoinColumn(name="DATA_INPUT_ID", nullable=false)
     @NotNull
+    @JsonIgnore
     private DataInput dataInput;
 
     @ManyToOne(optional = false)
