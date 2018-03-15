@@ -1,17 +1,22 @@
-import { Component, OnInit,ElementRef, Input, ViewChild } from '@angular/core';
-import { JhiAlertService } from 'ng-jhipster';
-import { ResponseWrapper, DataInput, DataInputService, DataBundle, DataBundleService } from '../../shared';
-import { User, UserService } from '../../shared';
-import { Subscription } from 'rxjs/Rx';
-import { ActivatedRoute } from '@angular/router';
+import {Component, OnInit, ElementRef, Input, ViewChild} from '@angular/core';
+import {JhiAlertService} from 'ng-jhipster';
+import {ResponseWrapper, DataInput, DataInputService, DataBundle, DataBundleService} from '../../shared';
+import {User, UserService} from '../../shared';
+import {Subscription} from 'rxjs/Rx';
+import {ActivatedRoute} from '@angular/router';
+import {UploadService} from '../../shared/data-upload/data-upload.service';
+import {WarningMessageComponent} from '../../shared/messages/warning.message';
+import {ErrorMessageComponent} from '../../shared/messages/error.message';
+import {SuccessMessageComponent} from '../../shared/messages/success.message';
+import {InfoMessageComponent} from '../../shared/messages/info.message';
 
 @Component({
     selector: 'jhi-data-input-creation',
     templateUrl: './data-input-creation.component.html',
-    providers: [DataInputService, DataBundleService]
+    providers: [DataInputService, DataBundleService, UploadService,WarningMessageComponent,ErrorMessageComponent,SuccessMessageComponent,InfoMessageComponent],
+
 })
 export class DataInputCreationComponent implements OnInit {
-
     success: boolean;
     error: boolean;
     errorDataInputExists: boolean;
@@ -24,16 +29,24 @@ export class DataInputCreationComponent implements OnInit {
     private selectedReviewer: User;
     @Input() multiple: boolean = false;
     @ViewChild('fileInput') inputEl: ElementRef;
-    private resourceUrls = 'api/data-upload';
-    private data: string;
-    uploadFileNames:any[];
+    uploadFileNames: any[];
+    msg: string;
+    warnHide = true;
+    errorHide = true;
+    successHide = true;
+    infoHide = true;
 
-    constructor(
-        private alertService: JhiAlertService,
-        private dataInputService: DataInputService,
-        private userService: UserService,
-        private route: ActivatedRoute,
-        private dataBundleService: DataBundleService,
+    constructor(private alertService: JhiAlertService,
+                private dataInputService: DataInputService,
+                private uploadService: UploadService,
+                private userService: UserService,
+                private route: ActivatedRoute,
+                private dataBundleService: DataBundleService,
+                private warningMessageComponent: WarningMessageComponent,
+                private errorMessageComponent: ErrorMessageComponent,
+                private successMessageComponent: SuccessMessageComponent,
+                private infoMessageComponent: InfoMessageComponent
+
     ) {
     }
 
@@ -48,9 +61,16 @@ export class DataInputCreationComponent implements OnInit {
         this.subscription = this.route.params.subscribe((params) => {
             this.loadDataBundle(params['dataBundleId']);
         });
-    }
 
-    ngAfterViewInit() {
+        this.msg = 'You are creating data collection';
+        this.infoHide = false;
+     }
+
+    onMessageStatusChange() {
+        this.warnHide = true;
+        this.errorHide = true;
+        this.successHide = true;
+        this.infoHide = true;
     }
 
     loadDataBundle(dataBundleId) {
@@ -81,6 +101,9 @@ export class DataInputCreationComponent implements OnInit {
     }
 
     onFileUploaded(uploadedFiles: any[]) {
+        this.msg = 'Please upload only excel files';
+        this.warnHide = false;
+
         this.uploadFileNames = new Array();
         let fileCount: number = uploadedFiles.length;
         for (let i = 0; i < fileCount; i++) {
@@ -88,39 +111,70 @@ export class DataInputCreationComponent implements OnInit {
         }
     }
 
-    ownerChanged(user:User){
+    ownerChanged(user: User) {
         this.selectedOwner = user;
     }
 
-    reviewerChanged(user:User){
+    reviewerChanged(user: User) {
         this.selectedReviewer = user;
     }
 
+    private processError(response) {
+        let obj = JSON.parse(response);
+        this.msg = obj.message;
+        this.warnHide = true;
+        this.errorHide = false;
+        this.successHide = true;
+        this.infoHide = true;
+    }
+
     create() {
+        let formData = new FormData();
         this.dataInput.ownerId = this.selectedOwner.id;
         this.dataInput.reviewerId = this.selectedReviewer.id;
 
         this.dataInput.dataBundleId = this.dataBundle.id;
 
-        this.dataInput.fileName = this.uploadFileNames[0];
         this.dataInput.fileLocation = "C:\\Files\\";
         this.dataInput.orderIndex = 0;
-        this.dataInput.defaultDeadline =this.dataBundle.defaultDeadline;
+        this.dataInput.defaultDeadline = this.dataBundle.defaultDeadline;
+        formData.append('uploadFiles', this.uploadFileNames[0]);
 
-        this.dataInputService.create(this.dataInput).subscribe(
+
+        this.uploadService.upload(formData).subscribe(
             response => {
-                console.log("success" + response.status);
+                console.log('   success' + response.status);
                 this.success = true;
+                this.dataInput.fileName = 'Template.xlsx';
+                this.msg = 'File Upload Successful';
+                this.successHide = false;
+
+                this.dataInputService.create(this.dataInput).subscribe(
+                    response => {
+                        console.log("success" + response.status);
+                        this.success = true;
+
+                    },
+                    errorResponse => {
+                        console.log("error" + errorResponse.status + errorResponse.statusText);
+                        this.msg = errorResponse.statusText;
+                        this.errorHide = false;
+                        if (409 == errorResponse.status) {
+                            this.errorDataInputExists = true;
+                        }
+                        else {
+                            this.error = true;
+                        }
+                    }
+                );
+
+
             },
             errorResponse => {
-                console.log("error" + errorResponse.status + errorResponse.statusText);
-                if (409 == errorResponse.status) {
-                    this.errorDataInputExists = true;
-                }
-                else {
-                    this.error = true;
-                }
+                this.processError(errorResponse);
             }
         );
+
+
     }
 }

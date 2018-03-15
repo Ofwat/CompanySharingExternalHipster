@@ -7,6 +7,7 @@ import {
     JhiAlertErrorComponent
 } from './';
 
+
 @NgModule({
     imports: [
         CompanySharingExternalSharedLibsModule
@@ -16,7 +17,7 @@ import {
         JhiAlertErrorComponent
     ],
     providers: [
-        Title
+        Title,
     ],
     exports: [
         CompanySharingExternalSharedLibsModule,

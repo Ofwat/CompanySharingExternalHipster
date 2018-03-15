@@ -110,3 +110,7 @@ application:
     recaptcha:
         secret: XXX
         url: XXX
+
+jobber:
+    defaultTarget: FOUNTAIN
+    whoAmI: DCS_EXTERNAL

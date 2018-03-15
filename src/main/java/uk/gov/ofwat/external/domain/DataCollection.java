@@ -45,12 +45,12 @@ public class DataCollection extends AbstractAuditingEntity implements Serializab
     @Column(name = "guidance")
     private String guidance;
 
-    @OneToMany(mappedBy="dataCollection")
+    @OneToMany(mappedBy="dataCollection",fetch = FetchType.LAZY, cascade= CascadeType.ALL)
     @OrderColumn(name="order_Index")
     @JsonIgnore
     private DataBundle[] dataBundles;
 
-    @OneToMany(mappedBy="dataCollection")
+    @OneToMany(mappedBy="dataCollection",fetch = FetchType.LAZY, cascade= CascadeType.ALL)
     @OrderColumn(name="company_data_collection_order_Index")
     @JsonIgnore
     private CompanyDataCollection[] companyDataCollections;

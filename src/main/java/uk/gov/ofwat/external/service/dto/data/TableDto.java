@@ -14,19 +14,19 @@ import com.google.gson.annotations.SerializedName;
 public class TableDto implements Cloneable {
 
 	private int id;
-//	@SerializedName("n")
+	@SerializedName("n")
 	private String name;
-//	@SerializedName("t")
+	@SerializedName("t")
 	private String team;
-//	@SerializedName("u")
+	@SerializedName("u")
 	private String user;
-//	@SerializedName("em")
+	@SerializedName("em")
 	private String errorMessage;
-//	@SerializedName("e")
+	@SerializedName("e")
 	private Boolean error;
-//	@SerializedName("r")
+	@SerializedName("r")
 	private List<RowDto> rows;
-//	@SerializedName("mid")
+	@SerializedName("mid")
 	private String excelDocMongoId;
 
 	public TableDto() {

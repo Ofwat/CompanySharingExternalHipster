@@ -124,21 +124,21 @@
             <tr>
                 <td>Server error</td>
                 <td>
-                    <ngb-progressbar [max]="metrics.timers['com.codahale.metrics.servlet.InstrumentedFilter.requests'].count" [value]="metrics.meters['com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.serverError'].count" [striped]="true" [animated]="true" type="success">
-                        <span>{{metrics.meters['com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.serverError'].count}}</span>
+                    <ngb-progressbar [max]="metrics.timers['com.codahale.metrics.servlet.InstrumentedFilter.requests'].count" [value]="metrics.meters['com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.dcsServerMessage'].count" [striped]="true" [animated]="true" type="success">
+                        <span>{{metrics.meters['com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.dcsServerMessage'].count}}</span>
                     </ngb-progressbar>
                 </td>
                 <td class="text-right">
-                    {{filterNaN(metrics.meters['com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.serverError'].mean_rate) | number:'1.0-2'}}
+                    {{filterNaN(metrics.meters['com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.dcsServerMessage'].mean_rate) | number:'1.0-2'}}
                 </td>
                 <td class="text-right">
-                    {{filterNaN(metrics.meters['com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.serverError'].m1_rate) | number:'1.0-2'}}
+                    {{filterNaN(metrics.meters['com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.dcsServerMessage'].m1_rate) | number:'1.0-2'}}
                 </td>
                 <td class="text-right">
-                    {{filterNaN(metrics.meters['com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.serverError'].m5_rate) | number:'1.0-2'}}
+                    {{filterNaN(metrics.meters['com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.dcsServerMessage'].m5_rate) | number:'1.0-2'}}
                 </td>
                 <td class="text-right">
-                    {{filterNaN(metrics.meters['com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.serverError'].m15_rate) | number:'1.0-2'}}
+                    {{filterNaN(metrics.meters['com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.dcsServerMessage'].m15_rate) | number:'1.0-2'}}
                 </td>
             </tr>
             </tbody>
@@ -176,7 +176,7 @@
             </tbody>
         </table>
     </div>
-    
+
     <h3>Cache statistics</h3>
     <div class="table-responsive" *ngIf="!updatingMetrics">
         <table class="table table-striped">
@@ -214,7 +214,7 @@
             </tbody>
         </table>
     </div>
-    
+
     <h3 *ngIf="metrics.gauges && metrics.gauges['HikariPool-1.pool.TotalConnections'] && metrics.gauges['HikariPool-1.pool.TotalConnections'].value > 0">DataSource statistics (time in millisecond)</h3>
     <div class="table-responsive" *ngIf="!updatingMetrics && metrics.gauges && metrics.gauges['HikariPool-1.pool.TotalConnections'] && metrics.gauges['HikariPool-1.pool.TotalConnections'].value > 0">
         <table class="table table-striped">
