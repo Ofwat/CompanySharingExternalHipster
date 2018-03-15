@@ -93,6 +93,7 @@ public class DataUploadResource {
             directory.mkdir();
         }
         for (MultipartFile file : files) {
+            // ToDo move this to a file service
             log.debug("Uploaded File Names :" + file.getOriginalFilename());
 
             DataFile dataFile = new DataFile();

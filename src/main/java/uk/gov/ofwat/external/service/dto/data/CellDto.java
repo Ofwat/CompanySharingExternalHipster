@@ -12,18 +12,18 @@ import com.google.gson.annotations.SerializedName;
 @XmlType(propOrder = { "row", "col", "value", "decimalPlaces", "cellFormat", "dataType", "dataFormat", "style", "errorFlag", "errorText", "key", "cellType" })
 public class CellDto implements Cloneable {
 
-    @SerializedName("r")
+//    @SerializedName("r")
     private int row;
-    @SerializedName("c")
+//    @SerializedName("c")
     private int col;
-    @SerializedName("v")
+//    @SerializedName("v")
     private String value;
     private int decimalPlaces;	// We now have the dataFormat so may not need this.
     private String cellFormat;	// "percentage", "numeric", "text".
     private String dataType;	// "calc", "input".
     private String dataFormat;	// Format string. EG "#,##0".
     private String style;		// "text", "calc", "input", "error".
-    @SerializedName("e")
+//    @SerializedName("e")
     private boolean errorFlag;
     private String errorText;
     private String key;			// data key.
