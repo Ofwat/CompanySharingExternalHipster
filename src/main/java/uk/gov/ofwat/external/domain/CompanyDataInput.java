@@ -270,19 +270,19 @@ public class CompanyDataInput implements Serializable, JobObserver {
     @Override
     public String toString() {
         return "CompanyDataInput{" +
-            "id=" + id +
-            ", name='" + name + '\'' +
-            ", status=" + status +
-            ", company=" + company +
-            ", companyDataBundle=" + companyDataBundle +
-            ", dataInput=" + dataInput +
-            ", companyOwner=" + companyOwner +
-            ", companyReviewer=" + companyReviewer +
-            ", reviewSignOffs=" + reviewSignOffs +
-            ", submissionFiles=" + submissionFiles +
-            ", inputType=" + inputType +
-            ", orderIndex=" + orderIndex +
-            ", companyDataInputOrderIndex=" + companyDataInputOrderIndex +
+            "id=" + getId() +
+            ", name='" + getName() + '\'' +
+            ", status=" + getStatus() +
+            ", company=" + getCompany() +
+            ", companyDataBundle=" + getCompanyDataBundle() +
+            ", dataInput=" + getDataInput() +
+            ", companyOwner=" + getCompanyOwner() +
+            ", companyReviewer=" + getCompanyReviewer() +
+            ", reviewSignOffs=" + getReviewSignOffs() +
+            ", submissionFiles=" + getSubmissionFiles() +
+            ", inputType=" + getInputType() +
+            ", orderIndex=" + getOrderIndex() +
+            ", companyDataInputOrderIndex=" + getCompanyDataInputOrderIndex() +
             '}';
     }
 
