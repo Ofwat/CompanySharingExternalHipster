@@ -6,10 +6,6 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import uk.gov.ofwat.external.domain.message.CompanyStatusEnum;
 import uk.gov.ofwat.external.repository.CompanyStatusRepository;
-import uk.gov.ofwat.jobber.domain.constants.JobStatusConstants;
-import uk.gov.ofwat.jobber.domain.jobs.Job;
-import uk.gov.ofwat.jobber.domain.observer.JobObservationSubject;
-import uk.gov.ofwat.jobber.domain.observer.JobObserver;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -23,7 +19,7 @@ import java.util.Set;
 @Entity
 @Table(name = "company_data_input")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class CompanyDataInput implements Serializable, JobObserver {
+public class CompanyDataInput implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -284,32 +280,6 @@ public class CompanyDataInput implements Serializable, JobObserver {
             ", orderIndex=" + getOrderIndex() +
             ", companyDataInputOrderIndex=" + getCompanyDataInputOrderIndex() +
             '}';
-    }
-
-    @Override
-    public void jobUpdateOccurred(JobObservationSubject jos) {
-        Job job = (Job) jos;
-
-        switch (job.getJobStatus().getName()) {
-            case JobStatusConstants.RESPONSE_UNKNOWN:
-                this.setStatus(companyStatusRepository.findOneByStatus(CompanyStatusEnum.PUBLISHED.toString()));
-            case JobStatusConstants.RESPONSE_SUCCESS:
-                this.setStatus(companyStatusRepository.findOneByStatus(CompanyStatusEnum.COMPLETE.toString()));
-            case JobStatusConstants.RESPONSE_FAILURE:
-                this.setStatus(companyStatusRepository.findOneByStatus(CompanyStatusEnum.PUBLISHED.toString()));
-            case JobStatusConstants.RESPONSE_TARGET_PROCESSING:
-                this.setStatus(companyStatusRepository.findOneByStatus(CompanyStatusEnum.PUBLISHED.toString()));
-            case JobStatusConstants.RESPONSE_TARGET_ACCEPTED:
-                this.setStatus(companyStatusRepository.findOneByStatus(CompanyStatusEnum.COMPLETE.toString()));
-            case JobStatusConstants.RESPONSE_TARGET_REJECTED:
-                this.setStatus(companyStatusRepository.findOneByStatus(CompanyStatusEnum.PUBLISHED.toString()));
-            case JobStatusConstants.RESPONSE_PENDING_ACTION:
-                this.setStatus(companyStatusRepository.findOneByStatus(CompanyStatusEnum.PUBLISHED.toString()));
-            case JobStatusConstants.RESPONSE_JOB_CREATED:
-                this.setStatus(companyStatusRepository.findOneByStatus(CompanyStatusEnum.PUBLISHED.toString()));
-            case JobStatusConstants.RESPONSE_LINKED:
-                this.setStatus(companyStatusRepository.findOneByStatus(CompanyStatusEnum.PUBLISHED.toString()));
-        }
     }
 
     @Override

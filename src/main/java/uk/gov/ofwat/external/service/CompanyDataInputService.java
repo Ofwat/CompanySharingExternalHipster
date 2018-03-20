@@ -10,9 +10,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import uk.gov.ofwat.jobber.domain.constants.JobStatusConstants;
-import uk.gov.ofwat.jobber.domain.jobs.Job;
-import uk.gov.ofwat.jobber.service.JobService;
 
 import java.util.Optional;
 

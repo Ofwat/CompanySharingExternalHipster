@@ -12,7 +12,7 @@ import uk.gov.ofwat.external.domain.CompanyDataInput;
 import uk.gov.ofwat.external.domain.DataFile;
 import uk.gov.ofwat.external.domain.TableMetadata;
 import uk.gov.ofwat.external.repository.DataFileRepository;
-import uk.gov.ofwat.jobber.domain.jobs.Job;
+//import uk.gov.ofwat.jobber.domain.jobs.Job;
 
 import java.io.File;
 import java.io.IOException;
@@ -74,8 +74,8 @@ public class DataUploadService {
                         "N/A",
                         companyInputId);
                     //Create the Job.
-                    Job job = companySharingJobService.processUpload(theDestination1.toString(), tableMetadata, companyDataInput);
-                    log.info(job.getUuid().toString());
+//                    Job job = companySharingJobService.processUpload(theDestination1.toString(), tableMetadata, companyDataInput);
+//                    log.info(job.getUuid().toString());
                     current.interrupt();
                 });
                 executorService.shutdown();

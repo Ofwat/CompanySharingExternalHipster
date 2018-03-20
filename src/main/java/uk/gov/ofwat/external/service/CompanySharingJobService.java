@@ -8,11 +8,11 @@ import uk.gov.ofwat.external.domain.TableMetadata;
 import uk.gov.ofwat.external.domain.data.DCSTable;
 import uk.gov.ofwat.external.service.dto.data.TableDto;
 import uk.gov.ofwat.external.service.mapper.DCSTableMapper;
-import uk.gov.ofwat.jobber.domain.jobs.Job;
-import uk.gov.ofwat.jobber.domain.constants.JobTargetPlatformConstants;
-import uk.gov.ofwat.jobber.domain.constants.JobTypeConstants;
-import uk.gov.ofwat.jobber.service.JobInformation;
-import uk.gov.ofwat.jobber.service.JobService;
+//import uk.gov.ofwat.jobber.domain.jobs.Job;
+//import uk.gov.ofwat.jobber.domain.constants.JobTargetPlatformConstants;
+//import uk.gov.ofwat.jobber.domain.constants.JobTypeConstants;
+//import uk.gov.ofwat.jobber.service.JobInformation;
+//import uk.gov.ofwat.jobber.service.JobService;
 
 @Service
 @Transactional
@@ -20,24 +20,25 @@ public class CompanySharingJobService {
 
     private final ExcelReaderService excelReaderService;
 
-    private final JobService jobService;
+//    private final JobService jobService;
 
     private final DCSTableMapper dcsTableMapper;
 
-    public CompanySharingJobService(ExcelReaderService excelReaderService, JobService jobService, DCSTableMapper dcsTableMapper){
+//    public CompanySharingJobService(ExcelReaderService excelReaderService, JobService jobService, DCSTableMapper dcsTableMapper){
+    public CompanySharingJobService(ExcelReaderService excelReaderService, DCSTableMapper dcsTableMapper){
         this.excelReaderService = excelReaderService;
-        this.jobService = jobService;
+//        this.jobService = jobService;
         this.dcsTableMapper = dcsTableMapper;
     }
 
-    public Job processUpload(String pathToStoredFile, TableMetadata tableMetadata, CompanyDataInput companyDataInput){
-        TableDto tableDto = excelReaderService.readFOut(pathToStoredFile, tableMetadata);
-        DCSTable dcsTable = dcsTableMapper.toEntity(tableDto);
-        String jobData = convertTableDtoToJson(tableDto);
-        JobInformation jobInformation = createDataJobInformation(jobData, tableMetadata, companyDataInput);
-        Job job = jobService.createJob(jobInformation);
-        return job;
-    }
+//    public Job processUpload(String pathToStoredFile, TableMetadata tableMetadata, CompanyDataInput companyDataInput){
+//        TableDto tableDto = excelReaderService.readFOut(pathToStoredFile, tableMetadata);
+//        DCSTable dcsTable = dcsTableMapper.toEntity(tableDto);
+//        String jobData = convertTableDtoToJson(tableDto);
+//        JobInformation jobInformation = createDataJobInformation(jobData, tableMetadata, companyDataInput);
+//        Job job = jobService.createJob(jobInformation);
+//        return job;
+//    }
 
     private String convertTableDtoToJson(TableDto tableDto){
         Gson gson = new Gson();
@@ -45,19 +46,19 @@ public class CompanySharingJobService {
         return json;
     }
 
-    private JobInformation createDataJobInformation(String jobData, TableMetadata tableMetadata, CompanyDataInput companyDataInput){
-        JobInformation jobInformation = new JobInformation.Builder(JobTargetPlatformConstants.FOUNTAIN)
-            .type(JobTypeConstants.DATA_JOB)
-            .data(jobData)
-            .originator(JobTargetPlatformConstants.DCS)
-            .addMetaData("fountainReportId", tableMetadata.getFountainReportId().toString())
-            .addMetaData("companyId", tableMetadata.getCompanyId().toString())
-            .addMetaData("auditComment", tableMetadata.getAuditComment())
-            .addMetaData("runId", tableMetadata.getRunId().toString())
-            .addMetaData("excelDocMongoId", tableMetadata.getExcelDocMongoId())
-            .addMetaData("companyDataInputId", tableMetadata.getCompanyDataInputId())
-            .addJobObserver(companyDataInput)
-            .build();
-        return jobInformation;
-    }
+//    private JobInformation createDataJobInformation(String jobData, TableMetadata tableMetadata, CompanyDataInput companyDataInput){
+//        JobInformation jobInformation = new JobInformation.Builder(JobTargetPlatformConstants.FOUNTAIN)
+//            .type(JobTypeConstants.DATA_JOB)
+//            .data(jobData)
+//            .originator(JobTargetPlatformConstants.DCS)
+//            .addMetaData("fountainReportId", tableMetadata.getFountainReportId().toString())
+//            .addMetaData("companyId", tableMetadata.getCompanyId().toString())
+//            .addMetaData("auditComment", tableMetadata.getAuditComment())
+//            .addMetaData("runId", tableMetadata.getRunId().toString())
+//            .addMetaData("excelDocMongoId", tableMetadata.getExcelDocMongoId())
+//            .addMetaData("companyDataInputId", tableMetadata.getCompanyDataInputId())
+//            .addJobObserver(companyDataInput)
+//            .build();
+//        return jobInformation;
+//    }
 }
