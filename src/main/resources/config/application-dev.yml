@@ -85,13 +85,13 @@ liquibase:
 #
 server:
     port: 8443
-    ssl:
-        key-store: keystore.p12
-        key-store-password: password
-        keyStoreType: PKCS12
-        keyAlias: tomcat
+#    ssl:
+#        key-store: keystore.p12
+#        key-store-password: password
+#        keyStoreType: PKCS12
+#        keyAlias: tomcat
 # ===================================================================
-# server:
+#server:
 #    port: 8080
 # ===================================================================
 # JHipster specific properties

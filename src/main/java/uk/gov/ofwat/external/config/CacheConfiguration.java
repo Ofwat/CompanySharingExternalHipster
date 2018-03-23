@@ -67,6 +67,7 @@ public class CacheConfiguration {
             cm.createCache(uk.gov.ofwat.external.domain.CompanyDataInput.class.getName(), jcacheConfiguration);
             cm.createCache(uk.gov.ofwat.external.domain.CompanyDataInput.class.getName() + ".reviewSignOffs", jcacheConfiguration);
             cm.createCache(uk.gov.ofwat.external.domain.CompanyDataInput.class.getName() + ".submissionFiles", jcacheConfiguration);
+            cm.createCache(uk.gov.ofwat.external.domain.DataJob.class.getName(), jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

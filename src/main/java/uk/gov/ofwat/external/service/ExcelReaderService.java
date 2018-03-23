@@ -19,9 +19,9 @@ import java.util.Iterator;
 @Transactional
 public class ExcelReaderService {
 
-    public TableDto readFOut(String excelFilePath, TableMetadata tableMetadata) {
+        public TableDto readFOut(String excelFilePath, Long reportId) {
         TableDto tableDto= new TableDto();
-        tableDto.setId(tableMetadata.getFountainReportId().intValue());
+        tableDto.setId(reportId.intValue());
         int headerCellCount = 0;
 
         try {
