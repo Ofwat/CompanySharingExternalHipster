@@ -44,6 +44,7 @@ public class DataBundle extends AbstractAuditingEntity implements Serializable {
 
     @ManyToOne(optional = false)
     @NotNull
+    @JsonIgnore
     private PublishingStatus status;
 
     @ManyToOne(optional = false)
@@ -57,14 +58,17 @@ public class DataBundle extends AbstractAuditingEntity implements Serializable {
     @ManyToOne(optional = false,fetch = FetchType.LAZY)
     @JoinColumn(name="DATA_COLLECTION_ID", nullable=false)
     @NotNull
+    @JsonIgnore
     private DataCollection dataCollection;
 
     @OneToMany(mappedBy="dataBundle",fetch = FetchType.LAZY, cascade= CascadeType.ALL)
     @OrderColumn(name="order_Index")
+    @JsonIgnore
     private DataInput[] dataInputs;
 
     @OneToMany(mappedBy="dataBundle",fetch = FetchType.LAZY, cascade= CascadeType.ALL)
     @OrderColumn(name="company_data_bundle_order_Index")
+    @JsonIgnore
     private CompanyDataBundle[] companyDataBundle;
 
     public Long getId() {

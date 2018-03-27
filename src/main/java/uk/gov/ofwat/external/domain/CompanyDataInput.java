@@ -9,7 +9,6 @@ import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.Objects;
 
 /**
  * A CompanyDataInput.
@@ -20,6 +19,10 @@ import java.util.Objects;
 public class CompanyDataInput implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    @Autowired
+    @Transient
+    private CompanyStatusRepository companyStatusRepository;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -260,19 +263,19 @@ public class CompanyDataInput implements Serializable {
     @Override
     public String toString() {
         return "CompanyDataInput{" +
-            "id=" + id +
-            ", name='" + name + '\'' +
-            ", status=" + status +
-            ", company=" + company +
-            ", companyDataBundle=" + companyDataBundle +
-            ", dataInput=" + dataInput +
-            ", companyOwner=" + companyOwner +
-            ", companyReviewer=" + companyReviewer +
-            ", reviewSignOffs=" + reviewSignOffs +
-            ", submissionFiles=" + submissionFiles +
-            ", inputType=" + inputType +
-            ", orderIndex=" + orderIndex +
-            ", companyDataInputOrderIndex=" + companyDataInputOrderIndex +
+            "id=" + getId() +
+            ", name='" + getName() + '\'' +
+            ", status=" + getStatus() +
+            ", company=" + getCompany() +
+            ", companyDataBundle=" + getCompanyDataBundle() +
+            ", dataInput=" + getDataInput() +
+            ", companyOwner=" + getCompanyOwner() +
+            ", companyReviewer=" + getCompanyReviewer() +
+            ", reviewSignOffs=" + getReviewSignOffs() +
+            ", submissionFiles=" + getSubmissionFiles() +
+            ", inputType=" + getInputType() +
+            ", orderIndex=" + getOrderIndex() +
+            ", companyDataInputOrderIndex=" + getCompanyDataInputOrderIndex() +
             '}';
     }
 

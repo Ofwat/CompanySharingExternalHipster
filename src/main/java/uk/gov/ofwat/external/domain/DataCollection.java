@@ -29,6 +29,7 @@ public class DataCollection extends AbstractAuditingEntity implements Serializab
     private String name;
 
     @ManyToOne
+    @JsonIgnore
     private PublishingStatus publishingStatus;
 
     //reinstate    @NotNull
@@ -46,10 +47,12 @@ public class DataCollection extends AbstractAuditingEntity implements Serializab
 
     @OneToMany(mappedBy="dataCollection",fetch = FetchType.LAZY, cascade= CascadeType.ALL)
     @OrderColumn(name="order_Index")
+    @JsonIgnore
     private DataBundle[] dataBundles;
 
     @OneToMany(mappedBy="dataCollection",fetch = FetchType.LAZY, cascade= CascadeType.ALL)
     @OrderColumn(name="company_data_collection_order_Index")
+    @JsonIgnore
     private CompanyDataCollection[] companyDataCollections;
 
 

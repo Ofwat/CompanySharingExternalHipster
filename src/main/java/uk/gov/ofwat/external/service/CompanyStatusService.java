@@ -71,6 +71,19 @@ public class CompanyStatusService {
     }
 
     /**
+     *  Get one companyStatus by id.
+     *
+     *  @param status the status of the entity
+     *  @return the entity
+     */
+    @Transactional(readOnly = true)
+    public CompanyStatusDTO findOne(String status) {
+        log.debug("Request to get CompanyStatus : {}", status);
+        CompanyStatus companyStatus = companyStatusRepository.findOneByStatus(status);
+        return companyStatusMapper.toDto(companyStatus);
+    }
+
+    /**
      *  Delete the  companyStatus by id.
      *
      *  @param id the id of the entity

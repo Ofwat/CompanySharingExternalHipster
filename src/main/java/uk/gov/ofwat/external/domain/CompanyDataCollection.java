@@ -30,6 +30,7 @@ public class CompanyDataCollection implements Serializable {
 
     @ManyToOne(optional = false)
     @NotNull
+    @JsonIgnore
     private CompanyStatus status;
 
     @ManyToOne(optional = false)
@@ -39,6 +40,7 @@ public class CompanyDataCollection implements Serializable {
     @ManyToOne(optional = false,fetch = FetchType.LAZY)
     @JoinColumn(name="DATA_COLLECTION_ID", nullable=false)
     @NotNull
+    @JsonIgnore
     private DataCollection dataCollection;
 
     @OneToMany(mappedBy="companyDataCollection",fetch = FetchType.LAZY, cascade= CascadeType.ALL)

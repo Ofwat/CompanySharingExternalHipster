@@ -55,11 +55,13 @@ public class DataInput extends AbstractAuditingEntity implements Serializable {
 
     @ManyToOne(optional = false)
     @NotNull
+    @JsonIgnore
     private PublishingStatus status;
 
     @ManyToOne(optional = false,fetch = FetchType.LAZY)
     @JoinColumn(name="DATA_BUNDLE_ID", nullable=false)
     @NotNull
+    @JsonIgnore
     private DataBundle dataBundle;
 
     @ManyToOne(optional = false)

@@ -12,9 +12,9 @@ import com.google.gson.annotations.SerializedName;
 @XmlRootElement(name = "rowDto")
 @XmlType(propOrder = { "cells" })
 public class RowDto implements Cloneable {
-	@SerializedName("c")
+//	@SerializedName("c")
 	private List<CellDto> cells;
-	@SerializedName("ic")
+//	@SerializedName("ic")
 	private String itemCode;
 
 	public String getItemCode() {

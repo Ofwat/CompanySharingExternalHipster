@@ -29,7 +29,7 @@ public class CaptchaService {
 
     private final ApplicationProperties applicationProperties;
 
-    public CaptchaService(ApplicationProperties applicationProperties, JobService jobService){
+    public CaptchaService(ApplicationProperties applicationProperties){
         this.applicationProperties = applicationProperties;
     }
 

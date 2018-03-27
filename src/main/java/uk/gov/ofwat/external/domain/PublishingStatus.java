@@ -62,7 +62,8 @@ public class PublishingStatus implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+//        return Objects.hashCode(getId());
+        return (id != null) ? id.hashCode() : 0;
     }
 
     @Override
