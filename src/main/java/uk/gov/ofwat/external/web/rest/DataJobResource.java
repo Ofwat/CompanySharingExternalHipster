@@ -15,7 +15,7 @@ import java.util.Optional;
  * REST controller for managing DataJob.
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/data-job")
 public class DataJobResource {
 
     Logger log = LoggerFactory.getLogger(DataJobResource.class);

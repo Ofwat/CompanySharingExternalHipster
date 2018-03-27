@@ -7,3 +7,4 @@ id;login;password_hash;first_name;last_name;email;image_url;activated;lang_key;c
 6;testCompany1Admin;$2a$10$gSAhZrxMllrbgj/kkK9UceBPpChGWJA7SYIb1Mqo.n5aNLq1/oRrC;User;User;ofwatdev+testCompany1Admin@localhost;;true;en;system;system
 7;testCompany2User;$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K;User;User;ofwatdev+testCompany2User@localhost;;true;en;system;system
 8;testCompany2Admin;$2a$10$gSAhZrxMllrbgj/kkK9UceBPpChGWJA7SYIb1Mqo.n5aNLq1/oRrC;User;User;ofwatdev+testCompany2Admin@localhost;;true;en;system;system
+9;fountain;$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K;fountain;fountain;ofwatdev+fountain@localhost;;true;en;system;system

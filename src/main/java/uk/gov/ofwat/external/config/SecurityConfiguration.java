@@ -54,16 +54,15 @@ public class SecurityConfiguration{
         }
         @Autowired
         public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
-            auth.inMemoryAuthentication().withUser("admin").password("admin").roles("ADMIN");
-            auth.inMemoryAuthentication().withUser("tom").password("abc123").roles("USER");
+            auth.inMemoryAuthentication().withUser("fountain").password("user").roles("FOUNTAIN");
         }
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {
             http
-                .antMatcher("/jobber/**")
+                .antMatcher("/data-job/**")
                 .authorizeRequests()
-                .anyRequest().hasRole("ADMIN")
+                .anyRequest().hasRole("ROLE_FOUNTAIN")
                 .and()
                 .httpBasic().realmName(REALM).authenticationEntryPoint(getBasicAuthEntryPoint());
 

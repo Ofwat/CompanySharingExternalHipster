@@ -17,6 +17,8 @@ public final class AuthoritiesConstants {
 
     public static final String OFWAT_ADMIN = "ROLE_OFWAT_ADMIN";
 
+    public static final String FOUNTAIN ="ROLE_FOUNTAIN";
+
     // TODO We will need a pre-auth user role to use two(step) auth mechanism. TBA.
     public static final String PRE_AUTH_USER = "PRE_AUTH_ROLE_USER";
 

@@ -11,5 +11,4 @@ id;created_by;last_modified_by;authority_name;company_id;user_id;created_date;la
 10;admin;admin;ROLE_COMPANY_ADMIN;1;6;2017-11-12;2017-11-12
 11;admin;admin;ROLE_COMPANY_USER;2;7;2017-11-12;2017-11-12
 12;admin;admin;ROLE_COMPANY_ADMIN;2;8;2017-11-12;2017-11-12
-
-
+13;admin;admin;ROLE_FOUNTAIN;2;9;2018-03-25;2018-03-25
