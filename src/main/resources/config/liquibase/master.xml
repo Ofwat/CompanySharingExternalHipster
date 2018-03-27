@@ -70,8 +70,6 @@
 
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 
-    <!-- Jobber Changelog -->
-    <include file="classpath:db/jobber-changelog/master.xml" relativeToChangelogFile="false"/>
 
 
 </databaseChangeLog>
