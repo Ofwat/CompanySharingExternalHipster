@@ -3,6 +3,9 @@ package uk.gov.ofwat.external.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.springframework.beans.factory.annotation.Autowired;
+import uk.gov.ofwat.external.domain.message.CompanyStatusEnum;
+import uk.gov.ofwat.external.repository.CompanyStatusRepository;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;

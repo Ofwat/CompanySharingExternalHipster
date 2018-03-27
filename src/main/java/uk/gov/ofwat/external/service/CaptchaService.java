@@ -14,7 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import uk.gov.ofwat.external.config.ApplicationProperties;
-import uk.gov.ofwat.jobber.service.JobService;
 
 import java.io.*;
 import java.util.ArrayList;
