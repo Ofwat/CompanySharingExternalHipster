@@ -90,6 +90,12 @@ server:
 #        key-store-password: password
 #        keyStoreType: PKCS12
 #        keyAlias: tomcat
+    ssl:
+        enabled: true
+        key-store: keystore.p12
+        key-store-password: password
+        keyStoreType: PKCS12
+        keyAlias: tomcat
 # ===================================================================
 #server:
 #    port: 8080
