@@ -85,11 +85,6 @@ liquibase:
 #
 server:
     port: 8443
-#    ssl:
-#        key-store: keystore.p12
-#        key-store-password: password
-#        keyStoreType: PKCS12
-#        keyAlias: tomcat
     ssl:
         enabled: true
         key-store: keystore.p12
