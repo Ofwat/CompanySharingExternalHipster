@@ -62,7 +62,7 @@ public class SecurityConfiguration{
             http
                 .antMatcher("/data-job/**")
                 .authorizeRequests()
-                .anyRequest().hasRole("ROLE_FOUNTAIN")
+                .anyRequest().hasRole("FOUNTAIN")
                 .and()
                 .httpBasic().realmName(REALM).authenticationEntryPoint(getBasicAuthEntryPoint());
 
