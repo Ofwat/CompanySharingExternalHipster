@@ -28,4 +28,9 @@ public interface DataJobRepository extends JpaRepository<DataJob,Long> {
     @Query("UPDATE DataJob dj SET dj.jobStatus = :jobStatus, dj.rejectedReason = :rejectedReason, dj.updated = :updated WHERE dj.uuid = :uuid")
     void updateDataJobForUuid(@Param("uuid") String uuid, @Param("jobStatus") String jobStatus, @Param("rejectedReason") String rejectedReason, @Param("updated") Boolean updated);
 
+    /**
+     *
+     * @return
+     */
+    List<DataJob> findByUpdatedOrderByCompanyDataInputId(@Param("updated") boolean updated);
 }

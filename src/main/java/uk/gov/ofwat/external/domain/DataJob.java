@@ -36,7 +36,7 @@ public class DataJob implements Serializable {
     private String excelMongoDocId;
 
     @Column(name = "company_data_input_id")
-    private String companyDataInputId;
+    private Long companyDataInputId;
 
     @Column(name = "rejected_reason")
     private String rejectedReason;
@@ -112,11 +112,11 @@ public class DataJob implements Serializable {
         this.excelMongoDocId = excelMongoDocId;
     }
 
-    public String getCompanyDataInputId() {
+    public Long getCompanyDataInputId() {
         return companyDataInputId;
     }
 
-    public void setCompanyDataInputId(String companyDataInputId) {
+    public void setCompanyDataInputId(Long companyDataInputId) {
         this.companyDataInputId = companyDataInputId;
     }
 

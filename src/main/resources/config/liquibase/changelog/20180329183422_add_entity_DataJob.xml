@@ -1,0 +1,17 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+<changeSet id="1" author="MCephas">
+    <insert tableName="data_job">
+        <column name="updated" value="true"/>
+        <column name="job_status" value="ACCEPTED"/>
+        <column name="rejected_reason" value=""/>
+        <column name="company_data_input_id" value="1"/>
+        <column name="fountain_company_id" value="1"/>
+        <column name="fountain_report_id" value="1"/>
+        <column name="fountain_run_id" value="1"/>
+        <column name="fountain_audit_comment" value="1"/>
+        <column name="fountain_excel_mongo_id" value="1"/>
+        <column name="data" value=""/>
+    </insert>
+   </changeSet>
+</databaseChangeLog>

@@ -67,9 +67,5 @@
     <include file="classpath:config/liquibase/changelog/20180205140317_add_report_id.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20171025155755_add_input_type.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20180320183422_DataJob_added.xml" relativeToChangelogFile="false"/>
-
-    <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
-
-
-
+    <include file="classpath:config/liquibase/changelog/20180329183422_add_entity_DataJob.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>

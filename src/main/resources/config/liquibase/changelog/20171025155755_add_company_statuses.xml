@@ -5,16 +5,16 @@
             <column name="status" value="DRAFT"></column>
         </insert>
         <insert tableName="company_status">
-            <column name="status" value="REVIEW"></column>
-        </insert>
-        <insert tableName="company_status">
-            <column name="status" value="PENDING"></column>
-        </insert>
-        <insert tableName="company_status">
             <column name="status" value="PUBLISHED"></column>
         </insert>
         <insert tableName="company_status">
-            <column name="status" value="COMPLETE"></column>
+            <column name="status" value="RECEIVED"></column>
+        </insert>
+        <insert tableName="company_status">
+            <column name="status" value="RECEIVE1"></column>
+        </insert>
+        <insert tableName="company_status">
+            <column name="status" value="RECEIVE2"></column>
         </insert>
     </changeSet>
 </databaseChangeLog>

@@ -9,7 +9,7 @@
             <column name="updated" type="boolean"/>
             <column name="job_status" type="VARCHAR(255)"/>
             <column name="rejected_reason" type="VARCHAR(255)"/>
-            <column name="company_data_input_id" type="VARCHAR(255)"/>
+            <column name="company_data_input_id" type="BIGINT"/>
             <column name="fountain_company_id" type="VARCHAR(255)"/>
             <column name="fountain_report_id" type="VARCHAR(255)"/>
             <column name="fountain_run_id" type="VARCHAR(255)"/>
