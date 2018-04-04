@@ -4,7 +4,8 @@
     <insert tableName="data_job">
         <column name="updated" value="true"/>
         <column name="job_status" value="ACCEPTED"/>
-        <column name="rejected_reason" value=""/>
+        <column name="rejected_reason" value="1"/>
+        <column name="rejection_codes_id" value="1"/>
         <column name="company_data_input_id" value="1"/>
         <column name="fountain_company_id" value="1"/>
         <column name="fountain_report_id" value="1"/>

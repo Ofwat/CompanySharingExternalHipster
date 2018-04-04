@@ -13,8 +13,8 @@ import { CompanySharingExternalEntityModule } from './entities/entity.module';
 import { CompanySharingExternalDataCollectionModule } from './data-collection/data-collection.module';
 import { CompanySharingExternalDataBundleModule } from './data-bundle/data-bundle.module';
 import { CompanySharingExternalDataInputModule } from './data-input/data-input.module';
-import {CompanySharingExternalCompanyDataBundleModule} from './company-data-bundle/company-data-bundle.module'
-import {CompanySharingExternalCompanyDataInputModule} from './company-data-input/company-data-input.module'
+import {CompanySharingExternalCompanyDataBundleModule} from './company-data-bundle/company-data-bundle.module';
+import {CompanySharingExternalCompanyDataInputModule} from './company-data-input/company-data-input.module';
 import { CompanySharingExternalCompanyDataCollectionModule } from './company-data-collection/company-data-collection.module';
 import { customHttpProvider } from './blocks/interceptor/http.provider';
 import { PaginationConfig } from './blocks/config/uib-pagination.config';

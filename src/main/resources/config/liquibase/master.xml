@@ -68,4 +68,6 @@
     <include file="classpath:config/liquibase/changelog/20171025155755_add_input_type.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20180320183422_DataJob_added.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20180329183422_add_entity_DataJob.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20180404183422_add_entity_RejectionCodes.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20180404183422_add_data_RejectionCodes.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>

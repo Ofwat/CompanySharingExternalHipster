@@ -1,0 +1,14 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet id="1" author="MCephas">
+        <insert tableName="rejection_codes">
+            <column name="description" value="Rejected by Fountain"></column>
+        </insert>
+        <insert tableName="rejection_codes">
+            <column name="description" value="Did not recieve information"></column>
+        </insert>
+        <insert tableName="rejection_codes">
+            <column name="description" value="No information in Fountain"></column>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
