@@ -75,4 +75,9 @@ public class DataJobService {
         Optional<DataJob> dataJob = dataJobRepository.findDistinctDataJobByJobStatusOrderByIdAsc(DataJobStatus.CREATED.name());
         return dataJob;
     }
+
+    public List<DataJob> findByUpdatedOrderByCompanyDataInputId(boolean updated) {
+        List<DataJob> dataJobsList = dataJobRepository.findByUpdatedOrderByCompanyDataInputId(updated);
+        return dataJobsList;
+    }
 }

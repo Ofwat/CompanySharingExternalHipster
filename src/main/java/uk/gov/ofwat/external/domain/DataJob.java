@@ -50,7 +50,7 @@ public class DataJob implements Serializable {
     private String data;
 
 
-    @ManyToOne(optional = false,fetch = FetchType.LAZY)
+    @ManyToOne(optional = false,fetch = FetchType.EAGER)
     @JoinColumn(name="REJECTION_CODES_ID", nullable=false)
     @NotNull
     @JsonIgnore

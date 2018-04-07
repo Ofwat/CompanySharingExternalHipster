@@ -76,17 +76,20 @@ public class CompanyDataBundleService {
     public CompanyDataBundleDTO findOne(Long id) {
         log.debug("Request to get CompanyDataBundle : {}", id);
         CompanyDataBundle companyDataBundle = companyDataBundleRepository.findOne(id);
-
-    /*    List<CompanyDataInput> companyDataInputList = null;
-        try {
-            companyDataInputList = companyDataInputRepository.findByCompanyDataBundle(companyDataBundle.getId());
-            CompanyDataInput[] companyDataInputArray = new CompanyDataInput[companyDataInputList.size()];
-            companyDataInputArray = companyDataInputList.toArray(companyDataInputArray);
-            companyDataBundle.setCompanyDataInputs(companyDataInputArray);
-        }catch(Exception e){
-            log.debug(e.getMessage());
-        }*/
         return companyDataBundleMapper.toDto(companyDataBundle);
+    }
+
+    /**
+     *  Get one companyDataBundle by id.
+     *
+     *  @param id the id of the entity
+     *  @return the entity
+     */
+    @Transactional(readOnly = true)
+    public CompanyDataBundle findOneCompanyDataBundle(Long id) {
+        log.debug("Request to get CompanyDataBundle : {}", id);
+        CompanyDataBundle companyDataBundle = companyDataBundleRepository.findOne(id);
+        return companyDataBundle;
     }
 
     /**

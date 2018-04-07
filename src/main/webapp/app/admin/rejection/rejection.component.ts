@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Rejection } from './rejection.model';
+import { RejectionModel } from './rejection.model';
 import { RejectionService } from './rejection.service';
 
 @Component({
@@ -9,13 +9,14 @@ import { RejectionService } from './rejection.service';
 })
 export class RejectionComponent implements OnInit {
 
-    loggers: Rejection[];
+    rejectionModels: RejectionModel[];
     filter: string;
     orderProp: string;
     reverse: boolean;
+    rejections: String[];
 
     constructor(
-        private logsService: RejectionService
+        private rejectionService: RejectionService
     ) {
         this.filter = '';
         this.orderProp = 'name';
@@ -23,13 +24,26 @@ export class RejectionComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.logsService.findAll().subscribe((loggers) => this.loggers = loggers);
+       this.load();
     }
 
-    changeLevel(name: string, level: string) {
-        const log = new Rejection(name, level);
-        this.logsService.changeLevel(log).subscribe(() => {
-            this.logsService.findAll().subscribe((loggers) => this.loggers = loggers);
+    load() {
+        this.rejectionService.findAll().subscribe((rejectionModels) => {
+            this.rejectionModels = rejectionModels;
+
+            /*rejectionModels.forEach(bundle => {
+                    if(bundle != null) {
+                        this.rejections.push(bundle)
+                    }
+                });*/
+
         });
     }
+
+/*    changeLevel(name: string, level: string) {
+        const log = new RejectionModel(name, level);
+        this.rejectionService.changeLevel(log).subscribe(() => {
+            this.rejectionService.findAll().subscribe((rejectionModels) => this.rejectionModels = rejectionModels);
+        });
+    }*/
 }

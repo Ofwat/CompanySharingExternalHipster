@@ -1,27 +1,60 @@
-<div class="table-responsive" *ngIf="loggers">
-    <h2>Logs</h2>
 
-    <p>There are {{ loggers.length }} loggers.</p>
+    <div class="grid-row">
+        <div class="column-two-thirds">
 
-    <span>Filter</span> <input type="text" [(ngModel)]="filter" class="form-control">
+            <h2 class="heading-medium">
+                <span>Rejection Details</span>
+            </h2>
 
-    <table class="table table-condensed table-striped table-bordered">
-        <thead>
-        <tr title="click to order">
-            <th (click)="orderProp = 'name'; reverse=!reverse"><span>Name</span></th>
-            <th (click)="orderProp = 'level'; reverse=!reverse"><span>Level</span></th>
-        </tr>
-        </thead>
+            <div class="form-group">
+                <dl class="govuk-check-your-answers cya-questions-short">
+                    <div>
+                        <dd class="cya-question">Id</dd>
+                        <dd class="cya-question">Status</dd>
+                        <dd class="cya-question">Rejected Reason</dd>
+                        <dd class="cya-question">Company Name</dd>
+                        <dd class="cya-question">Company Bundle Name</dd>
+                        <dd class="cya-question">Company DataInput Name</dd>
+                        <dd class="cya-question">Company Deadline</dd>
+                    </div>
+                    <div *ngFor="let rm of rejectionModels">
+                        <dd class="cya-answer"><div *ngIf="rm.id">{{rm.id}}</div></dd>
+                        <dd class="cya-answer"><div *ngIf="rm.jobStatus">{{rm.jobStatus}}</div></dd>
+                        <dd class="cya-answer"><div *ngIf="rm.rejectedReason">{{rm.rejectedReason}}</div></dd>
+                        <dd class="cya-answer"><div *ngIf="rm.companyName">{{rm.companyName}}</div></dd>
+                        <dd class="cya-answer"><div *ngIf="rm.companyDataInputName">{{rm.companyDataInputName}}</div></dd>
+                        <dd class="cya-answer"><div *ngIf="rm.companyDataBundleName">{{rm.companyDataBundleName}}</div></dd>
+                        <dd class="cya-answer"><div *ngIf="rm.companyDeadline">{{rm.companyDeadline}}</div></dd>
+                     </div>
+                </dl>
+            </div>
 
-        <tr *ngFor="let logger of (loggers | pureFilter:filter:'name' | orderBy:orderProp:reverse)">
-            <td><small>{{logger.name | slice:0:140}}</small></td>
-            <td>
-                <button (click)="changeLevel(logger.name, 'TRACE')" [ngClass]="(logger.level=='TRACE') ? 'btn-danger' : 'btn-secondary'" class="btn btn-sm">TRACE</button>
-                <button (click)="changeLevel(logger.name, 'DEBUG')" [ngClass]="(logger.level=='DEBUG') ? 'btn-warning' : 'btn-secondary'" class="btn btn-sm">DEBUG</button>
-                <button (click)="changeLevel(logger.name, 'INFO')" [ngClass]="(logger.level=='INFO') ? 'btn-info' : 'btn-secondary'" class="btn btn-sm">INFO</button>
-                <button (click)="changeLevel(logger.name, 'WARN')" [ngClass]="(logger.level=='WARN') ? 'btn-success' : 'btn-secondary'" class="btn btn-sm">WARN</button>
-                <button (click)="changeLevel(logger.name, 'ERROR')" [ngClass]="(logger.level=='ERROR') ? 'btn-primary' : 'btn-secondary'" class="btn btn-sm">ERROR</button>
-            </td>
-        </tr>
-    </table>
-</div>
+            <!--<h2 class="heading-medium">Company Data Bundles</h2>
+
+            <div class="form-group">
+                <dl class="govuk-check-your-answers cya-questions-short">
+                    <div>
+                        <dt class="cya-question">Name</dt>
+                        <dt class="cya-question">Status</dt>
+                        <dt class="cya-question"></dt>
+                    </div>
+
+                    <div *ngFor="let db of dataBundles">
+                        <dd class="cya-question" >{{db.name}}</dd>
+                        <dd class="cya-answer" >{{db.statusStatus}}</dd>
+                        <dd class="cya-answer"><a href="" [routerLink]="['/company-data-bundle-detail', db.id]">Details</a>   </dd>
+                    </div>
+
+                </dl>
+            </div>
+-->
+            <div class="form-group">
+                <button type="button"
+                        routerLink="/company-data-collection-management"
+                        class="button button-secondary float-left">
+                    <span>Back</span>
+                </button>
+            </div>
+        </div>
+    </div>
+

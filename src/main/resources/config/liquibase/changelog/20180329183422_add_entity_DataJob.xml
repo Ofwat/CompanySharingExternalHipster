@@ -14,5 +14,19 @@
         <column name="fountain_excel_mongo_id" value="1"/>
         <column name="data" value=""/>
     </insert>
-   </changeSet>
+    <insert tableName="data_job">
+        <column name="updated" value="true"/>
+        <column name="job_status" value="ACCEPTED"/>
+        <column name="rejected_reason" value="1"/>
+        <column name="rejection_codes_id" value="2"/>
+        <column name="company_data_input_id" value="1"/>
+        <column name="fountain_company_id" value="1"/>
+        <column name="fountain_report_id" value="1"/>
+        <column name="fountain_run_id" value="1"/>
+        <column name="fountain_audit_comment" value="1"/>
+        <column name="fountain_excel_mongo_id" value="1"/>
+        <column name="data" value=""/>
+    </insert>
+
+</changeSet>
 </databaseChangeLog>
