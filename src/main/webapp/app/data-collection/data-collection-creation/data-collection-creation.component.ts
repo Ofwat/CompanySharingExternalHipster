@@ -50,7 +50,7 @@ export class DataCollectionCreationComponent implements OnInit {
     }
 
     private processError(msg:string) {
-        this.msg=this.msg;
+        this.msg=msg;
         this.warnHide = true;
         this.errorHide = false;
         this.successHide = true;
@@ -63,6 +63,14 @@ export class DataCollectionCreationComponent implements OnInit {
         this.errorHide = true;
         this.successHide = false;
         this.infoHide = true;
+    }
+
+    onMessageStatusChange() {
+        this.warnHide = true;
+        this.errorHide = true;
+        this.successHide = true;
+        this.infoHide = true;
+        this.router.navigate(['data-collection-management']);
     }
 
     loadUsers() {
@@ -86,14 +94,6 @@ export class DataCollectionCreationComponent implements OnInit {
 
     reviewerChanged(user:User){
         this.selectedReviewer = user;
-    }
-
-    onMessageStatusChange() {
-        this.warnHide = true;
-        this.errorHide = true;
-        this.successHide = true;
-        this.infoHide = true;
-        this.router.navigate(['data-collection-management']);
     }
 
     create() {

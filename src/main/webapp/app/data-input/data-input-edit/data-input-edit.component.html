@@ -1,5 +1,9 @@
 <div>
     <div>
+        <warningmsg [message]="msg" [hidden]="warnHide" (warningStatusChange)="onMessageStatusChange($event)"></warningmsg>
+        <errormsg [message]="msg" [hidden]="errorHide" (errorStatusChange)="onMessageStatusChange($event)"></errormsg>
+        <successmsg [message]="msg" [hidden]="successHide" (successStatusChange)="onMessageStatusChange($event)"></successmsg>
+        <infomsg [message]="msg" [hidden]="infoHide" (infoStatusChange)="onMessageStatusChange($event)"></infomsg>
         <h2 class="heading-medium">Edit Data Input</h2>
         <h3 class="heading-small" *ngIf="!success && !errorDataBundleExists">Data Bundle: {{dataInput.dataBundleName}}</h3>
 

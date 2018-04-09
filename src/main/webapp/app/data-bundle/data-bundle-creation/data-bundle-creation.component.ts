@@ -5,10 +5,16 @@ import { User, UserService } from '../../shared';
 import { Subscription } from 'rxjs/Rx';
 import { ActivatedRoute } from '@angular/router';
 
+import {WarningMessageComponent} from '../../shared/messages/warning.message';
+import {ErrorMessageComponent} from '../../shared/messages/error.message';
+import {SuccessMessageComponent} from '../../shared/messages/success.message';
+import {InfoMessageComponent} from '../../shared/messages/info.message';
+import {Router} from "@angular/router";
+
 @Component({
     selector: 'jhi-data-bundle-creation',
     templateUrl: './data-bundle-creation.component.html',
-    providers: [DataBundleService, DataCollectionService]
+    providers: [DataBundleService, DataCollectionService,WarningMessageComponent,ErrorMessageComponent,SuccessMessageComponent,InfoMessageComponent]
 })
 export class DataBundleCreationComponent implements OnInit {
 
@@ -22,6 +28,11 @@ export class DataBundleCreationComponent implements OnInit {
     currentDate: any;
     private selectedOwner: User;
     private selectedReviewer: User;
+    warnHide = true;
+    errorHide = true;
+    successHide = true;
+    infoHide = true;
+    msg: string;
 
 
     constructor(
@@ -30,6 +41,8 @@ export class DataBundleCreationComponent implements OnInit {
         private userService: UserService,
         private route: ActivatedRoute,
         private dataCollectionService: DataCollectionService,
+        private router: Router
+
     ) {
     }
 
@@ -45,6 +58,40 @@ export class DataBundleCreationComponent implements OnInit {
             this.loadDataCollection(params['dataCollectionId']);
         });
     }
+
+    private processError(msg:string) {
+        this.msg=msg;
+        this.warnHide = true;
+        this.errorHide = false;
+        this.successHide = true;
+        this.infoHide = true;
+    }
+
+    private processSuccess() {
+        this.msg="Data Bundle created";
+        this.warnHide = true;
+        this.errorHide = true;
+        this.successHide = false;
+        this.infoHide = true;
+    }
+
+    onMessageStatusChange() {
+        this.warnHide = true;
+        this.errorHide = true;
+        this.successHide = true;
+        this.infoHide = true;
+        this.router.navigate(['data-collection-detail', this.dataCollection.id]);
+    }
+
+
+    loadUsers() {
+        this.userService.query().subscribe(
+            (res: ResponseWrapper) => this.onLoadUsersSuccess(res.json),
+            (res: ResponseWrapper) => this.onLoadUsersError(res.json)
+        );
+    }
+
+
 
     ngAfterViewInit() {
     }
@@ -92,15 +139,18 @@ export class DataBundleCreationComponent implements OnInit {
         this.dataBundleService.create(this.dataBundle).subscribe(
             response => {
                 console.log("success" + response.status);
-                this.success = true;
+                //this.success = true;
+                this.processSuccess();
             },
             errorResponse => {
                 console.log("error" + errorResponse.status + errorResponse.statusText);
                 if (409 == errorResponse.status) {
-                    this.errorDataBundleExists = true;
+                    //this.errorDataBundleExists = true;
+                    this.processError("Data Bundle name is already in use! Please choose another one.")
                 }
                 else {
-                    this.error = true;
+                    //this.error = true;
+                    this.processError(errorResponse.status + errorResponse.statusText);
                 }
             }
         );

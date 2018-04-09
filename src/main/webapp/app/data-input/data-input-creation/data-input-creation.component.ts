@@ -3,7 +3,7 @@ import {JhiAlertService} from 'ng-jhipster';
 import {ResponseWrapper, DataInput, DataInputService, DataBundle, DataBundleService} from '../../shared';
 import {User, UserService} from '../../shared';
 import {Subscription} from 'rxjs/Rx';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {UploadService} from '../../shared/data-upload/data-upload.service';
 import {WarningMessageComponent} from '../../shared/messages/warning.message';
 import {ErrorMessageComponent} from '../../shared/messages/error.message';
@@ -42,10 +42,7 @@ export class DataInputCreationComponent implements OnInit {
                 private userService: UserService,
                 private route: ActivatedRoute,
                 private dataBundleService: DataBundleService,
-                private warningMessageComponent: WarningMessageComponent,
-                private errorMessageComponent: ErrorMessageComponent,
-                private successMessageComponent: SuccessMessageComponent,
-                private infoMessageComponent: InfoMessageComponent
+                private router: Router
 
     ) {
     }
@@ -62,8 +59,6 @@ export class DataInputCreationComponent implements OnInit {
             this.loadDataBundle(params['dataBundleId']);
         });
 
-        this.msg = 'You are creating data collection';
-        this.infoHide = false;
      }
 
     onMessageStatusChange() {
@@ -71,6 +66,7 @@ export class DataInputCreationComponent implements OnInit {
         this.errorHide = true;
         this.successHide = true;
         this.infoHide = true;
+        this.router.navigate(['data-bundle-detail', this.dataBundle.id]);
     }
 
     loadDataBundle(dataBundleId) {
@@ -101,9 +97,6 @@ export class DataInputCreationComponent implements OnInit {
     }
 
     onFileUploaded(uploadedFiles: any[]) {
-        this.msg = 'Please upload only excel files';
-        this.warnHide = false;
-
         this.uploadFileNames = new Array();
         let fileCount: number = uploadedFiles.length;
         for (let i = 0; i < fileCount; i++) {
@@ -119,12 +112,24 @@ export class DataInputCreationComponent implements OnInit {
         this.selectedReviewer = user;
     }
 
-    private processError(response) {
-        let obj = JSON.parse(response);
-        this.msg = obj.message;
+    private processError(response,msg:string) {
+        if(msg !=""){
+          this.msg=msg;
+        }else {
+            let obj = JSON.parse(response);
+            this.msg = obj.message;
+        }
         this.warnHide = true;
         this.errorHide = false;
         this.successHide = true;
+        this.infoHide = true;
+    }
+
+    private processSuccess() {
+        this.msg="Data Input created";
+        this.warnHide = true;
+        this.errorHide = true;
+        this.successHide = false;
         this.infoHide = true;
     }
 
@@ -144,7 +149,8 @@ export class DataInputCreationComponent implements OnInit {
         this.uploadService.upload(formData).subscribe(
             response => {
                 console.log('   success' + response.status);
-                this.success = true;
+                //this.success = true;
+                this.processSuccess();
                 this.dataInput.fileName = 'Template.xlsx';
                 this.msg = 'File Upload Successful';
                 this.successHide = false;
@@ -152,7 +158,8 @@ export class DataInputCreationComponent implements OnInit {
                 this.dataInputService.create(this.dataInput).subscribe(
                     response => {
                         console.log("success" + response.status);
-                        this.success = true;
+                        //this.success = true;
+                        this.processSuccess();
 
                     },
                     errorResponse => {
@@ -160,10 +167,12 @@ export class DataInputCreationComponent implements OnInit {
                         this.msg = errorResponse.statusText;
                         this.errorHide = false;
                         if (409 == errorResponse.status) {
-                            this.errorDataInputExists = true;
+                            //this.errorDataInputExists = true;
+                            this.processError(errorResponse,"Data Input name is already in use! Please choose another one.");
                         }
                         else {
-                            this.error = true;
+                            //this.error = true;
+                            this.processError(errorResponse,"");
                         }
                     }
                 );
@@ -171,7 +180,7 @@ export class DataInputCreationComponent implements OnInit {
 
             },
             errorResponse => {
-                this.processError(errorResponse);
+                this.processError(errorResponse,"");
             }
         );
 

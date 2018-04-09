@@ -3,16 +3,25 @@ import { ITEMS_PER_PAGE, Principal, ResponseWrapper, DataCollection, DataCollect
 import { Subscription } from 'rxjs/Rx';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ok} from "assert";
+import {WarningMessageComponent} from '../../shared/messages/warning.message';
+import {ErrorMessageComponent} from '../../shared/messages/error.message';
+import {SuccessMessageComponent} from '../../shared/messages/success.message';
+import {InfoMessageComponent} from '../../shared/messages/info.message';
 
 @Component({
     selector: 'jhi-data-collection-deletion-confirmation',
     templateUrl: './data-collection-deletion-confirmation.component.html',
-    providers: [DataCollectionService]
+    providers: [DataCollectionService,WarningMessageComponent,ErrorMessageComponent,SuccessMessageComponent,InfoMessageComponent]
 })
 export class DataCollectionDeletionConfirmationComponent implements OnInit {
 
     dataCollection: DataCollection;
     private subscription: Subscription;
+    warnHide = true;
+    errorHide = true;
+    successHide = true;
+    infoHide = true;
+    msg: string;
 
     constructor(private route: ActivatedRoute,
                 private dataCollectionService: DataCollectionService,
@@ -31,10 +40,38 @@ export class DataCollectionDeletionConfirmationComponent implements OnInit {
         });
     }
 
+    private processError() {
+        this.msg="Data Collection deletion failed";
+        this.warnHide = true;
+        this.errorHide = false;
+        this.successHide = true;
+        this.infoHide = true;
+    }
+
+    private processSuccess() {
+        this.msg="Data Collection deleted";
+        this.warnHide = true;
+        this.errorHide = true;
+        this.successHide = false;
+        this.infoHide = true;
+    }
+
+    onMessageStatusChange() {
+        this.warnHide = true;
+        this.errorHide = true;
+        this.successHide = true;
+        this.infoHide = true;
+        this.router.navigate(['data-collection-management']);
+    }
+
+
     delete(id) {
         this.dataCollectionService.delete(id).subscribe((response) => {
             if (response.ok === true) {
-                this.router.navigate(['data-collection-management']);
+                //this.router.navigate(['data-collection-management']);
+                this.processSuccess();
+            }else{
+                this.processError()
             }
         });
     }

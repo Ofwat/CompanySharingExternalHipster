@@ -3,12 +3,16 @@ import { JhiAlertService } from 'ng-jhipster';
 import { ResponseWrapper, DataInput, DataInputService } from '../../shared';
 import { User, UserService } from '../../shared';
 import {Subscription} from 'rxjs';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute,Router} from '@angular/router';
+import {WarningMessageComponent} from '../../shared/messages/warning.message';
+import {ErrorMessageComponent} from '../../shared/messages/error.message';
+import {SuccessMessageComponent} from '../../shared/messages/success.message';
+import {InfoMessageComponent} from '../../shared/messages/info.message';
 
 @Component({
     selector: 'jhi-data-input-edit',
     templateUrl: './data-input-edit.component.html',
-    providers: [DataInputService]
+    providers: [DataInputService,WarningMessageComponent,ErrorMessageComponent,SuccessMessageComponent,InfoMessageComponent]
 })
 export class DataInputEditComponent implements OnInit {
 
@@ -22,11 +26,18 @@ export class DataInputEditComponent implements OnInit {
     private subscription: Subscription;
     currentDate: any;
 
+    msg: string;
+    warnHide = true;
+    errorHide = true;
+    successHide = true;
+    infoHide = true;
+
     constructor(
         private alertService: JhiAlertService,
         private dataInputService: DataInputService,
         private userService: UserService,
         private route: ActivatedRoute,
+        private router: Router
     ) {
     }
 
@@ -43,6 +54,32 @@ export class DataInputEditComponent implements OnInit {
 
     ngAfterViewInit() {
     }
+
+
+    onMessageStatusChange() {
+        this.warnHide = true;
+        this.errorHide = true;
+        this.successHide = true;
+        this.infoHide = true;
+        this.router.navigate(['data-input-detail', this.dataInput.id]);
+    }
+
+    private processError(msg:string) {
+        this.msg = msg;
+        this.warnHide = true;
+        this.errorHide = false;
+        this.successHide = true;
+        this.infoHide = true;
+    }
+
+    private processSuccess() {
+        this.msg="Data Input updated";
+        this.warnHide = true;
+        this.errorHide = true;
+        this.successHide = false;
+        this.infoHide = true;
+    }
+
 
     load(dataInputId) {
         this.dataInputService.get(dataInputId)
@@ -92,15 +129,18 @@ export class DataInputEditComponent implements OnInit {
         this.dataInputService.update(this.dataInput).subscribe(
             response => {
                 console.log("success" + response.status);
-                this.success = true;
+                //this.success = true;
+                this.processSuccess();
             },
             errorResponse => {
                 console.log("error" + errorResponse.status + errorResponse.statusText);
                 if (409 == errorResponse.status) {
-                    this.errorDataInputExists = true;
+                    //this.errorDataInputExists = true;
+                    this.processError("Data Input name is already in use! Please choose another one.")
                 }
                 else {
-                    this.error = true;
+                    //this.error = true;
+                    this.processError(errorResponse.status + errorResponse.statusText)
                 }
             }
         );

@@ -3,12 +3,17 @@ import { JhiAlertService } from 'ng-jhipster';
 import { ResponseWrapper, DataBundle, DataBundleService } from '../../shared';
 import { User, UserService } from '../../shared';
 import {Subscription} from 'rxjs';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
+import {WarningMessageComponent} from '../../shared/messages/warning.message';
+import {ErrorMessageComponent} from '../../shared/messages/error.message';
+import {SuccessMessageComponent} from '../../shared/messages/success.message';
+import {InfoMessageComponent} from '../../shared/messages/info.message';
+
 
 @Component({
     selector: 'jhi-data-bundle-edit',
     templateUrl: './data-bundle-edit.component.html',
-    providers: [DataBundleService]
+    providers: [DataBundleService,WarningMessageComponent,ErrorMessageComponent,SuccessMessageComponent,InfoMessageComponent]
 })
 export class DataBundleEditComponent implements OnInit {
 
@@ -22,11 +27,18 @@ export class DataBundleEditComponent implements OnInit {
     private subscription: Subscription;
     currentDate: any;
 
+    warnHide = true;
+    errorHide = true;
+    successHide = true;
+    infoHide = true;
+    msg: string;
+
     constructor(
         private alertService: JhiAlertService,
         private dataBundleService: DataBundleService,
         private userService: UserService,
         private route: ActivatedRoute,
+        private router: Router
     ) {
     }
 
@@ -43,6 +55,32 @@ export class DataBundleEditComponent implements OnInit {
 
     ngAfterViewInit() {
     }
+
+
+    private processError(msg:string) {
+        this.msg=msg;
+        this.warnHide = true;
+        this.errorHide = false;
+        this.successHide = true;
+        this.infoHide = true;
+    }
+
+    private processSuccess() {
+        this.msg="Data Bundle updated";
+        this.warnHide = true;
+        this.errorHide = true;
+        this.successHide = false;
+        this.infoHide = true;
+    }
+
+    onMessageStatusChange() {
+        this.warnHide = true;
+        this.errorHide = true;
+        this.successHide = true;
+        this.infoHide = true;
+        this.router.navigate(['data-bundle-detail', this.dataBundle.id]);
+    }
+
 
     load(dataBundleId) {
         this.dataBundleService.get(dataBundleId)
@@ -92,15 +130,18 @@ export class DataBundleEditComponent implements OnInit {
         this.dataBundleService.update(this.dataBundle).subscribe(
             response => {
                 console.log("success" + response.status);
-                this.success = true;
+                //this.success = true;
+                this.processSuccess();
             },
             errorResponse => {
                 console.log("error" + errorResponse.status + errorResponse.statusText);
                 if (409 == errorResponse.status) {
-                    this.errorDataBundleExists = true;
+                    //this.errorDataBundleExists = true;
+                    this.processError("Data Bundle name is already in use! Please choose another one.")
                 }
                 else {
-                    this.error = true;
+                    //this.error = true;
+                    this.processError("Data Bundle updation failed!")
                 }
             }
         );
