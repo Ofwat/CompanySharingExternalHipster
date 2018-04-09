@@ -1,8 +1,12 @@
 <div>
     <div>
+        <warningmsg [message]="msg" [hidden]="warnHide" (warningStatusChange)="onMessageStatusChange($event)"></warningmsg>
+        <errormsg [message]="msg" [hidden]="errorHide" (errorStatusChange)="onMessageStatusChange($event)"></errormsg>
+        <successmsg [message]="msg" [hidden]="successHide" (successStatusChange)="onMessageStatusChange($event)"></successmsg>
+        <infomsg [message]="msg" [hidden]="infoHide" (infoStatusChange)="onMessageStatusChange($event)"></infomsg>
         <h2 class="heading-medium">Create Data Collection</h2>
         <div class="alert alert-success" *ngIf="success">
-            <p><strong>Data Collection created</strong></p>
+            <p><strong></strong></p>
             <button type="button"
                     class="button button-secondary float-left"
                     [routerLink]="['../data-collection-management']">
@@ -20,14 +24,14 @@
 
         </div>
 
-        <div class="alert alert-danger" *ngIf="errorDataCollectionExists">
+ <!--       <div class="alert alert-danger" *ngIf="errorDataCollectionExists">
             <p><strong>Data Collection name '{{dataCollection.name}}' is already in use!</strong> Please choose another one.</p>
             <button type="button"
                     class="button button-secondary float-left"
                     [routerLink]="['../data-collection-management']">
                 <span>Back to Data Collections</span>
             </button>
-        </div>
+        </div>-->
     </div>
 
     <div class="col-md-8 offset-md-2">
