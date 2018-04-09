@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -70,6 +71,7 @@ public class CompanyStatusService {
         return companyStatusMapper.toDto(companyStatus);
     }
 
+
     /**
      *  Get one companyStatus by id.
      *
@@ -79,8 +81,8 @@ public class CompanyStatusService {
     @Transactional(readOnly = true)
     public CompanyStatusDTO findOne(String status) {
         log.debug("Request to get CompanyStatus : {}", status);
-        CompanyStatus companyStatus = companyStatusRepository.findOneByStatus(status);
-        return companyStatusMapper.toDto(companyStatus);
+        Optional <CompanyStatus> companyStatus = companyStatusRepository.findOneByStatus(status);
+        return companyStatusMapper.toDto(companyStatus.get());
     }
 
     /**

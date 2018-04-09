@@ -5,6 +5,8 @@ import org.springframework.stereotype.Repository;
 
 import org.springframework.data.jpa.repository.*;
 
+import java.util.Optional;
+
 
 /**
  * Spring Data JPA repository for the CompanyStatus entity.
@@ -13,5 +15,8 @@ import org.springframework.data.jpa.repository.*;
 @Repository
 public interface CompanyStatusRepository extends JpaRepository<CompanyStatus,Long> {
 
-    CompanyStatus findOneByStatus(String status);
+    Optional<CompanyStatus> findOneByStatus(String status);
 }
+
+
+

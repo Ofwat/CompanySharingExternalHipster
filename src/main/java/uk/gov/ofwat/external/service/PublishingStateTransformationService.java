@@ -38,6 +38,7 @@ public class PublishingStateTransformationService {
 
     /**
      * Constructor for intialisation
+     *
      * @param companyRepository
      * @param dataCollectionRepository
      * @param userRepository
@@ -70,6 +71,7 @@ public class PublishingStateTransformationService {
 
     /**
      * Gets called on change to dataBundle status
+     *
      * @param dataBundleDTO
      * @return true or false based on success
      * @throws URISyntaxException
@@ -117,12 +119,7 @@ public class PublishingStateTransformationService {
                 companyDataBundle.setCompanyDataBundleOrderIndex(orderIndexL);
                 companyDataBundleRepository.save(companyDataBundle);
 
-                List<DataInput> dataInputList = null;
-                try {
-                    dataInputList = dataInputRepository.findByDataBundle(dataBundleDTO.getId());
-                } catch (Exception e) {
-                    dataInputList = new ArrayList(Arrays.asList(dataCollection.getDataBundles()[0].getDataInputs()));
-                }
+                List<DataInput> dataInputList = new ArrayList(Arrays.asList(dataCollection.getDataBundles()[0].getDataInputs()));
 
                 //Set Company Data Inputs
                 for (DataInput dataInput : dataInputList) {
@@ -163,6 +160,7 @@ public class PublishingStateTransformationService {
      */
     public boolean publishDataInputStatus(DataInputDTO dataInputDTO) throws URISyntaxException {
 
+/*
         boolean success = false;
 
         DataBundle dataBundle = dataBundleRepository.findOne(dataInputDTO.getDataBundleId());
@@ -193,6 +191,38 @@ public class PublishingStateTransformationService {
                 }
             }
             success = true;
+        }
+        return success;
+    }
+*/
+
+        boolean success = false;
+        DataBundle dataBundle = dataBundleRepository.findOne(dataInputDTO.getDataBundleId());
+        DataInput dataInput = dataInputRepository.findOne(dataInputDTO.getId());
+        DataCollection dataCollection = dataCollectionRepository.findOne(dataBundle.getDataCollection().getId());
+        if ((dataCollection.getPublishingStatus().getId().equals(new Long(4)))
+            && (dataBundle.getStatus().getId().equals(new Long(4)))) {
+            if ((dataInput.getStatus().getId().equals(new Long(4)))) {
+                List<CompanyDataBundle> companyDataBundleList = companyDataBundleRepository.findByCompanyAndBundle(dataBundle.getId());
+                Optional<CompanyStatus> companyStatus = companyStatusRepository.findOneByStatus("PUBLISHED");
+                Long orderIndexL = new Long(0);
+                for (CompanyDataBundle companyDataBundle : companyDataBundleList) {
+                    CompanyDataInput companyDataInput = new CompanyDataInput();
+                    companyDataInput.setDataInput(dataInput);
+                    companyDataInput.setCompanyReviewer(userRepository.findOne(dataInput.getReviewer().getId()));
+                    companyDataInput.setCompany(companyDataBundle.getCompany());
+                    companyDataInput.setCompanyOwner(userRepository.findOne(dataInput.getOwner().getId()));
+                    companyDataInput.setInputType(inputTypeRepository.findOne(new Long(1)));
+                    companyDataInput.setName(dataInput.getName());
+                    companyDataInput.setOrderIndex(orderIndexL);
+                    companyDataInput.setStatus(companyStatus.get());
+                    companyDataInput.setCompanyDataBundle(companyDataBundle);
+                    companyDataInput.setCompanyDataInputOrderIndex(orderIndexL);
+                    companyDataInputRepository.save(companyDataInput);
+                    orderIndexL++;
+
+                }
+            }
         }
         return success;
     }
