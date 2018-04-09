@@ -160,42 +160,6 @@ public class PublishingStateTransformationService {
      */
     public boolean publishDataInputStatus(DataInputDTO dataInputDTO) throws URISyntaxException {
 
-/*
-        boolean success = false;
-
-        DataBundle dataBundle = dataBundleRepository.findOne(dataInputDTO.getDataBundleId());
-
-        List<Company> listOfCompanies = companyRepository.findAll();
-        DataCollection dataCollection = dataCollectionRepository.findOne(dataBundle.getDataCollection().getId());
-        if ((dataCollection.getPublishingStatus().getId().equals(new Long(4)))
-            && (dataBundle.getStatus().getId().equals(new Long(4)))) {
-            DataInput dataInput = dataInputRepository.findOne(dataInputDTO.getId());
-            if ((dataInput.getStatus().getId().equals(new Long(4)))) {
-                Long orderIndexL = new Long(0);
-                for (Company company : listOfCompanies) {
-                    List<CompanyDataBundle> companyDataBundleList = companyDataBundleRepository.findByCompanyAndBundle(dataBundle.getId());
-                    CompanyDataBundle companyDataBundle = companyDataBundleList.stream().filter(x -> x.getCompany().getId().equals(company.getId())).findFirst().get();
-                    CompanyDataInput companyDataInput = new CompanyDataInput();
-                    companyDataInput.setDataInput(dataInput);
-                    companyDataInput.setCompanyReviewer(userRepository.findOne(dataInput.getReviewer().getId()));
-                    companyDataInput.setCompany(company);
-                    companyDataInput.setCompanyOwner(userRepository.findOne(dataInput.getOwner().getId()));
-                    companyDataInput.setInputType(inputTypeRepository.findOne(new Long(1)));
-                    companyDataInput.setName(dataInput.getName());
-                    companyDataInput.setOrderIndex(orderIndexL);
-                    companyDataInput.setStatus(companyStatusRepository.findOne(dataInput.getStatus().getId()));
-                    companyDataInput.setCompanyDataBundle(companyDataBundle);
-                    companyDataInput.setCompanyDataInputOrderIndex(orderIndexL);
-                    companyDataInputRepository.save(companyDataInput);
-                    orderIndexL++;
-                }
-            }
-            success = true;
-        }
-        return success;
-    }
-*/
-
         boolean success = false;
         DataBundle dataBundle = dataBundleRepository.findOne(dataInputDTO.getDataBundleId());
         DataInput dataInput = dataInputRepository.findOne(dataInputDTO.getId());
