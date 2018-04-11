@@ -9,6 +9,7 @@ import uk.gov.ofwat.external.service.dto.DataBundleDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.gov.ofwat.external.service.dto.DataInputDTO;
+import uk.gov.ofwat.external.web.rest.errors.DcsException;
 
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -76,76 +77,81 @@ public class PublishingStateTransformationService {
      * @return true or false based on success
      * @throws URISyntaxException
      */
-    public boolean publishDataBundleStatus(DataBundleDTO dataBundleDTO) throws URISyntaxException {
+    public boolean publishDataBundleStatus(DataBundleDTO dataBundleDTO) throws URISyntaxException, DcsException {
 
         boolean success = false;
-        List<Company> listOfCompanies = companyRepository.findAll();
+        try {
+            List<Company> listOfCompanies = companyRepository.findAll();
 
-        DataCollection dataCollection = dataCollectionRepository.findOne(dataBundleDTO.getDataCollectionId());
-        Optional<PublishingStatus> published = publishingStatusRepository.findOneByStatus("PUBLISHED");
-        if ((dataCollection.getPublishingStatus().getId().equals(new Long(4)))
-            || (dataCollection.getPublishingStatus().getId().equals(new Long(3)))) {
+            DataCollection dataCollection = dataCollectionRepository.findOne(dataBundleDTO.getDataCollectionId());
+            Optional<PublishingStatus> published = publishingStatusRepository.findOneByStatus("PUBLISHED");
+            if ((dataCollection.getPublishingStatus().getId().equals(new Long(4)))
+                || (dataCollection.getPublishingStatus().getId().equals(new Long(3)))) {
 
-            //Publish data collection
-            dataCollection.setPublishingStatus(published.get());
-            dataCollectionRepository.save(dataCollection);
-            Long orderIndexL = new Long(0);
-            for (Company company : listOfCompanies) {
+                //Publish data collection
+                dataCollection.setPublishingStatus(published.get());
+                dataCollectionRepository.save(dataCollection);
+                Long orderIndexL = new Long(0);
+                for (Company company : listOfCompanies) {
 
-                //Get data collection
-                CompanyDataCollection companyDataCollection = new CompanyDataCollection();
-                companyDataCollection.setCompany(company);
-                companyDataCollection.setCompanyOwner(userRepository.findOne(dataBundleDTO.getOwnerId()));
-                companyDataCollection.setCompanyReviewer(userRepository.findOne(dataBundleDTO.getReviewerId()));
-                companyDataCollection.setDataCollection(dataCollection);
-                companyDataCollection.setName(company.getName());
-                companyDataCollection.setStatus(companyStatusRepository.findOne(dataCollection.getPublishingStatus().getId()));
-                companyDataCollection.setCompanyDataCollectionOrderIndex(orderIndexL);
-                companyDataCollectionRepository.save(companyDataCollection);
+                    //Get data collection
+                    CompanyDataCollection companyDataCollection = new CompanyDataCollection();
+                    companyDataCollection.setCompany(company);
+                    companyDataCollection.setCompanyOwner(userRepository.findOne(dataBundleDTO.getOwnerId()));
+                    companyDataCollection.setCompanyReviewer(userRepository.findOne(dataBundleDTO.getReviewerId()));
+                    companyDataCollection.setDataCollection(dataCollection);
+                    companyDataCollection.setName(company.getName());
+                    companyDataCollection.setStatus(companyStatusRepository.findOne(dataCollection.getPublishingStatus().getId()));
+                    companyDataCollection.setCompanyDataCollectionOrderIndex(orderIndexL);
+                    companyDataCollectionRepository.save(companyDataCollection);
 
 
-                //dataBundleRepository.findByDataCollection()
-                //Set Company Data Bundles
-                CompanyDataBundle companyDataBundle = new CompanyDataBundle();
-                companyDataBundle.setCompany(company);
-                companyDataBundle.setStatus(companyStatusRepository.findOne(dataCollection.getPublishingStatus().getId()));
-                companyDataBundle.setOrderIndex(orderIndexL);
-                companyDataBundle.setCompanyDeadline(dataBundleDTO.getDefaultDeadline());
-                companyDataBundle.setCompanyOwner(userRepository.findOne(dataBundleDTO.getOwnerId()));
-                companyDataBundle.setCompanyReviewer(userRepository.findOne(dataBundleDTO.getReviewerId()));
-                companyDataBundle.setDataBundle(dataBundleRepository.findOne(dataBundleDTO.getId()));
-                companyDataBundle.setName(dataBundleDTO.getName());
-                companyDataBundle.setCompanyDataCollection(companyDataCollection);
-                companyDataBundle.setCompanyDataBundleOrderIndex(orderIndexL);
-                companyDataBundleRepository.save(companyDataBundle);
+                    //dataBundleRepository.findByDataCollection()
+                    //Set Company Data Bundles
+                    CompanyDataBundle companyDataBundle = new CompanyDataBundle();
+                    companyDataBundle.setCompany(company);
+                    companyDataBundle.setStatus(companyStatusRepository.findOne(dataCollection.getPublishingStatus().getId()));
+                    companyDataBundle.setOrderIndex(orderIndexL);
+                    companyDataBundle.setCompanyDeadline(dataBundleDTO.getDefaultDeadline());
+                    companyDataBundle.setCompanyOwner(userRepository.findOne(dataBundleDTO.getOwnerId()));
+                    companyDataBundle.setCompanyReviewer(userRepository.findOne(dataBundleDTO.getReviewerId()));
+                    companyDataBundle.setDataBundle(dataBundleRepository.findOne(dataBundleDTO.getId()));
+                    companyDataBundle.setName(dataBundleDTO.getName());
+                    companyDataBundle.setCompanyDataCollection(companyDataCollection);
+                    companyDataBundle.setCompanyDataBundleOrderIndex(orderIndexL);
+                    companyDataBundleRepository.save(companyDataBundle);
 
-                List<DataInput> dataInputList = new ArrayList(Arrays.asList(dataCollection.getDataBundles()[0].getDataInputs()));
+                    List<DataInput> dataInputList = new ArrayList(Arrays.asList(dataCollection.getDataBundles()[0].getDataInputs()));
 
-                //Set Company Data Inputs
-                for (DataInput dataInput : dataInputList) {
-                    if ((dataInput.getStatus().getId().equals(new Long(3))) || (dataInput.getStatus().getId().equals(new Long(4)))) {
+                    //Set Company Data Inputs
+                    for (DataInput dataInput : dataInputList) {
+                        if ((dataInput.getStatus().getId().equals(new Long(3))) || (dataInput.getStatus().getId().equals(new Long(4)))) {
 
-                        CompanyDataInput companyDataInput = new CompanyDataInput();
-                        companyDataInput.setDataInput(dataInput);
-                        companyDataInput.setCompanyReviewer(userRepository.findOne(dataBundleDTO.getReviewerId()));
-                        companyDataInput.setCompany(company);
-                        companyDataInput.setCompanyOwner(userRepository.findOne(dataBundleDTO.getOwnerId()));
-                        companyDataInput.setInputType(inputTypeRepository.findOne(new Long(1)));
-                        companyDataInput.setName(dataBundleDTO.getName());
-                        companyDataInput.setOrderIndex(orderIndexL);
-                        companyDataInput.setStatus(companyStatusRepository.findOne(dataCollection.getPublishingStatus().getId()));
-                        companyDataInput.setCompanyDataBundle(companyDataBundle);
-                        companyDataInput.setCompanyDataInputOrderIndex(orderIndexL);
-                        companyDataInputRepository.save(companyDataInput);
-
-                        //Publish data input
-                        dataInput.setStatus(published.get());
-                        dataInputRepository.save(dataInput);
+                            CompanyDataInput companyDataInput = new CompanyDataInput();
+                            companyDataInput.setDataInput(dataInput);
+                            companyDataInput.setCompanyReviewer(userRepository.findOne(dataBundleDTO.getReviewerId()));
+                            companyDataInput.setCompany(company);
+                            companyDataInput.setCompanyOwner(userRepository.findOne(dataBundleDTO.getOwnerId()));
+                            companyDataInput.setInputType(inputTypeRepository.findOne(new Long(1)));
+                            companyDataInput.setName(dataBundleDTO.getName());
+                            companyDataInput.setOrderIndex(orderIndexL);
+                            companyDataInput.setStatus(companyStatusRepository.findOne(dataCollection.getPublishingStatus().getId()));
+                            companyDataInput.setCompanyDataBundle(companyDataBundle);
+                            companyDataInput.setCompanyDataInputOrderIndex(orderIndexL);
+                            companyDataInputRepository.save(companyDataInput);
+                            //Publish data input
+                            dataInput.setStatus(published.get());
+                            dataInputRepository.save(dataInput);
+                        }
+                        success = true;
                     }
-                    success = true;
+                    orderIndexL++;
                 }
-                orderIndexL++;
+            } else {
+                throw new DcsException("Data Collection " + dataCollection.getName() + " not published yet ");
             }
+        } catch (Exception e) {
+            throw new DcsException(e.getMessage());
         }
         return success;
 
@@ -158,16 +164,18 @@ public class PublishingStateTransformationService {
      * @return true of false based on success or failure of change
      * @throws URISyntaxException
      */
-    public boolean publishDataInputStatus(DataInputDTO dataInputDTO) throws URISyntaxException {
-
+    public boolean publishDataInputStatus(DataInputDTO dataInputDTO) throws URISyntaxException, DcsException {
         boolean success = false;
-        DataBundle dataBundle = dataBundleRepository.findOne(dataInputDTO.getDataBundleId());
-        DataInput dataInput = dataInputRepository.findOne(dataInputDTO.getId());
-        DataCollection dataCollection = dataCollectionRepository.findOne(dataBundle.getDataCollection().getId());
-        if ((dataCollection.getPublishingStatus().getId().equals(new Long(4)))
-            && (dataBundle.getStatus().getId().equals(new Long(4)))) {
-            if ((dataInput.getStatus().getId().equals(new Long(4)))) {
+        try {
+            DataBundle dataBundle = dataBundleRepository.findOne(dataInputDTO.getDataBundleId());
+            DataInput dataInput = dataInputRepository.findOne(dataInputDTO.getId());
+            DataCollection dataCollection = dataCollectionRepository.findOne(dataBundle.getDataCollection().getId());
+            if ((dataCollection.getPublishingStatus().getId().equals(new Long(4)))
+                && (dataBundle.getStatus().getId().equals(new Long(4)))) {
+                // if ((dataInput.getStatus().getId().equals(new Long(4)))) {
                 List<CompanyDataBundle> companyDataBundleList = companyDataBundleRepository.findByCompanyAndBundle(dataBundle.getId());
+                if(companyDataBundleList.size()==0)
+                    throw new DcsException("Company Data Bundle does not exist for this Data Input");
                 Optional<CompanyStatus> companyStatus = companyStatusRepository.findOneByStatus("PUBLISHED");
                 Long orderIndexL = new Long(0);
                 for (CompanyDataBundle companyDataBundle : companyDataBundleList) {
@@ -184,9 +192,13 @@ public class PublishingStateTransformationService {
                     companyDataInput.setCompanyDataInputOrderIndex(orderIndexL);
                     companyDataInputRepository.save(companyDataInput);
                     orderIndexL++;
-
                 }
+                //}
+            } else {
+                throw new DcsException("Data Collection " + dataCollection.getName() + " or Data Bundle " + dataBundle.getName() + " not published yet ");
             }
+        } catch (Exception e) {
+            throw new DcsException(e.getMessage());
         }
         return success;
     }

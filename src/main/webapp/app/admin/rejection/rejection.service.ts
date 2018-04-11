@@ -11,6 +11,7 @@ export class RejectionService {
 
     findAll(): Observable<RejectionModel[]> {
         //return this.http.get('rejection/allrejections').map((res: Response) => this.convertResponse(res));
-        return this.http.get('rejection/allrejections').map((res: Response) => res.json()).catch((error:any) => Observable.throw(error.json().error()));
+        //return this.http.get('rejection/allrejections').map((res: Response) => res.json()).catch((error:any) => Observable.throw(error.json().error()));
+        return this.http.get('rejection/allrejections').map((res: Response) => res.json());
     }
 }

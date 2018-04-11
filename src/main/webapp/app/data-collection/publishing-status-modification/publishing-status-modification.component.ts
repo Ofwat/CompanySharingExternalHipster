@@ -6,11 +6,15 @@ import {ActivatedRoute, NavigationEnd, NavigationStart, Router} from "@angular/r
 import {PublishingStatus} from "../../shared/publishing-status/publishing-status.model";
 import {PublishingStatusService} from "../../shared/publishing-status/publishing-status.service";
 import {Location} from '@angular/common';
+import {WarningMessageComponent} from '../../shared/messages/warning.message';
+import {ErrorMessageComponent} from '../../shared/messages/error.message';
+import {SuccessMessageComponent} from '../../shared/messages/success.message';
+import {InfoMessageComponent} from '../../shared/messages/info.message';
 
 @Component({
     selector: 'jhi-publishing-status-modification',
     templateUrl: './publishing-status-modification.component.html',
-    providers: [DataCollectionService, DataBundleService, DataInputService, PublishingStatusService]
+    providers: [DataCollectionService, DataBundleService, DataInputService, PublishingStatusService,WarningMessageComponent,ErrorMessageComponent,SuccessMessageComponent,InfoMessageComponent]
 })
 export class PublishingStatusModificationComponent implements OnInit {
 
@@ -23,6 +27,11 @@ export class PublishingStatusModificationComponent implements OnInit {
     private subscription: Subscription;
     previousUrl: string;
     private resourceService: any;
+    warnHide = true;
+    errorHide = true;
+    successHide = true;
+    infoHide = true;
+    msg: string;
 
     constructor(
         private alertService: JhiAlertService,
@@ -58,6 +67,30 @@ export class PublishingStatusModificationComponent implements OnInit {
             }
             this.load(params['resourceId']);
         });
+    }
+
+    private processError(response) {
+        let obj = JSON.parse(response._body);
+        this.msg = obj.message;
+        this.warnHide = true;
+        this.errorHide = false;
+        this.successHide = true;
+        this.infoHide = true;
+    }
+
+    private processSuccess() {
+        this.msg="Publishing Status changed";
+        this.warnHide = true;
+        this.errorHide = true;
+        this.successHide = false;
+        this.infoHide = true;
+    }
+
+    onMessageStatusChange() {
+        this.warnHide = true;
+        this.errorHide = true;
+        this.successHide = true;
+        this.infoHide = true;
     }
 
     load(dataResourceId) {
@@ -100,16 +133,12 @@ export class PublishingStatusModificationComponent implements OnInit {
         this.resourceService.update(this.dataResource).subscribe(
             response => {
                 console.log("success" + response.status);
-                this.success = true;
+                //this.success = true;
+                this.processSuccess()
             },
             errorResponse => {
                 console.log("error" + errorResponse.status + errorResponse.statusText);
-                if (409 == errorResponse.status) {
-                    this.errorDataResourceExists = true;
-                }
-                else {
-                    this.error = true;
-                }
+                this.processError(errorResponse);
             }
         );
     }

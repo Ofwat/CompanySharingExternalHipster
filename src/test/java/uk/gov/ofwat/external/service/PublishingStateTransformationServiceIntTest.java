@@ -9,6 +9,7 @@ import uk.gov.ofwat.external.domain.*;
 import uk.gov.ofwat.external.repository.*;
 import uk.gov.ofwat.external.service.dto.DataBundleDTO;
 import uk.gov.ofwat.external.service.dto.DataInputDTO;
+import uk.gov.ofwat.external.web.rest.errors.DcsException;
 
 import javax.transaction.Transactional;
 import java.net.URISyntaxException;
@@ -78,7 +79,7 @@ public class PublishingStateTransformationServiceIntTest {
 
     @Test
     @Transactional
-    public void shouldPublishBundleService() throws URISyntaxException {
+    public void shouldPublishBundleService() throws URISyntaxException,DcsException {
         when(companyRepository.findAll()).thenReturn(getListofCompanies());
         when(dataCollectionRepository.findOne(anyLong())).thenReturn(getDataCollection());
         when(publishingStatusRepository.findOneByStatus(anyString())).thenReturn(getPublishedStatusOptional());
@@ -101,7 +102,7 @@ public class PublishingStateTransformationServiceIntTest {
 
     @Test
     @Transactional
-    public void shouldPublishInputService() throws URISyntaxException {
+    public void shouldPublishInputService() throws URISyntaxException,DcsException {
         when(dataInputDTO.getDataBundleId()).thenReturn(new Long(1));
         when(dataInputDTO.getId()).thenReturn(new Long(1));
         when(dataBundleRepository.findOne(anyLong())).thenReturn(getDataBundles());

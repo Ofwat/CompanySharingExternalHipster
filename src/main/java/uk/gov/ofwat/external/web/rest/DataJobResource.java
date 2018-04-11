@@ -44,7 +44,7 @@ public class DataJobResource {
     }
 
     @PostMapping("/data-job/{uuid}")
-    public ResponseEntity updateJob(@PathVariable String uuid, @RequestBody DataJob dataJob) {
+    public ResponseEntity updateJob(@PathVariable(value="uuid")final String uuid, @RequestBody DataJob dataJob) {
         log.info("REST request to update a DataJob");
         if (!dataJob.getUuid().equals(uuid)) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
@@ -54,7 +54,7 @@ public class DataJobResource {
             return ResponseEntity.notFound().build();
         }
 
-        dataJobService.updateDataJob(dataJob);
+        dataJobService.updateDataJob(new DataJob());
         return new ResponseEntity(HttpStatus.OK);
     }
 

@@ -60,6 +60,7 @@ public class SecurityConfiguration{
         @Override
         protected void configure(HttpSecurity http) throws Exception {
             http
+                .csrf().disable()
                 .antMatcher("/data-job/**")
                 .authorizeRequests()
                 .anyRequest().hasRole("FOUNTAIN")

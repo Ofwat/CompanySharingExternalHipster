@@ -2,6 +2,11 @@
     <div class="grid-row">
         <div class="column-two-thirds">
 
+            <warningmsg [message]="msg" [hidden]="warnHide" (warningStatusChange)="onMessageStatusChange($event)"></warningmsg>
+            <errormsg [message]="msg" [hidden]="errorHide" (errorStatusChange)="onMessageStatusChange($event)"></errormsg>
+            <successmsg [message]="msg" [hidden]="successHide" (successStatusChange)="onMessageStatusChange($event)"></successmsg>
+            <infomsg [message]="msg" [hidden]="infoHide" (infoStatusChange)="onMessageStatusChange($event)"></infomsg>
+
             <h2 class="heading-medium">
                 <span>Rejection Details</span>
             </h2>

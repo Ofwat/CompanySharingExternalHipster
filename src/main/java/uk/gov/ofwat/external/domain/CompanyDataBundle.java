@@ -68,7 +68,7 @@ public class CompanyDataBundle implements Serializable {
     @JsonIgnore
     private CompanyDataCollection companyDataCollection;
 
-    @OneToMany(mappedBy="companyDataBundle",fetch = FetchType.LAZY, cascade= CascadeType.ALL)
+    @OneToMany(mappedBy="companyDataBundle",fetch = FetchType.EAGER, cascade= CascadeType.ALL)
     @OrderColumn(name="order_Index")
     @JsonIgnore
     private CompanyDataInput[] companyDataInputs;

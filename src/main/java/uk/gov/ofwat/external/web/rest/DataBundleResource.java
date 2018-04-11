@@ -1,11 +1,15 @@
 package uk.gov.ofwat.external.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import uk.gov.ofwat.external.domain.*;
 import uk.gov.ofwat.external.repository.*;
 import uk.gov.ofwat.external.service.DataBundleService;
 import uk.gov.ofwat.external.service.PublishingService;
 import uk.gov.ofwat.external.service.PublishingStateTransformationService;
+import uk.gov.ofwat.external.web.rest.errors.DcsException;
+import uk.gov.ofwat.external.web.rest.errors.DcsServerMessage;
 import uk.gov.ofwat.external.web.rest.util.HeaderUtil;
 import uk.gov.ofwat.external.web.rest.util.PaginationUtil;
 import uk.gov.ofwat.external.service.dto.DataBundleDTO;
@@ -91,17 +95,17 @@ public class DataBundleResource {
      */
     @PutMapping("/data-bundles")
     @Timed
-    public ResponseEntity<DataBundleDTO> updateDataBundle(@Valid @RequestBody DataBundleDTO dataBundleDTO) throws URISyntaxException {
+    public ResponseEntity<DataBundleDTO> updateDataBundle(@Valid @RequestBody DataBundleDTO dataBundleDTO) throws URISyntaxException,DcsException {
         log.debug("REST request to update DataBundle : {}", dataBundleDTO);
         if (dataBundleDTO.getId() == null) {
             return createDataBundle(dataBundleDTO);
         }
-        DataBundleDTO result = dataBundleService.save(dataBundleDTO);
-
         //When status has been changed to publish
         if (dataBundleDTO.getStatusId().equals(new Long(4))) {
             publishingStateTransformationService.publishDataBundleStatus(dataBundleDTO);
         }
+        DataBundleDTO result = dataBundleService.save(dataBundleDTO);
+
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, dataBundleDTO.getId().toString()))
             .body(result);
@@ -148,5 +152,17 @@ public class DataBundleResource {
         log.debug("REST request to delete DataBundle : {}", id);
         dataBundleService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleException(final Exception exception) throws JsonProcessingException {
+        log.debug("handling Exception", exception);
+        return buildResponseEntity(new DcsServerMessage(HttpStatus.INTERNAL_SERVER_ERROR, exception.getMessage(), new Throwable(new Exception("exception"))));
+    }
+
+    private ResponseEntity<String> buildResponseEntity(DcsServerMessage dcsServerMessage) throws JsonProcessingException {
+        ObjectMapper obm = new ObjectMapper();
+        String x = obm.writeValueAsString(dcsServerMessage);
+        return new ResponseEntity<>(x, dcsServerMessage.getStatus());
     }
 }

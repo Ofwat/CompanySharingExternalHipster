@@ -1,6 +1,8 @@
 package uk.gov.ofwat.external.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.jhipster.web.util.ResponseUtil;
 import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
@@ -17,6 +19,8 @@ import uk.gov.ofwat.external.service.DataInputService;
 import uk.gov.ofwat.external.service.ExcelReaderService;
 import uk.gov.ofwat.external.service.PublishingStateTransformationService;
 import uk.gov.ofwat.external.service.dto.DataInputDTO;
+import uk.gov.ofwat.external.web.rest.errors.DcsException;
+import uk.gov.ofwat.external.web.rest.errors.DcsServerMessage;
 import uk.gov.ofwat.external.web.rest.util.HeaderUtil;
 import uk.gov.ofwat.external.web.rest.util.PaginationUtil;
 
@@ -97,16 +101,18 @@ public class DataInputResource {
          */
     @PutMapping("/data-inputs")
     @Timed
-    public ResponseEntity<DataInputDTO> updateDataInput(@Valid @RequestBody DataInputDTO dataInputDTO) throws URISyntaxException {
+    public ResponseEntity<DataInputDTO> updateDataInput(@Valid @RequestBody DataInputDTO dataInputDTO) throws URISyntaxException,DcsException {
         log.debug("REST request to update DataInput : {}", dataInputDTO);
         if (dataInputDTO.getId() == null) {
             return createDataInput(dataInputDTO);
         }
-        DataInputDTO result = dataInputService.save(dataInputDTO);
+
         //When status has been changed to publish
         if (dataInputDTO.getStatusId().equals(new Long(4))) {
             publishingStateTransformationService.publishDataInputStatus(dataInputDTO);
         }
+
+        DataInputDTO result = dataInputService.save(dataInputDTO);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, dataInputDTO.getId().toString()))
             .body(result);
@@ -153,5 +159,17 @@ public class DataInputResource {
         log.debug("REST request to delete DataInput : {}", id);
         dataInputService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleException(final Exception exception) throws JsonProcessingException {
+        log.debug("handling Exception", exception);
+        return buildResponseEntity(new DcsServerMessage(HttpStatus.INTERNAL_SERVER_ERROR, exception.getMessage(), new Throwable(new Exception("exception"))));
+    }
+
+    private ResponseEntity<String> buildResponseEntity(DcsServerMessage dcsServerMessage) throws JsonProcessingException {
+        ObjectMapper obm = new ObjectMapper();
+        String x = obm.writeValueAsString(dcsServerMessage);
+        return new ResponseEntity<>(x, dcsServerMessage.getStatus());
     }
 }
