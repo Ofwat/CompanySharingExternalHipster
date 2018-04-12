@@ -3,15 +3,11 @@ package uk.gov.ofwat.external.service.dto;
 
 import javax.validation.constraints.*;
 import java.io.Serializable;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.Objects;
 
 /**
  * A DTO for the CompanyDataCollection entity.
  */
-public class RejectionResourceDTO implements Serializable {
+public class DataSubmissionResourceDTO implements Serializable {
 
     private Long id;
 
@@ -87,9 +83,9 @@ public class RejectionResourceDTO implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof RejectionResourceDTO)) return false;
+        if (!(o instanceof DataSubmissionResourceDTO)) return false;
 
-        RejectionResourceDTO that = (RejectionResourceDTO) o;
+        DataSubmissionResourceDTO that = (DataSubmissionResourceDTO) o;
 
         if (getId() != null ? !getId().equals(that.getId()) : that.getId() != null) return false;
         if (getJobStatus() != null ? !getJobStatus().equals(that.getJobStatus()) : that.getJobStatus() != null)
@@ -119,7 +115,7 @@ public class RejectionResourceDTO implements Serializable {
 
     @Override
     public String toString() {
-        return "RejectionResourceDTO{" +
+        return "DataSubmissionResourceDTO{" +
             "id=" + id +
             ", jobStatus='" + jobStatus + '\'' +
             ", rejectedReason='" + rejectedReason + '\'' +

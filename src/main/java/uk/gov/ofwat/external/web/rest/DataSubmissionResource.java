@@ -16,7 +16,7 @@ import uk.gov.ofwat.external.domain.*;
 import uk.gov.ofwat.external.service.CompanyDataBundleService;
 import uk.gov.ofwat.external.service.CompanyDataInputService;
 import uk.gov.ofwat.external.service.DataJobService;
-import uk.gov.ofwat.external.service.dto.RejectionResourceDTO;
+import uk.gov.ofwat.external.service.dto.DataSubmissionResourceDTO;
 import uk.gov.ofwat.external.web.rest.errors.DcsException;
 import uk.gov.ofwat.external.web.rest.errors.DcsServerMessage;
 
@@ -27,10 +27,10 @@ import java.util.List;
  * Controller for view and managing Log Level at runtime.
  */
 @RestController
-@RequestMapping("/rejection")
-public class RejectionResource {
+@RequestMapping("/datasubmission")
+public class DataSubmissionResource {
 
-    private final Logger log = LoggerFactory.getLogger(RejectionResource.class);
+    private final Logger log = LoggerFactory.getLogger(DataSubmissionResource.class);
 
     @Autowired
     DataJobService dataJobService;
@@ -42,29 +42,29 @@ public class RejectionResource {
     @Autowired
     CompanyDataBundleService companyDataBundleService;
 
-    @GetMapping("/allrejections")
+    @GetMapping("/data")
     @Timed
-    public List<RejectionResourceDTO> getList() throws DcsException {
-        List<RejectionResourceDTO> rejectionResourceDTOS = new ArrayList<>();
+    public List<DataSubmissionResourceDTO> getList() throws DcsException {
+        List<DataSubmissionResourceDTO> dataSubmissionResourceDTOS = new ArrayList<>();
         try {
             List<DataJob> dataJobsList = dataJobService.findByUpdatedOrderByCompanyDataInputId(true);
             dataJobsList.stream().forEach(dataJob -> {
                 CompanyDataInput companyDataInput = companyDataInputService.findCompanyDataInput(dataJob.getCompanyDataInputId());
                 CompanyDataBundle companyDataBundle = companyDataInput.getCompanyDataBundle();
-                RejectionResourceDTO rejectionResourceDTO = new RejectionResourceDTO();
-                rejectionResourceDTO.setId(dataJob.getId());
-                rejectionResourceDTO.setCompanyDataBundleName(companyDataBundle.getName());
-                rejectionResourceDTO.setCompanyDataInputName(companyDataInput.getName());
-                rejectionResourceDTO.setCompanyDeadline(String.valueOf(companyDataBundle.getCompanyDeadline()));
-                rejectionResourceDTO.setCompanyName(companyDataBundle.getCompany().getName());
-                rejectionResourceDTO.setJobStatus(dataJob.getJobStatus());
-                rejectionResourceDTO.setRejectedReason(dataJob.getRejectionCodes().getDescription());
-                rejectionResourceDTOS.add(rejectionResourceDTO);
+                DataSubmissionResourceDTO dataSubmissionResourceDTO = new DataSubmissionResourceDTO();
+                dataSubmissionResourceDTO.setId(dataJob.getId());
+                dataSubmissionResourceDTO.setCompanyDataBundleName(companyDataBundle.getName());
+                dataSubmissionResourceDTO.setCompanyDataInputName(companyDataInput.getName());
+                dataSubmissionResourceDTO.setCompanyDeadline(String.valueOf(companyDataBundle.getCompanyDeadline()));
+                dataSubmissionResourceDTO.setCompanyName(companyDataBundle.getCompany().getName());
+                dataSubmissionResourceDTO.setJobStatus(dataJob.getJobStatus());
+                dataSubmissionResourceDTO.setRejectedReason(dataJob.getRejectionCodes().getDescription());
+                dataSubmissionResourceDTOS.add(dataSubmissionResourceDTO);
             });
         } catch (Exception e) {
             throw new DcsException("Company Data Input not found");
         }
-        return rejectionResourceDTOS;
+        return dataSubmissionResourceDTOS;
     }
 
     @ExceptionHandler(Exception.class)

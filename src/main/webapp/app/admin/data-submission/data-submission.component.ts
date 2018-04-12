@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { RejectionModel } from './rejection.model';
-import { RejectionService } from './rejection.service';
+import { DataSubmissionModel } from './data-submission.model';
+import { DataSubmissionService } from './data-submission.service';
 import {WarningMessageComponent} from '../../shared/messages/warning.message';
 import {ErrorMessageComponent} from '../../shared/messages/error.message';
 import {SuccessMessageComponent} from '../../shared/messages/success.message';
@@ -12,12 +12,12 @@ import {ResponseWrapper} from "../../shared/index";
 
 @Component({
     selector: 'jhi-logs',
-    templateUrl: './rejection.component.html',
+    templateUrl: './data-submission.component.html',
     providers: [WarningMessageComponent,ErrorMessageComponent,SuccessMessageComponent,InfoMessageComponent]
 })
-export class RejectionComponent implements OnInit {
+export class DataSubmissionComponent implements OnInit {
 
-    rejectionModels: RejectionModel[];
+    rejectionModels: DataSubmissionModel[];
     filter: string;
     orderProp: string;
     reverse: boolean;
@@ -29,7 +29,7 @@ export class RejectionComponent implements OnInit {
     msg: string;
 
     constructor(
-        private rejectionService: RejectionService,
+        private dataSubmissionService: DataSubmissionService,
         private router: Router
     ) {
         this.filter = '';
@@ -67,7 +67,7 @@ export class RejectionComponent implements OnInit {
     }
 
     load() {
-        this.rejectionService.findAll().subscribe((rejectionModels) => {
+        this.dataSubmissionService.findAll().subscribe((rejectionModels) => {
             this.rejectionModels = rejectionModels;
         },
             (res: ResponseWrapper) => this.processError(res)

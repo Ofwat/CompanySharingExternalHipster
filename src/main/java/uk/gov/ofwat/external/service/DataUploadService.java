@@ -1,6 +1,5 @@
 package uk.gov.ofwat.external.service;
 
-import com.google.gson.Gson;
 import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,12 +11,10 @@ import uk.gov.ofwat.external.config.SharePointOAuthClient;
 import uk.gov.ofwat.external.domain.CompanyDataInput;
 import uk.gov.ofwat.external.domain.DataFile;
 import uk.gov.ofwat.external.domain.DataJob;
-import uk.gov.ofwat.external.domain.TableMetadata;
 import uk.gov.ofwat.external.domain.data.DCSTable;
 import uk.gov.ofwat.external.repository.DataFileRepository;
 import uk.gov.ofwat.external.service.dto.data.TableDto;
 import uk.gov.ofwat.external.service.mapper.DCSTableMapper;
-//import uk.gov.ofwat.jobber.domain.jobs.Job;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,6 +23,8 @@ import java.nio.file.Paths;
 import java.time.Instant;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+//import uk.gov.ofwat.jobber.domain.jobs.Job;
 
 @Service
 @Transactional
@@ -70,32 +69,26 @@ public class DataUploadService {
 
 //        sharePointOAuthClient.uploadFileToSharePoint(newFile);
 
-        //Create the Job.
-        TableDto tableDto = excelReaderService.readFOut(theDestination1.toString(), companyDataInput.getDataInput().getReportId());
-        DCSTable dcsTable = dcsTableMapper.toEntity(tableDto);
-        DataJob dataJob = dataJobService.createDataJob(companyDataInput, tableDto);
 
-
-//        Thread current = Thread.currentThread();
-//        try {
-//            new Thread(() -> {
-//                running = true;
-//                ExecutorService executorService = Executors.newSingleThreadExecutor();
-//                executorService.execute(() -> {
-//                    //Create the Job.
-//                    TableDto tableDto = excelReaderService.readFOut(theDestination1.toString(), companyDataInput.getDataInput().getReportId());
-//                    DCSTable dcsTable = dcsTableMapper.toEntity(tableDto);
-//                    DataJob dataJob = dataJobService.createDataJob(companyDataInput, tableDto);
-//
-//                    current.interrupt();
-//                });
-//                executorService.shutdown();
-//            }).start();
-//        } catch (Exception e) {
-//            // TODO Auto-generated catch block
-//            log.error(String.valueOf(e));
-//        }
-//        current.sleep(1000);
+        Thread current = Thread.currentThread();
+        try {
+            new Thread(() -> {
+                running = true;
+                ExecutorService executorService = Executors.newSingleThreadExecutor();
+                executorService.execute(() -> {
+                    //Create the Job.
+                    TableDto tableDto = excelReaderService.readFOut(theDestination1.toString(), companyDataInput.getDataInput().getReportId());
+                    DCSTable dcsTable = dcsTableMapper.toEntity(tableDto);
+                    DataJob dataJob = dataJobService.createDataJob(companyDataInput, tableDto);
+                current.interrupt();
+                });
+                executorService.shutdown();
+            }).start();
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            log.error(String.valueOf(e));
+        }
+        current.sleep(1000);
     }
 
     String getUniqueFileName(String companyName, String reportId, String runId, String name) {

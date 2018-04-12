@@ -1,6 +1,6 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import {RejectionComponent} from './rejection/rejection.component';
+import {DataSubmissionComponent} from './data-submission/data-submission.component';
 import { CompanySharingExternalSharedModule } from '../shared';
 import { OfwatUserMgmtComponent } from './ofwat-user-management/ofwat-user-management.component';
 import { OfwatUserMgmtDetailComponent } from './ofwat-user-management/ofwat-user-management-detail.component';
@@ -38,7 +38,7 @@ import {
     JhiHealthService,
     JhiMetricsService,
     LogsService,
-    RejectionService,
+    DataSubmissionService,
     UserResolvePagingParams,
     OfwatUserResolvePagingParams,
     OfwatPendingInviteResolvePagingParams,
@@ -63,7 +63,7 @@ import {
         UserDeleteDialogComponent,
         UserMgmtDetailComponent,
         OfwatUserMgmtDetailComponent,
-        RejectionComponent,
+        DataSubmissionComponent,
         OfwatUserMgmtPermissionsComponent,
         UserMgmtDialogComponent,
         UserMgmtDeleteDialogComponent,
@@ -101,7 +101,7 @@ import {
         JhiHealthService,
         JhiMetricsService,
         LogsService,
-        RejectionService,
+        DataSubmissionService,
         UserResolvePagingParams,
         OfwatUserResolvePagingParams,
         OfwatPendingInviteResolvePagingParams,

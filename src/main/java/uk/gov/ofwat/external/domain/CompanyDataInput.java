@@ -4,11 +4,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
-import uk.gov.ofwat.external.domain.message.CompanyStatusEnum;
 import uk.gov.ofwat.external.repository.CompanyStatusRepository;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -49,7 +48,7 @@ public class CompanyDataInput implements Serializable {
     @NotNull
     private CompanyDataBundle companyDataBundle;
 
-    @ManyToOne(optional = false,fetch = FetchType.LAZY)
+    @ManyToOne(optional = false,fetch = FetchType.EAGER)
     @JoinColumn(name="DATA_INPUT_ID", nullable=false)
     @NotNull
     private DataInput dataInput;

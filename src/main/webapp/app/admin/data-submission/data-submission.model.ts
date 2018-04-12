@@ -1,5 +1,5 @@
 
-export class RejectionModel {
+export class DataSubmissionModel {
     public id?: any;
     public jobStatus?: string;
     public rejectedReason?: string;
