@@ -65,24 +65,23 @@ public class DataInputResource {
     @Timed
     public ResponseEntity<DataInputDTO> createDataInput(@Valid @RequestBody DataInputDTO dataInputDTO) throws URISyntaxException {
         log.debug("REST request to save DataInput : {}", dataInputDTO);
+        if (dataInputDTO.getId() != null) {
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new dataInput cannot already have an ID")).body(null);
+        }
 
-            if (dataInputDTO.getId() != null) {
-                return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new dataInput cannot already have an ID")).body(null);
-            }
+        Long maxOrderIndex = dataInputService.getMaxOrderIndex(dataInputDTO.getDataBundleId());
+        log.error("maxOrderIndex = " + maxOrderIndex);
+        Optional<PublishingStatus> optionalPublishingStatus = publishingStatusRepository.findOneByStatus("DRAFT");
+        if (!optionalPublishingStatus.isPresent()) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "publishingStatusMissing", "Publishing status 'Draft' not found in database."))
+                .body(null);
+        }
+        dataInputDTO.setStatusId(optionalPublishingStatus.get().getId());
+        dataInputDTO.setStatusStatus(optionalPublishingStatus.get().getStatus());
+        dataInputDTO.setOrderIndex(new Long(maxOrderIndex + 1));
 
-            Long maxOrderIndex = dataInputService.getMaxOrderIndex(dataInputDTO.getDataBundleId());
-            log.error("maxOrderIndex = " + maxOrderIndex);
-            Optional<PublishingStatus> optionalPublishingStatus = publishingStatusRepository.findOneByStatus("DRAFT");
-            if (!optionalPublishingStatus.isPresent()) {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "publishingStatusMissing", "Publishing status 'Draft' not found in database."))
-                    .body(null);
-            }
-            dataInputDTO.setStatusId(optionalPublishingStatus.get().getId());
-            dataInputDTO.setStatusStatus(optionalPublishingStatus.get().getStatus());
-            dataInputDTO.setOrderIndex(new Long(maxOrderIndex + 1));
-
-            DataInputDTO result = dataInputService.save(dataInputDTO);
+        DataInputDTO result = dataInputService.save(dataInputDTO);
 
         return ResponseEntity.created(new URI("/api/data-inputs/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
@@ -90,23 +89,26 @@ public class DataInputResource {
     }
 
 
-        /**
-         * PUT  /data-inputs : Updates an existing dataInput.
-         *
-         * @param dataInputDTO the dataInputDTO to update
-         * @return the ResponseEntity with status 200 (OK) and with body the updated dataInputDTO,
-         * or with status 400 (Bad Request) if the dataInputDTO is not valid,
-         * or with status 500 (Internal Server Error) if the dataInputDTO couldn't be updated
-         * @throws URISyntaxException if the Location URI syntax is incorrect
-         */
+    /**
+     * PUT  /data-inputs : Updates an existing dataInput.
+     *
+     * @param dataInputDTO the dataInputDTO to update
+     * @return the ResponseEntity with status 200 (OK) and with body the updated dataInputDTO,
+     * or with status 400 (Bad Request) if the dataInputDTO is not valid,
+     * or with status 500 (Internal Server Error) if the dataInputDTO couldn't be updated
+     * @throws URISyntaxException if the Location URI syntax is incorrect
+     */
     @PutMapping("/data-inputs")
     @Timed
-    public ResponseEntity<DataInputDTO> updateDataInput(@Valid @RequestBody DataInputDTO dataInputDTO) throws URISyntaxException,DcsException {
+    public ResponseEntity<DataInputDTO> updateDataInput(@Valid @RequestBody DataInputDTO dataInputDTO) throws URISyntaxException, DcsException {
         log.debug("REST request to update DataInput : {}", dataInputDTO);
+        if (!Double.valueOf(dataInputDTO.getReportId().toString()).isNaN()) {
+            new DcsServerMessage(HttpStatus.INTERNAL_SERVER_ERROR, "ReportId is numeric", new Throwable(new Exception("exception")));
+        }
+
         if (dataInputDTO.getId() == null) {
             return createDataInput(dataInputDTO);
         }
-
         //When status has been changed to publish
         if (dataInputDTO.getStatusId().equals(new Long(4))) {
             publishingStateTransformationService.publishDataInputStatus(dataInputDTO);

@@ -38,7 +38,6 @@ export class UploadService {
 
 
     private handleError (error: Response | any) {
-        console.error(error._body.message || error);
         return Observable.throw(error._body);
     }
 

@@ -64,9 +64,11 @@ export class DataInputCreationComponent implements OnInit {
     onMessageStatusChange() {
         this.warnHide = true;
         this.errorHide = true;
-        this.successHide = true;
         this.infoHide = true;
-        this.router.navigate(['data-bundle-detail', this.dataBundle.id]);
+        if(this.successHide==false){
+            this.router.navigate(['data-bundle-detail', this.dataBundle.id]);
+        }
+        this.successHide = true;
     }
 
     loadDataBundle(dataBundleId) {
@@ -150,10 +152,12 @@ export class DataInputCreationComponent implements OnInit {
             response => {
                 console.log('   success' + response.status);
                 //this.success = true;
-                this.processSuccess();
                 this.dataInput.fileName = 'Template.xlsx';
-                this.msg = 'File Upload Successful';
-                this.successHide = false;
+                if (isNaN(this.dataInput.reportId)){
+                    this.processError(response,"ReportId needs to be numeric");
+                    return;
+                }
+
 
                 this.dataInputService.create(this.dataInput).subscribe(
                     response => {
