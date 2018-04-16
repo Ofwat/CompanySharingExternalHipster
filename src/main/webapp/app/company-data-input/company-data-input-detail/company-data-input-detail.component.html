@@ -54,8 +54,8 @@
                 </div>
 
                 <div >
-                    <dd class="cya-question"><div *ngIf="dataInput.dataInputId"><jhi-upload *ngIf="!success && !errorDataInputExists"  [valueCompanyInputId]="company_data_input_id" [valueMultiple]="true"></jhi-upload></div></dd>
-                    <dd class="cya-answer"></dd>
+                    <dd class="cya-question"><div *ngIf="dataInput.dataInputId">Upload a file</div></dd>
+                    <dd class="cya-answer" style="width: 120%;"><jhi-upload *ngIf="!success && !errorDataInputExists"  [valueCompanyInputId]="company_data_input_id" [valueMultiple]="true"></jhi-upload></dd>
                 </div>
 
             </dl>

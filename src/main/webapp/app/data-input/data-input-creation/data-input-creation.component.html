@@ -34,10 +34,17 @@
             </button>
         </div>
     </div>
-
-    <jhi-upload *ngIf="!success && !errorDataInputExists" [valueLocation]="" [valueMultiple]="true" (filesUploaded)="onFileUploaded($event)"></jhi-upload>
     <div class="col-md-8 offset-md-2">
         <form name="form" role="form" (ngSubmit)="create()" #dataInputCreationForm="ngForm" *ngIf="!success && !errorDataInputExists">
+            <div class="form-group">
+                <label class="form-label" for="fileName">
+                    Upload a file
+                </label>
+                <jhi-upload *ngIf="!success && !errorDataInputExists" [valueLocation]="" [valueMultiple]="true" (filesUploaded)="onFileUploaded($event)"></jhi-upload>
+
+            </div>
+
+
 
             <div class="form-group">
                 <label class="form-label" for="name">Report Id

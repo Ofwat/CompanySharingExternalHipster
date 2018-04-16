@@ -39,6 +39,15 @@ public class DataUploadService {
     private final DCSTableMapper dcsTableMapper;
     private volatile boolean running = false;
 
+    @Value("${localUploadCompanyFolder}")
+    private String localUploadCompanyFolder;
+
+    @Value("${localUploadOfwatFolder}")
+    private String localUploadOfwatFolder;
+
+    @Value("${ofwatFileName}")
+    private String ofwatFileName;
+
     @Value("${env}")
     private String env;
 
@@ -51,7 +60,19 @@ public class DataUploadService {
         this.dcsTableMapper = dcsTableMapper;
     }
 
-    public void uploadFile(String companyInputId, MultipartFile file) throws IOException, JSONException, InterruptedException {
+    public void uploadFile(MultipartFile file) throws IOException, InterruptedException {
+        log.debug("Uploaded File Names :" + file.getOriginalFilename());
+        Path theDestination1 = Paths.get("C:\\Files\\" + ofwatFileName);
+        File newFile = new File(theDestination1.toString());
+        try {
+            file.transferTo(newFile);
+        }catch(Exception e){
+            //do nothing if file exists
+        }
+        //sharePointOAuthClient.uploadFileToSharePoint(newFile);
+
+    }
+    public void uploadCompanyFile(String companyInputId, MultipartFile file) throws IOException, JSONException, InterruptedException {
         log.debug("Uploaded File Names :" + file.getOriginalFilename());
 
         DataFile dataFile = new DataFile();
@@ -60,7 +81,11 @@ public class DataUploadService {
         newFileName = newFileName.replaceAll(" ", "%20");
         Path theDestination1 = Paths.get("C:\\CompanyFiles\\" + newFileName);
         File newFile = new File(theDestination1.toString());
-        file.transferTo(newFile);
+        try {
+            file.transferTo(newFile);
+        } catch (Exception e) {
+            //do nothing if file exists
+        }
 
         dataFile.setCompanyDataInput(companyDataInput);
         dataFile.setLocation("C:\\CompanyFiles\\");

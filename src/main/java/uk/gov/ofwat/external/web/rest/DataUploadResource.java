@@ -73,7 +73,7 @@ public class DataUploadResource {
         }
 
         for (MultipartFile file : files) {
-            dataUploadService.uploadFile(companyInputId, file);
+            dataUploadService.uploadCompanyFile(companyInputId, file);
         }
 
         //return dummy obj might change it to empty string and discussion
@@ -84,7 +84,7 @@ public class DataUploadResource {
     }
 
     @PostMapping(value = "/data-upload")
-    public ResponseEntity<DataInputDTO> uploadFile(@RequestParam(value = "uploadFiles", required = false) MultipartFile[] files) throws IOException, JSONException {
+    public ResponseEntity<DataInputDTO> uploadFile(@RequestParam(value = "uploadFiles", required = false) MultipartFile[] files) throws IOException, InterruptedException {
         //-- my stuff with formDataObject and uploaded files
         log.debug("REST request to upload Data : {}");
 
@@ -96,13 +96,7 @@ public class DataUploadResource {
             directory.mkdir();
         }
         for (MultipartFile file : files) {
-            log.debug("Uploaded File Names :" + file.getOriginalFilename());
-            Path theDestination1 = Paths.get("C:\\Files\\" + ofwatFileName);
-            File newFile = new File(theDestination1.toString());
-
-            file.transferTo(newFile);
-
-            sharePointOAuthClient.uploadFileToSharePoint(newFile);
+            dataUploadService.uploadFile(file);
         }
 
         //return dummy obj might change it to empty string and discussion
