@@ -55,7 +55,7 @@ public class DataBundle extends AbstractAuditingEntity implements Serializable {
     @NotNull
     private User reviewer;
 
-    @ManyToOne(optional = false,fetch = FetchType.LAZY)
+    @ManyToOne(optional = false,fetch = FetchType.EAGER)
     @JoinColumn(name="DATA_COLLECTION_ID", nullable=false)
     @NotNull
     @JsonIgnore

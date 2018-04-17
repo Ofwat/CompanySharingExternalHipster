@@ -64,11 +64,11 @@ public class DataInput extends AbstractAuditingEntity implements Serializable {
     @JsonIgnore
     private DataBundle dataBundle;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false,fetch = FetchType.EAGER)
     @NotNull
     private User owner;
 
-    @ManyToOne(optional = false,fetch = FetchType.LAZY)
+    @ManyToOne(optional = false,fetch = FetchType.EAGER)
     @NotNull
     private User reviewer;
 

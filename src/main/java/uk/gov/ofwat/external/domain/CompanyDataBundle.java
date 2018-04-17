@@ -19,7 +19,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "company_data_bundle")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class CompanyDataBundle extends AbstractAuditingEntity implements Serializable {
+public class CompanyDataBundle implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -68,7 +68,7 @@ public class CompanyDataBundle extends AbstractAuditingEntity implements Seriali
     @JsonIgnore
     private CompanyDataCollection companyDataCollection;
 
-    @OneToMany(mappedBy="companyDataBundle",fetch = FetchType.EAGER, cascade= CascadeType.ALL)
+    @OneToMany(mappedBy="companyDataBundle",fetch = FetchType.LAZY, cascade= CascadeType.ALL)
     @OrderColumn(name="order_Index")
     @JsonIgnore
     private CompanyDataInput[] companyDataInputs;
