@@ -1,6 +1,7 @@
 package uk.gov.ofwat.external.service.dto;
 
 
+import uk.gov.ofwat.external.domain.CompanyDataCollection;
 import uk.gov.ofwat.external.domain.PublishingStatus;
 import uk.gov.ofwat.external.domain.User;
 
@@ -32,6 +33,7 @@ public class DataCollectionDTO implements Serializable {
     private Instant lastModifiedDate;
     private String lastModifiedBy;
     private DataBundleDTO[] dataBundles;
+    private CompanyDataCollection[] companyDataCollections;
 
     public Long getId() {
         return id;
@@ -169,6 +171,14 @@ public class DataCollectionDTO implements Serializable {
         this.dataBundles = dataBundles;
     }
 
+    public CompanyDataCollection[] getCompanyDataCollections() {
+        return companyDataCollections;
+    }
+
+    public void setCompanyDataCollections(CompanyDataCollection[] companyDataCollections) {
+        this.companyDataCollections = companyDataCollections;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -206,7 +216,9 @@ public class DataCollectionDTO implements Serializable {
         if (getLastModifiedBy() != null ? !getLastModifiedBy().equals(that.getLastModifiedBy()) : that.getLastModifiedBy() != null)
             return false;
         // Probably incorrect - comparing Object[] arrays with Arrays.equals
-        return Arrays.equals(getDataBundles(), that.getDataBundles());
+        if (!Arrays.equals(getDataBundles(), that.getDataBundles())) return false;
+        // Probably incorrect - comparing Object[] arrays with Arrays.equals
+        return Arrays.equals(getCompanyDataCollections(), that.getCompanyDataCollections());
     }
 
     @Override
@@ -228,6 +240,7 @@ public class DataCollectionDTO implements Serializable {
         result = 31 * result + (getLastModifiedDate() != null ? getLastModifiedDate().hashCode() : 0);
         result = 31 * result + (getLastModifiedBy() != null ? getLastModifiedBy().hashCode() : 0);
         result = 31 * result + Arrays.hashCode(getDataBundles());
+        result = 31 * result + Arrays.hashCode(getCompanyDataCollections());
         return result;
     }
 
@@ -251,6 +264,7 @@ public class DataCollectionDTO implements Serializable {
             ", lastModifiedDate=" + lastModifiedDate +
             ", lastModifiedBy='" + lastModifiedBy + '\'' +
             ", dataBundles=" + Arrays.toString(dataBundles) +
+            ", companyDataCollections=" + Arrays.toString(companyDataCollections) +
             '}';
     }
 }

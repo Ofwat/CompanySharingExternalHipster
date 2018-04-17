@@ -12,7 +12,7 @@
     <div class="row">
     </div>
     <br/>
-    <div class="table-responsive" *ngIf="companyDataInputs">
+    <div class="table-responsive" *ngIf="companyDataInput">
         <table class="table table-striped">
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
@@ -29,7 +29,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let companyDataInput of companyDataInputs ;trackBy: trackId">
+            <tr *ngFor="let companyDataInput of companyDataInput ;trackBy: trackId">
                 <td><a [routerLink]="['../company-data-input', companyDataInput.id ]">{{companyDataInput.id}}</a></td>
                 <td>{{companyDataInput.name}}</td>
                 <td>
@@ -91,7 +91,7 @@
             </tbody>
         </table>
     </div>
-        <div *ngIf="companyDataInputs && companyDataInputs.length">
+        <div *ngIf="companyDataInput && companyDataInput.length">
             <div class="row justify-content-center">
                 <jhi-item-count [page]="page" [total]="queryCount" [itemsPerPage]="itemsPerPage"></jhi-item-count>
             </div>

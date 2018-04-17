@@ -1,10 +1,13 @@
 package uk.gov.ofwat.external.service.dto;
 
 
+import uk.gov.ofwat.external.domain.CompanyDataInput;
+
 import java.time.Instant;
 import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
@@ -37,6 +40,7 @@ public class DataInputDTO implements Serializable {
     private String createdBy;
     private Instant lastModifiedDate;
     private String lastModifiedBy;
+    private CompanyDataInput[] companyDataInputs;
 
     public Long getId() {
         return id;
@@ -222,6 +226,14 @@ public class DataInputDTO implements Serializable {
         this.reportId = reportId;
     }
 
+    public CompanyDataInput[] getCompanyDataInputs() {
+        return companyDataInputs;
+    }
+
+    public void setCompanyDataInputs(CompanyDataInput[] companyDataInputs) {
+        this.companyDataInputs = companyDataInputs;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -229,63 +241,79 @@ public class DataInputDTO implements Serializable {
 
         DataInputDTO that = (DataInputDTO) o;
 
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (reportId != null ? !reportId.equals(that.reportId) : that.reportId != null) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (description != null ? !description.equals(that.description) : that.description != null) return false;
-        if (guidance != null ? !guidance.equals(that.guidance) : that.guidance != null) return false;
-        if (defaultDeadline != null ? !defaultDeadline.equals(that.defaultDeadline) : that.defaultDeadline != null)
+        if (getId() != null ? !getId().equals(that.getId()) : that.getId() != null) return false;
+        if (getReportId() != null ? !getReportId().equals(that.getReportId()) : that.getReportId() != null)
             return false;
-        if (orderIndex != null ? !orderIndex.equals(that.orderIndex) : that.orderIndex != null) return false;
-        if (fileName != null ? !fileName.equals(that.fileName) : that.fileName != null) return false;
-        if (fileLocation != null ? !fileLocation.equals(that.fileLocation) : that.fileLocation != null) return false;
-        if (statusId != null ? !statusId.equals(that.statusId) : that.statusId != null) return false;
-        if (statusStatus != null ? !statusStatus.equals(that.statusStatus) : that.statusStatus != null) return false;
-        if (dataBundleId != null ? !dataBundleId.equals(that.dataBundleId) : that.dataBundleId != null) return false;
-        if (dataBundleName != null ? !dataBundleName.equals(that.dataBundleName) : that.dataBundleName != null)
+        if (getName() != null ? !getName().equals(that.getName()) : that.getName() != null) return false;
+        if (getDescription() != null ? !getDescription().equals(that.getDescription()) : that.getDescription() != null)
             return false;
-        if (ownerId != null ? !ownerId.equals(that.ownerId) : that.ownerId != null) return false;
-        if (ownerFirstName != null ? !ownerFirstName.equals(that.ownerFirstName) : that.ownerFirstName != null)
+        if (getGuidance() != null ? !getGuidance().equals(that.getGuidance()) : that.getGuidance() != null)
             return false;
-        if (ownerLastName != null ? !ownerLastName.equals(that.ownerLastName) : that.ownerLastName != null)
+        if (getDefaultDeadline() != null ? !getDefaultDeadline().equals(that.getDefaultDeadline()) : that.getDefaultDeadline() != null)
             return false;
-        if (reviewerId != null ? !reviewerId.equals(that.reviewerId) : that.reviewerId != null) return false;
-        if (reviewerFirstName != null ? !reviewerFirstName.equals(that.reviewerFirstName) : that.reviewerFirstName != null)
+        if (getOrderIndex() != null ? !getOrderIndex().equals(that.getOrderIndex()) : that.getOrderIndex() != null)
             return false;
-        if (reviewerLastName != null ? !reviewerLastName.equals(that.reviewerLastName) : that.reviewerLastName != null)
+        if (getFileName() != null ? !getFileName().equals(that.getFileName()) : that.getFileName() != null)
             return false;
-        if (createdDate != null ? !createdDate.equals(that.createdDate) : that.createdDate != null) return false;
-        if (createdBy != null ? !createdBy.equals(that.createdBy) : that.createdBy != null) return false;
-        if (lastModifiedDate != null ? !lastModifiedDate.equals(that.lastModifiedDate) : that.lastModifiedDate != null)
+        if (getFileLocation() != null ? !getFileLocation().equals(that.getFileLocation()) : that.getFileLocation() != null)
             return false;
-        return lastModifiedBy != null ? lastModifiedBy.equals(that.lastModifiedBy) : that.lastModifiedBy == null;
+        if (getStatusId() != null ? !getStatusId().equals(that.getStatusId()) : that.getStatusId() != null)
+            return false;
+        if (getStatusStatus() != null ? !getStatusStatus().equals(that.getStatusStatus()) : that.getStatusStatus() != null)
+            return false;
+        if (getDataBundleId() != null ? !getDataBundleId().equals(that.getDataBundleId()) : that.getDataBundleId() != null)
+            return false;
+        if (getDataBundleName() != null ? !getDataBundleName().equals(that.getDataBundleName()) : that.getDataBundleName() != null)
+            return false;
+        if (getOwnerId() != null ? !getOwnerId().equals(that.getOwnerId()) : that.getOwnerId() != null) return false;
+        if (getOwnerFirstName() != null ? !getOwnerFirstName().equals(that.getOwnerFirstName()) : that.getOwnerFirstName() != null)
+            return false;
+        if (getOwnerLastName() != null ? !getOwnerLastName().equals(that.getOwnerLastName()) : that.getOwnerLastName() != null)
+            return false;
+        if (getReviewerId() != null ? !getReviewerId().equals(that.getReviewerId()) : that.getReviewerId() != null)
+            return false;
+        if (getReviewerFirstName() != null ? !getReviewerFirstName().equals(that.getReviewerFirstName()) : that.getReviewerFirstName() != null)
+            return false;
+        if (getReviewerLastName() != null ? !getReviewerLastName().equals(that.getReviewerLastName()) : that.getReviewerLastName() != null)
+            return false;
+        if (getCreatedDate() != null ? !getCreatedDate().equals(that.getCreatedDate()) : that.getCreatedDate() != null)
+            return false;
+        if (getCreatedBy() != null ? !getCreatedBy().equals(that.getCreatedBy()) : that.getCreatedBy() != null)
+            return false;
+        if (getLastModifiedDate() != null ? !getLastModifiedDate().equals(that.getLastModifiedDate()) : that.getLastModifiedDate() != null)
+            return false;
+        if (getLastModifiedBy() != null ? !getLastModifiedBy().equals(that.getLastModifiedBy()) : that.getLastModifiedBy() != null)
+            return false;
+        // Probably incorrect - comparing Object[] arrays with Arrays.equals
+        return Arrays.equals(getCompanyDataInputs(), that.getCompanyDataInputs());
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (reportId != null ? reportId.hashCode() : 0);
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (guidance != null ? guidance.hashCode() : 0);
-        result = 31 * result + (defaultDeadline != null ? defaultDeadline.hashCode() : 0);
-        result = 31 * result + (orderIndex != null ? orderIndex.hashCode() : 0);
-        result = 31 * result + (fileName != null ? fileName.hashCode() : 0);
-        result = 31 * result + (fileLocation != null ? fileLocation.hashCode() : 0);
-        result = 31 * result + (statusId != null ? statusId.hashCode() : 0);
-        result = 31 * result + (statusStatus != null ? statusStatus.hashCode() : 0);
-        result = 31 * result + (dataBundleId != null ? dataBundleId.hashCode() : 0);
-        result = 31 * result + (dataBundleName != null ? dataBundleName.hashCode() : 0);
-        result = 31 * result + (ownerId != null ? ownerId.hashCode() : 0);
-        result = 31 * result + (ownerFirstName != null ? ownerFirstName.hashCode() : 0);
-        result = 31 * result + (ownerLastName != null ? ownerLastName.hashCode() : 0);
-        result = 31 * result + (reviewerId != null ? reviewerId.hashCode() : 0);
-        result = 31 * result + (reviewerFirstName != null ? reviewerFirstName.hashCode() : 0);
-        result = 31 * result + (reviewerLastName != null ? reviewerLastName.hashCode() : 0);
-        result = 31 * result + (createdDate != null ? createdDate.hashCode() : 0);
-        result = 31 * result + (createdBy != null ? createdBy.hashCode() : 0);
-        result = 31 * result + (lastModifiedDate != null ? lastModifiedDate.hashCode() : 0);
-        result = 31 * result + (lastModifiedBy != null ? lastModifiedBy.hashCode() : 0);
+        int result = getId() != null ? getId().hashCode() : 0;
+        result = 31 * result + (getReportId() != null ? getReportId().hashCode() : 0);
+        result = 31 * result + (getName() != null ? getName().hashCode() : 0);
+        result = 31 * result + (getDescription() != null ? getDescription().hashCode() : 0);
+        result = 31 * result + (getGuidance() != null ? getGuidance().hashCode() : 0);
+        result = 31 * result + (getDefaultDeadline() != null ? getDefaultDeadline().hashCode() : 0);
+        result = 31 * result + (getOrderIndex() != null ? getOrderIndex().hashCode() : 0);
+        result = 31 * result + (getFileName() != null ? getFileName().hashCode() : 0);
+        result = 31 * result + (getFileLocation() != null ? getFileLocation().hashCode() : 0);
+        result = 31 * result + (getStatusId() != null ? getStatusId().hashCode() : 0);
+        result = 31 * result + (getStatusStatus() != null ? getStatusStatus().hashCode() : 0);
+        result = 31 * result + (getDataBundleId() != null ? getDataBundleId().hashCode() : 0);
+        result = 31 * result + (getDataBundleName() != null ? getDataBundleName().hashCode() : 0);
+        result = 31 * result + (getOwnerId() != null ? getOwnerId().hashCode() : 0);
+        result = 31 * result + (getOwnerFirstName() != null ? getOwnerFirstName().hashCode() : 0);
+        result = 31 * result + (getOwnerLastName() != null ? getOwnerLastName().hashCode() : 0);
+        result = 31 * result + (getReviewerId() != null ? getReviewerId().hashCode() : 0);
+        result = 31 * result + (getReviewerFirstName() != null ? getReviewerFirstName().hashCode() : 0);
+        result = 31 * result + (getReviewerLastName() != null ? getReviewerLastName().hashCode() : 0);
+        result = 31 * result + (getCreatedDate() != null ? getCreatedDate().hashCode() : 0);
+        result = 31 * result + (getCreatedBy() != null ? getCreatedBy().hashCode() : 0);
+        result = 31 * result + (getLastModifiedDate() != null ? getLastModifiedDate().hashCode() : 0);
+        result = 31 * result + (getLastModifiedBy() != null ? getLastModifiedBy().hashCode() : 0);
+        result = 31 * result + Arrays.hashCode(getCompanyDataInputs());
         return result;
     }
 
@@ -315,6 +343,7 @@ public class DataInputDTO implements Serializable {
             ", createdBy='" + createdBy + '\'' +
             ", lastModifiedDate=" + lastModifiedDate +
             ", lastModifiedBy='" + lastModifiedBy + '\'' +
+            ", companyDataInputs=" + Arrays.toString(companyDataInputs) +
             '}';
     }
 }

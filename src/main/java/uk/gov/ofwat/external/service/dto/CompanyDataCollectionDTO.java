@@ -3,6 +3,7 @@ package uk.gov.ofwat.external.service.dto;
 
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -38,7 +39,17 @@ public class CompanyDataCollectionDTO implements Serializable {
 
     private String companyReviewerFirstName;
 
+    private Instant createdDate;
+
+    private String createdBy;
+
+    private Instant lastModifiedDate;
+
+    private String lastModifiedBy;
+
     private CompanyDataBundleDTO[] companyDataBundles;
+
+    private Long companyDataCollectionOrderIndex;
 
     public Long getId() {
         return id;
@@ -136,12 +147,52 @@ public class CompanyDataCollectionDTO implements Serializable {
         this.companyReviewerFirstName = userFirstName;
     }
 
+    public Instant getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Instant createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public Instant getLastModifiedDate() {
+        return lastModifiedDate;
+    }
+
+    public void setLastModifiedDate(Instant lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
+    }
+
+    public String getLastModifiedBy() {
+        return lastModifiedBy;
+    }
+
+    public void setLastModifiedBy(String lastModifiedBy) {
+        this.lastModifiedBy = lastModifiedBy;
+    }
+
     public CompanyDataBundleDTO[] getCompanyDataBundles() {
         return companyDataBundles;
     }
 
     public void setCompanyDataBundles(CompanyDataBundleDTO[] companyDataBundles) {
         this.companyDataBundles = companyDataBundles;
+    }
+
+    public Long getCompanyDataCollectionOrderIndex() {
+        return companyDataCollectionOrderIndex;
+    }
+
+    public void setCompanyDataCollectionOrderIndex(Long companyDataCollectionOrderIndex) {
+        this.companyDataCollectionOrderIndex = companyDataCollectionOrderIndex;
     }
 
     @Override
@@ -151,43 +202,61 @@ public class CompanyDataCollectionDTO implements Serializable {
 
         CompanyDataCollectionDTO that = (CompanyDataCollectionDTO) o;
 
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (statusId != null ? !statusId.equals(that.statusId) : that.statusId != null) return false;
-        if (statusStatus != null ? !statusStatus.equals(that.statusStatus) : that.statusStatus != null) return false;
-        if (companyId != null ? !companyId.equals(that.companyId) : that.companyId != null) return false;
-        if (companyName != null ? !companyName.equals(that.companyName) : that.companyName != null) return false;
-        if (dataCollectionId != null ? !dataCollectionId.equals(that.dataCollectionId) : that.dataCollectionId != null)
+        if (getId() != null ? !getId().equals(that.getId()) : that.getId() != null) return false;
+        if (getName() != null ? !getName().equals(that.getName()) : that.getName() != null) return false;
+        if (getStatusId() != null ? !getStatusId().equals(that.getStatusId()) : that.getStatusId() != null)
             return false;
-        if (dataCollectionName != null ? !dataCollectionName.equals(that.dataCollectionName) : that.dataCollectionName != null)
+        if (getStatusStatus() != null ? !getStatusStatus().equals(that.getStatusStatus()) : that.getStatusStatus() != null)
             return false;
-        if (companyOwnerId != null ? !companyOwnerId.equals(that.companyOwnerId) : that.companyOwnerId != null)
+        if (getCompanyId() != null ? !getCompanyId().equals(that.getCompanyId()) : that.getCompanyId() != null)
             return false;
-        if (companyOwnerFirstName != null ? !companyOwnerFirstName.equals(that.companyOwnerFirstName) : that.companyOwnerFirstName != null)
+        if (getCompanyName() != null ? !getCompanyName().equals(that.getCompanyName()) : that.getCompanyName() != null)
             return false;
-        if (companyReviewerId != null ? !companyReviewerId.equals(that.companyReviewerId) : that.companyReviewerId != null)
+        if (getDataCollectionId() != null ? !getDataCollectionId().equals(that.getDataCollectionId()) : that.getDataCollectionId() != null)
             return false;
-        if (companyReviewerFirstName != null ? !companyReviewerFirstName.equals(that.companyReviewerFirstName) : that.companyReviewerFirstName != null)
+        if (getDataCollectionName() != null ? !getDataCollectionName().equals(that.getDataCollectionName()) : that.getDataCollectionName() != null)
+            return false;
+        if (getCompanyOwnerId() != null ? !getCompanyOwnerId().equals(that.getCompanyOwnerId()) : that.getCompanyOwnerId() != null)
+            return false;
+        if (getCompanyOwnerFirstName() != null ? !getCompanyOwnerFirstName().equals(that.getCompanyOwnerFirstName()) : that.getCompanyOwnerFirstName() != null)
+            return false;
+        if (getCompanyReviewerId() != null ? !getCompanyReviewerId().equals(that.getCompanyReviewerId()) : that.getCompanyReviewerId() != null)
+            return false;
+        if (getCompanyReviewerFirstName() != null ? !getCompanyReviewerFirstName().equals(that.getCompanyReviewerFirstName()) : that.getCompanyReviewerFirstName() != null)
+            return false;
+        if (getCreatedDate() != null ? !getCreatedDate().equals(that.getCreatedDate()) : that.getCreatedDate() != null)
+            return false;
+        if (getCreatedBy() != null ? !getCreatedBy().equals(that.getCreatedBy()) : that.getCreatedBy() != null)
+            return false;
+        if (getLastModifiedDate() != null ? !getLastModifiedDate().equals(that.getLastModifiedDate()) : that.getLastModifiedDate() != null)
+            return false;
+        if (getLastModifiedBy() != null ? !getLastModifiedBy().equals(that.getLastModifiedBy()) : that.getLastModifiedBy() != null)
             return false;
         // Probably incorrect - comparing Object[] arrays with Arrays.equals
-        return Arrays.equals(companyDataBundles, that.companyDataBundles);
+        if (!Arrays.equals(getCompanyDataBundles(), that.getCompanyDataBundles())) return false;
+        return getCompanyDataCollectionOrderIndex() != null ? getCompanyDataCollectionOrderIndex().equals(that.getCompanyDataCollectionOrderIndex()) : that.getCompanyDataCollectionOrderIndex() == null;
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (statusId != null ? statusId.hashCode() : 0);
-        result = 31 * result + (statusStatus != null ? statusStatus.hashCode() : 0);
-        result = 31 * result + (companyId != null ? companyId.hashCode() : 0);
-        result = 31 * result + (companyName != null ? companyName.hashCode() : 0);
-        result = 31 * result + (dataCollectionId != null ? dataCollectionId.hashCode() : 0);
-        result = 31 * result + (dataCollectionName != null ? dataCollectionName.hashCode() : 0);
-        result = 31 * result + (companyOwnerId != null ? companyOwnerId.hashCode() : 0);
-        result = 31 * result + (companyOwnerFirstName != null ? companyOwnerFirstName.hashCode() : 0);
-        result = 31 * result + (companyReviewerId != null ? companyReviewerId.hashCode() : 0);
-        result = 31 * result + (companyReviewerFirstName != null ? companyReviewerFirstName.hashCode() : 0);
-        result = 31 * result + Arrays.hashCode(companyDataBundles);
+        int result = getId() != null ? getId().hashCode() : 0;
+        result = 31 * result + (getName() != null ? getName().hashCode() : 0);
+        result = 31 * result + (getStatusId() != null ? getStatusId().hashCode() : 0);
+        result = 31 * result + (getStatusStatus() != null ? getStatusStatus().hashCode() : 0);
+        result = 31 * result + (getCompanyId() != null ? getCompanyId().hashCode() : 0);
+        result = 31 * result + (getCompanyName() != null ? getCompanyName().hashCode() : 0);
+        result = 31 * result + (getDataCollectionId() != null ? getDataCollectionId().hashCode() : 0);
+        result = 31 * result + (getDataCollectionName() != null ? getDataCollectionName().hashCode() : 0);
+        result = 31 * result + (getCompanyOwnerId() != null ? getCompanyOwnerId().hashCode() : 0);
+        result = 31 * result + (getCompanyOwnerFirstName() != null ? getCompanyOwnerFirstName().hashCode() : 0);
+        result = 31 * result + (getCompanyReviewerId() != null ? getCompanyReviewerId().hashCode() : 0);
+        result = 31 * result + (getCompanyReviewerFirstName() != null ? getCompanyReviewerFirstName().hashCode() : 0);
+        result = 31 * result + (getCreatedDate() != null ? getCreatedDate().hashCode() : 0);
+        result = 31 * result + (getCreatedBy() != null ? getCreatedBy().hashCode() : 0);
+        result = 31 * result + (getLastModifiedDate() != null ? getLastModifiedDate().hashCode() : 0);
+        result = 31 * result + (getLastModifiedBy() != null ? getLastModifiedBy().hashCode() : 0);
+        result = 31 * result + Arrays.hashCode(getCompanyDataBundles());
+        result = 31 * result + (getCompanyDataCollectionOrderIndex() != null ? getCompanyDataCollectionOrderIndex().hashCode() : 0);
         return result;
     }
 
@@ -206,7 +275,12 @@ public class CompanyDataCollectionDTO implements Serializable {
             ", companyOwnerFirstName='" + companyOwnerFirstName + '\'' +
             ", companyReviewerId=" + companyReviewerId +
             ", companyReviewerFirstName='" + companyReviewerFirstName + '\'' +
+            ", createdDate=" + createdDate +
+            ", createdBy='" + createdBy + '\'' +
+            ", lastModifiedDate=" + lastModifiedDate +
+            ", lastModifiedBy='" + lastModifiedBy + '\'' +
             ", companyDataBundles=" + Arrays.toString(companyDataBundles) +
+            ", companyDataCollectionOrderIndex=" + companyDataCollectionOrderIndex +
             '}';
     }
 }

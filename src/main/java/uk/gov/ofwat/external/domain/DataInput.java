@@ -9,7 +9,6 @@ import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.Objects;
 
 /**
  * A DataInput.

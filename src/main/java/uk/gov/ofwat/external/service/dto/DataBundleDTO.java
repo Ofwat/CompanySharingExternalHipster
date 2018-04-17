@@ -1,6 +1,8 @@
 package uk.gov.ofwat.external.service.dto;
 
 
+import uk.gov.ofwat.external.domain.CompanyDataBundle;
+
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -33,7 +35,7 @@ public class DataBundleDTO implements Serializable {
     private Instant lastModifiedDate;
     private String lastModifiedBy;
     private DataInputDTO[] dataInputs;
-
+    private CompanyDataBundle[] companyDataBundle;
 
     public Long getId() {
         return id;
@@ -203,6 +205,14 @@ public class DataBundleDTO implements Serializable {
         this.dataInputs = dataInputs;
     }
 
+    public CompanyDataBundle[] getCompanyDataBundle() {
+        return companyDataBundle;
+    }
+
+    public void setCompanyDataBundle(CompanyDataBundle[] companyDataBundle) {
+        this.companyDataBundle = companyDataBundle;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -248,7 +258,9 @@ public class DataBundleDTO implements Serializable {
         if (getLastModifiedBy() != null ? !getLastModifiedBy().equals(that.getLastModifiedBy()) : that.getLastModifiedBy() != null)
             return false;
         // Probably incorrect - comparing Object[] arrays with Arrays.equals
-        return Arrays.equals(getDataInputs(), that.getDataInputs());
+        if (!Arrays.equals(getDataInputs(), that.getDataInputs())) return false;
+        // Probably incorrect - comparing Object[] arrays with Arrays.equals
+        return Arrays.equals(getCompanyDataBundle(), that.getCompanyDataBundle());
     }
 
     @Override
@@ -274,6 +286,7 @@ public class DataBundleDTO implements Serializable {
         result = 31 * result + (getLastModifiedDate() != null ? getLastModifiedDate().hashCode() : 0);
         result = 31 * result + (getLastModifiedBy() != null ? getLastModifiedBy().hashCode() : 0);
         result = 31 * result + Arrays.hashCode(getDataInputs());
+        result = 31 * result + Arrays.hashCode(getCompanyDataBundle());
         return result;
     }
 
@@ -301,6 +314,7 @@ public class DataBundleDTO implements Serializable {
             ", lastModifiedDate=" + lastModifiedDate +
             ", lastModifiedBy='" + lastModifiedBy + '\'' +
             ", dataInputs=" + Arrays.toString(dataInputs) +
+            ", companyDataBundle=" + Arrays.toString(companyDataBundle) +
             '}';
     }
 }

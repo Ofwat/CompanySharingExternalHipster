@@ -1,6 +1,7 @@
 package uk.gov.ofwat.external.service.dto;
 
 
+import java.time.Instant;
 import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
@@ -48,6 +49,16 @@ public class CompanyDataBundleDTO implements Serializable {
     private Long orderIndex;
 
     private CompanyDataInputDTO[]  companyDataInputs;
+
+    private Long companyDataBundleOrderIndex;
+
+    private Instant createdDate;
+
+    private String createdBy;
+
+    private Instant lastModifiedDate;
+
+    private String lastModifiedBy;
 
     public Long getOrderIndex() {
         return orderIndex;
@@ -185,6 +196,46 @@ public class CompanyDataBundleDTO implements Serializable {
         this.companyDataInputs = companyDataInputs;
     }
 
+    public Long getCompanyDataBundleOrderIndex() {
+        return companyDataBundleOrderIndex;
+    }
+
+    public void setCompanyDataBundleOrderIndex(Long companyDataBundleOrderIndex) {
+        this.companyDataBundleOrderIndex = companyDataBundleOrderIndex;
+    }
+
+    public Instant getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Instant createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public Instant getLastModifiedDate() {
+        return lastModifiedDate;
+    }
+
+    public void setLastModifiedDate(Instant lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
+    }
+
+    public String getLastModifiedBy() {
+        return lastModifiedBy;
+    }
+
+    public void setLastModifiedBy(String lastModifiedBy) {
+        this.lastModifiedBy = lastModifiedBy;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -192,53 +243,73 @@ public class CompanyDataBundleDTO implements Serializable {
 
         CompanyDataBundleDTO that = (CompanyDataBundleDTO) o;
 
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (companyDeadline != null ? !companyDeadline.equals(that.companyDeadline) : that.companyDeadline != null)
+        if (getId() != null ? !getId().equals(that.getId()) : that.getId() != null) return false;
+        if (getName() != null ? !getName().equals(that.getName()) : that.getName() != null) return false;
+        if (getCompanyDeadline() != null ? !getCompanyDeadline().equals(that.getCompanyDeadline()) : that.getCompanyDeadline() != null)
             return false;
-        if (statusId != null ? !statusId.equals(that.statusId) : that.statusId != null) return false;
-        if (statusStatus != null ? !statusStatus.equals(that.statusStatus) : that.statusStatus != null) return false;
-        if (companyId != null ? !companyId.equals(that.companyId) : that.companyId != null) return false;
-        if (companyName != null ? !companyName.equals(that.companyName) : that.companyName != null) return false;
-        if (companyDataCollectionId != null ? !companyDataCollectionId.equals(that.companyDataCollectionId) : that.companyDataCollectionId != null)
+        if (getStatusId() != null ? !getStatusId().equals(that.getStatusId()) : that.getStatusId() != null)
             return false;
-        if (companyDataCollectionName != null ? !companyDataCollectionName.equals(that.companyDataCollectionName) : that.companyDataCollectionName != null)
+        if (getStatusStatus() != null ? !getStatusStatus().equals(that.getStatusStatus()) : that.getStatusStatus() != null)
             return false;
-        if (dataBundleId != null ? !dataBundleId.equals(that.dataBundleId) : that.dataBundleId != null) return false;
-        if (dataBundleName != null ? !dataBundleName.equals(that.dataBundleName) : that.dataBundleName != null)
+        if (getCompanyId() != null ? !getCompanyId().equals(that.getCompanyId()) : that.getCompanyId() != null)
             return false;
-        if (companyOwnerId != null ? !companyOwnerId.equals(that.companyOwnerId) : that.companyOwnerId != null)
+        if (getCompanyName() != null ? !getCompanyName().equals(that.getCompanyName()) : that.getCompanyName() != null)
             return false;
-        if (companyOwnerFirstName != null ? !companyOwnerFirstName.equals(that.companyOwnerFirstName) : that.companyOwnerFirstName != null)
+        if (getCompanyDataCollectionId() != null ? !getCompanyDataCollectionId().equals(that.getCompanyDataCollectionId()) : that.getCompanyDataCollectionId() != null)
             return false;
-        if (companyReviewerId != null ? !companyReviewerId.equals(that.companyReviewerId) : that.companyReviewerId != null)
+        if (getCompanyDataCollectionName() != null ? !getCompanyDataCollectionName().equals(that.getCompanyDataCollectionName()) : that.getCompanyDataCollectionName() != null)
             return false;
-        if (companyReviewerFirstName != null ? !companyReviewerFirstName.equals(that.companyReviewerFirstName) : that.companyReviewerFirstName != null)
+        if (getDataBundleId() != null ? !getDataBundleId().equals(that.getDataBundleId()) : that.getDataBundleId() != null)
             return false;
-        if (orderIndex != null ? !orderIndex.equals(that.orderIndex) : that.orderIndex != null) return false;
+        if (getDataBundleName() != null ? !getDataBundleName().equals(that.getDataBundleName()) : that.getDataBundleName() != null)
+            return false;
+        if (getCompanyOwnerId() != null ? !getCompanyOwnerId().equals(that.getCompanyOwnerId()) : that.getCompanyOwnerId() != null)
+            return false;
+        if (getCompanyOwnerFirstName() != null ? !getCompanyOwnerFirstName().equals(that.getCompanyOwnerFirstName()) : that.getCompanyOwnerFirstName() != null)
+            return false;
+        if (getCompanyReviewerId() != null ? !getCompanyReviewerId().equals(that.getCompanyReviewerId()) : that.getCompanyReviewerId() != null)
+            return false;
+        if (getCompanyReviewerFirstName() != null ? !getCompanyReviewerFirstName().equals(that.getCompanyReviewerFirstName()) : that.getCompanyReviewerFirstName() != null)
+            return false;
+        if (getOrderIndex() != null ? !getOrderIndex().equals(that.getOrderIndex()) : that.getOrderIndex() != null)
+            return false;
         // Probably incorrect - comparing Object[] arrays with Arrays.equals
-        return Arrays.equals(companyDataInputs, that.companyDataInputs);
+        if (!Arrays.equals(getCompanyDataInputs(), that.getCompanyDataInputs())) return false;
+        if (getCompanyDataBundleOrderIndex() != null ? !getCompanyDataBundleOrderIndex().equals(that.getCompanyDataBundleOrderIndex()) : that.getCompanyDataBundleOrderIndex() != null)
+            return false;
+        if (getCreatedDate() != null ? !getCreatedDate().equals(that.getCreatedDate()) : that.getCreatedDate() != null)
+            return false;
+        if (getCreatedBy() != null ? !getCreatedBy().equals(that.getCreatedBy()) : that.getCreatedBy() != null)
+            return false;
+        if (getLastModifiedDate() != null ? !getLastModifiedDate().equals(that.getLastModifiedDate()) : that.getLastModifiedDate() != null)
+            return false;
+        return getLastModifiedBy() != null ? getLastModifiedBy().equals(that.getLastModifiedBy()) : that.getLastModifiedBy() == null;
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (companyDeadline != null ? companyDeadline.hashCode() : 0);
-        result = 31 * result + (statusId != null ? statusId.hashCode() : 0);
-        result = 31 * result + (statusStatus != null ? statusStatus.hashCode() : 0);
-        result = 31 * result + (companyId != null ? companyId.hashCode() : 0);
-        result = 31 * result + (companyName != null ? companyName.hashCode() : 0);
-        result = 31 * result + (companyDataCollectionId != null ? companyDataCollectionId.hashCode() : 0);
-        result = 31 * result + (companyDataCollectionName != null ? companyDataCollectionName.hashCode() : 0);
-        result = 31 * result + (dataBundleId != null ? dataBundleId.hashCode() : 0);
-        result = 31 * result + (dataBundleName != null ? dataBundleName.hashCode() : 0);
-        result = 31 * result + (companyOwnerId != null ? companyOwnerId.hashCode() : 0);
-        result = 31 * result + (companyOwnerFirstName != null ? companyOwnerFirstName.hashCode() : 0);
-        result = 31 * result + (companyReviewerId != null ? companyReviewerId.hashCode() : 0);
-        result = 31 * result + (companyReviewerFirstName != null ? companyReviewerFirstName.hashCode() : 0);
-        result = 31 * result + (orderIndex != null ? orderIndex.hashCode() : 0);
-        result = 31 * result + Arrays.hashCode(companyDataInputs);
+        int result = getId() != null ? getId().hashCode() : 0;
+        result = 31 * result + (getName() != null ? getName().hashCode() : 0);
+        result = 31 * result + (getCompanyDeadline() != null ? getCompanyDeadline().hashCode() : 0);
+        result = 31 * result + (getStatusId() != null ? getStatusId().hashCode() : 0);
+        result = 31 * result + (getStatusStatus() != null ? getStatusStatus().hashCode() : 0);
+        result = 31 * result + (getCompanyId() != null ? getCompanyId().hashCode() : 0);
+        result = 31 * result + (getCompanyName() != null ? getCompanyName().hashCode() : 0);
+        result = 31 * result + (getCompanyDataCollectionId() != null ? getCompanyDataCollectionId().hashCode() : 0);
+        result = 31 * result + (getCompanyDataCollectionName() != null ? getCompanyDataCollectionName().hashCode() : 0);
+        result = 31 * result + (getDataBundleId() != null ? getDataBundleId().hashCode() : 0);
+        result = 31 * result + (getDataBundleName() != null ? getDataBundleName().hashCode() : 0);
+        result = 31 * result + (getCompanyOwnerId() != null ? getCompanyOwnerId().hashCode() : 0);
+        result = 31 * result + (getCompanyOwnerFirstName() != null ? getCompanyOwnerFirstName().hashCode() : 0);
+        result = 31 * result + (getCompanyReviewerId() != null ? getCompanyReviewerId().hashCode() : 0);
+        result = 31 * result + (getCompanyReviewerFirstName() != null ? getCompanyReviewerFirstName().hashCode() : 0);
+        result = 31 * result + (getOrderIndex() != null ? getOrderIndex().hashCode() : 0);
+        result = 31 * result + Arrays.hashCode(getCompanyDataInputs());
+        result = 31 * result + (getCompanyDataBundleOrderIndex() != null ? getCompanyDataBundleOrderIndex().hashCode() : 0);
+        result = 31 * result + (getCreatedDate() != null ? getCreatedDate().hashCode() : 0);
+        result = 31 * result + (getCreatedBy() != null ? getCreatedBy().hashCode() : 0);
+        result = 31 * result + (getLastModifiedDate() != null ? getLastModifiedDate().hashCode() : 0);
+        result = 31 * result + (getLastModifiedBy() != null ? getLastModifiedBy().hashCode() : 0);
         return result;
     }
 
@@ -262,6 +333,11 @@ public class CompanyDataBundleDTO implements Serializable {
             ", companyReviewerFirstName='" + companyReviewerFirstName + '\'' +
             ", orderIndex=" + orderIndex +
             ", companyDataInputs=" + Arrays.toString(companyDataInputs) +
+            ", companyDataBundleOrderIndex=" + companyDataBundleOrderIndex +
+            ", createdDate=" + createdDate +
+            ", createdBy='" + createdBy + '\'' +
+            ", lastModifiedDate=" + lastModifiedDate +
+            ", lastModifiedBy='" + lastModifiedBy + '\'' +
             '}';
     }
 }

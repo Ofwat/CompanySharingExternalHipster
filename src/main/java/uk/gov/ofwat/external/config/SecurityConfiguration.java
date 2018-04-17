@@ -229,6 +229,12 @@ public class SecurityConfiguration{
                 .antMatchers("/api/resend_invite").hasAuthority(AuthoritiesConstants.ADMIN)
                 .antMatchers("/api/users/pending_accounts/**").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.COMPANY_ADMIN)
                 .antMatchers("/api/users/companies/**").hasAuthority(AuthoritiesConstants.ADMIN)
+                .antMatchers("/api/data-inputs/**").hasAnyAuthority(AuthoritiesConstants.ADMIN)
+                .antMatchers("/api/data-collections/**").hasAnyAuthority(AuthoritiesConstants.ADMIN)
+                .antMatchers("/api/data-bundles/**").hasAnyAuthority(AuthoritiesConstants.ADMIN)
+                .antMatchers("/api/company-data-inputs/**").hasAnyAuthority(AuthoritiesConstants.ADMIN)
+                .antMatchers("/api/company-data-collections/**").hasAnyAuthority(AuthoritiesConstants.ADMIN)
+                .antMatchers("/api/company-data-bundles/**").hasAnyAuthority(AuthoritiesConstants.ADMIN)
 
 /*            .antMatchers("/api/account/verify_captcha").permitAll()*/
                 .antMatchers("/api/profile-info").permitAll()
