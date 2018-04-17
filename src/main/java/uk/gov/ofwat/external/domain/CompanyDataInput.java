@@ -43,11 +43,13 @@ public class CompanyDataInput extends AbstractAuditingEntity implements Serializ
     @ManyToOne(optional = false,fetch = FetchType.EAGER)
     @JoinColumn(name="COMPANY_DATA_BUNDLE_ID", nullable=false)
     @NotNull
+    @JsonIgnore
     private CompanyDataBundle companyDataBundle;
 
     @ManyToOne(optional = false,fetch = FetchType.EAGER)
     @JoinColumn(name="DATA_INPUT_ID", nullable=false)
     @NotNull
+    @JsonIgnore
     private DataInput dataInput;
 
     @ManyToOne(optional = false)

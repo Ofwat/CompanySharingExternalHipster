@@ -40,7 +40,7 @@ public class DataInputDTO implements Serializable {
     private String createdBy;
     private Instant lastModifiedDate;
     private String lastModifiedBy;
-    private CompanyDataInput[] companyDataInputs;
+    private CompanyDataInput[] companyDataInput;
 
     public Long getId() {
         return id;
@@ -226,12 +226,12 @@ public class DataInputDTO implements Serializable {
         this.reportId = reportId;
     }
 
-    public CompanyDataInput[] getCompanyDataInputs() {
-        return companyDataInputs;
+    public CompanyDataInput[] getCompanyDataInput() {
+        return companyDataInput;
     }
 
-    public void setCompanyDataInputs(CompanyDataInput[] companyDataInputs) {
-        this.companyDataInputs = companyDataInputs;
+    public void setCompanyDataInput(CompanyDataInput[] companyDataInput) {
+        this.companyDataInput = companyDataInput;
     }
 
     @Override
@@ -285,7 +285,7 @@ public class DataInputDTO implements Serializable {
         if (getLastModifiedBy() != null ? !getLastModifiedBy().equals(that.getLastModifiedBy()) : that.getLastModifiedBy() != null)
             return false;
         // Probably incorrect - comparing Object[] arrays with Arrays.equals
-        return Arrays.equals(getCompanyDataInputs(), that.getCompanyDataInputs());
+        return Arrays.equals(getCompanyDataInput(), that.getCompanyDataInput());
     }
 
     @Override
@@ -313,7 +313,7 @@ public class DataInputDTO implements Serializable {
         result = 31 * result + (getCreatedBy() != null ? getCreatedBy().hashCode() : 0);
         result = 31 * result + (getLastModifiedDate() != null ? getLastModifiedDate().hashCode() : 0);
         result = 31 * result + (getLastModifiedBy() != null ? getLastModifiedBy().hashCode() : 0);
-        result = 31 * result + Arrays.hashCode(getCompanyDataInputs());
+        result = 31 * result + Arrays.hashCode(getCompanyDataInput());
         return result;
     }
 
@@ -343,7 +343,7 @@ public class DataInputDTO implements Serializable {
             ", createdBy='" + createdBy + '\'' +
             ", lastModifiedDate=" + lastModifiedDate +
             ", lastModifiedBy='" + lastModifiedBy + '\'' +
-            ", companyDataInputs=" + Arrays.toString(companyDataInputs) +
+            ", companyDataInput=" + Arrays.toString(companyDataInput) +
             '}';
     }
 }

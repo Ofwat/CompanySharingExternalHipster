@@ -21,12 +21,14 @@ public interface DataInputMapper extends EntityMapper <DataInputDTO, DataInput> 
     @Mapping(source = "reviewer.id", target = "reviewerId")
     @Mapping(source = "reviewer.firstName", target = "reviewerFirstName")
     @Mapping(source = "reviewer.lastName", target = "reviewerLastName")
+    @Mapping(source = "dataInput.companyDataInput", target = "companyDataInput")
     DataInputDTO toDto(DataInput dataInput);
 
     @Mapping(source = "statusId", target = "status")
     @Mapping(source = "dataBundleId", target = "dataBundle")
     @Mapping(source = "ownerId", target = "owner")
     @Mapping(source = "reviewerId", target = "reviewer")
+    @Mapping(source = "companyDataInput", target = "companyDataInput")
     DataInput toEntity(DataInputDTO dataInputDTO);
 
     default DataInput fromId(Long id) {
