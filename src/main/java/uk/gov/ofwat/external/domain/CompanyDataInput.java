@@ -18,13 +18,10 @@ import java.util.Set;
 @Entity
 @Table(name = "company_data_input")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class CompanyDataInput implements Serializable {
+public class CompanyDataInput extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Autowired
-    @Transient
-    private CompanyStatusRepository companyStatusRepository;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

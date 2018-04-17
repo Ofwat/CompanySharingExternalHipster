@@ -13,6 +13,10 @@
         <column name="fountain_audit_comment" value="1"/>
         <column name="fountain_excel_mongo_id" value="1"/>
         <column name="data" value=""/>
+        <column name="created_by" value="admin"/>
+        <column name="created_date" value="2018-04-17 12:00:48.35"/>
+        <column name="last_modified_by" value="admin"/>
+        <column name="last_modified_date" value="2018-04-17 12:00:48.35"/>
     </insert>
     <insert tableName="data_job">
         <column name="updated" value="true"/>
@@ -26,6 +30,10 @@
         <column name="fountain_audit_comment" value="1"/>
         <column name="fountain_excel_mongo_id" value="1"/>
         <column name="data" value=""/>
+        <column name="created_by" value="admin"/>
+        <column name="created_date" value="2018-04-17 12:00:48.35"/>
+        <column name="last_modified_by" value="admin"/>
+        <column name="last_modified_date" value="2018-04-17 12:00:48.35"/>
     </insert>
 
 </changeSet>

@@ -17,6 +17,18 @@
             <column name="fountain_audit_comment" type="VARCHAR(255)"/>
             <column name="fountain_excel_mongo_id" type="VARCHAR(255)"/>
             <column name="data" type="CLOB"/>
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false" />
+            </column>
+            <column name="created_date" type="timestamp" defaultValueDate="${now}">
+                <constraints nullable="false" />
+            </column>
+            <column name="last_modified_by" type="varchar(50)">
+                <constraints nullable="false" />
+            </column>
+            <column name="last_modified_date" type="timestamp" defaultValueDate="${now}">
+                <constraints nullable="false" />
+            </column>
         </createTable>
     </changeSet>
 </databaseChangeLog>

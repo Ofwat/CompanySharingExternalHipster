@@ -13,7 +13,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "data_file")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class DataFile implements Serializable {
+public class DataFile extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
