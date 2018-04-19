@@ -3,6 +3,7 @@ package uk.gov.ofwat.external.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import uk.gov.ofwat.external.aop.company.CompanySelectionAspect;
 import uk.gov.ofwat.external.config.audit.CustomBasicAuthenticationEntryPoint;
 import uk.gov.ofwat.external.security.*;
@@ -184,7 +185,7 @@ public class SecurityConfiguration{
             http
 /*            .securityContext().securityContextRepository(this.refreshingUserDetailsSecurityContextRepository(new HttpSessionSecurityContextRepository()))
         .and()*/
-                .csrf().disable()
+                //.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).and()
                 //.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                 //.and()
                 .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
@@ -247,8 +248,9 @@ public class SecurityConfiguration{
                 .antMatchers("/v2/api-docs/**").permitAll()
                 .antMatchers("/swagger-resources/confresend_otpiguration/ui").permitAll()
                 .antMatchers("/content/js/download.js").permitAll()
-                .antMatchers("/swagger-ui/index.html").hasAuthority(AuthoritiesConstants.ADMIN);
-
+                .antMatchers("/swagger-ui/index.html").hasAuthority(AuthoritiesConstants.ADMIN)
+                .and()
+                .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
         }
 
         @Bean
