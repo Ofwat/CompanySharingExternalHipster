@@ -2,7 +2,7 @@ import { Component, OnInit, } from '@angular/core';
 import { JhiAlertService } from 'ng-jhipster';
 import { DataCollectionService, DataBundleService, DataInputService } from '../../shared';
 import {Subscription} from "rxjs";
-import {ActivatedRoute, NavigationEnd, NavigationStart, Router} from "@angular/router";
+import {ActivatedRoute} from "@angular/router";
 import {PublishingStatus} from "../../shared/publishing-status/publishing-status.model";
 import {PublishingStatusService} from "../../shared/publishing-status/publishing-status.service";
 import {Location} from '@angular/common';
@@ -40,7 +40,7 @@ export class PublishingStatusModificationComponent implements OnInit {
         private dataInputService: DataInputService,
         private publishingStatusService: PublishingStatusService,
         private route: ActivatedRoute,
-        private _location: Location
+        private _location: Location,
     ) {
     }
 
@@ -91,6 +91,7 @@ export class PublishingStatusModificationComponent implements OnInit {
         this.errorHide = true;
         this.successHide = true;
         this.infoHide = true;
+        this._location.back();
     }
 
     load(dataResourceId) {

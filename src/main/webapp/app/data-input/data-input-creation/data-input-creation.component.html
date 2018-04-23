@@ -2,7 +2,7 @@
 
     <div>
        <!-- <jhi-message *ngIf="dspMsg"  [message]="msg" [successCode]="successCode" [errorCode]="errorCode" [infoCode]="infoCode" [warningCode]="warningCode"   (msgStatusChange)="onMessageStatusChange($event)"></jhi-message>-->
-
+        <div class="loader" *ngIf="spinnerShown"></div>
         <warningmsg [message]="msg" [hidden]="warnHide" (warningStatusChange)="onMessageStatusChange($event)"></warningmsg>
         <errormsg [message]="msg" [hidden]="errorHide" (errorStatusChange)="onMessageStatusChange($event)"></errormsg>
         <successmsg [message]="msg" [hidden]="successHide" (successStatusChange)="onMessageStatusChange($event)"></successmsg>
