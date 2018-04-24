@@ -183,11 +183,6 @@ public class SecurityConfiguration{
         @Override
         protected void configure(HttpSecurity http) throws Exception {
             http
-/*            .securityContext().securityContextRepository(this.refreshingUserDetailsSecurityContextRepository(new HttpSessionSecurityContextRepository()))
-        .and()*/
-                //.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).and()
-                //.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-                //.and()
                 .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling()
                 .authenticationEntryPoint(http401UnauthorizedEntryPoint())
@@ -236,11 +231,8 @@ public class SecurityConfiguration{
                 .antMatchers("/api/company-data-inputs/**").hasAnyAuthority(AuthoritiesConstants.ADMIN)
                 .antMatchers("/api/company-data-collections/**").hasAnyAuthority(AuthoritiesConstants.ADMIN)
                 .antMatchers("/api/company-data-bundles/**").hasAnyAuthority(AuthoritiesConstants.ADMIN)
-
-/*            .antMatchers("/api/account/verify_captcha").permitAll()*/
                 .antMatchers("/api/profile-info").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/companies").permitAll()
-          /*  .antMatchers("/api/**").authenticated()*/
                 .antMatchers("/api/data-download").permitAll()
                 .antMatchers("/api/data-download-file").permitAll()
                 .antMatchers("/management/health").permitAll()
