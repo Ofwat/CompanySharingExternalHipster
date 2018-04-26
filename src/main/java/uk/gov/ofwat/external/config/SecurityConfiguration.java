@@ -241,6 +241,7 @@ public class SecurityConfiguration{
                 .antMatchers("/swagger-resources/confresend_otpiguration/ui").permitAll()
                 .antMatchers("/content/js/download.js").permitAll()
                 .antMatchers("/swagger-ui/index.html").hasAuthority(AuthoritiesConstants.ADMIN)
+                .antMatchers("/datasubmission").hasAnyAuthority(AuthoritiesConstants.ADMIN,AuthoritiesConstants.USER)
                 .and()
                 .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
         }
