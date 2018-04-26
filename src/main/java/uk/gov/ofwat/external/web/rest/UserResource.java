@@ -273,6 +273,7 @@ public class UserResource {
     @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<Void> deleteRegistrationRequest(@PathVariable String login,@AuthenticationPrincipal User activeUser) {
         log.debug("REST request to delete RegistrationRequest: {}", login);
+        activeUser = userService.getUserWithAuthorities();
         registrationRequestService.deleteRegistrationRequest(login, activeUser);
         //return ResponseEntity.ok().headers(HeaderUtil.createAlert( "A RegistrationRequest is deleted with identifier " + login, login)).build();
         return  ResponseEntity.ok().build();
@@ -289,6 +290,7 @@ public class UserResource {
     @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<String> approveRegistrationRequest(@RequestBody String login,@AuthenticationPrincipal User activeUser) {
         log.debug("REST request to approve RegistrationRequest: {}", login);
+        activeUser = userService.getUserWithAuthorities();
         return registrationRequestService.approveRegistrationRequest(login, activeUser).map(registrationRequest -> new ResponseEntity<String>(HttpStatus.OK))
             .orElse(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
     }
