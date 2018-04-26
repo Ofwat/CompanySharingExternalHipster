@@ -157,6 +157,7 @@ export class DataInputCreationComponent implements OnInit {
                 //this.success = true;
                 this.dataInput.fileName = 'Template.xlsx';
                 if (isNaN(this.dataInput.reportId)){
+                    this.spinnerShown=false;
                     this.processError(response,"ReportId needs to be numeric");
                     return;
                 }
