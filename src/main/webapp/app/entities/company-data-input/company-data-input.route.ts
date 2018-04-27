@@ -35,7 +35,7 @@ export const companyDataInputRoute: Routes = [
             'pagingParams': CompanyDataInputResolvePagingParams
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_OFWAT_USER'],
             pageTitle: 'CompanyDataInputs'
         },
         canActivate: [UserRouteAccessService]
@@ -43,7 +43,7 @@ export const companyDataInputRoute: Routes = [
         path: 'company-data-input/:id',
         component: CompanyDataInputDetailComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_OFWAT_USER'],
             pageTitle: 'CompanyDataInputs'
         },
         canActivate: [UserRouteAccessService]
@@ -55,7 +55,7 @@ export const companyDataInputPopupRoute: Routes = [
         path: 'company-data-input-new',
         component: CompanyDataInputPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_OFWAT_USER'],
             pageTitle: 'CompanyDataInputs'
         },
         canActivate: [UserRouteAccessService],
@@ -65,7 +65,7 @@ export const companyDataInputPopupRoute: Routes = [
         path: 'company-data-input/:id/edit',
         component: CompanyDataInputPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_OFWAT_USER'],
             pageTitle: 'CompanyDataInputs'
         },
         canActivate: [UserRouteAccessService],
@@ -75,7 +75,7 @@ export const companyDataInputPopupRoute: Routes = [
         path: 'company-data-input/:id/delete',
         component: CompanyDataInputDeletePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_OFWAT_USER'],
             pageTitle: 'CompanyDataInputs'
         },
         canActivate: [UserRouteAccessService],

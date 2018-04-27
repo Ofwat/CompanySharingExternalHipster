@@ -47,7 +47,7 @@ export class CompanyDataCollectionDialogComponent implements OnInit {
 
     ngOnInit() {
         this.isSaving = false;
-        this.authorities = ['ROLE_USER', 'ROLE_ADMIN'];
+        this.authorities = ['ROLE_OFWAT_USER', 'ROLE_OFWAT_ADMIN'];
         this.companyStatusService.query()
             .subscribe((res: ResponseWrapper) => { this.companystatuses = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
         this.companyService.query()

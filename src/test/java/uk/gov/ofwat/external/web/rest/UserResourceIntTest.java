@@ -157,7 +157,7 @@ public class UserResourceIntTest {
 
         // Create the User
         Set<String> authorities = new HashSet<>();
-        authorities.add("ROLE_USER");
+        authorities.add("ROLE_OFWAT_USER");
         ManagedUserVM managedUserVM = new ManagedUserVM(
             null,
             DEFAULT_LOGIN,
@@ -201,7 +201,7 @@ public class UserResourceIntTest {
         int databaseSizeBeforeCreate = userRepository.findAll().size();
 
         Set<String> authorities = new HashSet<>();
-        authorities.add("ROLE_USER");
+        authorities.add("ROLE_OFWAT_USER");
         ManagedUserVM managedUserVM = new ManagedUserVM(
             1L,
             DEFAULT_LOGIN,
@@ -241,7 +241,7 @@ public class UserResourceIntTest {
         int databaseSizeBeforeCreate = userRepository.findAll().size();
 
         Set<String> authorities = new HashSet<>();
-        authorities.add("ROLE_USER");
+        authorities.add("ROLE_OFWAT_USER");
         ManagedUserVM managedUserVM = new ManagedUserVM(
             null,
             DEFAULT_LOGIN, // this login should already be used
@@ -281,7 +281,7 @@ public class UserResourceIntTest {
         int databaseSizeBeforeCreate = userRepository.findAll().size();
 
         Set<String> authorities = new HashSet<>();
-        authorities.add("ROLE_USER");
+        authorities.add("ROLE_OFWAT_USER");
         ManagedUserVM managedUserVM = new ManagedUserVM(
             null,
             "anotherlogin",
@@ -368,7 +368,7 @@ public class UserResourceIntTest {
         User updatedUser = userRepository.findOne(user.getId());
 
         Set<String> authorities = new HashSet<>();
-        authorities.add("ROLE_USER");
+        authorities.add("ROLE_OFWAT_USER");
         ManagedUserVM managedUserVM = new ManagedUserVM(
             updatedUser.getId(),
             updatedUser.getLogin(),
@@ -416,7 +416,7 @@ public class UserResourceIntTest {
         User updatedUser = userRepository.findOne(user.getId());
 
         Set<String> authorities = new HashSet<>();
-        authorities.add("ROLE_USER");
+        authorities.add("ROLE_OFWAT_USER");
         ManagedUserVM managedUserVM = new ManagedUserVM(
             updatedUser.getId(),
             UPDATED_LOGIN,
@@ -476,7 +476,7 @@ public class UserResourceIntTest {
         User updatedUser = userRepository.findOne(user.getId());
 
         Set<String> authorities = new HashSet<>();
-        authorities.add("ROLE_USER");
+        authorities.add("ROLE_OFWAT_USER");
         ManagedUserVM managedUserVM = new ManagedUserVM(
             updatedUser.getId(),
             updatedUser.getLogin(),
@@ -525,7 +525,7 @@ public class UserResourceIntTest {
         User updatedUser = userRepository.findOne(user.getId());
 
         Set<String> authorities = new HashSet<>();
-        authorities.add("ROLE_USER");
+        authorities.add("ROLE_OFWAT_USER");
         ManagedUserVM managedUserVM = new ManagedUserVM(
             updatedUser.getId(),
             "jhipster", // this login should already be used by anotherUser
@@ -578,7 +578,7 @@ public class UserResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$").isArray())
-            .andExpect(jsonPath("$").value(containsInAnyOrder("ROLE_USER", "ROLE_ADMIN", "PRE_AUTH_ROLE_USER", "ROLE_COMPANY_ADMIN", "ROLE_COMPANY_USER")));
+            .andExpect(jsonPath("$").value(containsInAnyOrder("ROLE_OFWAT_USER", "ROLE_OFWAT_ADMIN", "PRE_AUTH_ROLE_USER", "ROLE_COMPANY_ADMIN", "ROLE_COMPANY_USER")));
     }
 
     @Test
@@ -621,7 +621,7 @@ public class UserResourceIntTest {
             null,
             DEFAULT_LOGIN,
             null,
-            Stream.of(AuthoritiesConstants.USER).collect(Collectors.toSet()),
+            Stream.of(AuthoritiesConstants.OFWAT_USER).collect(Collectors.toSet()),
             "077777077852",
             true,
             Instant.now());
@@ -638,7 +638,7 @@ public class UserResourceIntTest {
         assertThat(user.getCreatedDate()).isNotNull();
         assertThat(user.getLastModifiedBy()).isNull();
         assertThat(user.getLastModifiedDate()).isNotNull();
-        assertThat(user.getAuthorities()).extracting("name").containsExactly(AuthoritiesConstants.USER);
+        assertThat(user.getAuthorities()).extracting("name").containsExactly(AuthoritiesConstants.OFWAT_USER);
     }
 
     @Test
@@ -651,7 +651,7 @@ public class UserResourceIntTest {
 
         Set<Authority> authorities = new HashSet<>();
         Authority authority = new Authority();
-        authority.setName(AuthoritiesConstants.USER);
+        authority.setName(AuthoritiesConstants.OFWAT_USER);
         authorities.add(authority);
         user.setAuthorities(authorities);
 
@@ -669,7 +669,7 @@ public class UserResourceIntTest {
         assertThat(userDTO.getCreatedDate()).isEqualTo(user.getCreatedDate());
         assertThat(userDTO.getLastModifiedBy()).isEqualTo(DEFAULT_LOGIN);
         assertThat(userDTO.getLastModifiedDate()).isEqualTo(user.getLastModifiedDate());
-        assertThat(userDTO.getAuthorities()).containsExactly(AuthoritiesConstants.USER);
+        assertThat(userDTO.getAuthorities()).containsExactly(AuthoritiesConstants.OFWAT_USER);
         assertThat(userDTO.toString()).isNotNull();
     }
 
@@ -685,13 +685,13 @@ public class UserResourceIntTest {
         Authority authorityB = new Authority();
         assertThat(authorityA).isEqualTo(authorityB);
 
-        authorityB.setName(AuthoritiesConstants.ADMIN);
+        authorityB.setName(AuthoritiesConstants.OFWAT_ADMIN);
         assertThat(authorityA).isNotEqualTo(authorityB);
 
-        authorityA.setName(AuthoritiesConstants.USER);
+        authorityA.setName(AuthoritiesConstants.OFWAT_USER);
         assertThat(authorityA).isNotEqualTo(authorityB);
 
-        authorityB.setName(AuthoritiesConstants.USER);
+        authorityB.setName(AuthoritiesConstants.OFWAT_USER);
         assertThat(authorityA).isEqualTo(authorityB);
         assertThat(authorityA.hashCode()).isEqualTo(authorityB.hashCode());
     }

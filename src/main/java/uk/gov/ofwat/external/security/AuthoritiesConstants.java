@@ -5,9 +5,9 @@ package uk.gov.ofwat.external.security;
  */
 public final class AuthoritiesConstants {
 
-    public static final String ADMIN = "ROLE_ADMIN";
+/*    public static final String ADMIN = "ROLE_ADMIN";
 
-    public static final String USER = "ROLE_USER";
+    public static final String USER = "ROLE_USER";*/
 
     public static final String ANONYMOUS = "ROLE_ANONYMOUS";
 
@@ -16,6 +16,8 @@ public final class AuthoritiesConstants {
     public static final String COMPANY_USER = "ROLE_COMPANY_USER";
 
     public static final String OFWAT_ADMIN = "ROLE_OFWAT_ADMIN";
+
+    public static final String OFWAT_USER = "ROLE_OFWAT_USER";
 
     public static final String FOUNTAIN ="ROLE_FOUNTAIN";
 

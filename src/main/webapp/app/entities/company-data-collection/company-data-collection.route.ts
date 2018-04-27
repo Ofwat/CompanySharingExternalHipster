@@ -35,7 +35,7 @@ export const companyDataCollectionRoute: Routes = [
             'pagingParams': CompanyDataCollectionResolvePagingParams
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_OFWAT_USER'],
             pageTitle: 'CompanyDataCollections'
         },
         canActivate: [UserRouteAccessService]
@@ -43,7 +43,7 @@ export const companyDataCollectionRoute: Routes = [
         path: 'company-data-collection/:id',
         component: CompanyDataCollectionDetailComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_OFWAT_USER'],
             pageTitle: 'CompanyDataCollections'
         },
         canActivate: [UserRouteAccessService]
@@ -55,7 +55,7 @@ export const companyDataCollectionPopupRoute: Routes = [
         path: 'company-data-collection-new',
         component: CompanyDataCollectionPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_OFWAT_USER'],
             pageTitle: 'CompanyDataCollections'
         },
         canActivate: [UserRouteAccessService],
@@ -65,7 +65,7 @@ export const companyDataCollectionPopupRoute: Routes = [
         path: 'company-data-collection/:id/edit',
         component: CompanyDataCollectionPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_OFWAT_USER'],
             pageTitle: 'CompanyDataCollections'
         },
         canActivate: [UserRouteAccessService],
@@ -75,7 +75,7 @@ export const companyDataCollectionPopupRoute: Routes = [
         path: 'company-data-collection/:id/delete',
         component: CompanyDataCollectionDeletePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_OFWAT_USER'],
             pageTitle: 'CompanyDataCollections'
         },
         canActivate: [UserRouteAccessService],

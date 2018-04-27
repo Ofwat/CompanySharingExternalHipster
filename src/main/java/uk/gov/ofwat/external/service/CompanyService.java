@@ -231,7 +231,7 @@ public class CompanyService {
 
     private Boolean checkForAdminRoles(CompanyUserDetails companyUserDetails){
         String authority = companyUserDetails.getAuthority().getName();
-        return authority.equals(AuthoritiesConstants.ADMIN) || authority.equals(AuthoritiesConstants.COMPANY_ADMIN);
+        return authority.equals(AuthoritiesConstants.OFWAT_ADMIN) || authority.equals(AuthoritiesConstants.COMPANY_ADMIN);
     }
 
     /**

@@ -34,7 +34,7 @@ const DATA_BUNDLE_ROUTES = [
 export const dataBundleState: Routes = [{
     path: '',
     data: {
-        authorities: ['ROLE_ADMIN']
+        authorities: ['ROLE_OFWAT_ADMIN']
     },
     canActivate: [UserRouteAccessService],
     children: DATA_BUNDLE_ROUTES

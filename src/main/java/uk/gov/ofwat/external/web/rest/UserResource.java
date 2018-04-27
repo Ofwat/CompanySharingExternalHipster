@@ -103,7 +103,7 @@ public class UserResource {
     public ResponseEntity<String> addCompanyUser(@RequestBody Long companyId, @RequestBody String login){
         log.debug("Addding user {} to company with id {}", login, companyId);
         return userRepository.findOneByLogin(login).map(user -> {
-            companyService.addUserToCompany(companyId, user, AuthoritiesConstants.USER);
+            companyService.addUserToCompany(companyId, user, AuthoritiesConstants.OFWAT_USER);
             return new ResponseEntity<String>(HttpStatus.CREATED);
         }).orElse(new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR));
     }
@@ -121,7 +121,7 @@ public class UserResource {
      */
     @PostMapping("/users")
     @Timed
-    @Secured(AuthoritiesConstants.ADMIN)
+    @Secured(AuthoritiesConstants.OFWAT_ADMIN)
     public ResponseEntity createUser(@Valid @RequestBody ManagedUserVM managedUserVM) throws URISyntaxException {
         log.debug("REST request to save User : {}", managedUserVM);
 
@@ -157,7 +157,7 @@ public class UserResource {
      */
     @PutMapping("/users")
     @Timed
-    @Secured(AuthoritiesConstants.ADMIN)
+    @Secured(AuthoritiesConstants.OFWAT_ADMIN)
     public ResponseEntity<UserDTO> updateUser(@Valid @RequestBody ManagedUserVM managedUserVM) {
         log.debug("REST request to update User : {}", managedUserVM);
         Optional<User> existingUser = userRepository.findOneByEmail(managedUserVM.getEmail());
@@ -194,7 +194,7 @@ public class UserResource {
      */
     @GetMapping("/users/authorities")
     @Timed
-    @Secured(AuthoritiesConstants.ADMIN)
+    @Secured(AuthoritiesConstants.OFWAT_ADMIN)
     public List<String> getAuthorities() {
         return userService.getAuthorities();
     }
@@ -223,7 +223,7 @@ public class UserResource {
      */
     @DeleteMapping("/users/{login:" + Constants.LOGIN_REGEX + "}")
     @Timed
-    @Secured(AuthoritiesConstants.ADMIN)
+    @Secured(AuthoritiesConstants.OFWAT_ADMIN)
     public ResponseEntity<Void> deleteUser(@PathVariable String login) {
         log.debug("REST request to delete User: {}", login);
         userService.deleteUser(login);
@@ -247,7 +247,7 @@ public class UserResource {
      */
     @GetMapping("/users/pending_accounts")
     @Timed
-    @Secured({AuthoritiesConstants.ADMIN, AuthoritiesConstants.COMPANY_ADMIN})
+    @Secured({AuthoritiesConstants.OFWAT_ADMIN, AuthoritiesConstants.COMPANY_ADMIN})
     public ResponseEntity<List<RegistrationRequest>> getAllRegistrationRequests(@ApiParam Pageable pageable, @RequestParam Long companyId) {
         Company company = companyMapper.toEntity(companyService.findOne(companyId));
         User currentUser = userService.getUserWithAuthorities();
@@ -270,7 +270,7 @@ public class UserResource {
      */
     @DeleteMapping("/users/pending_accounts/{login:" + Constants.LOGIN_REGEX + "}")
     @Timed
-    @Secured(AuthoritiesConstants.ADMIN)
+    @Secured(AuthoritiesConstants.OFWAT_ADMIN)
     public ResponseEntity<Void> deleteRegistrationRequest(@PathVariable String login,@AuthenticationPrincipal User activeUser) {
         log.debug("REST request to delete RegistrationRequest: {}", login);
         activeUser = userService.getUserWithAuthorities();
@@ -287,7 +287,7 @@ public class UserResource {
      */
     @PostMapping("/users/pending_accounts")
     @Timed
-    @Secured(AuthoritiesConstants.ADMIN)
+    @Secured(AuthoritiesConstants.OFWAT_ADMIN)
     public ResponseEntity<String> approveRegistrationRequest(@RequestBody String login,@AuthenticationPrincipal User activeUser) {
         log.debug("REST request to approve RegistrationRequest: {}", login);
         activeUser = userService.getUserWithAuthorities();
@@ -297,7 +297,7 @@ public class UserResource {
 
     @Timed
     @PostMapping("/users/companies")
-    @Secured({AuthoritiesConstants.ADMIN, AuthoritiesConstants.COMPANY_ADMIN, AuthoritiesConstants.COMPANY_USER})
+    @Secured({AuthoritiesConstants.OFWAT_ADMIN, AuthoritiesConstants.COMPANY_ADMIN, AuthoritiesConstants.COMPANY_USER})
     public List<Company> getCompaniesForUser(@RequestBody String login){
         log.info("REST request to get companies for login: {}", login);
         return companyService.getListOfCompaniesUserIsMemberFor(login).get();
