@@ -254,7 +254,7 @@
             <!-- If it is an ofwat employee display a select list of all companies -->
             <!-- Else display only for the company the user is associated with. -->
             <!--<a href='url-to-page-2'>{{isOfwatEmployee()}}</a>-->
-            <a *jhiHasAnyAuthorit="['ROLE_ADMIN', 'ROLE_OFWAT_USER', 'ROLE_USER']" href='' [routerLink]="['data-collection-management']">Data collections</a></li>
+            <a *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_OFWAT_USER', 'ROLE_USER']" href='' [routerLink]="['data-collection-management']">Data collections</a></li>
         </li>
         <li *ngSwitchCase="true">
             <!--<jhi-ofwat-company-select></jhi-ofwat-company-select>-->
