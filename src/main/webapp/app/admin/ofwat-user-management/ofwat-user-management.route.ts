@@ -10,7 +10,7 @@ import { ModifyLoginComponent } from "./config/modify-login.component";
 import { ModifyMobileComponent } from "./config/modify-mobile.component";
 import { ModifyRolesComponent } from "./config/modify-roles.component";
 import { ModifyEmailComponent } from "./config/modify-email.component";
-
+import { ModifyPasswordComponent } from "./config/modify-password.component";
 @Injectable()
 export class UserResolveOfwat implements CanActivate {
 
@@ -78,7 +78,7 @@ export const ofwatUserMgmtRoute: Routes = [
     },
     {
         path: 'ofwat-user-management/:login/password',
-        component: ModifyMobileComponent,
+        component: ModifyPasswordComponent,
         data: {
             pageTitle: 'Reset password'
         }

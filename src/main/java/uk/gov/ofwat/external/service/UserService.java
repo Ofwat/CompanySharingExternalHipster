@@ -234,6 +234,11 @@ public class UserService {
                 user.setLangKey(userDTO.getLangKey());
                 user.setMobileTelephoneNumber(userDTO.getMobileTelephoneNumber());
                 user.setEnabled(userDTO.getEnabled());
+
+                String encryptedPassword = passwordEncoder.encode(userDTO.getPassword());
+                user.setPassword(encryptedPassword);
+                user.setPasswordLastChangeDate(Instant.now());
+
                 Set<Authority> managedAuthorities = user.getAuthorities();
                 managedAuthorities.clear();
                 userDTO.getAuthorities().stream()

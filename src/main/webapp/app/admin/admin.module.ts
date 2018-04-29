@@ -15,6 +15,7 @@ import {ModifyEmailComponent} from './ofwat-user-management/config/modify-email.
 import {ModifyLoginComponent} from './ofwat-user-management/config/modify-login.component';
 import {ModifyMobileComponent} from './ofwat-user-management/config/modify-mobile.component';
 import {ModifyRolesComponent} from './ofwat-user-management/config/modify-roles.component';
+import {ModifyPasswordComponent} from './ofwat-user-management/config/modify-password.component';
 /* jhipster-needle-add-admin-module-import - JHipster will add admin modules imports here */
 
 import {
@@ -71,6 +72,7 @@ import {
         ModifyEmailComponent,
         ModifyLoginComponent,
         ModifyMobileComponent,
+        ModifyPasswordComponent,
         ModifyRolesComponent,
         LogsComponent,
         JhiConfigurationComponent,
@@ -91,6 +93,7 @@ import {
         ModifyRolesComponent,
         ModifyCompaniesComponent,
         ModifyMobileComponent,
+        ModifyPasswordComponent,
         UserMgmtDeleteDialogComponent,
         JhiHealthModalComponent,
         JhiMetricsMonitoringModalComponent,
