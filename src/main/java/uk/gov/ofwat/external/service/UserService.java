@@ -22,6 +22,8 @@ import org.springframework.transaction.annotation.Transactional;
 import uk.gov.ofwat.external.repository.AuthorityRepository;
 import uk.gov.ofwat.external.repository.PersistentTokenRepository;
 import uk.gov.ofwat.external.repository.UserRepository;
+import uk.gov.ofwat.external.web.rest.vm.ManagedUserVM;
+
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -218,30 +220,32 @@ public class UserService {
     /**
      * Update all information for a specific user, and return the modified user.
      *
-     * @param userDTO user to update
+     * @param userDetails user to update
      * @return updated user
      */
-    public java.util.Optional<UserDTO> updateUser(UserDTO userDTO) {
+    public java.util.Optional<UserDTO> updateUser(ManagedUserVM userDetails) {
         return Optional.of(userRepository
-            .findOne(userDTO.getId()))
+            .findOne(userDetails.getId()))
             .map(user -> {
-                user.setLogin(userDTO.getLogin());
-                user.setFirstName(userDTO.getFirstName());
-                user.setLastName(userDTO.getLastName());
-                user.setEmail(userDTO.getEmail());
-                user.setImageUrl(userDTO.getImageUrl());
-                user.setActivated(userDTO.isActivated());
-                user.setLangKey(userDTO.getLangKey());
-                user.setMobileTelephoneNumber(userDTO.getMobileTelephoneNumber());
-                user.setEnabled(userDTO.getEnabled());
+                user.setLogin(userDetails.getLogin());
+                user.setFirstName(userDetails.getFirstName());
+                user.setLastName(userDetails.getLastName());
+                user.setEmail(userDetails.getEmail());
+                user.setImageUrl(userDetails.getImageUrl());
+                user.setActivated(userDetails.isActivated());
+                user.setLangKey(userDetails.getLangKey());
+                user.setMobileTelephoneNumber(userDetails.getMobileTelephoneNumber());
+                user.setEnabled(userDetails.getEnabled());
 
-                String encryptedPassword = passwordEncoder.encode(userDTO.getPassword());
-                user.setPassword(encryptedPassword);
-                user.setPasswordLastChangeDate(Instant.now());
+                if(userDetails.getPassword()!=null) {
+                    String encryptedPassword = passwordEncoder.encode(userDetails.getPassword());
+                    user.setPassword(encryptedPassword);
+                    user.setPasswordLastChangeDate(Instant.now());
+                }
 
                 Set<Authority> managedAuthorities = user.getAuthorities();
                 managedAuthorities.clear();
-                userDTO.getAuthorities().stream()
+                userDetails.getAuthorities().stream()
                     .map(authorityRepository::findOne)
                     .forEach(managedAuthorities::add);
                 log.debug("Changed Information for User: {}", user);

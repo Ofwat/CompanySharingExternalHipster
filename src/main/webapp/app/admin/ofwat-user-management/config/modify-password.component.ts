@@ -15,7 +15,9 @@ export class ModifyPasswordComponent implements OnInit {
     private subscription: Subscription;
     private user: User;
     private error = false;
+    private errorDontMatch=false;
     private isSaving = false;
+    confirmPassword:string;
 
     constructor(
         private userService: UserService,
@@ -27,6 +29,8 @@ export class ModifyPasswordComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.error=false;
+        this.errorDontMatch=false;
         this.subscription = this.route.params.subscribe((params) => {
             this.load(params['login']);
         });
@@ -39,16 +43,22 @@ export class ModifyPasswordComponent implements OnInit {
     }
 
     save(user: User){
-        this.isSaving = true;
-        if (this.user.id !== null) {
-            this.userService.update(this.user).subscribe((response) => this.onSaveSuccess(response, false), () => this.onSaveError());
+        if(this.user.password!=this.confirmPassword){
+            this.errorDontMatch=true;
         } else {
-            this.user.langKey = 'en';
-            this.userService.create(this.user).subscribe((response) => this.onSaveSuccess(response, true), () => this.onSaveError());
+            this.isSaving = true;
+            if (this.user.id !== null) {
+                this.userService.update(this.user).subscribe((response) => this.onSaveSuccess(response, false), () => this.onSaveError());
+            } else {
+                this.user.langKey = 'en';
+                this.userService.create(this.user).subscribe((response) => this.onSaveSuccess(response, true), () => this.onSaveError());
+            }
         }
     }
 
     private onSaveSuccess(result, isCreated: boolean) {
+        this.error=false;
+        this.errorDontMatch=false;
         this.alertService.success(
             isCreated ? ` Password for [<b>{{user.login}} </b>] was changed succesfully`
                 : `A user is updated with password `,
@@ -59,6 +69,7 @@ export class ModifyPasswordComponent implements OnInit {
 
     private onSaveError() {
         this.isSaving = false;
+        this.error=true;
     }
 
     clear(){
