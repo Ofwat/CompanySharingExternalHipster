@@ -7,15 +7,14 @@ import { User } from '../../../shared/user/user.model';
 import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
 
 @Component({
-    selector: 'jhi-ofwat-modify-roles',
-    templateUrl: './modify-roles.component.html'
+    selector: 'jhi-ofwat-modify-accountstatus',
+    templateUrl: './modify-accountstatus.component.html'
 })
-export class ModifyRolesComponent implements OnInit {
+export class ModifyAccountStatusComponent implements OnInit {
 
     private subscription: Subscription;
     private user: User;
     private error = false;
-    private errorDontMatch=false;
     private isSaving = false;
     confirmPassword:string;
 
@@ -30,7 +29,6 @@ export class ModifyRolesComponent implements OnInit {
 
     ngOnInit() {
         this.error=false;
-        this.errorDontMatch=false;
         this.subscription = this.route.params.subscribe((params) => {
             this.load(params['login']);
         });
@@ -43,9 +41,6 @@ export class ModifyRolesComponent implements OnInit {
     }
 
     save(user: User){
-        if(this.user.password!=this.confirmPassword){
-            this.errorDontMatch=true;
-        } else {
             this.isSaving = true;
             if (this.user.id !== null) {
                 this.userService.update(this.user).subscribe((response) => this.onSaveSuccess(response, false), () => this.onSaveError());
@@ -53,15 +48,18 @@ export class ModifyRolesComponent implements OnInit {
                 this.user.langKey = 'en';
                 this.userService.create(this.user).subscribe((response) => this.onSaveSuccess(response, true), () => this.onSaveError());
             }
-        }
     }
+
+    setActive(user, isActivated) {
+        user.activated = isActivated;
+    }
+
 
     private onSaveSuccess(result, isCreated: boolean) {
         this.error=false;
-        this.errorDontMatch=false;
         this.alertService.success(
-            isCreated ? ` Password for [<b>{{user.login}} </b>] was changed succesfully`
-                : `A user is updated with password `,
+            isCreated ? ` Account Status for [<b>{{user.login}} </b>] was changed succesfully`
+                : `A user is updated with status `,
             { param1:'test param 1' }, null);
         this.eventManager.broadcast({ name: 'userListModification', content: 'OK' });
         this.isSaving = false;

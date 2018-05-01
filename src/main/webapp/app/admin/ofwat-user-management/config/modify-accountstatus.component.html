@@ -1,0 +1,33 @@
+<main id="content" role="main" tabindex="-1">
+    <div *ngIf="user">
+        <h1 class="heading-large">Change Account Status {{user.login}} </h1>
+        <div class="grid-row">
+            <div class="column-full">
+                <jhi-alert></jhi-alert>
+                <div class="error-summary" role="alert" aria-labelledby="error-summary" *ngIf="error">
+                    <strong>Account Status change failed.</strong> Please try again later.
+                </div>
+            </div>
+            <div class="column-full">
+                <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+                    <td>
+                        <button class="btn btn-danger btn-sm" (click)="setActive(user, true)" *ngIf="!user.activated"
+                        >Deactivated</button>
+                        <button class="btn btn-success btn-sm" (click)="setActive(user, false)" *ngIf="user.activated"
+                                [disabled]="currentAccount.login === user.login">Activated</button>
+                    </td>
+
+                    <div class="form-group">
+                    </div>
+                    <div class="form-group">
+                    </div>
+                    <div class="page-footer">
+                        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="button" value="Save">Save</button>
+                        <button type="button" class="page-footer-back-link" [routerLink]="['/ofwat-user-management/'+ user.login]">Back to your profile</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>

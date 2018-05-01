@@ -11,6 +11,8 @@ import { ModifyMobileComponent } from "./config/modify-mobile.component";
 import { ModifyRolesComponent } from "./config/modify-roles.component";
 import { ModifyEmailComponent } from "./config/modify-email.component";
 import { ModifyPasswordComponent } from "./config/modify-password.component";
+import { ModifyAccountStatusComponent } from "./config/modify-accountstatus.component";
+
 @Injectable()
 export class UserResolveOfwat implements CanActivate {
 
@@ -67,6 +69,13 @@ export const ofwatUserMgmtRoute: Routes = [
         component: ModifyEmailComponent,
         data: {
             pageTitle: 'Modify email'
+        }
+    },
+    {
+        path: 'ofwat-user-management/:login/accountstatus',
+        component: ModifyAccountStatusComponent,
+        data: {
+            pageTitle: 'Modify Account Status'
         }
     },
     {
