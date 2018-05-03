@@ -28,6 +28,7 @@ export {ErrorMessageComponent} from './messages/error.message';
 export {SuccessMessageComponent} from './messages/success.message';
 export {InfoMessageComponent} from './messages/info.message';
 export * from './data-collection/data-collection.model';
+export {GenericServerMessageService} from './messages/generic.servermessage';
 export * from './data-collection/data-collection.service';
 export * from './company-data-collection/company-data-collection.model';
 export * from './company-data-collection/company-data-collection.service';

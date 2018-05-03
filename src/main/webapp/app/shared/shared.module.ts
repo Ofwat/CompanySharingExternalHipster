@@ -8,7 +8,7 @@ import {WarningMessageComponent} from './messages/warning.message';
 import {ErrorMessageComponent} from './messages/error.message';
 import {SuccessMessageComponent} from './messages/success.message';
 import {InfoMessageComponent} from './messages/info.message';
-
+import {GenericServerMessageService} from './messages/generic.servermessage';
 
 import {
     CompanySharingExternalSharedLibsModule,
@@ -40,6 +40,7 @@ import {
         ErrorMessageComponent,
         SuccessMessageComponent,
         InfoMessageComponent,
+        GenericServerMessageService,
         PublishingStatusSelectComponent,
         UserSelectComponent,
 
@@ -67,6 +68,7 @@ import {
         ErrorMessageComponent,
         SuccessMessageComponent,
         InfoMessageComponent,
+        GenericServerMessageService,
         PublishingStatusSelectComponent,
         UserSelectComponent
     ],

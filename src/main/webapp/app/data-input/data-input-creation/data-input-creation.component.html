@@ -1,12 +1,8 @@
 <div>
-
-    <div>
-       <!-- <jhi-message *ngIf="dspMsg"  [message]="msg" [successCode]="successCode" [errorCode]="errorCode" [infoCode]="infoCode" [warningCode]="warningCode"   (msgStatusChange)="onMessageStatusChange($event)"></jhi-message>-->
+     <div>
         <div class="loader" *ngIf="spinnerShown"></div>
-        <warningmsg [message]="msg" [hidden]="warnHide" (warningStatusChange)="onMessageStatusChange($event)"></warningmsg>
-        <errormsg [message]="msg" [hidden]="errorHide" (errorStatusChange)="onMessageStatusChange($event)"></errormsg>
-        <successmsg [message]="msg" [hidden]="successHide" (successStatusChange)="onMessageStatusChange($event)"></successmsg>
-        <infomsg [message]="msg" [hidden]="infoHide" (infoStatusChange)="onMessageStatusChange($event)"></infomsg>
+        <jhi-gen-srv-msg [message]="msg" [warnHide]="warnHideParent" [successHide]="successHideParent"
+                         [errorHide]="errorHideParent" [infoHide]="infoHideParent" ></jhi-gen-srv-msg>
         <h2 class="heading-medium">Create Data Input for bundle: {{dataBundle?.name}}</h2>
 
         <div class="alert alert-success" *ngIf="success">
