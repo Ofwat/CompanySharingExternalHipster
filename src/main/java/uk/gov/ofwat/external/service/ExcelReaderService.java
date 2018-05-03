@@ -34,13 +34,7 @@ public class ExcelReaderService {
 
                 Row currentRow = datatypeSheet.getRow(rowNo);
                 if (null == currentRow) {
-                    for (int i = 0; i < headerCellCount; i++) {
-                        CellDto cellDto = new CellDto();
-                        System.out.print("--");
-                        cellDto.setValue("");
-                        rowDto.getCells().add(cellDto);
-                    }
-                    System.out.println();
+                    makeBlankRow(headerCellCount, rowNo, rowDto);
                     continue;
                 }
 
@@ -49,37 +43,66 @@ public class ExcelReaderService {
                     headerCellCount = lastCellNo;
                 }
                 for (int cellNo = 0; cellNo < lastCellNo; cellNo++) {
-                    CellDto cellDto = new CellDto();
+                    Cell currentCell = readExcelCell(currentRow, cellNo);
+                    CellDto cellDto = makeCell(rowNo, cellNo, currentCell);
                     rowDto.getCells().add(cellDto);
-                    Cell currentCell = currentRow.getCell(cellNo, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-
-                    if (currentCell.getCellTypeEnum() == CellType.STRING) {
-                        System.out.print(currentCell.getStringCellValue() + "--");
-                        cellDto.setValue(currentCell.getStringCellValue());
-                    } else if (currentCell.getCellTypeEnum() == CellType.NUMERIC) {
-                        System.out.print(currentCell.getNumericCellValue() + "--");
-                        cellDto.setValue("" + currentCell.getNumericCellValue());
-                    } else if (currentCell.getCellTypeEnum() == CellType.BLANK) {
-                        System.out.print("--");
-                        cellDto.setValue("");
-                    }
                 }
-                System.out.println();
-
             }
         } catch (IOException |InvalidFormatException e) {
             e.printStackTrace();
         }
-        addTrailingCells(tableDto.getRows().get(0), headerCellCount);
+        addTrailingCellsToRow(tableDto, 0, headerCellCount);
+        printTableDto(tableDto);
         return tableDto;
     }
 
-    private void addTrailingCells(RowDto rowDto, int totalCellsRequired) {
+    private void printTableDto(TableDto tableDto) {
+        System.out.println();
+        for (RowDto rowDto: tableDto.getRows()) {
+            for (CellDto cellDto: rowDto.getCells()) {
+                System.out.print("" + cellDto.getRow() + ":" + cellDto.getCol() + "[" + cellDto.getValue() + "]");
+            }
+            System.out.println();
+        }
+    }
+
+    private void makeBlankRow(int headerCellCount, int rowNo, RowDto rowDto) {
+        for (int cellNo = 0; cellNo < headerCellCount; cellNo++) {
+            CellDto cellDto = buildCellDto(rowNo, cellNo);
+            cellDto.setValue("");
+            rowDto.getCells().add(cellDto);
+        }
+    }
+
+    private CellDto makeCell(int rowNo, int cellNo, Cell currentCell) {
+        CellDto cellDto = buildCellDto(rowNo, cellNo);
+
+        if (currentCell.getCellTypeEnum() == CellType.STRING) {
+            cellDto.setValue(currentCell.getStringCellValue());
+        } else if (currentCell.getCellTypeEnum() == CellType.NUMERIC) {
+            cellDto.setValue("" + currentCell.getNumericCellValue());
+        } else if (currentCell.getCellTypeEnum() == CellType.BLANK) {
+            cellDto.setValue("");
+        }
+        return cellDto;
+    }
+
+    private CellDto buildCellDto(int rowNo, int cellNo) {
+        CellDto cellDto = new CellDto();
+        cellDto.setRow(rowNo);
+        cellDto.setCol(cellNo);
+        return cellDto;
+    }
+
+    private Cell readExcelCell(Row currentRow, int cellNo) {
+        return currentRow.getCell(cellNo, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
+    }
+
+    private void addTrailingCellsToRow(TableDto tableDto, int rowNo, int headerCellCount) {
+        RowDto rowDto = tableDto.getRows().get(0);
         int cellNo = rowDto.getCells().size();
-        cellNo++;
-        for (; cellNo <= totalCellsRequired; cellNo++) {
-            System.out.print("-" + cellNo + "-");
-            CellDto cellDto = new CellDto();
+        for (; cellNo < headerCellCount; cellNo++) {
+            CellDto cellDto = buildCellDto(rowNo, cellNo);
             cellDto.setValue("");
             rowDto.getCells().add(cellDto);
         }
