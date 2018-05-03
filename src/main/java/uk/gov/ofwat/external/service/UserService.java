@@ -130,7 +130,7 @@ public class UserService {
         String imageUrl, String langKey, String mobileTelephoneNumber) {
 
         User newUser = new User();
-        Authority authority = authorityRepository.findOne(AuthoritiesConstants.USER);
+        Authority authority = authorityRepository.findOne(AuthoritiesConstants.OFWAT_USER);
         Set<Authority> authorities = new HashSet<>();
         String encryptedPassword = passwordEncoder.encode(password);
         newUser.setLogin(login);
@@ -367,7 +367,7 @@ public class UserService {
 
     public Boolean isUserAdministrator(String login){
         return userRepository.findOneByLogin(login).get().getAuthorities().stream().anyMatch(authority -> {
-            return authority.getName().equals(AuthoritiesConstants.ADMIN);
+            return authority.getName().equals(AuthoritiesConstants.OFWAT_ADMIN);
         });
     }
 

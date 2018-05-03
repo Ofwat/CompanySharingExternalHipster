@@ -7,7 +7,7 @@ export const userProfileRoute: Routes = [
         component: UserProfileComponent,
         data: {
             pageTitle: 'User Profile',
-            authorities: ['ROLE_ADMIN', 'ROLE_USER']
+            authorities: ['ROLE_OFWAT_ADMIN', 'ROLE_OFWAT_USER']
         }
     }
 ];

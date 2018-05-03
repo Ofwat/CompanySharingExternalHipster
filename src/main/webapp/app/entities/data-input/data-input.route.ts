@@ -35,7 +35,7 @@ export const dataInputRoute: Routes = [
             'pagingParams': DataInputResolvePagingParams
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_OFWAT_USER'],
             pageTitle: 'DataInputs'
         },
         canActivate: [UserRouteAccessService]
@@ -43,7 +43,7 @@ export const dataInputRoute: Routes = [
         path: 'data-input/:id',
         component: DataInputDetailComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_OFWAT_USER'],
             pageTitle: 'DataInputs'
         },
         canActivate: [UserRouteAccessService]
@@ -55,7 +55,7 @@ export const dataInputPopupRoute: Routes = [
         path: 'data-input-new',
         component: DataInputPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_OFWAT_USER'],
             pageTitle: 'DataInputs'
         },
         canActivate: [UserRouteAccessService],
@@ -65,7 +65,7 @@ export const dataInputPopupRoute: Routes = [
         path: 'data-input/:id/edit',
         component: DataInputPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_OFWAT_USER'],
             pageTitle: 'DataInputs'
         },
         canActivate: [UserRouteAccessService],
@@ -75,7 +75,7 @@ export const dataInputPopupRoute: Routes = [
         path: 'data-input/:id/delete',
         component: DataInputDeletePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_OFWAT_USER'],
             pageTitle: 'DataInputs'
         },
         canActivate: [UserRouteAccessService],

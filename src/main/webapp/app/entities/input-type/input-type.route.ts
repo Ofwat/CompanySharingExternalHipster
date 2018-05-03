@@ -16,7 +16,7 @@ export const inputTypeRoute: Routes = [
         path: 'input-type',
         component: InputTypeComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_OFWAT_USER'],
             pageTitle: 'InputTypes'
         },
         canActivate: [UserRouteAccessService]
@@ -24,7 +24,7 @@ export const inputTypeRoute: Routes = [
         path: 'input-type/:id',
         component: InputTypeDetailComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_OFWAT_USER'],
             pageTitle: 'InputTypes'
         },
         canActivate: [UserRouteAccessService]
@@ -36,7 +36,7 @@ export const inputTypePopupRoute: Routes = [
         path: 'input-type-new',
         component: InputTypePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_OFWAT_USER'],
             pageTitle: 'InputTypes'
         },
         canActivate: [UserRouteAccessService],
@@ -46,7 +46,7 @@ export const inputTypePopupRoute: Routes = [
         path: 'input-type/:id/edit',
         component: InputTypePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_OFWAT_USER'],
             pageTitle: 'InputTypes'
         },
         canActivate: [UserRouteAccessService],
@@ -56,7 +56,7 @@ export const inputTypePopupRoute: Routes = [
         path: 'input-type/:id/delete',
         component: InputTypeDeletePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_OFWAT_USER'],
             pageTitle: 'InputTypes'
         },
         canActivate: [UserRouteAccessService],

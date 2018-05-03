@@ -118,7 +118,7 @@ public class AccountResource {
                                 managedUserVM.getFirstName(), managedUserVM.getLastName(),
                                 managedUserVM.getEmail().toLowerCase(), managedUserVM.getImageUrl(),
                                 managedUserVM.getLangKey(), managedUserVM.getMobileTelephoneNumber(), registrationRequest.get());
-                        companyService.addUserToCompany(managedUserVM.getCompanyId(), user, AuthoritiesConstants.USER);
+                        companyService.addUserToCompany(managedUserVM.getCompanyId(), user, AuthoritiesConstants.OFWAT_USER);
                         //mailService.sendActivationEmail(user);
                         otpService.generateOtpCode(user);
                         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -136,7 +136,7 @@ public class AccountResource {
     @PostMapping(path = "/invite",
         produces={MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_PLAIN_VALUE})
     @Timed
-    @Secured(AuthoritiesConstants.ADMIN)
+    @Secured(AuthoritiesConstants.OFWAT_ADMIN)
     public ResponseEntity inviteUser(@Valid @RequestBody ManagedUserVM managedUserVM) {
 
         HttpHeaders textPlainHeaders = new HttpHeaders();
@@ -166,7 +166,7 @@ public class AccountResource {
                             managedUserVM.getFirstName(), managedUserVM.getLastName(),
                             managedUserVM.getEmail().toLowerCase(), managedUserVM.getImageUrl(),
                             managedUserVM.getLangKey(), managedUserVM.getMobileTelephoneNumber());
-                    companyService.addUserToCompany(managedUserVM.getCompanyId(), user, AuthoritiesConstants.USER);
+                    companyService.addUserToCompany(managedUserVM.getCompanyId(), user, AuthoritiesConstants.OFWAT_USER);
                     mailService.sendActivationEmail(user);
                     otpService.generateOtpCode(user);
                     return new ResponseEntity<>(HttpStatus.CREATED);
@@ -177,7 +177,7 @@ public class AccountResource {
     @PostMapping(path = "/resend_invite",
         produces={MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_PLAIN_VALUE})
     @Timed
-    @Secured(AuthoritiesConstants.ADMIN)
+    @Secured(AuthoritiesConstants.OFWAT_ADMIN)
     public ResponseEntity inviteUser(@RequestBody String registrationRequestLogin) {
         HttpHeaders textPlainHeaders = new HttpHeaders();
         textPlainHeaders.setContentType(MediaType.TEXT_PLAIN);

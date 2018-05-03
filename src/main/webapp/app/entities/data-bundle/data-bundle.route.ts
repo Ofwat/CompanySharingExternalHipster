@@ -35,7 +35,7 @@ export const dataBundleRoute: Routes = [
             'pagingParams': DataBundleResolvePagingParams
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_OFWAT_USER'],
             pageTitle: 'DataBundles'
         },
         canActivate: [UserRouteAccessService]
@@ -43,7 +43,7 @@ export const dataBundleRoute: Routes = [
         path: 'data-bundle/:id',
         component: DataBundleDetailComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_OFWAT_USER'],
             pageTitle: 'DataBundles'
         },
         canActivate: [UserRouteAccessService]
@@ -55,7 +55,7 @@ export const dataBundlePopupRoute: Routes = [
         path: 'data-bundle-new',
         component: DataBundlePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_OFWAT_USER'],
             pageTitle: 'DataBundles'
         },
         canActivate: [UserRouteAccessService],
@@ -65,7 +65,7 @@ export const dataBundlePopupRoute: Routes = [
         path: 'data-bundle/:id/edit',
         component: DataBundlePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_OFWAT_USER'],
             pageTitle: 'DataBundles'
         },
         canActivate: [UserRouteAccessService],
@@ -75,7 +75,7 @@ export const dataBundlePopupRoute: Routes = [
         path: 'data-bundle/:id/delete',
         component: DataBundleDeletePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_OFWAT_USER'],
             pageTitle: 'DataBundles'
         },
         canActivate: [UserRouteAccessService],

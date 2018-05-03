@@ -117,7 +117,7 @@ public class RegistrationRequestServiceIntTest {
     public void testDeleteRegistrationRequest(){
         Company company = createCompany("Company 1");
         User admin = userRepository.findOneByLogin("admin").get();
-        companyService.addUserToCompany(company.getId(), admin, AuthoritiesConstants.ADMIN);
+        companyService.addUserToCompany(company.getId(), admin, AuthoritiesConstants.OFWAT_ADMIN);
         RegistrationRequest newRequest = registrationRequestService.createRegistrationRequest("test@test.com", "test", "smith", "test@test.com", "07000100100" , company.getId());
         assertThat(registrationRequestRepository.findOneByLogin("test@test.com").isPresent()).isTrue();
         registrationRequestService.deleteRegistrationRequest(newRequest.getLogin(), admin);
@@ -151,8 +151,8 @@ public class RegistrationRequestServiceIntTest {
         User admin = userRepository.findOneByLogin("admin").get();
         User nonAdmin = userService.createUser("johndoe", "johndoe", "John", "Doe", "john.doe@localhost", "http://placehold.it/50x50", "en-US", "077777077852");
         Company company1 = createCompany("Company 1");
-        companyService.addUserToCompany(company1.getId(), admin, AuthoritiesConstants.ADMIN);
-        companyService.addUserToCompany(company1.getId(), nonAdmin, AuthoritiesConstants.USER);
+        companyService.addUserToCompany(company1.getId(), admin, AuthoritiesConstants.OFWAT_ADMIN);
+        companyService.addUserToCompany(company1.getId(), nonAdmin, AuthoritiesConstants.OFWAT_USER);
 
         RegistrationRequest registrationRequest = registrationRequestService.createRegistrationRequest("test1@test.com", "test", "smith", "test1@test.com", "07000100100" , company1.getId());
         Optional<RegistrationRequest> rr = registrationRequestService.approveRegistrationRequest(registrationRequest.getLogin(), admin);
@@ -169,8 +169,8 @@ public class RegistrationRequestServiceIntTest {
         Company company = createCompany("Company 1");
         User admin = userRepository.findOneByLogin("admin").get();
         User user = userRepository.findOneByLogin("user").get();
-        companyService.addUserToCompany(company.getId(), admin, AuthoritiesConstants.ADMIN);
-        companyService.addUserToCompany(company.getId(), user, AuthoritiesConstants.USER);
+        companyService.addUserToCompany(company.getId(), admin, AuthoritiesConstants.OFWAT_ADMIN);
+        companyService.addUserToCompany(company.getId(), user, AuthoritiesConstants.OFWAT_USER);
         RegistrationRequest newRequest = registrationRequestService.createRegistrationRequest("test@test.com", "test", "smith", "test@test.com", "07000100100" , company.getId());
         assertThat(registrationRequestRepository.findOneByLogin("test@test.com").isPresent()).isTrue();
 
@@ -192,7 +192,7 @@ public class RegistrationRequestServiceIntTest {
     public void testWeCanResendRegistrationRequest(){
         Company company = createCompany("Company 1");
         User admin = userRepository.findOneByLogin("admin").get();
-        companyService.addUserToCompany(company.getId(), admin, AuthoritiesConstants.ADMIN);
+        companyService.addUserToCompany(company.getId(), admin, AuthoritiesConstants.OFWAT_ADMIN);
         RegistrationRequest newRequest = registrationRequestService.createRegistrationRequest("test@test.com", "test", "smith", "test@test.com", "07000100100" , company.getId());
         assertThat(registrationRequestRepository.findOneByLogin("test@test.com").isPresent()).isTrue();
 

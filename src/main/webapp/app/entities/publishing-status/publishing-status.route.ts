@@ -16,7 +16,7 @@ export const publishingStatusRoute: Routes = [
         path: 'publishing-status',
         component: PublishingStatusComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_OFWAT_USER'],
             pageTitle: 'PublishingStatuses'
         },
         canActivate: [UserRouteAccessService]
@@ -24,7 +24,7 @@ export const publishingStatusRoute: Routes = [
         path: 'publishing-status/:id',
         component: PublishingStatusDetailComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_OFWAT_USER'],
             pageTitle: 'PublishingStatuses'
         },
         canActivate: [UserRouteAccessService]
@@ -36,7 +36,7 @@ export const publishingStatusPopupRoute: Routes = [
         path: 'publishing-status-new',
         component: PublishingStatusPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_OFWAT_USER'],
             pageTitle: 'PublishingStatuses'
         },
         canActivate: [UserRouteAccessService],
@@ -46,7 +46,7 @@ export const publishingStatusPopupRoute: Routes = [
         path: 'publishing-status/:id/edit',
         component: PublishingStatusPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_OFWAT_USER'],
             pageTitle: 'PublishingStatuses'
         },
         canActivate: [UserRouteAccessService],
@@ -56,7 +56,7 @@ export const publishingStatusPopupRoute: Routes = [
         path: 'publishing-status/:id/delete',
         component: PublishingStatusDeletePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_OFWAT_USER'],
             pageTitle: 'PublishingStatuses'
         },
         canActivate: [UserRouteAccessService],

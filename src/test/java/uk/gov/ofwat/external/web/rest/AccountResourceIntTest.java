@@ -141,7 +141,7 @@ public class AccountResourceIntTest {
     public void testGetExistingAccount() throws Exception {
         Set<Authority> authorities = new HashSet<>();
         Authority authority = new Authority();
-        authority.setName(AuthoritiesConstants.ADMIN);
+        authority.setName(AuthoritiesConstants.OFWAT_ADMIN);
         authorities.add(authority);
 
         User user = new User();
@@ -164,7 +164,7 @@ public class AccountResourceIntTest {
             .andExpect(jsonPath("$.email").value("john.doe@jhipster.com"))
             .andExpect(jsonPath("$.imageUrl").value("http://placehold.it/50x50"))
             .andExpect(jsonPath("$.langKey").value("en"))
-            .andExpect(jsonPath("$.authorities").value(AuthoritiesConstants.ADMIN));
+            .andExpect(jsonPath("$.authorities").value(AuthoritiesConstants.OFWAT_ADMIN));
     }
 
     @Test
@@ -193,7 +193,7 @@ public class AccountResourceIntTest {
             null,                   // createdDate
             null,                   // lastModifiedBy
             null,                   // lastModifiedDate
-            new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)),
+            new HashSet<>(Collections.singletonList(AuthoritiesConstants.OFWAT_USER)),
             1L,
             "077777077852",
             true,
@@ -226,7 +226,7 @@ public class AccountResourceIntTest {
             null,                   // createdDate
             null,                   // lastModifiedBy
             null,                   // lastModifiedDate
-            new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)),
+            new HashSet<>(Collections.singletonList(AuthoritiesConstants.OFWAT_USER)),
             1L,
             "077777077852",
             true,
@@ -259,7 +259,7 @@ public class AccountResourceIntTest {
             null,                   // createdDate
             null,                   // lastModifiedBy
             null,                   // lastModifiedDate
-            new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)),
+            new HashSet<>(Collections.singletonList(AuthoritiesConstants.OFWAT_USER)),
             1L,
             "077777077852",
             true,
@@ -292,7 +292,7 @@ public class AccountResourceIntTest {
             null,                   // createdDate
             null,                   // lastModifiedBy
             null,                   // lastModifiedDate
-            new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)),
+            new HashSet<>(Collections.singletonList(AuthoritiesConstants.OFWAT_USER)),
             1L,
             "077777077852",
             true,
@@ -325,7 +325,7 @@ public class AccountResourceIntTest {
             null,                   // createdDate
             null,                   // lastModifiedBy
             null,                   // lastModifiedDate
-            new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)),
+            new HashSet<>(Collections.singletonList(AuthoritiesConstants.OFWAT_USER)),
             1L,
             "077777077852",
             true,
@@ -359,7 +359,7 @@ public class AccountResourceIntTest {
             null,                   // createdDate
             null,                   // lastModifiedBy
             null,                   // lastModifiedDate
-            new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)),
+            new HashSet<>(Collections.singletonList(AuthoritiesConstants.OFWAT_USER)),
             1L,
             "077777077852",
             true,
@@ -409,7 +409,7 @@ public class AccountResourceIntTest {
             null,                   // createdDate
             null,                   // lastModifiedBy
             null,                   // lastModifiedDate
-            new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)),
+            new HashSet<>(Collections.singletonList(AuthoritiesConstants.OFWAT_USER)),
             1L,
             "077777077852",
             true,
@@ -457,7 +457,7 @@ public class AccountResourceIntTest {
             null,                   // createdDate
             null,                   // lastModifiedBy
             null,                   // lastModifiedDate
-            new HashSet<>(Collections.singletonList(AuthoritiesConstants.ADMIN)),
+            new HashSet<>(Collections.singletonList(AuthoritiesConstants.OFWAT_ADMIN)),
             1L,
             "077777077852",
             true,
@@ -472,7 +472,7 @@ public class AccountResourceIntTest {
         Optional<User> userDup = userRepository.findOneByLogin("badguy");
         assertThat(userDup.isPresent()).isTrue();
         assertThat(userDup.get().getAuthorities()).hasSize(1)
-            .containsExactly(authorityRepository.findOne(AuthoritiesConstants.USER));
+            .containsExactly(authorityRepository.findOne(AuthoritiesConstants.OFWAT_USER));
     }
 
     @Test
@@ -528,7 +528,7 @@ public class AccountResourceIntTest {
             null,                   // createdDate
             null,                   // lastModifiedBy
             null,                   // lastModifiedDate
-            new HashSet<>(Collections.singletonList(AuthoritiesConstants.ADMIN)),
+            new HashSet<>(Collections.singletonList(AuthoritiesConstants.OFWAT_ADMIN)),
             "077777077852",
             true,
             Instant.now()
@@ -577,7 +577,7 @@ public class AccountResourceIntTest {
             null,                   // createdDate
             null,                   // lastModifiedBy
             null,                   // lastModifiedDate
-            new HashSet<>(Collections.singletonList(AuthoritiesConstants.ADMIN)),
+            new HashSet<>(Collections.singletonList(AuthoritiesConstants.OFWAT_ADMIN)),
             "077777077852",
             true,
             Instant.now()
@@ -625,7 +625,7 @@ public class AccountResourceIntTest {
             null,                   // createdDate
             null,                   // lastModifiedBy
             null,                   // lastModifiedDate
-            new HashSet<>(Collections.singletonList(AuthoritiesConstants.ADMIN)),
+            new HashSet<>(Collections.singletonList(AuthoritiesConstants.OFWAT_ADMIN)),
             "077777077852",
             true,
             Instant.now()
@@ -666,7 +666,7 @@ public class AccountResourceIntTest {
             null,                   // createdDate
             null,                   // lastModifiedBy
             null,                   // lastModifiedDate
-            new HashSet<>(Collections.singletonList(AuthoritiesConstants.ADMIN)),
+            new HashSet<>(Collections.singletonList(AuthoritiesConstants.OFWAT_ADMIN)),
             "077777077852",
             true,
             Instant.now()

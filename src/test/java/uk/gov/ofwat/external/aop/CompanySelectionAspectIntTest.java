@@ -84,17 +84,17 @@ public class CompanySelectionAspectIntTest {
 
         User admin = createTestUser("testAdmin");
         User user = createTestUser("testUser");
-        companyService.addUserToCompany(company1.getId(), admin, AuthoritiesConstants.ADMIN);
-        companyService.addUserToCompany(company2.getId(), admin, AuthoritiesConstants.ADMIN);
-        companyService.addUserToCompany(company1.getId(), user, AuthoritiesConstants.USER);
-        companyService.addUserToCompany(company3.getId(), user, AuthoritiesConstants.USER);
+        companyService.addUserToCompany(company1.getId(), admin, AuthoritiesConstants.OFWAT_ADMIN);
+        companyService.addUserToCompany(company2.getId(), admin, AuthoritiesConstants.OFWAT_ADMIN);
+        companyService.addUserToCompany(company1.getId(), user, AuthoritiesConstants.OFWAT_USER);
+        companyService.addUserToCompany(company3.getId(), user, AuthoritiesConstants.OFWAT_USER);
 
         //Set up mocks for the annotation.
         joinPoint = mock(ProceedingJoinPoint.class);
         aspectRoleFetcher = mock(AspectRoleFetcher.class);
         companyHeaderParser = mock(CompanyHeaderParser.class);
         ValidateUserCompany validateUserCompany = mock(ValidateUserCompany.class);
-        String[] authorities = new String[]{AuthoritiesConstants.ADMIN};
+        String[] authorities = new String[]{AuthoritiesConstants.OFWAT_ADMIN};
         when(aspectRoleFetcher.getRoles(joinPoint)).thenReturn(authorities);
         RequestAttributes requestAttributes = mock(RequestAttributes.class);
         RequestContextHolder.setRequestAttributes(requestAttributes);
@@ -124,7 +124,7 @@ public class CompanySelectionAspectIntTest {
     @WithMockUser(username="testuser", roles={"USER"})
     public void shouldAllowUser(){
         try {
-            String[] authorities = new String[]{AuthoritiesConstants.USER};
+            String[] authorities = new String[]{AuthoritiesConstants.OFWAT_USER};
             when(aspectRoleFetcher.getRoles(joinPoint)).thenReturn(authorities);
             Object response = companySelectionAspect.validateUserCompany(joinPoint);
             verify(joinPoint, times(1)).proceed();

@@ -35,7 +35,7 @@ export const dataCollectionRoute: Routes = [
             'pagingParams': DataCollectionResolvePagingParams
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_OFWAT_USER'],
             pageTitle: 'DataCollections'
         },
         canActivate: [UserRouteAccessService]
@@ -43,7 +43,7 @@ export const dataCollectionRoute: Routes = [
         path: 'data-collection/:id',
         component: DataCollectionDetailComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_OFWAT_USER'],
             pageTitle: 'DataCollections'
         },
         canActivate: [UserRouteAccessService]
@@ -55,7 +55,7 @@ export const dataCollectionPopupRoute: Routes = [
         path: 'data-collection-new',
         component: DataCollectionPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_OFWAT_USER'],
             pageTitle: 'DataCollections'
         },
         canActivate: [UserRouteAccessService],
@@ -65,7 +65,7 @@ export const dataCollectionPopupRoute: Routes = [
         path: 'data-collection/:id/edit',
         component: DataCollectionPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_OFWAT_USER'],
             pageTitle: 'DataCollections'
         },
         canActivate: [UserRouteAccessService],
@@ -75,7 +75,7 @@ export const dataCollectionPopupRoute: Routes = [
         path: 'data-collection/:id/delete',
         component: DataCollectionDeletePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_OFWAT_USER'],
             pageTitle: 'DataCollections'
         },
         canActivate: [UserRouteAccessService],

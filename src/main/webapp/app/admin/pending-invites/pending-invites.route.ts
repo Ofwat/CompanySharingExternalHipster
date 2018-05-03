@@ -27,7 +27,7 @@ export class UserResolveOfwatPendingInvites implements CanActivate {
     constructor(private principal: Principal) { }
 
     canActivate() {
-        return this.principal.identity().then((account) => this.principal.hasAnyAuthority(['ROLE_ADMIN', 'ROLE_COMPANY_ADMIN']));
+        return this.principal.identity().then((account) => this.principal.hasAnyAuthority(['ROLE_OFWAT_ADMIN', 'ROLE_COMPANY_ADMIN']));
     }
 }
 

@@ -35,7 +35,7 @@ export const companyDataBundleRoute: Routes = [
             'pagingParams': CompanyDataBundleResolvePagingParams
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_OFWAT_USER'],
             pageTitle: 'CompanyDataBundles'
         },
         canActivate: [UserRouteAccessService]
@@ -43,7 +43,7 @@ export const companyDataBundleRoute: Routes = [
         path: 'company-data-bundle/:id',
         component: CompanyDataBundleDetailComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_OFWAT_USER'],
             pageTitle: 'CompanyDataBundles'
         },
         canActivate: [UserRouteAccessService]
@@ -55,7 +55,7 @@ export const companyDataBundlePopupRoute: Routes = [
         path: 'company-data-bundle-new',
         component: CompanyDataBundlePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_OFWAT_USER'],
             pageTitle: 'CompanyDataBundles'
         },
         canActivate: [UserRouteAccessService],
@@ -65,7 +65,7 @@ export const companyDataBundlePopupRoute: Routes = [
         path: 'company-data-bundle/:id/edit',
         component: CompanyDataBundlePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_OFWAT_USER'],
             pageTitle: 'CompanyDataBundles'
         },
         canActivate: [UserRouteAccessService],
@@ -75,7 +75,7 @@ export const companyDataBundlePopupRoute: Routes = [
         path: 'company-data-bundle/:id/delete',
         component: CompanyDataBundleDeletePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_OFWAT_USER'],
             pageTitle: 'CompanyDataBundles'
         },
         canActivate: [UserRouteAccessService],

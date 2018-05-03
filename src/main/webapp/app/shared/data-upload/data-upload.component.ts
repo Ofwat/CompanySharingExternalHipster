@@ -18,6 +18,7 @@ export class UploadComponent implements OnInit  {
     errorDataInputExists: boolean;
     uploadedFileNames: any[];
     uploadedFile: any[];
+    spinnerShown = false;
 
     @ViewChild('fileInput') inputEl: ElementRef;
     constructor(private uploadService: UploadService) {
@@ -28,7 +29,7 @@ export class UploadComponent implements OnInit  {
 
 
     ngOnInit() {
-
+        this.spinnerShown = false;
     }
 
 
@@ -62,15 +63,17 @@ export class UploadComponent implements OnInit  {
                 }
             );*/
         } else {
-
+            this.spinnerShown = true;
             formData.append('companyInputId', this.valueCompanyInputId);
             this.uploadService.uploadCompany(formData).subscribe(
             response => {
                 console.log("success" + response.status);
                 this.success = true;
+                this.spinnerShown = false;
             },
             errorResponse => {
                 console.log("error" + errorResponse.status + errorResponse.statusText);
+                this.spinnerShown = false;
                 if (409 == errorResponse.status) {
                     this.errorDataInputExists = true;
                 }

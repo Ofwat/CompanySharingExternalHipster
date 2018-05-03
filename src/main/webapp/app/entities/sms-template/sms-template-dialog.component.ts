@@ -30,7 +30,7 @@ export class SmsTemplateDialogComponent implements OnInit {
 
     ngOnInit() {
         this.isSaving = false;
-        this.authorities = ['ROLE_USER', 'ROLE_ADMIN'];
+        this.authorities = ['ROLE_OFWAT_USER', 'ROLE_OFWAT_ADMIN'];
     }
 
     clear() {

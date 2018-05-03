@@ -16,7 +16,7 @@ export const smsTemplateRoute: Routes = [
         path: 'sms-template',
         component: SmsTemplateComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_OFWAT_USER'],
             pageTitle: 'SmsTemplates'
         },
         canActivate: [UserRouteAccessService]
@@ -24,7 +24,7 @@ export const smsTemplateRoute: Routes = [
         path: 'sms-template/:id',
         component: SmsTemplateDetailComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_OFWAT_USER'],
             pageTitle: 'SmsTemplates'
         },
         canActivate: [UserRouteAccessService]
@@ -36,7 +36,7 @@ export const smsTemplatePopupRoute: Routes = [
         path: 'sms-template-new',
         component: SmsTemplatePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_OFWAT_USER'],
             pageTitle: 'SmsTemplates'
         },
         canActivate: [UserRouteAccessService],
@@ -46,7 +46,7 @@ export const smsTemplatePopupRoute: Routes = [
         path: 'sms-template/:id/edit',
         component: SmsTemplatePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_OFWAT_USER'],
             pageTitle: 'SmsTemplates'
         },
         canActivate: [UserRouteAccessService],
@@ -56,7 +56,7 @@ export const smsTemplatePopupRoute: Routes = [
         path: 'sms-template/:id/delete',
         component: SmsTemplateDeletePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_OFWAT_USER'],
             pageTitle: 'SmsTemplates'
         },
         canActivate: [UserRouteAccessService],

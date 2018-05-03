@@ -35,6 +35,7 @@ export class DataInputCreationComponent implements OnInit {
     errorHide = true;
     successHide = true;
     infoHide = true;
+    spinnerShown: boolean=false;
 
     constructor(private alertService: JhiAlertService,
                 private dataInputService: DataInputService,
@@ -48,6 +49,7 @@ export class DataInputCreationComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.spinnerShown=false;
         this.success = false;
         this.error = false;
         this.errorDataInputExists = false;
@@ -136,6 +138,7 @@ export class DataInputCreationComponent implements OnInit {
     }
 
     create() {
+        this.spinnerShown=true;
         let formData = new FormData();
         this.dataInput.ownerId = this.selectedOwner.id;
         this.dataInput.reviewerId = this.selectedReviewer.id;
@@ -154,6 +157,7 @@ export class DataInputCreationComponent implements OnInit {
                 //this.success = true;
                 this.dataInput.fileName = 'Template.xlsx';
                 if (isNaN(this.dataInput.reportId)){
+                    this.spinnerShown=false;
                     this.processError(response,"ReportId needs to be numeric");
                     return;
                 }
@@ -163,6 +167,7 @@ export class DataInputCreationComponent implements OnInit {
                     response => {
                         console.log("success" + response.status);
                         //this.success = true;
+                        this.spinnerShown=false;
                         this.processSuccess();
 
                     },
@@ -170,6 +175,7 @@ export class DataInputCreationComponent implements OnInit {
                         console.log("error" + errorResponse.status + errorResponse.statusText);
                         this.msg = errorResponse.statusText;
                         this.errorHide = false;
+                        this.spinnerShown=false;
                         if (409 == errorResponse.status) {
                             //this.errorDataInputExists = true;
                             this.processError(errorResponse,"Data Input name is already in use! Please choose another one.");
@@ -184,6 +190,7 @@ export class DataInputCreationComponent implements OnInit {
 
             },
             errorResponse => {
+                this.spinnerShown=false;
                 this.processError(errorResponse,"");
             }
         );

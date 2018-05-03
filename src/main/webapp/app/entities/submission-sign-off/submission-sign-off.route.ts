@@ -16,7 +16,7 @@ export const submissionSignOffRoute: Routes = [
         path: 'submission-sign-off',
         component: SubmissionSignOffComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_OFWAT_USER'],
             pageTitle: 'SubmissionSignOffs'
         },
         canActivate: [UserRouteAccessService]
@@ -24,7 +24,7 @@ export const submissionSignOffRoute: Routes = [
         path: 'submission-sign-off/:id',
         component: SubmissionSignOffDetailComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_OFWAT_USER'],
             pageTitle: 'SubmissionSignOffs'
         },
         canActivate: [UserRouteAccessService]
@@ -36,7 +36,7 @@ export const submissionSignOffPopupRoute: Routes = [
         path: 'submission-sign-off-new',
         component: SubmissionSignOffPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_OFWAT_USER'],
             pageTitle: 'SubmissionSignOffs'
         },
         canActivate: [UserRouteAccessService],
@@ -46,7 +46,7 @@ export const submissionSignOffPopupRoute: Routes = [
         path: 'submission-sign-off/:id/edit',
         component: SubmissionSignOffPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_OFWAT_USER'],
             pageTitle: 'SubmissionSignOffs'
         },
         canActivate: [UserRouteAccessService],
@@ -56,7 +56,7 @@ export const submissionSignOffPopupRoute: Routes = [
         path: 'submission-sign-off/:id/delete',
         component: SubmissionSignOffDeletePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_OFWAT_USER'],
             pageTitle: 'SubmissionSignOffs'
         },
         canActivate: [UserRouteAccessService],

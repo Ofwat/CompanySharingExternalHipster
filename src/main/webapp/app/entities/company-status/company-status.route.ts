@@ -16,7 +16,7 @@ export const companyStatusRoute: Routes = [
         path: 'company-status',
         component: CompanyStatusComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_OFWAT_USER'],
             pageTitle: 'CompanyStatuses'
         },
         canActivate: [UserRouteAccessService]
@@ -24,7 +24,7 @@ export const companyStatusRoute: Routes = [
         path: 'company-status/:id',
         component: CompanyStatusDetailComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_OFWAT_USER'],
             pageTitle: 'CompanyStatuses'
         },
         canActivate: [UserRouteAccessService]
@@ -36,7 +36,7 @@ export const companyStatusPopupRoute: Routes = [
         path: 'company-status-new',
         component: CompanyStatusPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_OFWAT_USER'],
             pageTitle: 'CompanyStatuses'
         },
         canActivate: [UserRouteAccessService],
@@ -46,7 +46,7 @@ export const companyStatusPopupRoute: Routes = [
         path: 'company-status/:id/edit',
         component: CompanyStatusPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_OFWAT_USER'],
             pageTitle: 'CompanyStatuses'
         },
         canActivate: [UserRouteAccessService],
@@ -56,7 +56,7 @@ export const companyStatusPopupRoute: Routes = [
         path: 'company-status/:id/delete',
         component: CompanyStatusDeletePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_OFWAT_USER'],
             pageTitle: 'CompanyStatuses'
         },
         canActivate: [UserRouteAccessService],

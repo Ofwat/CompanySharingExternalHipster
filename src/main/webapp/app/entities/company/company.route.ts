@@ -35,7 +35,7 @@ export const companyRoute: Routes = [
             'pagingParams': CompanyResolvePagingParams
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_OFWAT_USER'],
             pageTitle: 'Companies'
         },
         canActivate: [UserRouteAccessService]
@@ -43,7 +43,7 @@ export const companyRoute: Routes = [
         path: 'company/:id',
         component: CompanyDetailComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_OFWAT_USER'],
             pageTitle: 'Companies'
         },
         canActivate: [UserRouteAccessService]
@@ -55,7 +55,7 @@ export const companyPopupRoute: Routes = [
         path: 'company-new',
         component: CompanyPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_OFWAT_USER'],
             pageTitle: 'Companies'
         },
         canActivate: [UserRouteAccessService],
@@ -65,7 +65,7 @@ export const companyPopupRoute: Routes = [
         path: 'company/:id/edit',
         component: CompanyPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_OFWAT_USER'],
             pageTitle: 'Companies'
         },
         canActivate: [UserRouteAccessService],
@@ -75,7 +75,7 @@ export const companyPopupRoute: Routes = [
         path: 'company/:id/delete',
         component: CompanyDeletePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_OFWAT_USER'],
             pageTitle: 'Companies'
         },
         canActivate: [UserRouteAccessService],

@@ -34,7 +34,7 @@ export class OfwatUserMgmtDetailComponent implements OnInit, OnDestroy {
 
     isOfwatEmployee() {
         // TODO This should check for the correct type of Role TBA!
-        return this.principal.hasAnyAuthorityDirect(['ROLE_ADMIN']);
+        return this.principal.hasAnyAuthorityDirect(['ROLE_OFWAT_ADMIN']);
     }
 
     ngOnDestroy() {

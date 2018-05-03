@@ -178,11 +178,6 @@ public class SecurityConfiguration{
         @Override
         protected void configure(HttpSecurity http) throws Exception {
             http
-/*            .securityContext().securityContextRepository(this.refreshingUserDetailsSecurityContextRepository(new HttpSessionSecurityContextRepository()))
-        .and()*/
-                //.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).and()
-                //.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-                //.and()
                 .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling()
                 .authenticationEntryPoint(http401UnauthorizedEntryPoint())
@@ -220,30 +215,28 @@ public class SecurityConfiguration{
                 .antMatchers("/api/account/verify_otp").permitAll()
                 .antMatchers("/api/account/request_account").permitAll()
                 .antMatchers("/api/account/request_details").permitAll()
-                .antMatchers("/api/account/request_details_resend").hasAnyAuthority(AuthoritiesConstants.ADMIN)
-                .antMatchers("/api/invite").hasAuthority(AuthoritiesConstants.ADMIN)
-                .antMatchers("/api/resend_invite").hasAuthority(AuthoritiesConstants.ADMIN)
-                .antMatchers("/api/users/pending_accounts/**").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.COMPANY_ADMIN)
-                .antMatchers("/api/users/companies/**").hasAuthority(AuthoritiesConstants.ADMIN)
-                .antMatchers("/api/data-inputs/**").hasAnyAuthority(AuthoritiesConstants.ADMIN)
-                .antMatchers("/api/data-collections/**").hasAnyAuthority(AuthoritiesConstants.ADMIN)
-                .antMatchers("/api/data-bundles/**").hasAnyAuthority(AuthoritiesConstants.ADMIN)
-                .antMatchers("/api/company-data-inputs/**").hasAnyAuthority(AuthoritiesConstants.ADMIN)
-                .antMatchers("/api/company-data-collections/**").hasAnyAuthority(AuthoritiesConstants.ADMIN)
-                .antMatchers("/api/company-data-bundles/**").hasAnyAuthority(AuthoritiesConstants.ADMIN)
-
-/*            .antMatchers("/api/account/verify_captcha").permitAll()*/
+                .antMatchers("/api/account/request_details_resend").hasAnyAuthority(AuthoritiesConstants.OFWAT_ADMIN)
+                .antMatchers("/api/invite").hasAuthority(AuthoritiesConstants.OFWAT_ADMIN)
+                .antMatchers("/api/resend_invite").hasAuthority(AuthoritiesConstants.OFWAT_ADMIN)
+                .antMatchers("/api/users/pending_accounts/**").hasAnyAuthority(AuthoritiesConstants.OFWAT_ADMIN, AuthoritiesConstants.COMPANY_ADMIN)
+                .antMatchers("/api/users/companies/**").hasAuthority(AuthoritiesConstants.OFWAT_ADMIN)
+                .antMatchers("/api/data-inputs/**").hasAnyAuthority(AuthoritiesConstants.OFWAT_ADMIN)
+                .antMatchers("/api/data-collections/**").hasAnyAuthority(AuthoritiesConstants.OFWAT_ADMIN)
+                .antMatchers("/api/data-bundles/**").hasAnyAuthority(AuthoritiesConstants.OFWAT_ADMIN)
+                .antMatchers("/api/company-data-inputs/**").hasAnyAuthority(AuthoritiesConstants.OFWAT_ADMIN)
+                .antMatchers("/api/company-data-collections/**").hasAnyAuthority(AuthoritiesConstants.OFWAT_ADMIN)
+                .antMatchers("/api/company-data-bundles/**").hasAnyAuthority(AuthoritiesConstants.OFWAT_ADMIN)
                 .antMatchers("/api/profile-info").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/companies").permitAll()
-          /*  .antMatchers("/api/**").authenticated()*/
                 .antMatchers("/api/data-download").permitAll()
                 .antMatchers("/api/data-download-file").permitAll()
                 .antMatchers("/management/health").permitAll()
-                .antMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN)
+                .antMatchers("/management/**").hasAuthority(AuthoritiesConstants.OFWAT_ADMIN)
                 .antMatchers("/v2/api-docs/**").permitAll()
                 .antMatchers("/swagger-resources/confresend_otpiguration/ui").permitAll()
                 .antMatchers("/content/js/download.js").permitAll()
-                .antMatchers("/swagger-ui/index.html").hasAuthority(AuthoritiesConstants.ADMIN)
+                .antMatchers("/swagger-ui/index.html").hasAuthority(AuthoritiesConstants.OFWAT_ADMIN)
+                .antMatchers("/datasubmission").hasAnyAuthority(AuthoritiesConstants.OFWAT_ADMIN,AuthoritiesConstants.OFWAT_USER)
                 .and()
                 .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
         }
