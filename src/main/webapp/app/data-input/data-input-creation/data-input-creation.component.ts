@@ -115,17 +115,20 @@ export class DataInputCreationComponent implements OnInit {
             let obj = JSON.parse(response);
             this.msg = obj.message;
         }
-        this.warnHideParent = false;
         this.errorHideParent = true;
-        this.successHideParent = false;
-        this.infoHideParent = false;
     }
 
     private processSuccess() {
         this.msg = "Data Input created";
+        this.successHideParent = true;
+    }
+
+    onMessageStatusChange() {
+        if(this.successHideParent)
+            this.router.navigate(['data-collection-management']);
         this.warnHideParent = false;
         this.errorHideParent = false;
-        this.successHideParent = true;
+        this.successHideParent= false;
         this.infoHideParent = false;
     }
 

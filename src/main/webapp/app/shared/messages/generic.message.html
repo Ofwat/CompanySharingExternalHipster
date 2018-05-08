@@ -1,8 +1,3 @@
-<!--    <warningmsg [message]="msg" [hidden]="warnHide" (warningStatusChange)="onMessageStatusChange($event)"></warningmsg>
-    <errormsg [message]="msg" [hidden]="errorHide" (errorStatusChange)="onMessageStatusChange($event)"></errormsg>
-    <successmsg [message]="msg" [hidden]="successHide" (successStatusChange)="onMessageStatusChange($event)"></successmsg>
-    <infomsg [message]="msg" [hidden]="infoHide" (infoStatusChange)="onMessageStatusChange($event)"></infomsg>-->
-
     <div *ngIf="errorHide"  class="error font-small animated fadeIn">
         <strong>Error: </strong> {{message}}
         <button class="btn btn-error" (click)="onMessageStatusChange()" type="submit"><span class="font-small">Ok</span></button>

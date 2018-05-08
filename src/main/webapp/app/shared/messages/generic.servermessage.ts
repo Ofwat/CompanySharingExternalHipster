@@ -1,7 +1,4 @@
-import {Component, Injectable, Input, EventEmitter, Output} from '@angular/core';
-import {Http} from '@angular/http';
-import { Observable } from 'rxjs/Rx';
-
+import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
 
 @Component({
     selector: 'jhi-gen-srv-msg',
@@ -10,20 +7,31 @@ import { Observable } from 'rxjs/Rx';
 })
 
 
-export class GenericServerMessageService {
+export class GenericServerMessageService implements OnChanges {
     @Input() message: string;
-
     @Input() warnHide = true;
     @Input() errorHide = true;
     @Input() successHide = true;
     @Input() infoHide = true;
-    constructor(private http: Http) { }
+    @Output() errorStatusChange = new EventEmitter();
+    @Output() infoStatusChange = new EventEmitter();
+    @Output() successStatusChange = new EventEmitter();
+    @Output() warningStatusChange = new EventEmitter();
 
+    constructor() {
+    }
     onMessageStatusChange() {
-        this.warnHide = false;
-        this.errorHide = false;
-        this.infoHide = false;
-        this.successHide = false;
+        if (this.errorHide)
+            this.errorStatusChange.emit();
+        if (this.infoHide)
+            this.infoStatusChange.emit();
+        if (this.warnHide)
+            this.warningStatusChange.emit();
+        if (this.successHide)
+            this.successStatusChange.emit();
     }
 
+    ngOnChanges(changes: SimpleChanges) {
+
+    }
 }

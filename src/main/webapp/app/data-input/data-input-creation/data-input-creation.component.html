@@ -2,7 +2,11 @@
      <div>
         <div class="loader" *ngIf="spinnerShown"></div>
         <jhi-gen-srv-msg [message]="msg" [warnHide]="warnHideParent" [successHide]="successHideParent"
-                         [errorHide]="errorHideParent" [infoHide]="infoHideParent" ></jhi-gen-srv-msg>
+                         [errorHide]="errorHideParent" [infoHide]="infoHideParent"
+                         (warningStatusChange)="onMessageStatusChange($event)"
+                         (errorStatusChange)="onMessageStatusChange($event)"
+                         (successStatusChange)="onMessageStatusChange($event)"
+                         (infoStatusChange)="onMessageStatusChange($event)"></jhi-gen-srv-msg>
         <h2 class="heading-medium">Create Data Input for bundle: {{dataBundle?.name}}</h2>
 
         <div class="alert alert-success" *ngIf="success">
