@@ -36,10 +36,13 @@ public class CacheConfiguration {
     @Bean
     public JCacheManagerCustomizer cacheManagerCustomizer() {
         return cm -> {
+            cm.createCache(uk.gov.ofwat.external.domain.Privilege.class.getName(), jcacheConfiguration);
             cm.createCache(uk.gov.ofwat.external.domain.User.class.getName(), jcacheConfiguration);
             cm.createCache(uk.gov.ofwat.external.domain.Authority.class.getName(), jcacheConfiguration);
             cm.createCache(uk.gov.ofwat.external.domain.User.class.getName() + ".authorities", jcacheConfiguration);
+            cm.createCache(uk.gov.ofwat.external.domain.User.class.getName() + ".privileges", jcacheConfiguration);
             cm.createCache(uk.gov.ofwat.external.domain.User.class.getName() + ".companyUserDetails", jcacheConfiguration);
+            cm.createCache(uk.gov.ofwat.external.domain.User.class.getName() + ".companyUserPrDetails", jcacheConfiguration);
             cm.createCache(uk.gov.ofwat.external.domain.PersistentToken.class.getName(), jcacheConfiguration);
             cm.createCache(uk.gov.ofwat.external.domain.User.class.getName() + ".persistentTokens", jcacheConfiguration);
             cm.createCache(uk.gov.ofwat.external.domain.User.class.getName() + ".companies", jcacheConfiguration);
@@ -55,6 +58,7 @@ public class CacheConfiguration {
             cm.createCache(uk.gov.ofwat.external.domain.data.DCSRow.class.getName(), jcacheConfiguration);
             cm.createCache(uk.gov.ofwat.external.domain.data.DCSCell.class.getName(), jcacheConfiguration);
             cm.createCache(uk.gov.ofwat.external.domain.CompanyUserDetails.class.getName(), jcacheConfiguration);
+            cm.createCache(uk.gov.ofwat.external.domain.CompanyUserPrivilegeDetails.class.getName(), jcacheConfiguration);
             cm.createCache(uk.gov.ofwat.external.domain.DataInput.class.getName() + ".reviewers", jcacheConfiguration);
             cm.createCache(uk.gov.ofwat.external.domain.CompanyDataCollection.class.getName(), jcacheConfiguration);
             cm.createCache(uk.gov.ofwat.external.domain.CompanyStatus.class.getName(), jcacheConfiguration);
@@ -68,6 +72,7 @@ public class CacheConfiguration {
             cm.createCache(uk.gov.ofwat.external.domain.CompanyDataInput.class.getName(), jcacheConfiguration);
             cm.createCache(uk.gov.ofwat.external.domain.CompanyDataInput.class.getName() + ".reviewSignOffs", jcacheConfiguration);
             cm.createCache(uk.gov.ofwat.external.domain.CompanyDataInput.class.getName() + ".submissionFiles", jcacheConfiguration);
+
             cm.createCache(uk.gov.ofwat.external.domain.DataJob.class.getName(), jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };

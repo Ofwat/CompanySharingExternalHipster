@@ -1,0 +1,154 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet author="cmel7 (generated)" id="1525875297963-1">
+        <createTable tableName="company_user_privilege_details">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="company_user_privilege_detailsPK"/>
+            </column>
+            <column name="created_by" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_by" type="VARCHAR(50)"/>
+            <column name="last_modified_date" type="TIMESTAMP"/>
+            <column name="company_id" type="BIGINT"/>
+            <column name="privilege_name" type="VARCHAR(50)"/>
+            <column name="user_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="cmel7 (generated)" id="1525875297963-2">
+        <createTable tableName="jhi_privilege">
+            <column name="name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="cmel7 (generated)" id="1525875297963-3">
+        <createTable tableName="jhi_user_privilege">
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="privilege_name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="cmel7 (generated)" id="1525875297963-4">
+        <addPrimaryKey columnNames="user_id, privilege_name" tableName="jhi_user_privilege"/>
+    </changeSet>
+    <changeSet author="cmel7 (generated)" id="1525875297963-5">
+        <addPrimaryKey columnNames="name" constraintName="jhi_privilegePK" tableName="jhi_privilege"/>
+    </changeSet>
+    <changeSet author="cmel7 (generated)" id="1525875297963-6">
+        <addForeignKeyConstraint baseColumnNames="rejection_codes_id" baseTableName="data_job"
+                                 constraintName="FK1wr0u8tjjhc3kenbew0y4tvxr" deferrable="false"
+                                 initiallyDeferred="false" referencedColumnNames="id"
+                                 referencedTableName="rejection_codes"/>
+    </changeSet>
+    <changeSet author="cmel7 (generated)" id="1525875297963-7">
+        <addForeignKeyConstraint baseColumnNames="company_id" baseTableName="table"
+                                 constraintName="FK2d3rfuqn3ipmx92i5k4j6wv8v" deferrable="false"
+                                 initiallyDeferred="false" referencedColumnNames="id" referencedTableName="company"/>
+    </changeSet>
+    <changeSet author="cmel7 (generated)" id="1525875297963-8">
+        <addForeignKeyConstraint baseColumnNames="privilege_name" baseTableName="jhi_user_privilege"
+                                 constraintName="FK799ce343y1qkaps5pgub43ful" deferrable="false"
+                                 initiallyDeferred="false" referencedColumnNames="name"
+                                 referencedTableName="jhi_privilege"/>
+    </changeSet>
+    <changeSet author="cmel7 (generated)" id="1525875297963-9">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="company_user_privilege_details"
+                                 constraintName="FKdm46q90n4c8muf0pmkoioc7mp" deferrable="false"
+                                 initiallyDeferred="false" referencedColumnNames="id" referencedTableName="jhi_user"/>
+    </changeSet>
+    <changeSet author="cmel7 (generated)" id="1525875297963-10">
+        <addForeignKeyConstraint baseColumnNames="company_id" baseTableName="company_user_privilege_details"
+                                 constraintName="FKiepernp13kpngo8bc85cmfcqf" deferrable="false"
+                                 initiallyDeferred="false" referencedColumnNames="id" referencedTableName="company"/>
+    </changeSet>
+    <changeSet author="cmel7 (generated)" id="1525875297963-11">
+        <addForeignKeyConstraint baseColumnNames="privilege_name" baseTableName="company_user_privilege_details"
+                                 constraintName="FKlcnc763i9n9o5p3k3w7gx9vre" deferrable="false"
+                                 initiallyDeferred="false" referencedColumnNames="name"
+                                 referencedTableName="jhi_privilege"/>
+    </changeSet>
+    <changeSet author="cmel7 (generated)" id="1525875297963-12">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="jhi_user_privilege"
+                                 constraintName="FKr1mksv7dumkwijlxohimfuueb" deferrable="false"
+                                 initiallyDeferred="false" referencedColumnNames="id" referencedTableName="jhi_user"/>
+    </changeSet>
+    <changeSet author="cmel7 (generated)" id="1525875297963-13">
+        <dropColumn columnName="DELETED" tableName="COMPANY"/>
+    </changeSet>
+    <changeSet author="cmel7 (generated)" id="1525875297963-14">
+        <addNotNullConstraint columnDataType="bigint" columnName="company_data_input_id" tableName="data_file"/>
+    </changeSet>
+    <changeSet author="cmel7 (generated)" id="1525875297963-15">
+        <addNotNullConstraint columnDataType="bigint" columnName="input_type_id" tableName="company_data_input"/>
+    </changeSet>
+    <changeSet author="cmel7 (generated)" id="1525875297963-16">
+        <dropNotNullConstraint columnDataType="varchar(50)" columnName="last_modified_by"
+                               tableName="company_data_bundle"/>
+    </changeSet>
+    <changeSet author="cmel7 (generated)" id="1525875297963-17">
+        <dropNotNullConstraint columnDataType="varchar(50)" columnName="last_modified_by"
+                               tableName="company_data_collection"/>
+    </changeSet>
+    <changeSet author="cmel7 (generated)" id="1525875297963-18">
+        <dropNotNullConstraint columnDataType="varchar(50)" columnName="last_modified_by"
+                               tableName="company_data_input"/>
+    </changeSet>
+    <changeSet author="cmel7 (generated)" id="1525875297963-19">
+        <dropNotNullConstraint columnDataType="varchar(50)" columnName="last_modified_by" tableName="data_file"/>
+    </changeSet>
+    <changeSet author="cmel7 (generated)" id="1525875297963-20">
+        <dropNotNullConstraint columnDataType="varchar(50)" columnName="last_modified_by" tableName="data_job"/>
+    </changeSet>
+    <changeSet author="cmel7 (generated)" id="1525875297963-21">
+        <dropNotNullConstraint columnDataType="timestamp" columnName="last_modified_date"
+                               tableName="company_data_bundle"/>
+    </changeSet>
+    <changeSet author="cmel7 (generated)" id="1525875297963-22">
+        <dropNotNullConstraint columnDataType="timestamp" columnName="last_modified_date"
+                               tableName="company_data_collection"/>
+    </changeSet>
+    <changeSet author="cmel7 (generated)" id="1525875297963-23">
+        <dropNotNullConstraint columnDataType="timestamp" columnName="last_modified_date"
+                               tableName="company_data_input"/>
+    </changeSet>
+    <changeSet author="cmel7 (generated)" id="1525875297963-24">
+        <dropNotNullConstraint columnDataType="timestamp" columnName="last_modified_date" tableName="data_file"/>
+    </changeSet>
+    <changeSet author="cmel7 (generated)" id="1525875297963-25">
+        <dropNotNullConstraint columnDataType="timestamp" columnName="last_modified_date" tableName="data_job"/>
+    </changeSet>
+    <changeSet author="cmel7 (generated)" id="1525875297963-26">
+        <addNotNullConstraint columnDataType="bigint" columnName="rejection_codes_id" tableName="data_job"/>
+    </changeSet>
+
+    <changeSet author="jtodd (generated)" id="1">
+
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/privileges.csv"
+                  separator=";"
+                  tableName="jhi_privilege"/>
+
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/users_privileges.csv"
+                  separator=";"
+                  tableName="jhi_user_privilege"/>
+
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/company_user_privilege_details.csv"
+                  separator=";"
+                  tableName="company_user_privilege_details">
+        </loadData>
+
+
+    </changeSet>
+</databaseChangeLog>
