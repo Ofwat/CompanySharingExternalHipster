@@ -30,15 +30,31 @@
                     <th scope="col" jhiSortBy="email"><span>Email</span> <span class="fa fa-sort"></span></th>
                     <th scope="col" ><span>Login</span></th>
                     <!--<th scope="col" jhiSortBy="enabled"><span>Enabled</span> <span class="fa fa-sort"></span></th>-->
-                    <th></th>
-                    <th></th>
+                    <th>Company</th>
+                    <th>
+                        <div>
+                            <label>Filter Companies: </label>
+                            <select (change)="filterCompanies($event.target.value)">
+                                <option value="0">--All--</option>
+                                <option *ngFor="let company of companies" value={{company.name}}>
+                                    {{company.name}}
+                                </option>
+                            </select>
+                        </div>
+
+                    </th>
                 </tr>
             </thead>
             <tbody *ngIf ="users">
                 <tr *ngFor="let user of users; trackBy: trackIdentity">
                     <td>{{user.email}}</td>
                     <td>{{user.login}}</td>
-                    <td><!--<span class="text-warning">Important message here</span>--></td>
+                    <td>
+
+
+
+
+                        <!--<span class="text-warning">Important message here</span>--></td>
 <!--
                     <td><span class="multiple-choice" ><input style="opacity: 1; top:-20px;" id="testField{{user.id}}" name="testField{{user.id}}" [ngModel]="user.enabled" type="checkbox" class="" (click)="checkbox(user)"></span></td>
 -->

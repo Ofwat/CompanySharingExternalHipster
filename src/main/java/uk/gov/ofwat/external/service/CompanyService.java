@@ -54,7 +54,7 @@ public class CompanyService {
     }
 
     /*Returns list of all Companies*/
-    List<Company> findAll(){
+    public List<Company> findAll(){
         return this.companyRepository.findAll();
     }
 

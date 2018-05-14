@@ -1,14 +1,16 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Response } from '@angular/http';
-import { ActivatedRoute, Router } from '@angular/router';
-import { JhiEventManager, JhiPaginationUtil, JhiParseLinks, JhiAlertService } from 'ng-jhipster';
+import {Component, OnInit, OnDestroy} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {JhiEventManager, JhiPaginationUtil, JhiParseLinks, JhiAlertService} from 'ng-jhipster';
 
-import { ITEMS_PER_PAGE, Principal, User, UserService, ResponseWrapper } from '../../shared';
-import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
+import {ITEMS_PER_PAGE, Principal, User, UserService, ResponseWrapper} from '../../shared';
+import {PaginationConfig} from '../../blocks/config/uib-pagination.config';
+import {Company} from "../../shared/company/company.model";
+import {CompanyService} from "../../shared/company/company.service";
 
 @Component({
     selector: 'jhi-ofwat-user-mgmt',
-    templateUrl: './ofwat-user-management.component.html'
+    templateUrl: './ofwat-user-management.component.html',
+    providers: [CompanyService]
 })
 export class OfwatUserMgmtComponent implements OnInit, OnDestroy {
 
@@ -25,6 +27,8 @@ export class OfwatUserMgmtComponent implements OnInit, OnDestroy {
     predicate: any;
     previousPage: any;
     reverse: any;
+    cacheCompanies: Company[];
+    companies: Company[];
 
     constructor(private userService: UserService,
                 private parseLinks: JhiParseLinks,
@@ -34,7 +38,8 @@ export class OfwatUserMgmtComponent implements OnInit, OnDestroy {
                 private paginationUtil: JhiPaginationUtil,
                 private paginationConfig: PaginationConfig,
                 private activatedRoute: ActivatedRoute,
-                private router: Router) {
+                private router: Router,
+                private companyService: CompanyService) {
         this.itemsPerPage = ITEMS_PER_PAGE;
         this.routeData = this.activatedRoute.data.subscribe((data) => {
             this.page = data['pagingParams'].page;
@@ -42,8 +47,24 @@ export class OfwatUserMgmtComponent implements OnInit, OnDestroy {
             this.reverse = data['pagingParams'].ascending;
             this.predicate = data['pagingParams'].predicate;
         });
+        this.companies = new Array();
+        this.cacheCompanies = new Array();
+        this.load();
+       }
+
+
+    load() {
+        this.companyService.fetchCompanies().subscribe((response) => this.onSaveSuccess(response), () => this.onSaveError());
     }
 
+    private onSaveSuccess(companies) {
+        this.companies=companies;
+        this.cacheCompanies=companies;
+    }
+    private onSaveError() {
+        this.error = true;
+        this.success = false;
+    }
     ngOnInit() {
         this.principal.identity().then((account) => {
             this.currentAccount = account;
@@ -159,6 +180,13 @@ export class OfwatUserMgmtComponent implements OnInit, OnDestroy {
 
         this.alertService.error('404', {}, null);
         this.alertService.success('Success', {}, null);
+    }
+
+    filterCompanies(filterVal: any) {
+        if (filterVal == "0")
+            this.companies = this.cacheCompanies;
+        else
+            this.companies = this.cacheCompanies.filter((item) => item.name == filterVal);
     }
 
     delete() {

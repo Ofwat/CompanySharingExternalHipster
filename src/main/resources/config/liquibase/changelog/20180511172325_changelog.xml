@@ -1,0 +1,43 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet author="cmel7 (generated)" id="1526055812668-1">
+        <addColumn tableName="company_user_details">
+            <column name="order_index" type="bigint">
+
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="cmel7 (generated)" id="1526055812668-2">
+        <addColumn tableName="company_user_privilege_details">
+            <column name="order_index" type="bigint">
+
+            </column>
+        </addColumn>
+    </changeSet>
+     <changeSet author="cmel (generated)" id="1">
+
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/privileges.csv"
+                  separator=";"
+                  tableName="jhi_privilege"/>
+
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/users_privileges.csv"
+                  separator=";"
+                  tableName="jhi_user_privilege"/>
+
+         <loadData encoding="UTF-8"
+                   file="config/liquibase/company_user_details.csv"
+                   separator=";"
+                   tableName="company_user_details">
+         </loadData>
+
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/company_user_privilege_details.csv"
+                  separator=";"
+                  tableName="company_user_privilege_details">
+        </loadData>
+
+
+    </changeSet>
+</databaseChangeLog>

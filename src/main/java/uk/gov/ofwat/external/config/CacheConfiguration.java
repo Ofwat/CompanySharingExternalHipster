@@ -42,12 +42,13 @@ public class CacheConfiguration {
             cm.createCache(uk.gov.ofwat.external.domain.User.class.getName() + ".authorities", jcacheConfiguration);
             cm.createCache(uk.gov.ofwat.external.domain.User.class.getName() + ".privileges", jcacheConfiguration);
             cm.createCache(uk.gov.ofwat.external.domain.User.class.getName() + ".companyUserDetails", jcacheConfiguration);
-            cm.createCache(uk.gov.ofwat.external.domain.User.class.getName() + ".companyUserPrDetails", jcacheConfiguration);
+            cm.createCache(uk.gov.ofwat.external.domain.User.class.getName() + ".companyUserPrivilegeDetails", jcacheConfiguration);
             cm.createCache(uk.gov.ofwat.external.domain.PersistentToken.class.getName(), jcacheConfiguration);
             cm.createCache(uk.gov.ofwat.external.domain.User.class.getName() + ".persistentTokens", jcacheConfiguration);
             cm.createCache(uk.gov.ofwat.external.domain.User.class.getName() + ".companies", jcacheConfiguration);
             cm.createCache(uk.gov.ofwat.external.domain.Company.class.getName(), jcacheConfiguration);
             cm.createCache(uk.gov.ofwat.external.domain.Company.class.getName() + ".companyUserDetails", jcacheConfiguration);
+            cm.createCache(uk.gov.ofwat.external.domain.Company.class.getName() + ".companyUserPrivilegeDetails", jcacheConfiguration);
             cm.createCache(NotifyMessageTemplate.class.getName(), jcacheConfiguration);
             cm.createCache(uk.gov.ofwat.external.domain.RegistrationRequest.class.getName(), jcacheConfiguration);
             cm.createCache(uk.gov.ofwat.external.domain.DataCollection.class.getName(), jcacheConfiguration);

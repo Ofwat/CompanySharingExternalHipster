@@ -131,7 +131,7 @@
         <addNotNullConstraint columnDataType="bigint" columnName="rejection_codes_id" tableName="data_job"/>
     </changeSet>
 
-    <changeSet author="jtodd (generated)" id="1">
+   <!-- <changeSet author="jtodd (generated)" id="1">
 
         <loadData encoding="UTF-8"
                   file="config/liquibase/privileges.csv"
@@ -150,5 +150,5 @@
         </loadData>
 
 
-    </changeSet>
+    </changeSet>-->
 </databaseChangeLog>

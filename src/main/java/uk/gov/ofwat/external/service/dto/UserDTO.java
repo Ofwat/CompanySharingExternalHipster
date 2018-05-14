@@ -3,12 +3,12 @@ package uk.gov.ofwat.external.service.dto;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import uk.gov.ofwat.external.config.Constants;
-import uk.gov.ofwat.external.domain.Authority;
-import uk.gov.ofwat.external.domain.User;
+import uk.gov.ofwat.external.domain.*;
 
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -55,26 +55,37 @@ public class UserDTO {
 
     private Set<String> authorities;
 
+   /* private Set<String> privileges;*/
+
     private Boolean enabled = false;
 
     private Instant passwordLastChangeDate;
 
+    private Set<CompanyUserDetails> companyUserDetails = new HashSet<>();
+
+    private Set<CompanyUserPrivilegeDetails> companyUserPrivilegeDetails = new HashSet<>();
+
     public UserDTO() {
         // Empty constructor needed for Jackson.
     }
+
 
     public UserDTO(User user) {
         this(user.getId(), user.getLogin(), user.getFirstName(), user.getLastName(),
             user.getEmail(), user.getActivated(), user.getImageUrl(), user.getLangKey(),
             user.getCreatedBy(), user.getCreatedDate(), user.getLastModifiedBy(), user.getLastModifiedDate(),
             user.getAuthorities().stream().map(Authority::getName)
-                .collect(Collectors.toSet()), user.getMobileTelephoneNumber(), user.getEnabled(), user.getPasswordLastChangeDate());
+                .collect(Collectors.toSet()), user.getMobileTelephoneNumber(), user.getEnabled(), user.getPasswordLastChangeDate(),
+           /* user.getPrivileges().stream().map(Privilege::getName).collect(Collectors.toSet()),*/
+            user.getCompanyUserDetails(),user.getCompanyUserPrivilegeDetails()
+            );
     }
 
     public UserDTO(Long id, String login, String firstName, String lastName,
         String email, boolean activated, String imageUrl, String langKey,
         String createdBy, Instant createdDate, String lastModifiedBy, Instant lastModifiedDate,
-        Set<String> authorities, String mobileTelephoneNumber, boolean enabled, Instant passwordLastChangeDate) {
+        Set<String> authorities, String mobileTelephoneNumber, boolean enabled, Instant passwordLastChangeDate,/*Set<String> privileges,*/
+                  Set<CompanyUserDetails> companyUserDetails, Set<CompanyUserPrivilegeDetails> companyUserPrivilegeDetails) {
 
         this.id = id;
         this.login = login;
@@ -92,6 +103,10 @@ public class UserDTO {
         this.mobileTelephoneNumber = mobileTelephoneNumber;
         this.enabled = enabled;
         this.passwordLastChangeDate = passwordLastChangeDate;
+       /* this.privileges = privileges;*/
+        this.companyUserDetails = companyUserDetails;
+        this.companyUserPrivilegeDetails = companyUserPrivilegeDetails;
+
     }
 
     public Long getId() {
@@ -181,6 +196,30 @@ public class UserDTO {
     public void setPasswordLastChangeDate(Instant passwordLastChangeDate) {
         this.passwordLastChangeDate = passwordLastChangeDate;
     }
+
+    public Set<CompanyUserDetails> getCompanyUserDetails() {
+        return companyUserDetails;
+    }
+
+    public void setCompanyUserDetails(Set<CompanyUserDetails> companyUserDetails) {
+        this.companyUserDetails = companyUserDetails;
+    }
+
+    public Set<CompanyUserPrivilegeDetails> getCompanyUserPrivilegeDetails() {
+        return companyUserPrivilegeDetails;
+    }
+
+    public void setCompanyUserPrivilegeDetails(Set<CompanyUserPrivilegeDetails> companyUserPrivilegeDetails) {
+        this.companyUserPrivilegeDetails = companyUserPrivilegeDetails;
+    }
+
+/*    public Set<String> getPrivileges() {
+        return privileges;
+    }
+
+    public void setPrivileges(Set<String> privileges) {
+        this.privileges = privileges;
+    }*/
 
     @Override
     public String toString() {

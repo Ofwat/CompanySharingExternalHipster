@@ -6,6 +6,7 @@ import org.hibernate.annotations.Fetch;
 import org.springframework.context.annotation.Role;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Entity
@@ -17,8 +18,11 @@ public class CompanyUserDetails extends AbstractAuditingEntity implements Serial
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
+
+    @JoinColumn(name="user_id")
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private User user;
 
     @JsonIgnore
@@ -27,6 +31,18 @@ public class CompanyUserDetails extends AbstractAuditingEntity implements Serial
 
     @ManyToOne
     private Authority authority;
+
+    @NotNull
+    @Column(name = "order_Index", nullable = false)
+    private Long orderIndex;
+
+    public Long getOrderIndex() {
+        return orderIndex;
+    }
+
+    public void setOrderIndex(Long orderIndex) {
+        this.orderIndex = orderIndex;
+    }
 
     public Authority getAuthority() {
         return authority;

@@ -1,10 +1,7 @@
 package uk.gov.ofwat.external.service;
 
 import org.hibernate.cfg.NotYetImplementedException;
-import uk.gov.ofwat.external.domain.Authority;
-import uk.gov.ofwat.external.domain.Company;
-import uk.gov.ofwat.external.domain.RegistrationRequest;
-import uk.gov.ofwat.external.domain.User;
+import uk.gov.ofwat.external.domain.*;
 import uk.gov.ofwat.external.repository.*;
 import uk.gov.ofwat.external.config.Constants;
 import uk.gov.ofwat.external.security.AuthoritiesConstants;
@@ -52,6 +49,8 @@ public class UserService {
 
     private final AuthorityRepository authorityRepository;
 
+    private final PrivilegeRepository privilegeRepository;
+
     private final CompanyRepository companyRepository;
 
     private final RegistrationRequestRepository registrationRequestRepository;
@@ -59,7 +58,7 @@ public class UserService {
     private final MailService mailService;
 
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, OTPService otpService, PersistentTokenRepository persistentTokenRepository,
-                       AuthorityRepository authorityRepository, CompanyRepository companyRepository, RegistrationRequestRepository registrationRequestRepository, MailService mailService) {
+                       AuthorityRepository authorityRepository, CompanyRepository companyRepository, RegistrationRequestRepository registrationRequestRepository, MailService mailService,PrivilegeRepository privilegeRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.otpService = otpService;
@@ -68,6 +67,7 @@ public class UserService {
         this.companyRepository = companyRepository;
         this.registrationRequestRepository = registrationRequestRepository;
         this.mailService = mailService;
+        this.privilegeRepository = privilegeRepository;
     }
 
     public Optional<User> activateRegistration(String key) {
@@ -185,6 +185,14 @@ public class UserService {
             user.setAuthorities(authorities);
         }
 
+/*        if (userDTO.getPrivileges() != null) {
+            Set<Privilege> privileges = new HashSet<>();
+            userDTO.getPrivileges().forEach(
+                authority -> privileges.add(privilegeRepository.findOne(authority))
+            );
+            user.setPrivileges(privileges);
+        }*/
+
         String encryptedPassword = passwordEncoder.encode(RandomUtil.generatePassword());
         user.setPassword(encryptedPassword);
         user.setPasswordLastChangeDate(Instant.now());
@@ -248,6 +256,13 @@ public class UserService {
                 userDetails.getAuthorities().stream()
                     .map(authorityRepository::findOne)
                     .forEach(managedAuthorities::add);
+
+
+/*                Set<Privilege> managedPrivileges = user.getPrivileges();
+                managedPrivileges.clear();
+                userDetails.getPrivileges().stream()
+                    .map(privilegeRepository::findOne)
+                    .forEach(managedPrivileges::add);*/
                 log.debug("Changed Information for User: {}", user);
                 return user;
             })

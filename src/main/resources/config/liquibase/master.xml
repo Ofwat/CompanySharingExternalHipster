@@ -71,4 +71,5 @@
     <include file="classpath:config/liquibase/changelog/20180404183422_add_entity_RejectionCodes.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20180404183422_add_data_RejectionCodes.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20180509151444_add_entity_privileges_and_values.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20180511172325_changelog.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>

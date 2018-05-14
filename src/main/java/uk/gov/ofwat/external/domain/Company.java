@@ -50,9 +50,15 @@ public class Company extends AbstractAuditingEntity implements Serializable {
     private Set<User> users = new HashSet<>();*/
 
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "company", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "company", fetch = FetchType.LAZY)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<CompanyUserDetails> companyUserDetails = new HashSet<>();
+
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "company", fetch = FetchType.LAZY)
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<CompanyUserPrivilegeDetails> companyUserPrivilegeDetails = new HashSet<>();
+
 
     public Long getId() {
         return id;
@@ -84,7 +90,15 @@ public class Company extends AbstractAuditingEntity implements Serializable {
         return this;
     }
 
-/*    public Company addUser(User user, Authority authority) {
+    public Set<CompanyUserPrivilegeDetails> getCompanyUserPrivilegeDetails() {
+        return companyUserPrivilegeDetails;
+    }
+
+    public void setCompanyUserPrivilegeDetails(Set<CompanyUserPrivilegeDetails> companyUserPrivilegeDetails) {
+        this.companyUserPrivilegeDetails = companyUserPrivilegeDetails;
+    }
+
+    /*    public Company addUser(User user, Authority authority) {
         this.users.add(user);
         user.getCompanies().add(this);
         return this;

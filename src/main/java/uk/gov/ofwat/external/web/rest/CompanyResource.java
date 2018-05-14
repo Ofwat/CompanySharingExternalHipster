@@ -1,6 +1,7 @@
 package uk.gov.ofwat.external.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import uk.gov.ofwat.external.domain.Company;
 import uk.gov.ofwat.external.service.CompanyService;
 import uk.gov.ofwat.external.web.rest.util.HeaderUtil;
 import uk.gov.ofwat.external.web.rest.util.PaginationUtil;
@@ -19,8 +20,11 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * REST controller for managing Company.
@@ -122,5 +126,27 @@ public class CompanyResource {
         log.debug("REST request to delete Company : {}", id);
         companyService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+    /**
+     * GET /fetch-companies
+     * List of all companies
+     * @return list of companies
+     */
+    @GetMapping("/fetch-companies")
+    @Timed
+    public ResponseEntity fetchAllCompanies() {
+        log.debug("REST request to get all Companies");
+
+        return ResponseEntity.ok()
+            .header("Content-Disposition", "attachment; companies=")
+            .body(companyService.findAll().stream().map(temp -> {
+                CompanyDTO obj = new CompanyDTO();
+                obj.setName(temp.getName());
+                obj.setId(temp.getId());
+                return obj;
+            }).collect(Collectors.toList())
+            );
+
     }
 }
