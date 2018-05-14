@@ -51,12 +51,14 @@ spring:
 #                prepStmtCacheSize: 250
 #                prepStmtCacheSqlLimit: 2048
 #                useServerPrepStmts: true
+
     jpa:
         database-platform: io.github.jhipster.domain.util.FixedH2Dialect
         database: H2
         show-sql: true
         properties:
             hibernate.id.new_generator_mappings: true
+            hibernate.enable_lazy_load_no_trans: true
             hibernate.cache.use_second_level_cache: true
             hibernate.cache.use_query_cache: false
             hibernate.generate_statistics: true
@@ -177,3 +179,6 @@ security:
      resource: 00000003-0000-0ff1-ce00-000000000000/ofwat.sharepoint.com@42a92f0e-996a-41b2-8512-3ed237ab8313
      url: https://accounts.accesscontrol.windows.net/42a92f0e-996a-41b2-8512-3ed237ab8313/tokens/OAuth/2
      uploadFolder: https://ofwat.sharepoint.com/sites/rms/pr-test/Data%20Capture%20System/
+
+
+

@@ -55,7 +55,7 @@ public class UserDTO {
 
     private Set<String> authorities;
 
-   /* private Set<String> privileges;*/
+    private Set<String> privileges;
 
     private Boolean enabled = false;
 
@@ -76,7 +76,7 @@ public class UserDTO {
             user.getCreatedBy(), user.getCreatedDate(), user.getLastModifiedBy(), user.getLastModifiedDate(),
             user.getAuthorities().stream().map(Authority::getName)
                 .collect(Collectors.toSet()), user.getMobileTelephoneNumber(), user.getEnabled(), user.getPasswordLastChangeDate(),
-           /* user.getPrivileges().stream().map(Privilege::getName).collect(Collectors.toSet()),*/
+            user.getPrivileges().stream().map(Privilege::getName).collect(Collectors.toSet()),
             user.getCompanyUserDetails(),user.getCompanyUserPrivilegeDetails()
             );
     }
@@ -84,7 +84,7 @@ public class UserDTO {
     public UserDTO(Long id, String login, String firstName, String lastName,
         String email, boolean activated, String imageUrl, String langKey,
         String createdBy, Instant createdDate, String lastModifiedBy, Instant lastModifiedDate,
-        Set<String> authorities, String mobileTelephoneNumber, boolean enabled, Instant passwordLastChangeDate,/*Set<String> privileges,*/
+        Set<String> authorities, String mobileTelephoneNumber, boolean enabled, Instant passwordLastChangeDate,Set<String> privileges,
                   Set<CompanyUserDetails> companyUserDetails, Set<CompanyUserPrivilegeDetails> companyUserPrivilegeDetails) {
 
         this.id = id;
@@ -103,7 +103,7 @@ public class UserDTO {
         this.mobileTelephoneNumber = mobileTelephoneNumber;
         this.enabled = enabled;
         this.passwordLastChangeDate = passwordLastChangeDate;
-       /* this.privileges = privileges;*/
+        this.privileges = privileges;
         this.companyUserDetails = companyUserDetails;
         this.companyUserPrivilegeDetails = companyUserPrivilegeDetails;
 
@@ -213,13 +213,9 @@ public class UserDTO {
         this.companyUserPrivilegeDetails = companyUserPrivilegeDetails;
     }
 
-/*    public Set<String> getPrivileges() {
+    public Set<String> getPrivileges() {
         return privileges;
     }
-
-    public void setPrivileges(Set<String> privileges) {
-        this.privileges = privileges;
-    }*/
 
     @Override
     public String toString() {

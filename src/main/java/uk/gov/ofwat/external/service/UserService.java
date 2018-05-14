@@ -185,13 +185,13 @@ public class UserService {
             user.setAuthorities(authorities);
         }
 
-/*        if (userDTO.getPrivileges() != null) {
+        if (userDTO.getPrivileges() != null) {
             Set<Privilege> privileges = new HashSet<>();
             userDTO.getPrivileges().forEach(
                 authority -> privileges.add(privilegeRepository.findOne(authority))
             );
             user.setPrivileges(privileges);
-        }*/
+        }
 
         String encryptedPassword = passwordEncoder.encode(RandomUtil.generatePassword());
         user.setPassword(encryptedPassword);
@@ -258,11 +258,11 @@ public class UserService {
                     .forEach(managedAuthorities::add);
 
 
-/*                Set<Privilege> managedPrivileges = user.getPrivileges();
+                Set<Privilege> managedPrivileges = user.getPrivileges();
                 managedPrivileges.clear();
                 userDetails.getPrivileges().stream()
                     .map(privilegeRepository::findOne)
-                    .forEach(managedPrivileges::add);*/
+                    .forEach(managedPrivileges::add);
                 log.debug("Changed Information for User: {}", user);
                 return user;
             })
