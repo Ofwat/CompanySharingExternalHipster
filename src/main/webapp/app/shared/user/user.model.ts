@@ -1,4 +1,5 @@
 import {Company} from '../../entities/company/company.model';
+import {CompanyUserDetails} from "../company-user-details/company.user.model";
 
 export class User {
     public id?: any;
@@ -9,7 +10,10 @@ export class User {
     public activated?: Boolean;
     public langKey?: string;
     public authorities?: any[];
+    public privileges?: any[];
     public companies?: Company[];
+    public companyUserDetails?: CompanyUserDetails[];
+    public companyUserPrivilegeDetails?: any[];
     public createdBy?: string;
     public createdDate?: Date;
     public lastModifiedBy?: string;
@@ -18,6 +22,7 @@ export class User {
     public enabled?: Boolean;
     public mobileTelephoneNumber: string;
     public passwordLastChangeDate: Date;
+    public companyNames?: any[];
 
     constructor(
         id?: any,
@@ -28,7 +33,10 @@ export class User {
         activated?: Boolean,
         langKey?: string,
         authorities?: any[],
+        privileges?: any[],
         companies?: Company[],
+        companyUserDetails?: CompanyUserDetails[],
+        companyUserPrivilegeDetails?: any[],
         createdBy?: string,
         createdDate?: Date,
         lastModifiedBy?: string,
@@ -36,7 +44,8 @@ export class User {
         password?: string,
         enabled?: Boolean,
         mobileTelephoneNumber?: string,
-        passwordLastChangeDate?: Date
+        passwordLastChangeDate?: Date,
+        companyNames?: any[],
     ) {
         this.id = id ? id : null;
         this.login = login ? login : null;
@@ -46,7 +55,10 @@ export class User {
         this.activated = activated ? activated : false;
         this.langKey = langKey ? langKey : null;
         this.authorities = authorities ? authorities : null;
+        this.privileges = privileges ? privileges : null;
         this.companies = companies ? this.companies : null;
+        this.companyUserDetails = companyUserDetails ? companyUserDetails : null;
+        this.companyUserPrivilegeDetails = companyUserPrivilegeDetails ? companyUserPrivilegeDetails : null;
         this.createdBy = createdBy ? createdBy : null;
         this.createdDate = createdDate ? createdDate : null;
         this.lastModifiedBy = lastModifiedBy ? lastModifiedBy : null;
@@ -55,5 +67,6 @@ export class User {
         this.enabled = enabled ? enabled : null;
         this.mobileTelephoneNumber = mobileTelephoneNumber ? mobileTelephoneNumber : null;
         this.passwordLastChangeDate = passwordLastChangeDate ? passwordLastChangeDate : null;
+        this.companyNames = companyNames ? companyNames : null;
     }
 }

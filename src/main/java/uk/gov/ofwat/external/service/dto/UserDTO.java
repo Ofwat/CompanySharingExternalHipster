@@ -61,9 +61,13 @@ public class UserDTO {
 
     private Instant passwordLastChangeDate;
 
-    private Set<CompanyUserDetails> companyUserDetails = new HashSet<>();
+    private Set<Company> companies;
 
-    private Set<CompanyUserPrivilegeDetails> companyUserPrivilegeDetails = new HashSet<>();
+    private Set<CompanyUserDetails> companyUserDetails;
+
+    private Set<CompanyUserPrivilegeDetails> companyUserPrivilegeDetails;
+
+    private Set<String> companyNames;
 
     public UserDTO() {
         // Empty constructor needed for Jackson.
@@ -76,8 +80,10 @@ public class UserDTO {
             user.getCreatedBy(), user.getCreatedDate(), user.getLastModifiedBy(), user.getLastModifiedDate(),
             user.getAuthorities().stream().map(Authority::getName)
                 .collect(Collectors.toSet()), user.getMobileTelephoneNumber(), user.getEnabled(), user.getPasswordLastChangeDate(),
-            user.getPrivileges().stream().map(Privilege::getName).collect(Collectors.toSet()),
-            user.getCompanyUserDetails(),user.getCompanyUserPrivilegeDetails()
+            user.getPrivileges().stream().map(Privilege::getName).collect(Collectors.toSet()),user.getCompanies(),
+            user.getCompanyUserDetails(),user.getCompanyUserPrivilegeDetails(),
+            user.getCompanies().stream().map(Company::getName)
+                .collect(Collectors.toSet())
             );
     }
 
@@ -85,7 +91,8 @@ public class UserDTO {
         String email, boolean activated, String imageUrl, String langKey,
         String createdBy, Instant createdDate, String lastModifiedBy, Instant lastModifiedDate,
         Set<String> authorities, String mobileTelephoneNumber, boolean enabled, Instant passwordLastChangeDate,Set<String> privileges,
-                  Set<CompanyUserDetails> companyUserDetails, Set<CompanyUserPrivilegeDetails> companyUserPrivilegeDetails) {
+                   Set<Company> companies, Set<CompanyUserDetails> companyUserDetails, Set<CompanyUserPrivilegeDetails> companyUserPrivilegeDetails,
+                   Set<String> companyNames) {
 
         this.id = id;
         this.login = login;
@@ -104,8 +111,10 @@ public class UserDTO {
         this.enabled = enabled;
         this.passwordLastChangeDate = passwordLastChangeDate;
         this.privileges = privileges;
+        this.companies=companies;
         this.companyUserDetails = companyUserDetails;
         this.companyUserPrivilegeDetails = companyUserPrivilegeDetails;
+        this.companyNames = companyNames;
 
     }
 
@@ -215,6 +224,66 @@ public class UserDTO {
 
     public Set<String> getPrivileges() {
         return privileges;
+    }
+
+    public void setPrivileges(Set<String> privileges) {
+        this.privileges = privileges;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public void setActivated(boolean activated) {
+        this.activated = activated;
+    }
+
+    public void setLangKey(String langKey) {
+        this.langKey = langKey;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public void setCreatedDate(Instant createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public void setLastModifiedBy(String lastModifiedBy) {
+        this.lastModifiedBy = lastModifiedBy;
+    }
+
+    public void setAuthorities(Set<String> authorities) {
+        this.authorities = authorities;
+    }
+
+    public Set<Company> getCompanies() {
+        return companies;
+    }
+
+    public void setCompanies(Set<Company> companies) {
+        this.companies = companies;
+    }
+
+    public Set<String> getCompanyNames() {
+        return companyNames;
+    }
+
+    public void setCompanyNames(Set<String> companyNames) {
+        this.companyNames = companyNames;
     }
 
     @Override

@@ -33,6 +33,13 @@ export class UserService {
             .map((res: Response) => this.convertResponse(res));
     }
 
+    getUserByCompany(req: any, companyId: number): Observable<ResponseWrapper> {
+        const options = createRequestOption(req);
+        options.params.append('companyId', companyId.toString());
+        return this.http.get(this.resourceUrl, options)
+            .map((res: Response) => this.convertResponse(res));
+    }
+
     delete(login: string): Observable<Response> {
         return this.http.delete(`${this.resourceUrl}/${login}`);
     }

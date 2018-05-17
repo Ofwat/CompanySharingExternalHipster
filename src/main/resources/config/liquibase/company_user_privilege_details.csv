@@ -12,3 +12,5 @@ id;created_by;last_modified_by;privilege_name;company_id;user_id;created_date;la
 11;admin;admin;USER;2;7;2017-11-12;2017-11-12;11
 12;admin;admin;ADMIN;2;8;2017-11-12;2017-11-12;12
 13;admin;admin;ADMIN;2;9;2018-03-25;2018-03-25;13
+14;admin;admin;ADMIN;6;1;2017-11-12;2017-11-12;12
+15;admin;admin;ADMIN;6;2;2018-03-25;2018-03-25;13

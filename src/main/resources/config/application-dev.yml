@@ -62,6 +62,10 @@ spring:
             hibernate.cache.use_second_level_cache: true
             hibernate.cache.use_query_cache: false
             hibernate.generate_statistics: true
+#           Can be enable to debug SQL logs
+#            hibernate.format_sql: true
+#            hibernate.use_sql_comments: true
+#            hibernate.show_sql: true
             hibernate.cache.region.factory_class: io.github.jhipster.config.jcache.NoDefaultJCacheRegionFactory
     mail:
         host: localhost
@@ -143,7 +147,10 @@ jhipster:
             host: localhost
             port: 5000
             queue-size: 512
-
+        #level:
+         #   org:
+          #    hibernate:
+           #     type: trace
 # ===================================================================
 # Application specific properties
 # Add your own application properties here, see the ApplicationProperties class

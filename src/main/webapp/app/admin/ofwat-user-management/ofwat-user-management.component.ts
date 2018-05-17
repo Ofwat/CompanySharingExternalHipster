@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnInit, OnDestroy, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {JhiEventManager, JhiPaginationUtil, JhiParseLinks, JhiAlertService} from 'ng-jhipster';
 
@@ -12,10 +12,10 @@ import {CompanyService} from "../../shared/company/company.service";
     templateUrl: './ofwat-user-management.component.html',
     providers: [CompanyService]
 })
-export class OfwatUserMgmtComponent implements OnInit, OnDestroy {
+export class OfwatUserMgmtComponent implements OnInit, OnDestroy, OnChanges {
 
     currentAccount: any;
-    users: User[];
+    @Input() users: User[];
     error: any;
     success: any;
     routeData: any;
@@ -28,7 +28,10 @@ export class OfwatUserMgmtComponent implements OnInit, OnDestroy {
     previousPage: any;
     reverse: any;
     cacheCompanies: Company[];
+    selectedCompanies: Company[];
     companies: Company[];
+    cName: String[];
+    companyId: number;
 
     constructor(private userService: UserService,
                 private parseLinks: JhiParseLinks,
@@ -49,26 +52,37 @@ export class OfwatUserMgmtComponent implements OnInit, OnDestroy {
         });
         this.companies = new Array();
         this.cacheCompanies = new Array();
+        this.selectedCompanies = new Array();
+        this.users = new Array();
+        this.cName = new Array();
         this.load();
-       }
+    }
 
 
     load() {
         this.companyService.fetchCompanies().subscribe((response) => this.onSaveSuccess(response), () => this.onSaveError());
     }
 
-    private onSaveSuccess(companies) {
-        this.companies=companies;
-        this.cacheCompanies=companies;
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes['users']) {
+            this.users = changes['users'].currentValue;
+        }
     }
+
+    private onSaveSuccess(companies) {
+        this.companies = companies;
+        this.cacheCompanies = companies;
+    }
+
     private onSaveError() {
         this.error = true;
         this.success = false;
     }
+
     ngOnInit() {
         this.principal.identity().then((account) => {
             this.currentAccount = account;
-            this.loadAll();
+            this.loadAll(0);
             this.registerChangeInUsers();
         });
     }
@@ -78,7 +92,7 @@ export class OfwatUserMgmtComponent implements OnInit, OnDestroy {
     }
 
     registerChangeInUsers() {
-        this.eventManager.subscribe('userListModification', (response) => this.loadAll());
+        this.eventManager.subscribe('userListModification', (response) => this.loadAll(0));
     }
 
     setActive(user, isActivated) {
@@ -89,7 +103,7 @@ export class OfwatUserMgmtComponent implements OnInit, OnDestroy {
                 if (response.status === 200) {
                     this.error = null;
                     this.success = 'OK';
-                    this.loadAll();
+                    this.loadAll(0);
                 } else {
                     this.success = null;
                     this.error = 'ERROR';
@@ -97,12 +111,13 @@ export class OfwatUserMgmtComponent implements OnInit, OnDestroy {
             });
     }
 
-    loadAll() {
-        this.userService.query({
+    loadAll(companyId:number) {
+        // TODO Make sure the correct company id is passed here!
+        this.userService.getUserByCompany({
             page: this.page - 1,
             size: this.itemsPerPage,
             sort: this.sort()
-        }).subscribe(
+        }, companyId).subscribe(
             (res: ResponseWrapper) => this.onSuccess(res.json, res.headers),
             (res: ResponseWrapper) => this.onError(res.json)
         );
@@ -134,7 +149,7 @@ export class OfwatUserMgmtComponent implements OnInit, OnDestroy {
                 sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
             }
         });
-        this.loadAll();
+        this.loadAll(0);
     }
 
     checkbox(user: User) {
@@ -157,13 +172,28 @@ export class OfwatUserMgmtComponent implements OnInit, OnDestroy {
                         }
                     }
                     // TODO display the error message outlet.
-                    this.loadAll();
+                    this.loadAll(0);
                     this.onError({error: this.error, message: 'Something went wrong - get this from i8n'});
                 }
             });
     }
 
+    getCNames(usr) {
+        this.cName = new Array();
+        if (usr.length !== 0) {
+
+            usr.companies.forEach((value) => {
+                this.cName.push(value.name)
+            });
+            return this.cName;
+        }
+
+
+    }
+
+
     private onSuccess(data, headers) {
+        this.users = new Array();
         this.links = this.parseLinks.parse(headers.get('link'));
         this.totalItems = headers.get('X-Total-Count');
         this.queryCount = this.totalItems;
@@ -182,11 +212,8 @@ export class OfwatUserMgmtComponent implements OnInit, OnDestroy {
         this.alertService.success('Success', {}, null);
     }
 
-    filterCompanies(filterVal: any) {
-        if (filterVal == "0")
-            this.companies = this.cacheCompanies;
-        else
-            this.companies = this.cacheCompanies.filter((item) => item.name == filterVal);
+    filterCompanies(companyId: any) {
+          this.loadAll(companyId);
     }
 
     delete() {

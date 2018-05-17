@@ -1,13 +1,5 @@
 package uk.gov.ofwat.external.service;
 
-import org.hibernate.cfg.NotYetImplementedException;
-import uk.gov.ofwat.external.domain.*;
-import uk.gov.ofwat.external.repository.*;
-import uk.gov.ofwat.external.config.Constants;
-import uk.gov.ofwat.external.security.AuthoritiesConstants;
-import uk.gov.ofwat.external.security.SecurityUtils;
-import uk.gov.ofwat.external.service.util.RandomUtil;
-import uk.gov.ofwat.external.service.dto.UserDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -16,18 +8,22 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import uk.gov.ofwat.external.repository.AuthorityRepository;
-import uk.gov.ofwat.external.repository.PersistentTokenRepository;
-import uk.gov.ofwat.external.repository.UserRepository;
+import uk.gov.ofwat.external.config.Constants;
+import uk.gov.ofwat.external.domain.Authority;
+import uk.gov.ofwat.external.domain.Privilege;
+import uk.gov.ofwat.external.domain.RegistrationRequest;
+import uk.gov.ofwat.external.domain.User;
+import uk.gov.ofwat.external.repository.*;
+import uk.gov.ofwat.external.security.AuthoritiesConstants;
+import uk.gov.ofwat.external.security.SecurityUtils;
+import uk.gov.ofwat.external.service.dto.UserDTO;
+import uk.gov.ofwat.external.service.util.RandomUtil;
 import uk.gov.ofwat.external.web.rest.vm.ManagedUserVM;
 
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -290,6 +286,10 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
+    public Page<UserDTO> getAllManagedUsersByCompany(Pageable pageable,Long companyId) {
+        return userRepository.getAllManagedUsersByCompany(companyId,pageable).map(UserDTO::new);
+    }
+    @Transactional(readOnly = true)
     public Optional<User> getUserWithAuthoritiesByLogin(String login) {
         return userRepository.findOneWithAuthoritiesByLogin(login);
     }
@@ -349,7 +349,10 @@ public class UserService {
     @Scheduled(initialDelay=60000, fixedRate=300000)
     public void resetOtpCounts(){
         log.debug("Starting reset OTP Counts for all users job.");
-        List<User> users = userRepository.findAll();
+        List<User> users = new ArrayList<>();
+            userRepository.findAll().forEach(x->{
+            users.add(x);
+        });
         for (User user : users) {
             log.debug("Resetting OTP count for user {}", user.getLogin());
             user = otpService.resetOtpCount(user);

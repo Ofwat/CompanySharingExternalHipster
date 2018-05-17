@@ -1,30 +1,10 @@
 package uk.gov.ofwat.external.web.rest;
 
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import uk.gov.ofwat.external.aop.company.ValidateUserCompany;
-import uk.gov.ofwat.external.config.Constants;
 import com.codahale.metrics.annotation.Timed;
-import uk.gov.ofwat.external.domain.Company;
-import uk.gov.ofwat.external.domain.RegistrationRequest;
-import uk.gov.ofwat.external.domain.User;
-import uk.gov.ofwat.external.repository.UserRepository;
-import uk.gov.ofwat.external.security.AuthoritiesConstants;
-import uk.gov.ofwat.external.security.SecurityUtils;
-import uk.gov.ofwat.external.service.CompanyService;
-import uk.gov.ofwat.external.service.Exception.UnableToRemoveUserException;
-import uk.gov.ofwat.external.service.MailService;
-import uk.gov.ofwat.external.service.RegistrationRequestService;
-import uk.gov.ofwat.external.service.UserService;
-import uk.gov.ofwat.external.service.dto.CompanyDTO;
-import uk.gov.ofwat.external.service.dto.UserDTO;
-import uk.gov.ofwat.external.service.mapper.CompanyDataBundleMapper;
-import uk.gov.ofwat.external.service.mapper.CompanyMapper;
-import uk.gov.ofwat.external.web.rest.vm.ManagedUserVM;
-import uk.gov.ofwat.external.web.rest.util.HeaderUtil;
-import uk.gov.ofwat.external.web.rest.util.PaginationUtil;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.jhipster.web.util.ResponseUtil;
 import io.swagger.annotations.ApiParam;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -33,13 +13,29 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import uk.gov.ofwat.external.aop.company.ValidateUserCompany;
+import uk.gov.ofwat.external.config.Constants;
+import uk.gov.ofwat.external.domain.Company;
+import uk.gov.ofwat.external.domain.RegistrationRequest;
+import uk.gov.ofwat.external.domain.User;
+import uk.gov.ofwat.external.repository.UserRepository;
+import uk.gov.ofwat.external.security.AuthoritiesConstants;
+import uk.gov.ofwat.external.service.CompanyService;
+import uk.gov.ofwat.external.service.Exception.UnableToRemoveUserException;
+import uk.gov.ofwat.external.service.MailService;
+import uk.gov.ofwat.external.service.RegistrationRequestService;
+import uk.gov.ofwat.external.service.UserService;
+import uk.gov.ofwat.external.service.dto.UserDTO;
+import uk.gov.ofwat.external.service.mapper.CompanyMapper;
+import uk.gov.ofwat.external.web.rest.util.HeaderUtil;
+import uk.gov.ofwat.external.web.rest.util.PaginationUtil;
+import uk.gov.ofwat.external.web.rest.vm.ManagedUserVM;
 
 import javax.validation.Valid;
-import javax.websocket.server.PathParam;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.security.Principal;
 import java.util.*;
 
 /**
@@ -183,10 +179,34 @@ public class UserResource {
     @GetMapping("/users")
     @Timed
     @ValidateUserCompany(roles = {AuthoritiesConstants.COMPANY_USER, AuthoritiesConstants.COMPANY_ADMIN})
-    public ResponseEntity<List<UserDTO>> getAllUsers(@ApiParam Pageable pageable) {
-        final Page<UserDTO> page = userService.getAllManagedUsers(pageable);
+    public ResponseEntity<String> getAllUsers(@ApiParam Pageable pageable,@RequestParam Long companyId) throws JsonProcessingException {
+        final Page<UserDTO> page;
+        if (companyId==0){
+            //Get all users
+            page = userService.getAllManagedUsers(pageable);
+        }else {
+            //Get Company Users
+            page = userService.getAllManagedUsersByCompany(pageable,companyId);
+        }
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/users");
-        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+        ObjectMapper obm = new ObjectMapper();
+        //Due to object mapping of entities need to get Companies explicitly from companyUserDetails because
+        //Json conversion fails because of cyclic dependencies being present.
+        page.getContent().stream().forEach(x-> {
+            Set<Company> companiesList = new HashSet<>(new ArrayList<>());
+            x.getCompanyUserDetails().stream().forEach(y -> {
+                if (companyId==0) {
+                    companiesList.add(y.getCompany());
+                }else{
+                    if (y.getCompany().getId().equals(companyId))
+                        companiesList.add(y.getCompany());
+                }
+            });
+            x.setCompanies(companiesList);
+        });
+        String content = obm.writeValueAsString(page.getContent());
+        return new ResponseEntity<>(content, headers, HttpStatus.OK);
+
     }
 
     /**

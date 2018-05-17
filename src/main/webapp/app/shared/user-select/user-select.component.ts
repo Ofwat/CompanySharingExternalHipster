@@ -35,7 +35,7 @@ export class UserSelectComponent implements OnInit, OnChanges {
     @Output() userChangedEvent: EventEmitter<User>;
     @Input() userResponsibility: any;
     @Input() resourceType: any;
-    @Input() selectedUser: User
+    @Input() selectedUser: User;
     constructor(
         private alertService: JhiAlertService,
         private userService: UserService,
