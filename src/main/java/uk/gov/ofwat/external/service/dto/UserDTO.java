@@ -67,7 +67,6 @@ public class UserDTO {
 
     private Set<CompanyUserPrivilegeDetails> companyUserPrivilegeDetails;
 
-    private Set<String> companyNames;
 
     public UserDTO() {
         // Empty constructor needed for Jackson.
@@ -81,18 +80,14 @@ public class UserDTO {
             user.getAuthorities().stream().map(Authority::getName)
                 .collect(Collectors.toSet()), user.getMobileTelephoneNumber(), user.getEnabled(), user.getPasswordLastChangeDate(),
             user.getPrivileges().stream().map(Privilege::getName).collect(Collectors.toSet()),user.getCompanies(),
-            user.getCompanyUserDetails(),user.getCompanyUserPrivilegeDetails(),
-            user.getCompanies().stream().map(Company::getName)
-                .collect(Collectors.toSet())
-            );
+            user.getCompanyUserDetails(),user.getCompanyUserPrivilegeDetails());
     }
 
     public UserDTO(Long id, String login, String firstName, String lastName,
         String email, boolean activated, String imageUrl, String langKey,
         String createdBy, Instant createdDate, String lastModifiedBy, Instant lastModifiedDate,
         Set<String> authorities, String mobileTelephoneNumber, boolean enabled, Instant passwordLastChangeDate,Set<String> privileges,
-                   Set<Company> companies, Set<CompanyUserDetails> companyUserDetails, Set<CompanyUserPrivilegeDetails> companyUserPrivilegeDetails,
-                   Set<String> companyNames) {
+                   Set<Company> companies, Set<CompanyUserDetails> companyUserDetails, Set<CompanyUserPrivilegeDetails> companyUserPrivilegeDetails) {
 
         this.id = id;
         this.login = login;
@@ -114,7 +109,6 @@ public class UserDTO {
         this.companies=companies;
         this.companyUserDetails = companyUserDetails;
         this.companyUserPrivilegeDetails = companyUserPrivilegeDetails;
-        this.companyNames = companyNames;
 
     }
 
@@ -276,14 +270,6 @@ public class UserDTO {
 
     public void setCompanies(Set<Company> companies) {
         this.companies = companies;
-    }
-
-    public Set<String> getCompanyNames() {
-        return companyNames;
-    }
-
-    public void setCompanyNames(Set<String> companyNames) {
-        this.companyNames = companyNames;
     }
 
     @Override

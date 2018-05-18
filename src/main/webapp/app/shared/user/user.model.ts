@@ -11,8 +11,8 @@ export class User {
     public langKey?: string;
     public authorities?: any[];
     public privileges?: any[];
-    public companies?: Company[];
-    public companyUserDetails?: CompanyUserDetails[];
+    public companies?: any[];
+    public companyUserDetails?: any[];
     public companyUserPrivilegeDetails?: any[];
     public createdBy?: string;
     public createdDate?: Date;
@@ -22,7 +22,6 @@ export class User {
     public enabled?: Boolean;
     public mobileTelephoneNumber: string;
     public passwordLastChangeDate: Date;
-    public companyNames?: any[];
 
     constructor(
         id?: any,
@@ -34,8 +33,8 @@ export class User {
         langKey?: string,
         authorities?: any[],
         privileges?: any[],
-        companies?: Company[],
-        companyUserDetails?: CompanyUserDetails[],
+        companies?: any[],
+        companyUserDetails?: any[],
         companyUserPrivilegeDetails?: any[],
         createdBy?: string,
         createdDate?: Date,
@@ -45,7 +44,7 @@ export class User {
         enabled?: Boolean,
         mobileTelephoneNumber?: string,
         passwordLastChangeDate?: Date,
-        companyNames?: any[],
+
     ) {
         this.id = id ? id : null;
         this.login = login ? login : null;
@@ -67,6 +66,5 @@ export class User {
         this.enabled = enabled ? enabled : null;
         this.mobileTelephoneNumber = mobileTelephoneNumber ? mobileTelephoneNumber : null;
         this.passwordLastChangeDate = passwordLastChangeDate ? passwordLastChangeDate : null;
-        this.companyNames = companyNames ? companyNames : null;
     }
 }

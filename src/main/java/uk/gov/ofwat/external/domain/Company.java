@@ -1,5 +1,6 @@
 package uk.gov.ofwat.external.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.Cache;
@@ -107,10 +108,12 @@ public class Company extends AbstractAuditingEntity implements Serializable {
         return this;
     }*/
 
-    @JsonManagedReference
+/*
+    @JsonBackReference
     public Set<User> getUsers(){
         return this.companyUserDetails.stream().map(cud -> cud.getUser()).collect(Collectors.toSet());
     }
+*/
 
 
     public Long getFountainId() {

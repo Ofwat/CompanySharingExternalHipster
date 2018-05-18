@@ -34,11 +34,11 @@ public class ManagedUserVM extends UserDTO {
     public ManagedUserVM(Long id, String login, String password, String firstName, String lastName,
                          String email, boolean activated, String imageUrl, String langKey,
                          String createdBy, Instant createdDate, String lastModifiedBy, Instant lastModifiedDate,
-                         Set<String> authorities, Long companyId, String mobileTelehoneNumber, boolean enabled, Instant passwordLastChangeDate, Set<String> privileges,
-                         Set<Company> companies, Set<CompanyUserDetails> companyUserDetails, Set<CompanyUserPrivilegeDetails> companyUserPrivilegeDetails,Set<String> companyNames) {
+                         Set<String> authorities, String mobileTelehoneNumber, boolean enabled, Instant passwordLastChangeDate, Set<String> privileges,
+                         Set<Company> companies, Set<CompanyUserDetails> companyUserDetails, Set<CompanyUserPrivilegeDetails> companyUserPrivilegeDetails) {
 
         super(id, login, firstName, lastName, email, activated, imageUrl, langKey,
-            createdBy, createdDate, lastModifiedBy, lastModifiedDate,  authorities, mobileTelehoneNumber, enabled, passwordLastChangeDate,privileges,companies,companyUserDetails,companyUserPrivilegeDetails,companyNames);
+            createdBy, createdDate, lastModifiedBy, lastModifiedDate,  authorities, mobileTelehoneNumber, enabled, passwordLastChangeDate,privileges,companies,companyUserDetails,companyUserPrivilegeDetails);
 
         this.password = password;
     }
