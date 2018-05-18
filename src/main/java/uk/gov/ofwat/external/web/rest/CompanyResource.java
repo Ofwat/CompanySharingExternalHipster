@@ -1,13 +1,8 @@
 package uk.gov.ofwat.external.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
-import uk.gov.ofwat.external.domain.Company;
-import uk.gov.ofwat.external.service.CompanyService;
-import uk.gov.ofwat.external.web.rest.util.HeaderUtil;
-import uk.gov.ofwat.external.web.rest.util.PaginationUtil;
-import uk.gov.ofwat.external.service.dto.CompanyDTO;
-import io.swagger.annotations.ApiParam;
 import io.github.jhipster.web.util.ResponseUtil;
+import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -15,16 +10,21 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import uk.gov.ofwat.external.domain.Company;
+import uk.gov.ofwat.external.domain.User;
+import uk.gov.ofwat.external.service.CompanyService;
+import uk.gov.ofwat.external.service.UserService;
+import uk.gov.ofwat.external.service.dto.CompanyDTO;
+import uk.gov.ofwat.external.web.rest.util.HeaderUtil;
+import uk.gov.ofwat.external.web.rest.util.PaginationUtil;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.Set;
 
 /**
  * REST controller for managing Company.
@@ -39,8 +39,11 @@ public class CompanyResource {
 
     private final CompanyService companyService;
 
-    public CompanyResource(CompanyService companyService) {
+    private final UserService userService;
+
+    public CompanyResource(CompanyService companyService,UserService userService) {
         this.companyService = companyService;
+        this.userService = userService;
     }
 
     /**
@@ -135,18 +138,13 @@ public class CompanyResource {
      */
     @GetMapping("/fetch-companies")
     @Timed
-    public ResponseEntity fetchAllCompanies() {
+    public ResponseEntity fetchAllCompanies(@AuthenticationPrincipal User activeUser) {
         log.debug("REST request to get all Companies");
-
+        activeUser = userService.getUserWithAuthorities();
+        Set<Company> elligibleCompanies = activeUser.getCompanies();
         return ResponseEntity.ok()
             .header("Content-Disposition", "attachment; companies=")
-            .body(companyService.findAll().stream().map(temp -> {
-                CompanyDTO obj = new CompanyDTO();
-                obj.setName(temp.getName());
-                obj.setId(temp.getId());
-                return obj;
-            }).collect(Collectors.toList())
-            );
+            .body(elligibleCompanies);
 
     }
 }

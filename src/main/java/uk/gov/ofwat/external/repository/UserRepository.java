@@ -42,7 +42,7 @@ public interface UserRepository extends PagingAndSortingRepository<User, Long> {
     @Query("select company from Company company join company.companyUserDetails cud join cud.authority a join cud.user u where u.id =:userId and a.name ='ROLE_OFWAT_ADMIN'")
     Optional<List<Company>> findAllWhereUserIsAdmin(@Param("userId") Long userId);
 
-    @Query(value="select user from User user join user.companyUserDetails cud join cud.company comp where comp.id =:companyId and user.login <> ?#{principal.username}")
-    Page<User> getAllManagedUsersByCompany( @Param("companyId") Long companyId,Pageable pageable);
+    @Query(value="select user from User user join user.companyUserDetails cud join cud.company comp where comp.id =:companyId and user.id <> :userId")
+    Page<User> getAllManagedUsersByCompany( @Param("companyId") Long companyId, @Param("userId")  Long userId,Pageable pageable);
 
 }

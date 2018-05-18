@@ -179,14 +179,17 @@ public class UserResource {
     @GetMapping("/users")
     @Timed
     @ValidateUserCompany(roles = {AuthoritiesConstants.COMPANY_USER, AuthoritiesConstants.COMPANY_ADMIN})
-    public ResponseEntity<String> getAllUsers(@ApiParam Pageable pageable,@RequestParam Long companyId) throws JsonProcessingException {
+    public ResponseEntity<String> getAllUsers(@ApiParam Pageable pageable,@RequestParam Long companyId,@AuthenticationPrincipal User activeUser) throws JsonProcessingException {
         final Page<UserDTO> page;
+        activeUser = userService.getUserWithAuthorities();
+        Set<Company> elligibleCompanies = activeUser.getCompanies();
+
         if (companyId==0){
             //Get all users
             page = userService.getAllManagedUsers(pageable);
         }else {
             //Get Company Users
-            page = userService.getAllManagedUsersByCompany(pageable,companyId);
+            page = userService.getAllManagedUsersByCompany(pageable,companyId,activeUser.getId());
         }
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/users");
         ObjectMapper obm = new ObjectMapper();
@@ -195,11 +198,13 @@ public class UserResource {
         page.getContent().stream().forEach(x-> {
             Set<Company> companiesList = new HashSet<>(new ArrayList<>());
             x.getCompanyUserDetails().stream().forEach(y -> {
-                if (companyId==0) {
-                    companiesList.add(y.getCompany());
-                }else{
-                    if (y.getCompany().getId().equals(companyId))
+                if(elligibleCompanies.contains(y.getCompany())){
+                    if (companyId == 0) {
                         companiesList.add(y.getCompany());
+                    } else {
+                        if (y.getCompany().getId().equals(companyId))
+                            companiesList.add(y.getCompany());
+                    }
                 }
             });
             x.setCompanies(companiesList);

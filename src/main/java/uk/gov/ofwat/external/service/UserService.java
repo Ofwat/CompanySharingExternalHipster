@@ -286,8 +286,8 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public Page<UserDTO> getAllManagedUsersByCompany(Pageable pageable,Long companyId) {
-        return userRepository.getAllManagedUsersByCompany(companyId,pageable).map(UserDTO::new);
+    public Page<UserDTO> getAllManagedUsersByCompany(Pageable pageable,Long companyId,Long userId) {
+        return userRepository.getAllManagedUsersByCompany(companyId,userId,pageable).map(UserDTO::new);
     }
     @Transactional(readOnly = true)
     public Optional<User> getUserWithAuthoritiesByLogin(String login) {
