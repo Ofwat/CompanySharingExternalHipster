@@ -66,7 +66,7 @@ export class UserSelectComponent implements OnInit, OnChanges {
     }
 
     load() {
-        this.userService.query().subscribe(
+        this.userService.getAllUsers().subscribe(
             (res: ResponseWrapper) => this.onLoadUserSuccess(res.json, res.headers),
             (res: ResponseWrapper) => this.onLoadError(res.json)
         );

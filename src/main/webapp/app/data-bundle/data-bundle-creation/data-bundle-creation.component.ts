@@ -100,7 +100,7 @@ export class DataBundleCreationComponent implements OnInit {
         this.dataCollectionService.get(dataCollectionId)
             .flatMap((dataCollection) => {
                 this.dataCollection = dataCollection;
-                return this.userService.query();
+                return this.userService.getAllUsers();
             })
             .subscribe(
                 (res: ResponseWrapper) => this.onLoadUsersSuccess(res.json),

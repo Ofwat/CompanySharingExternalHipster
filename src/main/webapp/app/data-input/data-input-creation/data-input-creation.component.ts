@@ -69,7 +69,7 @@ export class DataInputCreationComponent implements OnInit {
         this.dataBundleService.get(dataBundleId)
             .flatMap((dataBundle) => {
                 this.dataBundle = dataBundle;
-                return this.userService.query();
+                return this.userService.getAllUsers();
             })
             .subscribe(
                 (res: ResponseWrapper) => this.onLoadUsersSuccess(res.json),

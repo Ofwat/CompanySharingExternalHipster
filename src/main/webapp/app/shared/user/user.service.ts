@@ -10,6 +10,7 @@ import { RegistrationRequest } from '../registration-request/registration-reques
 @Injectable()
 export class UserService {
     private resourceUrl = 'api/users';
+    private resourceUrl1 = 'api/users-only';
 
     constructor(private http: Http) { }
 
@@ -30,6 +31,12 @@ export class UserService {
     query(req?: any): Observable<ResponseWrapper> {
         const options = createRequestOption(req);
         return this.http.get(this.resourceUrl, options)
+            .map((res: Response) => this.convertResponse(res));
+    }
+
+    getAllUsers(req?: any): Observable<ResponseWrapper> {
+        const options = createRequestOption(req);
+        return this.http.get(this.resourceUrl1, options)
             .map((res: Response) => this.convertResponse(res));
     }
 

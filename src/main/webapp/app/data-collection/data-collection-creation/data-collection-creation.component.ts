@@ -74,7 +74,7 @@ export class DataCollectionCreationComponent implements OnInit {
     }
 
     loadUsers() {
-        this.userService.query().subscribe(
+        this.userService.getAllUsers().subscribe(
             (res: ResponseWrapper) => this.onLoadUsersSuccess(res.json),
             (res: ResponseWrapper) => this.onLoadUsersError(res.json)
         );
