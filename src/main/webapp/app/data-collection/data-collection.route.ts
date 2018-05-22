@@ -36,7 +36,7 @@ const DATA_COLLECTION_ROUTES = [
 export const dataCollectionState: Routes = [{
     path: '',
     data: {
-        authorities: ['ROLE_OFWAT_ADMIN']
+        authorities: ['ROLE_OFWAT_ADMIN','ROLE_OFWAT_USER']
     },
     canActivate: [UserRouteAccessService],
     children: DATA_COLLECTION_ROUTES

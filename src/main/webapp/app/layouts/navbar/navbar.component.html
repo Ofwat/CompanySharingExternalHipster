@@ -261,7 +261,7 @@
             <!-- If it is an ofwat employee display a select list of all companies -->
             <!-- Else display only for the company the user is associated with. -->
             <!--<a href='url-to-page-2'>{{isOfwatEmployee()}}</a>-->
-            <a *jhiHasAnyAuthority="['ROLE_OFWAT_ADMIN', 'ROLE_OFWAT_USER', 'ROLE_COMPANY_ADMIN', 'ROLE_OFWAT_USER', 'ROLE_COMPANY_USER']" href='' [routerLink]="['company-data-collection-management']">Company Data collections</a></li>
+            <a *jhiHasAnyAuthority="['ROLE_OFWAT_ADMIN', 'ROLE_COMPANY_ADMIN', 'ROLE_COMPANY_USER']" href='' [routerLink]="['company-data-collection-management']">Company Data collections</a></li>
         </li>
         <li *ngSwitchCase="true">
             <a [routerLink]="['user-profile']">My Profile</a>
@@ -274,7 +274,7 @@
                     <!-- If it is an ofwat employee display a select list of all companies -->
                     <!-- Else display only for the company the user is associated with. -->
                     <!--<a href='url-to-page-2'>{{isOfwatEmployee()}}</a>-->
-            <a *jhiHasAnyAuthority="['ROLE_OFWAT_ADMIN', 'ROLE_OFWAT_USER', 'ROLE_OFWAT_USER']" href='' [routerLink]="['datasubmission']">Data Submissions</a></li>
+            <a *jhiHasAnyAuthority="['ROLE_OFWAT_ADMIN', 'ROLE_OFWAT_USER']" href='' [routerLink]="['datasubmission']">Data Submissions</a></li>
         </li>
     </ul>
 </nav>

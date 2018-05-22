@@ -228,7 +228,6 @@ public class SecurityConfiguration{
                 .antMatchers("/api/data-inputs/**").hasAnyAuthority(AuthoritiesConstants.OFWAT_ADMIN,AuthoritiesConstants.OFWAT_USER)
                 .antMatchers("/api/data-collections/**").hasAnyAuthority(AuthoritiesConstants.OFWAT_ADMIN,AuthoritiesConstants.OFWAT_USER)
                 .antMatchers("/api/data-bundles/**").hasAnyAuthority(AuthoritiesConstants.OFWAT_ADMIN,AuthoritiesConstants.OFWAT_USER)
-                .antMatchers("/api/company-data-inputs/**").hasAnyAuthority(AuthoritiesConstants.OFWAT_ADMIN, AuthoritiesConstants.COMPANY_ADMIN,AuthoritiesConstants.COMPANY_USER,AuthoritiesConstants.OFWAT_USER)
                 .antMatchers("/api/company-data-collections/**").hasAnyAuthority(AuthoritiesConstants.OFWAT_ADMIN, AuthoritiesConstants.COMPANY_ADMIN,AuthoritiesConstants.COMPANY_USER,AuthoritiesConstants.OFWAT_USER)
                 .antMatchers("/api/company-data-bundles/**").hasAnyAuthority(AuthoritiesConstants.OFWAT_ADMIN, AuthoritiesConstants.COMPANY_ADMIN, AuthoritiesConstants.COMPANY_USER,AuthoritiesConstants.OFWAT_USER)
                 .antMatchers("/api/profile-info").permitAll()

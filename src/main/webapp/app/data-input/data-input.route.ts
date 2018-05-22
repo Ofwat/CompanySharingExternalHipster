@@ -37,7 +37,7 @@ const DATA_INPUT_ROUTES = [
 export const dataInputState: Routes = [{
     path: '',
     data: {
-        authorities: ['ROLE_OFWAT_ADMIN']
+        authorities: ['ROLE_OFWAT_ADMIN','ROLE_OFWAT_USER']
     },
     canActivate: [UserRouteAccessService],
     children: DATA_INPUT_ROUTES
