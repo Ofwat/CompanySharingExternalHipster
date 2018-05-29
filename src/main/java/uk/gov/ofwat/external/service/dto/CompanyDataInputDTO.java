@@ -1,12 +1,11 @@
 package uk.gov.ofwat.external.service.dto;
 
 
-import javax.validation.constraints.*;
+import uk.gov.ofwat.external.domain.CompanyDataInput;
+
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.Objects;
 
 /**
  * A DTO for the CompanyDataInput entity.
@@ -57,6 +56,51 @@ public class CompanyDataInputDTO implements Serializable {
     private Instant lastModifiedDate;
 
     private String lastModifiedBy;
+
+    public CompanyDataInputDTO() {
+
+    }
+
+    public CompanyDataInputDTO(CompanyDataInput companyDataInput) {
+
+        this(companyDataInput.getId(),companyDataInput.getName(),companyDataInput.getStatus().getId(),companyDataInput.getStatus().getStatus(),
+            companyDataInput.getCompany().getId(), companyDataInput.getCompany().getName(),companyDataInput.getCompanyDataBundle().getId(),
+            companyDataInput.getCompanyDataBundle().getName(),companyDataInput.getDataInput().getId(),companyDataInput.getDataInput().getName(),
+            companyDataInput.getCompanyOwner().getId(),companyDataInput.getCompanyOwner().getFirstName(),companyDataInput.getCompanyReviewer().getId(),
+            companyDataInput.getCompanyReviewer().getFirstName(),companyDataInput.getInputType().getId(),companyDataInput.getInputType().getType(),
+            companyDataInput.getOrderIndex(),companyDataInput.getCompanyDataInputOrderIndex(),companyDataInput.getCreatedDate(),companyDataInput.getCreatedBy(),
+            companyDataInput.getLastModifiedDate(),companyDataInput.getLastModifiedBy());
+    }
+
+    public CompanyDataInputDTO(Long id, String name, Long statusId, String statusStatus, Long companyId, String companyName,
+                               Long companyDataBundleId, String companyDataBundleName, Long dataInputId, String dataInputName,
+                               Long companyOwnerId, String companyOwnerFirstName, Long companyReviewerId,
+                               String companyReviewerFirstName, Long inputTypeId, String inputTypeType, Long orderIndex,
+                               Long companyDataInputOrderIndex, Instant createdDate, String createdBy, Instant lastModifiedDate,
+                               String lastModifiedBy) {
+        this.id = id;
+        this.name = name;
+        this.statusId = statusId;
+        this.statusStatus = statusStatus;
+        this.companyId = companyId;
+        this.companyName = companyName;
+        this.companyDataBundleId = companyDataBundleId;
+        this.companyDataBundleName = companyDataBundleName;
+        this.dataInputId = dataInputId;
+        this.dataInputName = dataInputName;
+        this.companyOwnerId = companyOwnerId;
+        this.companyOwnerFirstName = companyOwnerFirstName;
+        this.companyReviewerId = companyReviewerId;
+        this.companyReviewerFirstName = companyReviewerFirstName;
+        this.inputTypeId = inputTypeId;
+        this.inputTypeType = inputTypeType;
+        this.orderIndex = orderIndex;
+        this.companyDataInputOrderIndex = companyDataInputOrderIndex;
+        this.createdDate = createdDate;
+        this.createdBy = createdBy;
+        this.lastModifiedDate = lastModifiedDate;
+        this.lastModifiedBy = lastModifiedBy;
+    }
 
     public Long getOrderIndex() {
         return orderIndex;

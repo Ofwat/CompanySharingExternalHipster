@@ -1,14 +1,14 @@
 package uk.gov.ofwat.external.service.dto;
 
 
+import uk.gov.ofwat.external.domain.CompanyDataBundle;
+
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.time.Instant;
 import java.time.LocalDate;
-import javax.validation.constraints.*;
-import java.io.Serializable;
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * A DTO for the CompanyDataBundle entity.
@@ -59,6 +59,52 @@ public class CompanyDataBundleDTO implements Serializable {
     private Instant lastModifiedDate;
 
     private String lastModifiedBy;
+
+    public CompanyDataBundleDTO() {
+
+    }
+
+    public CompanyDataBundleDTO(CompanyDataBundle companyDataBundle) {
+        this(companyDataBundle.getId(),companyDataBundle.getName(),companyDataBundle.getCompanyDeadline(),companyDataBundle.getStatus().getId(),companyDataBundle.getStatus().getStatus(),
+            companyDataBundle.getCompany().getId(),companyDataBundle.getCompany().getName(),companyDataBundle.getCompanyDataCollection().getId(),
+            companyDataBundle.getCompanyDataCollection().getName(), companyDataBundle.getDataBundle().getId(), companyDataBundle.getDataBundle().getName(),
+            companyDataBundle.getCompanyOwner().getId(),companyDataBundle.getCompanyOwner().getFirstName(),
+            companyDataBundle.getCompanyReviewer().getId(),companyDataBundle.getCompanyReviewer().getFirstName(),
+            companyDataBundle.getOrderIndex(), Arrays.stream(companyDataBundle.getCompanyDataInputs()).map(CompanyDataInputDTO::new).collect(Collectors.toList()).toArray(new CompanyDataInputDTO[Arrays.stream(companyDataBundle.getCompanyDataInputs()).map(CompanyDataInputDTO::new).collect(Collectors.toList()).size()]),companyDataBundle.getCompanyDataBundleOrderIndex(),
+            companyDataBundle.getCreatedDate(),companyDataBundle.getCreatedBy(),companyDataBundle.getLastModifiedDate(),companyDataBundle.getLastModifiedBy()
+            );
+    }
+
+    public CompanyDataBundleDTO(Long id, String name, LocalDate companyDeadline, Long statusId, String statusStatus,
+                                Long companyId, String companyName, Long companyDataCollectionId,
+                                String companyDataCollectionName, Long dataBundleId, String dataBundleName,
+                                Long companyOwnerId, String companyOwnerFirstName, Long companyReviewerId,
+                                String companyReviewerFirstName, Long orderIndex, CompanyDataInputDTO[] companyDataInputs,
+                                Long companyDataBundleOrderIndex, Instant createdDate, String createdBy,
+                                Instant lastModifiedDate, String lastModifiedBy) {
+        this.id = id;
+        this.name = name;
+        this.companyDeadline = companyDeadline;
+        this.statusId = statusId;
+        this.statusStatus = statusStatus;
+        this.companyId = companyId;
+        this.companyName = companyName;
+        this.companyDataCollectionId = companyDataCollectionId;
+        this.companyDataCollectionName = companyDataCollectionName;
+        this.dataBundleId = dataBundleId;
+        this.dataBundleName = dataBundleName;
+        this.companyOwnerId = companyOwnerId;
+        this.companyOwnerFirstName = companyOwnerFirstName;
+        this.companyReviewerId = companyReviewerId;
+        this.companyReviewerFirstName = companyReviewerFirstName;
+        this.orderIndex = orderIndex;
+        this.companyDataInputs = companyDataInputs;
+        this.companyDataBundleOrderIndex = companyDataBundleOrderIndex;
+        this.createdDate = createdDate;
+        this.createdBy = createdBy;
+        this.lastModifiedDate = lastModifiedDate;
+        this.lastModifiedBy = lastModifiedBy;
+    }
 
     public Long getOrderIndex() {
         return orderIndex;

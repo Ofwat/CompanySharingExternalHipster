@@ -1,12 +1,8 @@
 package uk.gov.ofwat.external.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
-import uk.gov.ofwat.external.service.CompanyDataCollectionService;
-import uk.gov.ofwat.external.web.rest.util.HeaderUtil;
-import uk.gov.ofwat.external.web.rest.util.PaginationUtil;
-import uk.gov.ofwat.external.service.dto.CompanyDataCollectionDTO;
-import io.swagger.annotations.ApiParam;
 import io.github.jhipster.web.util.ResponseUtil;
+import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -14,14 +10,23 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import uk.gov.ofwat.external.domain.Company;
+import uk.gov.ofwat.external.domain.User;
+import uk.gov.ofwat.external.service.CompanyDataCollectionService;
+import uk.gov.ofwat.external.service.UserService;
+import uk.gov.ofwat.external.service.dto.CompanyDataCollectionDTO;
+import uk.gov.ofwat.external.web.rest.util.HeaderUtil;
+import uk.gov.ofwat.external.web.rest.util.PaginationUtil;
 
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * REST controller for managing CompanyDataCollection.
@@ -36,8 +41,12 @@ public class CompanyDataCollectionResource {
 
     private final CompanyDataCollectionService companyDataCollectionService;
 
-    public CompanyDataCollectionResource(CompanyDataCollectionService companyDataCollectionService) {
+    private final UserService userService;
+
+
+    public CompanyDataCollectionResource(CompanyDataCollectionService companyDataCollectionService, UserService userService) {
         this.companyDataCollectionService = companyDataCollectionService;
+        this.userService = userService;
     }
 
     /**
@@ -90,9 +99,15 @@ public class CompanyDataCollectionResource {
      */
     @GetMapping("/company-data-collections")
     @Timed
-    public ResponseEntity<List<CompanyDataCollectionDTO>> getAllCompanyDataCollections(@ApiParam Pageable pageable) {
+    public ResponseEntity<List<CompanyDataCollectionDTO>> getAllCompanyDataCollections(@ApiParam Pageable pageable,@AuthenticationPrincipal User activeUser) {
+        final Page<CompanyDataCollectionDTO> page;
         log.debug("REST request to get a page of CompanyDataCollections");
-        Page<CompanyDataCollectionDTO> page = companyDataCollectionService.findAll(pageable);
+        activeUser = userService.getUserWithAuthorities();
+        Set<Company> elligibleCompanies = activeUser.getCompanies();
+        List<Long> ids = elligibleCompanies.stream().map(x->x.getId()).collect(Collectors.toList());
+
+        page = companyDataCollectionService.findEligibleDataCollection(ids,pageable);
+
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/company-data-collections");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }

@@ -22,4 +22,11 @@ public interface CompanyDataBundleRepository extends JpaRepository<CompanyDataBu
     @Query("select company_data_bundle from CompanyDataBundle company_data_bundle where company_data_bundle.dataBundle.id = :bundleId")
     List<CompanyDataBundle> findByCompanyAndBundle(@Param("bundleId") Long bundleId);
 
+    @Query("SELECT coalesce(max(company_data_bundle.orderIndex), -1) FROM CompanyDataBundle company_data_bundle WHERE company_data_Collection_Id = :companyDataBundleId")
+    Long getMaxOrderIndex(@Param("companyDataBundleId") Long companyDataBundleId);
+
+    @Query("select coalesce(max(company_data_bundle.orderIndex), -1)  from CompanyDataBundle company_data_bundle where company_data_bundle.companyDataCollection.id = :dataCollectionId and company_data_bundle.company.id = :companyId")
+    Long findByCompanyByDataCollectionAndCompany(@Param("dataCollectionId") Long dataCollectionId, @Param("companyId") Long companyId);
+
+
 }

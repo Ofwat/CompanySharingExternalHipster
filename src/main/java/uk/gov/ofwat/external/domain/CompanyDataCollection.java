@@ -5,10 +5,9 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Arrays;
-import java.util.Objects;
 
 /**
  * A CompanyDataCollection.
@@ -37,7 +36,7 @@ public class CompanyDataCollection extends AbstractAuditingEntity implements Ser
     @NotNull
     private Company company;
 
-    @ManyToOne(optional = false,fetch = FetchType.LAZY)
+    @ManyToOne(optional = false,fetch = FetchType.LAZY, cascade= CascadeType.ALL)
     @JoinColumn(name="DATA_COLLECTION_ID", nullable=false)
     @NotNull
     @JsonIgnore

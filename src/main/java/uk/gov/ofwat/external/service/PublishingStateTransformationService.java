@@ -1,13 +1,13 @@
 package uk.gov.ofwat.external.service;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import uk.gov.ofwat.external.domain.*;
 import uk.gov.ofwat.external.repository.*;
 import uk.gov.ofwat.external.service.dto.DataBundleDTO;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import uk.gov.ofwat.external.service.dto.DataInputDTO;
 import uk.gov.ofwat.external.web.rest.errors.DcsException;
 
@@ -95,23 +95,28 @@ public class PublishingStateTransformationService {
                 for (Company company : listOfCompanies) {
 
                     //Get data collection
-                    CompanyDataCollection companyDataCollection = new CompanyDataCollection();
-                    companyDataCollection.setCompany(company);
-                    companyDataCollection.setCompanyOwner(userRepository.findOne(dataBundleDTO.getOwnerId()));
-                    companyDataCollection.setCompanyReviewer(userRepository.findOne(dataBundleDTO.getReviewerId()));
-                    companyDataCollection.setDataCollection(dataCollection);
-                    companyDataCollection.setName(company.getName());
-                    companyDataCollection.setStatus(companyStatusRepository.findOne(dataCollection.getPublishingStatus().getId()));
-                    companyDataCollection.setCompanyDataCollectionOrderIndex(orderIndexL);
-                    companyDataCollectionRepository.save(companyDataCollection);
+                    CompanyDataCollection companyDataCollection = companyDataCollectionRepository.findByCompanyByDataCollectionAndCompany(dataCollection.getId(),company.getId());
+                    if(companyDataCollection==null)
+                    {
+                        companyDataCollection = new CompanyDataCollection();
+                        companyDataCollection.setCompany(company);
+                        companyDataCollection.setCompanyOwner(userRepository.findOne(dataBundleDTO.getOwnerId()));
+                        companyDataCollection.setCompanyReviewer(userRepository.findOne(dataBundleDTO.getReviewerId()));
+                        companyDataCollection.setDataCollection(dataCollection);
+                        companyDataCollection.setName(company.getName());
+                        companyDataCollection.setStatus(companyStatusRepository.findOne(dataCollection.getPublishingStatus().getId()));
+                        companyDataCollection.setCompanyDataCollectionOrderIndex(orderIndexL);
+                        companyDataCollectionRepository.save(companyDataCollection);
+                    }
 
 
-                    //dataBundleRepository.findByDataCollection()
-                    //Set Company Data Bundles
                     CompanyDataBundle companyDataBundle = new CompanyDataBundle();
                     companyDataBundle.setCompany(company);
                     companyDataBundle.setStatus(companyStatusRepository.findOne(dataCollection.getPublishingStatus().getId()));
-                    companyDataBundle.setOrderIndex(orderIndexL);
+                    Long maxCount = new Long (0);
+                    maxCount = companyDataBundleRepository.findByCompanyByDataCollectionAndCompany(companyDataCollection.getId(), company.getId());
+
+                    companyDataBundle.setOrderIndex(maxCount++);
                     companyDataBundle.setCompanyDeadline(dataBundleDTO.getDefaultDeadline());
                     companyDataBundle.setCompanyOwner(userRepository.findOne(dataBundleDTO.getOwnerId()));
                     companyDataBundle.setCompanyReviewer(userRepository.findOne(dataBundleDTO.getReviewerId()));
@@ -134,7 +139,7 @@ public class PublishingStateTransformationService {
                             companyDataInput.setCompanyOwner(userRepository.findOne(dataBundleDTO.getOwnerId()));
                             companyDataInput.setInputType(inputTypeRepository.findOne(new Long(1)));
                             companyDataInput.setName(dataBundleDTO.getName());
-                            companyDataInput.setOrderIndex(orderIndexL);
+                            companyDataInput.setOrderIndex(new Long(0));
                             companyDataInput.setStatus(companyStatusRepository.findOne(dataCollection.getPublishingStatus().getId()));
                             companyDataInput.setCompanyDataBundle(companyDataBundle);
                             companyDataInput.setCompanyDataInputOrderIndex(orderIndexL);
@@ -186,14 +191,14 @@ public class PublishingStateTransformationService {
                     companyDataInput.setCompanyOwner(userRepository.findOne(dataInput.getOwner().getId()));
                     companyDataInput.setInputType(inputTypeRepository.findOne(new Long(1)));
                     companyDataInput.setName(dataInput.getName());
-                    companyDataInput.setOrderIndex(orderIndexL);
+                    companyDataInput.setOrderIndex(new Long(0));
                     companyDataInput.setStatus(companyStatus.get());
                     companyDataInput.setCompanyDataBundle(companyDataBundle);
                     companyDataInput.setCompanyDataInputOrderIndex(orderIndexL);
                     companyDataInputRepository.save(companyDataInput);
                     orderIndexL++;
                 }
-                //}
+
             } else {
                 throw new DcsException("Data Collection " + dataCollection.getName() + " or Data Bundle " + dataBundle.getName() + " not published yet ");
             }

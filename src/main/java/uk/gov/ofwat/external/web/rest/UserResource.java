@@ -179,7 +179,6 @@ public class UserResource {
      */
     @GetMapping("/users-only")
     @Timed
-    @ValidateUserCompany(roles = {AuthoritiesConstants.COMPANY_USER, AuthoritiesConstants.COMPANY_ADMIN})
     public ResponseEntity<List<UserDTO>> getOnlyUsers(@ApiParam Pageable pageable) {
         final Page<UserDTO> page = userService.getAllManagedUsers(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/users");

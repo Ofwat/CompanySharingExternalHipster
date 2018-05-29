@@ -11,6 +11,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 
 /**
  * Service Implementation for managing CompanyDataCollection.
@@ -68,6 +70,22 @@ public class CompanyDataCollectionService {
         CompanyDataCollection companyDataCollection = companyDataCollectionRepository.findOne(id);
         return companyDataCollectionMapper.toDto(companyDataCollection);
     }
+
+
+    /**
+     *  Get one companyDataCollection by id.
+     *
+     *  @param ids the id of the entity
+     *
+     *  @return the entity
+     */
+    @Transactional(readOnly = true)
+    public Page<CompanyDataCollectionDTO> findEligibleDataCollection(List<Long> ids,Pageable pageable) {
+        log.debug("Request to get CompanyDataCollection : {}", ids.toString());
+        return companyDataCollectionRepository.findEligibleDataCollection(ids,pageable).map(CompanyDataCollectionDTO::new);
+
+    }
+ //return userRepository.getAllManagedUsersByCompany(companyId,userId,pageable).map(UserDTO::new);
 
     /**
      *  Delete the  companyDataCollection by id.

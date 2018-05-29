@@ -1,13 +1,13 @@
 package uk.gov.ofwat.external.service.dto;
 
 
-import javax.validation.constraints.*;
+import uk.gov.ofwat.external.domain.CompanyDataCollection;
+
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * A DTO for the CompanyDataCollection entity.
@@ -50,6 +50,48 @@ public class CompanyDataCollectionDTO implements Serializable {
     private CompanyDataBundleDTO[] companyDataBundles;
 
     private Long companyDataCollectionOrderIndex;
+
+    public CompanyDataCollectionDTO() {
+
+    }
+
+
+    public CompanyDataCollectionDTO(CompanyDataCollection companyDataCollection) {
+        this(companyDataCollection.getId(), companyDataCollection.getName(),companyDataCollection.getStatus().getId(),
+            companyDataCollection.getStatus().getStatus(),companyDataCollection.getCompany().getId(),
+            companyDataCollection.getCompany().getName(),companyDataCollection.getDataCollection().getId(),
+            companyDataCollection.getDataCollection().getName(),companyDataCollection.getCompanyOwner().getId(),
+            companyDataCollection.getCompanyOwner().getFirstName(),companyDataCollection.getCompanyReviewer().getId(),
+            companyDataCollection.getCompanyReviewer().getFirstName(), companyDataCollection.getCreatedDate(),
+            companyDataCollection.getCreatedBy(),companyDataCollection.getLastModifiedDate(),companyDataCollection.getLastModifiedBy(),
+            Arrays.stream(companyDataCollection.getCompanyDataBundles()).map(CompanyDataBundleDTO::new).collect(Collectors.toList()).toArray(new CompanyDataBundleDTO[Arrays.stream(companyDataCollection.getCompanyDataBundles()).map(CompanyDataBundleDTO::new).collect(Collectors.toList()).size()]),companyDataCollection.getCompanyDataCollectionOrderIndex());
+    }
+
+
+    public CompanyDataCollectionDTO(Long id, String name, Long statusId, String statusStatus, Long companyId,
+                                    String companyName, Long dataCollectionId, String dataCollectionName, Long companyOwnerId,
+                                    String companyOwnerFirstName, Long companyReviewerId, String companyReviewerFirstName,
+                                    Instant createdDate, String createdBy, Instant lastModifiedDate, String lastModifiedBy,
+                                    CompanyDataBundleDTO[] companyDataBundles, Long companyDataCollectionOrderIndex) {
+        this.id = id;
+        this.name = name;
+        this.statusId = statusId;
+        this.statusStatus = statusStatus;
+        this.companyId = companyId;
+        this.companyName = companyName;
+        this.dataCollectionId = dataCollectionId;
+        this.dataCollectionName = dataCollectionName;
+        this.companyOwnerId = companyOwnerId;
+        this.companyOwnerFirstName = companyOwnerFirstName;
+        this.companyReviewerId = companyReviewerId;
+        this.companyReviewerFirstName = companyReviewerFirstName;
+        this.createdDate = createdDate;
+        this.createdBy = createdBy;
+        this.lastModifiedDate = lastModifiedDate;
+        this.lastModifiedBy = lastModifiedBy;
+        this.companyDataBundles = companyDataBundles;
+        this.companyDataCollectionOrderIndex = companyDataCollectionOrderIndex;
+    }
 
     public Long getId() {
         return id;

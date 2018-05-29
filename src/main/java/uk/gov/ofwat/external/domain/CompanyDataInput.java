@@ -3,8 +3,6 @@ package uk.gov.ofwat.external.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.springframework.beans.factory.annotation.Autowired;
-import uk.gov.ofwat.external.repository.CompanyStatusRepository;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -31,16 +29,16 @@ public class CompanyDataInput extends AbstractAuditingEntity implements Serializ
     @Column(name = "name", nullable = false)
     private String name;
 
-    @ManyToOne(optional = false,fetch = FetchType.LAZY)
+    @ManyToOne(optional = false,fetch = FetchType.LAZY,  cascade= CascadeType.ALL)
     @NotNull
     private CompanyStatus status;
 
-    @ManyToOne(optional = false,fetch = FetchType.LAZY)
+    @ManyToOne(optional = false,fetch = FetchType.LAZY, cascade= CascadeType.ALL)
     @JoinColumn(name="COMPANY_ID", nullable=false)
     @NotNull
     private Company company;
 
-    @ManyToOne(optional = false,fetch = FetchType.EAGER)
+    @ManyToOne(optional = false,fetch = FetchType.EAGER, cascade= CascadeType.ALL)
     @JoinColumn(name="COMPANY_DATA_BUNDLE_ID", nullable=false)
     @NotNull
     @JsonIgnore

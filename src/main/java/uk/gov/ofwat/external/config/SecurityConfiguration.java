@@ -225,6 +225,7 @@ public class SecurityConfiguration{
                 .antMatchers("/api/resend_invite").hasAuthority(AuthoritiesConstants.OFWAT_ADMIN)
                 .antMatchers("/api/users/pending_accounts/**").hasAnyAuthority(AuthoritiesConstants.OFWAT_ADMIN, AuthoritiesConstants.COMPANY_ADMIN)
                 .antMatchers("/api/users/companies/**").hasAuthority(AuthoritiesConstants.OFWAT_ADMIN)
+                .antMatchers("/api/users-only/**").hasAnyAuthority(AuthoritiesConstants.OFWAT_ADMIN,AuthoritiesConstants.OFWAT_USER)
                 .antMatchers("/api/data-inputs/**").hasAnyAuthority(AuthoritiesConstants.OFWAT_ADMIN,AuthoritiesConstants.OFWAT_USER)
                 .antMatchers("/api/data-collections/**").hasAnyAuthority(AuthoritiesConstants.OFWAT_ADMIN,AuthoritiesConstants.OFWAT_USER)
                 .antMatchers("/api/data-bundles/**").hasAnyAuthority(AuthoritiesConstants.OFWAT_ADMIN,AuthoritiesConstants.OFWAT_USER)
