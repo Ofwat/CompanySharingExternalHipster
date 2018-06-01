@@ -115,8 +115,8 @@ public class PublishingStateTransformationService {
                     companyDataBundle.setStatus(companyStatusRepository.findOne(dataCollection.getPublishingStatus().getId()));
                     Long maxCount = new Long (0);
                     maxCount = companyDataBundleRepository.findByCompanyByDataCollectionAndCompany(companyDataCollection.getId(), company.getId());
-
-                    companyDataBundle.setOrderIndex(maxCount++);
+                    maxCount = maxCount+1;
+                    companyDataBundle.setOrderIndex(maxCount);
                     companyDataBundle.setCompanyDeadline(dataBundleDTO.getDefaultDeadline());
                     companyDataBundle.setCompanyOwner(userRepository.findOne(dataBundleDTO.getOwnerId()));
                     companyDataBundle.setCompanyReviewer(userRepository.findOne(dataBundleDTO.getReviewerId()));

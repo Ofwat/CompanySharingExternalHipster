@@ -1,21 +1,18 @@
 package uk.gov.ofwat.external.service;
 
-import uk.gov.ofwat.external.domain.CompanyDataBundle;
-import uk.gov.ofwat.external.domain.CompanyDataInput;
-import uk.gov.ofwat.external.domain.DataInput;
-import uk.gov.ofwat.external.repository.CompanyDataBundleRepository;
-import uk.gov.ofwat.external.repository.CompanyDataInputRepository;
-import uk.gov.ofwat.external.service.dto.CompanyDataBundleDTO;
-import uk.gov.ofwat.external.service.mapper.CompanyDataBundleMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import uk.gov.ofwat.external.domain.CompanyDataBundle;
+import uk.gov.ofwat.external.domain.CompanyDataInput;
+import uk.gov.ofwat.external.repository.CompanyDataBundleRepository;
+import uk.gov.ofwat.external.repository.CompanyDataInputRepository;
+import uk.gov.ofwat.external.service.dto.CompanyDataBundleDTO;
+import uk.gov.ofwat.external.service.mapper.CompanyDataBundleMapper;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -51,6 +48,17 @@ public class CompanyDataBundleService {
         CompanyDataBundle companyDataBundle = companyDataBundleMapper.toEntity(companyDataBundleDTO);
         companyDataBundle = companyDataBundleRepository.save(companyDataBundle);
         return companyDataBundleMapper.toDto(companyDataBundle);
+    }
+
+    /**
+     * Save a companyDataBundle.
+     *
+     * @param companyDataBundle the entity to save
+     * @return the persisted entity
+     */
+    public void save(CompanyDataBundle companyDataBundle) {
+        log.debug("Request to save companyDataBundle : {}", companyDataBundle);
+        companyDataBundleRepository.save(companyDataBundle);
     }
 
     /**
@@ -92,15 +100,15 @@ public class CompanyDataBundleService {
     /**
      *  Get one companyDataBundle by id.
      *
-     *  @param id the id of the entity
+     *  @param bundleId the id of the entity
      *  @return the entity
      */
     @Transactional(readOnly = true)
-    public CompanyDataBundle findOneCompanyDataBundle(Long id) {
-        log.debug("Request to get CompanyDataBundle : {}", id);
-        CompanyDataBundle companyDataBundle = companyDataBundleRepository.findOne(id);
-        return companyDataBundle;
+    public List<CompanyDataBundle> findByCompanyAndBundle( Long bundleId) {
+        log.debug("Request to get CompanyDataBundle : {}", bundleId);
+        return companyDataBundleRepository.findByCompanyAndBundle(bundleId);
     }
+
 
     /**
      *  Delete the  companyDataBundle by id.
@@ -111,4 +119,18 @@ public class CompanyDataBundleService {
         log.debug("Request to delete CompanyDataBundle : {}", id);
         companyDataBundleRepository.delete(id);
     }
+
+    /**
+     *  Get one companyDataBundle by id.
+     *
+     *  @param dataCollectionId, companyId the id of the entity
+     *  @return the entity
+     */
+    @Transactional(readOnly = true)
+    public Long findByCompanyByDataCollectionAndCompany(Long dataCollectionId, Long companyId) {
+        log.debug("Request to get CompanyDataBundle : {}", dataCollectionId.toString());
+        return companyDataBundleRepository.findByCompanyByDataCollectionAndCompany(dataCollectionId,companyId);
+    }
+
+
 }

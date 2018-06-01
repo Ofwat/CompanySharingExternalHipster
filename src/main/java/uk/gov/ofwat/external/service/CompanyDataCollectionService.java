@@ -46,6 +46,17 @@ public class CompanyDataCollectionService {
     }
 
     /**
+     * Save a companyDataCollection.
+     *
+     * @param companyDataCollection the entity to save
+     * @return the persisted entity
+     */
+    public void save(CompanyDataCollection companyDataCollection) {
+        log.debug("Request to save companyDataCollection : {}", companyDataCollection);
+        companyDataCollectionRepository.save(companyDataCollection);
+    }
+
+    /**
      *  Get all the companyDataCollections.
      *
      *  @param pageable the pagination information
@@ -85,7 +96,19 @@ public class CompanyDataCollectionService {
         return companyDataCollectionRepository.findEligibleDataCollection(ids,pageable).map(CompanyDataCollectionDTO::new);
 
     }
- //return userRepository.getAllManagedUsersByCompany(companyId,userId,pageable).map(UserDTO::new);
+
+    /**
+     *  Get one companyDataCollection by id.
+     *
+     *  @param dataCollectionId, companyId the id of the entity
+     *
+     *  @return the entity
+     */
+    @Transactional(readOnly = true)
+    public CompanyDataCollection findByCompanyByDataCollectionAndCompany(Long dataCollectionId, Long companyId) {
+        log.debug("Request to get DataCollection : {}", dataCollectionId.toString());
+        return companyDataCollectionRepository.findByCompanyByDataCollectionAndCompany(dataCollectionId,companyId);
+    }
 
     /**
      *  Delete the  companyDataCollection by id.
