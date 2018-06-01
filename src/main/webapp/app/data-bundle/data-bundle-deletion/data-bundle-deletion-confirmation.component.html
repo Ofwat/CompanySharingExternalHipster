@@ -1,9 +1,12 @@
 <div>
     <div >
-        <warningmsg [message]="msg" [hidden]="warnHide" (warningStatusChange)="onMessageStatusChange($event)"></warningmsg>
-        <errormsg [message]="msg" [hidden]="errorHide" (errorStatusChange)="onMessageStatusChange($event)"></errormsg>
-        <successmsg [message]="msg" [hidden]="successHide" (successStatusChange)="onMessageStatusChange($event)"></successmsg>
-        <infomsg [message]="msg" [hidden]="infoHide" (infoStatusChange)="onMessageStatusChange($event)"></infomsg>
+        <div class="loader" *ngIf="spinnerShown"></div>
+        <jhi-gen-srv-msg [message]="msg" [warnHide]="warnHideParent" [successHide]="successHideParent"
+                         [errorHide]="errorHideParent" [infoHide]="infoHideParent"
+                         (warningStatusChange)="onMessageStatusChange($event)"
+                         (errorStatusChange)="onMessageStatusChange($event)"
+                         (successStatusChange)="onMessageStatusChange($event)"
+                         (infoStatusChange)="onMessageStatusChange($event)"></jhi-gen-srv-msg>
         <h2 class="heading-medium">Confirm Data Bundle Deletion</h2>
         <div class="alert alert-success" *ngIf="dataBundle">
             <p>You are about to delete the Data Bundle: <b>{{dataBundle.name}}.</b></p>

@@ -4,16 +4,12 @@ import { ResponseWrapper, DataBundle, DataBundleService } from '../../shared';
 import { User, UserService } from '../../shared';
 import {Subscription} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
-import {WarningMessageComponent} from '../../shared/messages/warning.message';
-import {ErrorMessageComponent} from '../../shared/messages/error.message';
-import {SuccessMessageComponent} from '../../shared/messages/success.message';
-import {InfoMessageComponent} from '../../shared/messages/info.message';
-
+import {GenericServerMessageService} from '../../shared/messages/generic.servermessage'
 
 @Component({
     selector: 'jhi-data-bundle-edit',
     templateUrl: './data-bundle-edit.component.html',
-    providers: [DataBundleService,WarningMessageComponent,ErrorMessageComponent,SuccessMessageComponent,InfoMessageComponent]
+    providers: [DataBundleService,GenericServerMessageService]
 })
 export class DataBundleEditComponent implements OnInit {
 
@@ -27,18 +23,20 @@ export class DataBundleEditComponent implements OnInit {
     private subscription: Subscription;
     currentDate: any;
 
-    warnHide = true;
-    errorHide = true;
-    successHide = true;
-    infoHide = true;
     msg: string;
+    warnHideParent = false;
+    errorHideParent = false;
+    successHideParent = false;
+    infoHideParent = false;
+    spinnerShown = false;
 
     constructor(
         private alertService: JhiAlertService,
         private dataBundleService: DataBundleService,
         private userService: UserService,
         private route: ActivatedRoute,
-        private router: Router
+        private router: Router,
+        private genericServerMessageService: GenericServerMessageService
     ) {
     }
 
@@ -48,6 +46,10 @@ export class DataBundleEditComponent implements OnInit {
         this.errorDataBundleExists = false;
         this.dataBundle = {};
         this.currentDate = new Date();
+        this.warnHideParent = false;
+        this.errorHideParent = false;
+        this.infoHideParent = false;
+        this.successHideParent = false;
         this.subscription = this.route.params.subscribe((params) => {
             this.load(params['id']);
         });
@@ -56,31 +58,31 @@ export class DataBundleEditComponent implements OnInit {
     ngAfterViewInit() {
     }
 
-
-    private processError(msg:string) {
-        this.msg=msg;
-        this.warnHide = true;
-        this.errorHide = false;
-        this.successHide = true;
-        this.infoHide = true;
+    private processSuccess() {
+        this.spinnerShown=false;
+        this.msg="Data Bundle updated";
+        this.successHideParent = true;
     }
 
-    private processSuccess() {
-        this.msg="Data Bundle updated";
-        this.warnHide = true;
-        this.errorHide = true;
-        this.successHide = false;
-        this.infoHide = true;
+
+    private processError(response, msg: string) {
+        this.spinnerShown=false;
+        if (msg != "") {
+            this.msg = msg;
+        } else {
+            let obj = JSON.parse(response);
+            this.msg = obj.message;
+        }
+        this.errorHideParent = true;
     }
 
     onMessageStatusChange() {
-        this.warnHide = true;
-        this.errorHide = true;
-        this.successHide = true;
-        this.infoHide = true;
+        this.warnHideParent = false;
+        this.errorHideParent = false;
+        this.successHideParent= false;
+        this.infoHideParent = false;
         this.router.navigate(['data-bundle-detail', this.dataBundle.id]);
     }
-
 
     load(dataBundleId) {
         this.dataBundleService.get(dataBundleId)
@@ -127,21 +129,19 @@ export class DataBundleEditComponent implements OnInit {
     }
 
     private updateDataBundle() {
+        this.spinnerShown = true;
         this.dataBundleService.update(this.dataBundle).subscribe(
             response => {
                 console.log("success" + response.status);
-                //this.success = true;
                 this.processSuccess();
             },
             errorResponse => {
                 console.log("error" + errorResponse.status + errorResponse.statusText);
                 if (409 == errorResponse.status) {
-                    //this.errorDataBundleExists = true;
-                    this.processError("Data Bundle name is already in use! Please choose another one.")
+                    this.processError(errorResponse, "Data Bundle name is already in use! Please choose another one.");
                 }
                 else {
-                    //this.error = true;
-                    this.processError("Data Bundle updation failed!")
+                    this.processError(errorResponse, "Data Bundle updation failed!");
                 }
             }
         );

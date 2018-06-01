@@ -6,15 +6,12 @@ import {ActivatedRoute} from "@angular/router";
 import {PublishingStatus} from "../../shared/publishing-status/publishing-status.model";
 import {PublishingStatusService} from "../../shared/publishing-status/publishing-status.service";
 import {Location} from '@angular/common';
-import {WarningMessageComponent} from '../../shared/messages/warning.message';
-import {ErrorMessageComponent} from '../../shared/messages/error.message';
-import {SuccessMessageComponent} from '../../shared/messages/success.message';
-import {InfoMessageComponent} from '../../shared/messages/info.message';
+import {GenericServerMessageService} from '../../shared/messages/generic.servermessage'
 
 @Component({
     selector: 'jhi-publishing-status-modification',
     templateUrl: './publishing-status-modification.component.html',
-    providers: [DataCollectionService, DataBundleService, DataInputService, PublishingStatusService,WarningMessageComponent,ErrorMessageComponent,SuccessMessageComponent,InfoMessageComponent]
+    providers: [DataCollectionService, DataBundleService, DataInputService, PublishingStatusService,GenericServerMessageService]
 })
 export class PublishingStatusModificationComponent implements OnInit {
 
@@ -27,11 +24,13 @@ export class PublishingStatusModificationComponent implements OnInit {
     private subscription: Subscription;
     previousUrl: string;
     private resourceService: any;
-    warnHide = true;
-    errorHide = true;
-    successHide = true;
-    infoHide = true;
+
     msg: string;
+    warnHideParent = false;
+    errorHideParent = false;
+    successHideParent = false;
+    infoHideParent = false;
+    spinnerShown = false;
 
     constructor(
         private alertService: JhiAlertService,
@@ -54,6 +53,12 @@ export class PublishingStatusModificationComponent implements OnInit {
         this.display = false;
         this.errorDataResourceExists = false;
         this.dataResource = {};
+
+        this.warnHideParent = false;
+        this.errorHideParent = false;
+        this.infoHideParent = false;
+        this.successHideParent = false;
+
         this.subscription = this.route.params.subscribe((params) => {
             let resourceType = params['resourceType'];
             if (resourceType === "collection") {
@@ -69,30 +74,31 @@ export class PublishingStatusModificationComponent implements OnInit {
         });
     }
 
-    private processError(response) {
-        let obj = JSON.parse(response._body);
-        this.msg = obj.message;
-        this.warnHide = true;
-        this.errorHide = false;
-        this.successHide = true;
-        this.infoHide = true;
-    }
-
     private processSuccess() {
+        this.spinnerShown=false;
         this.msg="Publishing Status changed";
-        this.warnHide = true;
-        this.errorHide = true;
-        this.successHide = false;
-        this.infoHide = true;
+        this.successHideParent = true;
     }
 
     onMessageStatusChange() {
-        this.warnHide = true;
-        this.errorHide = true;
-        this.successHide = true;
-        this.infoHide = true;
+        this.warnHideParent = false;
+        this.errorHideParent = false;
+        this.successHideParent= false;
+        this.infoHideParent = false;
         this._location.back();
     }
+
+    private processError(response, msg: string) {
+        this.spinnerShown=false;
+        if (msg != "") {
+            this.msg = msg;
+        } else {
+            let obj = JSON.parse(response);
+            this.msg = obj.message;
+        }
+        this.errorHideParent = true;
+    }
+
 
     load(dataResourceId) {
         this.resourceService.get(dataResourceId)
@@ -131,6 +137,7 @@ export class PublishingStatusModificationComponent implements OnInit {
     }
 
     private updateDataResource() {
+        this.spinnerShown=true;
         this.resourceService.update(this.dataResource).subscribe(
             response => {
                 console.log("success" + response.status);
@@ -139,7 +146,7 @@ export class PublishingStatusModificationComponent implements OnInit {
             },
             errorResponse => {
                 console.log("error" + errorResponse.status + errorResponse.statusText);
-                this.processError(errorResponse);
+                this.processError(errorResponse,"");
             }
         );
     }

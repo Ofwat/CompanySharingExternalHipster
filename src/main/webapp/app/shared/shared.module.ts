@@ -4,10 +4,6 @@ import { CompanySelectComponent } from './company-select/company-select.componen
 import { UploadComponent } from './data-upload/data-upload.component';
 import { PublishingStatusSelectComponent } from './publishing-status-select/publishing-status-select.component';
 import { UserSelectComponent } from './user-select/user-select.component';
-import {WarningMessageComponent} from './messages/warning.message';
-import {ErrorMessageComponent} from './messages/error.message';
-import {SuccessMessageComponent} from './messages/success.message';
-import {InfoMessageComponent} from './messages/info.message';
 import {GenericServerMessageService} from './messages/generic.servermessage';
 
 import {
@@ -36,10 +32,6 @@ import {
         HasAnyAuthorityDirective,
         CompanySelectComponent,
         UploadComponent,
-        WarningMessageComponent,
-        ErrorMessageComponent,
-        SuccessMessageComponent,
-        InfoMessageComponent,
         GenericServerMessageService,
         PublishingStatusSelectComponent,
         UserSelectComponent,
@@ -64,10 +56,6 @@ import {
         DatePipe,
         CompanySelectComponent,
         UploadComponent,
-        WarningMessageComponent,
-        ErrorMessageComponent,
-        SuccessMessageComponent,
-        InfoMessageComponent,
         GenericServerMessageService,
         PublishingStatusSelectComponent,
         UserSelectComponent

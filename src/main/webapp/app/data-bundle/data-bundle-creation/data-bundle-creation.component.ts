@@ -5,16 +5,14 @@ import { User, UserService } from '../../shared';
 import { Subscription } from 'rxjs/Rx';
 import { ActivatedRoute } from '@angular/router';
 
-import {WarningMessageComponent} from '../../shared/messages/warning.message';
-import {ErrorMessageComponent} from '../../shared/messages/error.message';
-import {SuccessMessageComponent} from '../../shared/messages/success.message';
-import {InfoMessageComponent} from '../../shared/messages/info.message';
 import {Router} from "@angular/router";
+import {GenericServerMessageService} from '../../shared/messages/generic.servermessage'
+
 
 @Component({
     selector: 'jhi-data-bundle-creation',
     templateUrl: './data-bundle-creation.component.html',
-    providers: [DataBundleService, DataCollectionService,WarningMessageComponent,ErrorMessageComponent,SuccessMessageComponent,InfoMessageComponent]
+    providers: [DataBundleService, DataCollectionService,GenericServerMessageService]
 })
 export class DataBundleCreationComponent implements OnInit {
 
@@ -28,11 +26,13 @@ export class DataBundleCreationComponent implements OnInit {
     currentDate: any;
     private selectedOwner: User;
     private selectedReviewer: User;
-    warnHide = true;
-    errorHide = true;
-    successHide = true;
-    infoHide = true;
     msg: string;
+    warnHideParent = false;
+    errorHideParent = false;
+    successHideParent = false;
+    infoHideParent = false;
+    spinnerShown = false;
+
 
 
     constructor(
@@ -41,7 +41,8 @@ export class DataBundleCreationComponent implements OnInit {
         private userService: UserService,
         private route: ActivatedRoute,
         private dataCollectionService: DataCollectionService,
-        private router: Router
+        private router: Router,
+        private genericServerMessageService: GenericServerMessageService
 
     ) {
     }
@@ -59,27 +60,29 @@ export class DataBundleCreationComponent implements OnInit {
         });
     }
 
-    private processError(msg:string) {
-        this.msg=msg;
-        this.warnHide = true;
-        this.errorHide = false;
-        this.successHide = true;
-        this.infoHide = true;
+
+    private processError(response, msg: string) {
+        this.spinnerShown=false;
+        if (msg != "") {
+            this.msg = msg;
+        } else {
+            let obj = JSON.parse(response);
+            this.msg = obj.message;
+        }
+        this.errorHideParent = true;
     }
 
     private processSuccess() {
+        this.spinnerShown=false;
         this.msg="Data Bundle created";
-        this.warnHide = true;
-        this.errorHide = true;
-        this.successHide = false;
-        this.infoHide = true;
+        this.successHideParent = true;
     }
 
     onMessageStatusChange() {
-        this.warnHide = true;
-        this.errorHide = true;
-        this.successHide = true;
-        this.infoHide = true;
+        this.warnHideParent = false;
+        this.errorHideParent = false;
+        this.successHideParent= false;
+        this.infoHideParent = false;
         this.router.navigate(['data-collection-detail', this.dataCollection.id]);
     }
 
@@ -131,6 +134,7 @@ export class DataBundleCreationComponent implements OnInit {
     }
 
     create() {
+        this.spinnerShown=true;
         this.dataBundle.ownerId = this.selectedOwner.id;
         this.dataBundle.reviewerId = this.selectedReviewer.id;
 
@@ -146,11 +150,11 @@ export class DataBundleCreationComponent implements OnInit {
                 console.log("error" + errorResponse.status + errorResponse.statusText);
                 if (409 == errorResponse.status) {
                     //this.errorDataBundleExists = true;
-                    this.processError("Data Bundle name is already in use! Please choose another one.")
+                    this.processError(errorResponse,"Data Bundle name is already in use! Please choose another one.")
                 }
                 else {
                     //this.error = true;
-                    this.processError(errorResponse.status + errorResponse.statusText);
+                    this.processError(errorResponse,errorResponse.status + errorResponse.statusText);
                 }
             }
         );

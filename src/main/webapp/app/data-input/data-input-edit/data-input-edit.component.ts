@@ -4,15 +4,12 @@ import { ResponseWrapper, DataInput, DataInputService } from '../../shared';
 import { User, UserService } from '../../shared';
 import {Subscription} from 'rxjs';
 import {ActivatedRoute,Router} from '@angular/router';
-import {WarningMessageComponent} from '../../shared/messages/warning.message';
-import {ErrorMessageComponent} from '../../shared/messages/error.message';
-import {SuccessMessageComponent} from '../../shared/messages/success.message';
-import {InfoMessageComponent} from '../../shared/messages/info.message';
+import {GenericServerMessageService} from '../../shared/messages/generic.servermessage'
 
 @Component({
     selector: 'jhi-data-input-edit',
     templateUrl: './data-input-edit.component.html',
-    providers: [DataInputService,WarningMessageComponent,ErrorMessageComponent,SuccessMessageComponent,InfoMessageComponent]
+    providers: [DataInputService,GenericServerMessageService]
 })
 export class DataInputEditComponent implements OnInit {
 
@@ -27,17 +24,18 @@ export class DataInputEditComponent implements OnInit {
     currentDate: any;
 
     msg: string;
-    warnHide = true;
-    errorHide = true;
-    successHide = true;
-    infoHide = true;
+    warnHideParent = false;
+    errorHideParent = false;
+    successHideParent = false;
+    infoHideParent = false;
+    spinnerShown = false;
 
     constructor(
         private alertService: JhiAlertService,
         private dataInputService: DataInputService,
         private userService: UserService,
         private route: ActivatedRoute,
-        private router: Router
+        private router: Router,
     ) {
     }
 
@@ -47,6 +45,11 @@ export class DataInputEditComponent implements OnInit {
         this.errorDataInputExists = false;
         this.dataInput = {};
         this.currentDate = new Date();
+        this.warnHideParent = false;
+        this.errorHideParent = false;
+        this.infoHideParent = false;
+        this.successHideParent = false;
+
         this.subscription = this.route.params.subscribe((params) => {
             this.load(params['id']);
         });
@@ -55,29 +58,29 @@ export class DataInputEditComponent implements OnInit {
     ngAfterViewInit() {
     }
 
+    private processSuccess() {
+        this.spinnerShown=false;
+        this.msg="Data Input updated";
+        this.successHideParent = true;
+    }
 
     onMessageStatusChange() {
-        this.warnHide = true;
-        this.errorHide = true;
-        this.successHide = true;
-        this.infoHide = true;
+        this.warnHideParent = false;
+        this.errorHideParent = false;
+        this.successHideParent= false;
+        this.infoHideParent = false;
         this.router.navigate(['data-input-detail', this.dataInput.id]);
     }
 
-    private processError(msg:string) {
-        this.msg = msg;
-        this.warnHide = true;
-        this.errorHide = false;
-        this.successHide = true;
-        this.infoHide = true;
-    }
-
-    private processSuccess() {
-        this.msg="Data Input updated";
-        this.warnHide = true;
-        this.errorHide = true;
-        this.successHide = false;
-        this.infoHide = true;
+    private processError(response, msg: string) {
+        this.spinnerShown=false;
+        if (msg != "") {
+            this.msg = msg;
+        } else {
+            let obj = JSON.parse(response);
+            this.msg = obj.message;
+        }
+        this.errorHideParent = true;
     }
 
 
@@ -126,6 +129,7 @@ export class DataInputEditComponent implements OnInit {
     }
 
     private updateDataInput() {
+        this.spinnerShown=true;
         this.dataInputService.update(this.dataInput).subscribe(
             response => {
                 console.log("success" + response.status);
@@ -136,11 +140,11 @@ export class DataInputEditComponent implements OnInit {
                 console.log("error" + errorResponse.status + errorResponse.statusText);
                 if (409 == errorResponse.status) {
                     //this.errorDataInputExists = true;
-                    this.processError("Data Input name is already in use! Please choose another one.")
+                    this.processError(errorResponse,"Data Input name is already in use! Please choose another one.")
                 }
                 else {
                     //this.error = true;
-                    this.processError(errorResponse.status + errorResponse.statusText)
+                    this.processError(errorResponse,errorResponse.status + errorResponse.statusText)
                 }
             }
         );

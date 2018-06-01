@@ -10,7 +10,7 @@ import {GenericServerMessageService} from '../../shared/messages/generic.serverm
 @Component({
     selector: 'jhi-data-input-creation',
     templateUrl: './data-input-creation.component.html',
-    providers: [DataInputService, DataBundleService, UploadService, GenericServerMessageService/*,WarningMessageComponent,ErrorMessageComponent,SuccessMessageComponent,InfoMessageComponent*/],
+    providers: [DataInputService, DataBundleService, UploadService, GenericServerMessageService],
 
 })
 export class DataInputCreationComponent implements OnInit {
@@ -32,7 +32,7 @@ export class DataInputCreationComponent implements OnInit {
     errorHideParent = false;
     successHideParent = false;
     infoHideParent = false;
-    spinnerShown: boolean = false;
+    spinnerShown = false;
 
     constructor(private alertService: JhiAlertService,
                 private dataInputService: DataInputService,
@@ -45,7 +45,7 @@ export class DataInputCreationComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.spinnerShown = false;
+
         this.success = false;
         this.error = false;
         this.errorDataInputExists = false;
@@ -53,6 +53,7 @@ export class DataInputCreationComponent implements OnInit {
         this.currentDate = new Date();
         this.selectedOwner = null;
         this.selectedReviewer = null;
+        this.spinnerShown = false;
         this.warnHideParent = false;
         this.errorHideParent = false;
         this.infoHideParent = false;
@@ -109,6 +110,7 @@ export class DataInputCreationComponent implements OnInit {
     }
 
     private processError(response, msg: string) {
+        this.spinnerShown=false;
         if (msg != "") {
             this.msg = msg;
         } else {
@@ -119,6 +121,7 @@ export class DataInputCreationComponent implements OnInit {
     }
 
     private processSuccess() {
+        this.spinnerShown=false;
         this.msg = "Data Input created";
         this.successHideParent = true;
     }
@@ -150,23 +153,19 @@ export class DataInputCreationComponent implements OnInit {
                     //this.success = true;
                     this.dataInput.fileName = 'Template.xlsx';
                     if (isNaN(this.dataInput.reportId)) {
-                        this.spinnerShown = false;
                         this.processError(response, "ReportId needs to be numeric");
                         return;
                     }
                     this.dataInputService.create(this.dataInput).subscribe(
                         response => {
                             console.log("success" + response.status);
-                            //this.success = true;
-                            this.spinnerShown = false;
-                            this.processSuccess();
+                              this.processSuccess();
 
                         },
                         errorResponse => {
                             console.log("error" + errorResponse.status + errorResponse.statusText);
                             this.msg = errorResponse.statusText;
                             this.genericServerMessageService.errorHide = false;
-                            this.spinnerShown = false;
                             if (409 == errorResponse.status) {
                                 //this.errorDataInputExists = true;
                                 this.processError(errorResponse, "Data Input name is already in use! Please choose another one.");
@@ -179,13 +178,11 @@ export class DataInputCreationComponent implements OnInit {
                     );
                 },
                 errorResponse => {
-                    this.spinnerShown = false;
                     this.processError(errorResponse, "");
                 }
             );
         } else {
             this.processError("", "Please upload file");
-            this.spinnerShown=false;
         }
     }
 }

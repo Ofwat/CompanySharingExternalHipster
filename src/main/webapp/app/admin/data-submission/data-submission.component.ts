@@ -2,18 +2,15 @@ import { Component, OnInit } from '@angular/core';
 
 import { DataSubmissionModel } from './data-submission.model';
 import { DataSubmissionService } from './data-submission.service';
-import {WarningMessageComponent} from '../../shared/messages/warning.message';
-import {ErrorMessageComponent} from '../../shared/messages/error.message';
-import {SuccessMessageComponent} from '../../shared/messages/success.message';
-import {InfoMessageComponent} from '../../shared/messages/info.message';
 import {Router} from "@angular/router";
 import {ResponseWrapper} from "../../shared/index";
+import {GenericServerMessageService} from '../../shared/messages/generic.servermessage'
 
 
 @Component({
     selector: 'jhi-logs',
     templateUrl: './data-submission.component.html',
-    providers: [WarningMessageComponent,ErrorMessageComponent,SuccessMessageComponent,InfoMessageComponent]
+    providers: [GenericServerMessageService]
 })
 export class DataSubmissionComponent implements OnInit {
 
@@ -22,15 +19,18 @@ export class DataSubmissionComponent implements OnInit {
     orderProp: string;
     reverse: boolean;
     rejections: String[];
-    warnHide = true;
-    errorHide = true;
-    successHide = true;
-    infoHide = true;
+
     msg: string;
+    warnHideParent = false;
+    errorHideParent = false;
+    successHideParent = false;
+    infoHideParent = false;
+    spinnerShown = false;
 
     constructor(
         private dataSubmissionService: DataSubmissionService,
-        private router: Router
+        private router: Router,
+        private genericServerMessageService: GenericServerMessageService
     ) {
         this.filter = '';
         this.orderProp = 'name';
@@ -38,31 +38,36 @@ export class DataSubmissionComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.spinnerShown = false;
+        this.warnHideParent = false;
+        this.errorHideParent = false;
+        this.infoHideParent = false;
+        this.successHideParent = false;
        this.load();
     }
 
-    private processError(response) {
-        let obj = JSON.parse(response._body);
-        this.msg = obj.message;
-        this.warnHide = true;
-        this.errorHide = false;
-        this.successHide = true;
-        this.infoHide = true;
+    private processError(response, msg: string) {
+        this.spinnerShown=false;
+        if (msg != "") {
+            this.msg = msg;
+        } else {
+            let obj = JSON.parse(response);
+            this.msg = obj.message;
+        }
+        this.errorHideParent = true;
     }
 
     private processSuccess() {
+        this.spinnerShown=false;
         this.msg="Data Collection created";
-        this.warnHide = true;
-        this.errorHide = true;
-        this.successHide = false;
-        this.infoHide = true;
+        this.successHideParent = true;
     }
 
     onMessageStatusChange() {
-        this.warnHide = true;
-        this.errorHide = true;
-        this.successHide = true;
-        this.infoHide = true;
+        this.warnHideParent = false;
+        this.errorHideParent = false;
+        this.successHideParent= false;
+        this.infoHideParent = false;
         this.router.navigate(['data-collection-management']);
     }
 
@@ -70,7 +75,7 @@ export class DataSubmissionComponent implements OnInit {
         this.dataSubmissionService.findAll().subscribe((rejectionModels) => {
             this.rejectionModels = rejectionModels;
         },
-            (res: ResponseWrapper) => this.processError(res)
+            (res: ResponseWrapper) => this.processError(res,"")
         );
     }
 }

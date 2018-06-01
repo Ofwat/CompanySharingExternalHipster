@@ -1,29 +1,27 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
-import { ITEMS_PER_PAGE, Principal, ResponseWrapper, DataBundle, DataBundleService } from '../../shared';
+import {  DataBundle, DataBundleService } from '../../shared';
 import { Subscription } from 'rxjs/Rx';
 import {ActivatedRoute, Router} from '@angular/router';
-import {ok} from "assert";
-import {WarningMessageComponent} from '../../shared/messages/warning.message';
-import {ErrorMessageComponent} from '../../shared/messages/error.message';
-import {SuccessMessageComponent} from '../../shared/messages/success.message';
-import {InfoMessageComponent} from '../../shared/messages/info.message';
+import {GenericServerMessageService} from '../../shared/messages/generic.servermessage'
 
 
 @Component({
     selector: 'jhi-data-bundle-deletion-confirmation',
     templateUrl: './data-bundle-deletion-confirmation.component.html',
-    providers: [DataBundleService,WarningMessageComponent,ErrorMessageComponent,SuccessMessageComponent,InfoMessageComponent]
+    providers: [DataBundleService,GenericServerMessageService]
 })
 export class DataBundleDeletionConfirmationComponent implements OnInit {
 
     dataBundle: DataBundle;
     dataCollectionId: any;
     private subscription: Subscription;
-    warnHide = true;
-    errorHide = true;
-    successHide = true;
-    infoHide = true;
     msg: string;
+    spinnerShown = false;
+    warnHideParent = false;
+    errorHideParent = false;
+    successHideParent = false;
+    infoHideParent = false;
+
 
     constructor(private route: ActivatedRoute,
                 private dataBundleService: DataBundleService,
@@ -31,6 +29,10 @@ export class DataBundleDeletionConfirmationComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.warnHideParent = false;
+        this.errorHideParent = false;
+        this.infoHideParent = false;
+        this.successHideParent = false;
         this.subscription = this.route.params.subscribe((params) => {
             this.load(params['id']);
         });
@@ -43,37 +45,39 @@ export class DataBundleDeletionConfirmationComponent implements OnInit {
         });
     }
 
-    private processError() {
-        this.msg="Data Bundle deletion failed!";
-        this.warnHide = true;
-        this.errorHide = false;
-        this.successHide = true;
-        this.infoHide = true;
-    }
 
     private processSuccess() {
+        this.spinnerShown=false;
         this.msg="Data Bundle deleted";
-        this.warnHide = true;
-        this.errorHide = true;
-        this.successHide = false;
-        this.infoHide = true;
+        this.successHideParent = true;
     }
 
     onMessageStatusChange() {
-        this.warnHide = true;
-        this.errorHide = true;
-        this.successHide = true;
-        this.infoHide = true;
+        this.warnHideParent = false;
+        this.errorHideParent = false;
+        this.successHideParent= false;
+        this.infoHideParent = false;
         this.router.navigate(['data-collection-detail', this.dataCollectionId]);
     }
 
+    private processError(response, msg: string) {
+        this.spinnerShown=false;
+        if (msg != "") {
+            this.msg = msg;
+        } else {
+            let obj = JSON.parse(response);
+            this.msg = obj.message;
+        }
+        this.errorHideParent = true;
+    }
 
     delete(id) {
+        this.spinnerShown=true;
         this.dataBundleService.delete(id).subscribe((response) => {
             if (response.ok === true) {
                this.processSuccess();
             } else{
-                this.processError();
+                this.processError(response,"Data Bundle deletion failed!");
             }
         });
     }
