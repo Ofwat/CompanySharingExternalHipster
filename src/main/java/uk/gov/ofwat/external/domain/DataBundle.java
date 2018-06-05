@@ -61,7 +61,7 @@ public class DataBundle extends AbstractAuditingEntity implements Serializable {
     @JsonIgnore
     private DataCollection dataCollection;
 
-    @OneToMany(mappedBy="dataBundle",fetch = FetchType.LAZY, cascade= CascadeType.ALL)
+    @OneToMany(mappedBy="dataBundle", cascade= CascadeType.REMOVE, orphanRemoval = true,fetch = FetchType.LAZY)
     @OrderColumn(name="order_Index")
     @JsonIgnore
     private DataInput[] dataInputs;

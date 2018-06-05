@@ -45,7 +45,7 @@ public class DataCollection extends AbstractAuditingEntity implements Serializab
     @Column(name = "guidance")
     private String guidance;
 
-    @OneToMany(mappedBy="dataCollection",fetch = FetchType.LAZY, cascade= CascadeType.ALL)
+    @OneToMany(mappedBy="dataCollection", cascade= CascadeType.REMOVE, orphanRemoval = true,fetch = FetchType.LAZY)
     @OrderColumn(name="order_Index")
     @JsonIgnore
     private DataBundle[] dataBundles;
