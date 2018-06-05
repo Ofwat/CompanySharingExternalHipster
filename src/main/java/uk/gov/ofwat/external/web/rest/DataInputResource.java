@@ -102,7 +102,7 @@ public class DataInputResource {
     @Timed
     public ResponseEntity<DataInputDTO> updateDataInput(@Valid @RequestBody DataInputDTO dataInputDTO) throws URISyntaxException, DcsException {
         log.debug("REST request to update DataInput : {}", dataInputDTO);
-        if (!Double.valueOf(dataInputDTO.getReportId().toString()).isNaN()) {
+        if (!Double.valueOf(dataInputDTO.getReportId()).isNaN()) {
             new DcsServerMessage(HttpStatus.INTERNAL_SERVER_ERROR, "ReportId is numeric", new Throwable(new Exception("exception")));
         }
 

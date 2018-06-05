@@ -93,7 +93,7 @@ export class PublishingStatusModificationComponent implements OnInit {
         if (msg != "") {
             this.msg = msg;
         } else {
-            let obj = JSON.parse(response);
+            let obj = JSON.parse(response._body);
             this.msg = obj.message;
         }
         this.errorHideParent = true;
