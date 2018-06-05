@@ -109,7 +109,7 @@ public class PublishingStateTransformationService {
                         companyDataCollectionRepository.save(companyDataCollection);
                     }
 
-
+                    DataBundle dataBundle =dataBundleRepository.findOne(dataBundleDTO.getId());
                     CompanyDataBundle companyDataBundle = new CompanyDataBundle();
                     companyDataBundle.setCompany(company);
                     companyDataBundle.setStatus(companyStatusRepository.findOne(dataCollection.getPublishingStatus().getId()));
@@ -120,13 +120,13 @@ public class PublishingStateTransformationService {
                     companyDataBundle.setCompanyDeadline(dataBundleDTO.getDefaultDeadline());
                     companyDataBundle.setCompanyOwner(userRepository.findOne(dataBundleDTO.getOwnerId()));
                     companyDataBundle.setCompanyReviewer(userRepository.findOne(dataBundleDTO.getReviewerId()));
-                    companyDataBundle.setDataBundle(dataBundleRepository.findOne(dataBundleDTO.getId()));
+                    companyDataBundle.setDataBundle(dataBundle);
                     companyDataBundle.setName(dataBundleDTO.getName());
                     companyDataBundle.setCompanyDataCollection(companyDataCollection);
                     companyDataBundle.setCompanyDataBundleOrderIndex(orderIndexL);
                     companyDataBundleRepository.save(companyDataBundle);
 
-                    List<DataInput> dataInputList = new ArrayList(Arrays.asList(dataCollection.getDataBundles()[0].getDataInputs()));
+                    List<DataInput> dataInputList = new ArrayList(Arrays.asList(dataBundle.getDataInputs()));
 
                     //Set Company Data Inputs
                     for (DataInput dataInput : dataInputList) {
