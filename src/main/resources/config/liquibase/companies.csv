@@ -1,7 +1,46 @@
 id;name;created_by;last_modified_by;fountain_id
-1;Test Company 1;1;1;1
-2;Test Company 2;1;1;2
-3;Test Company 3;1;1;3
-4;Test Company 4;1;1;4
-5;Anglian Water Services;1;1;30
-6;Ofwat;1;1;5
+1;Anglian Water Services;1;1;30
+2;Bristol Water plc;1;1;31
+3;Bournemouth Water;1;1;32
+4;Cambridge Water Company Plc;1;1;33
+5;Dee Valley Water Plc (pre 2018 merger);1;1;35
+6;Essex & Suffolk Water;1;1;36
+7;Hartlepool Water;1;1;41
+8;Northumbrian Water Ltd;1;1;46
+9;Northumbrian Water (NNE);1;1;48
+10;United Utilities Water Plc;1;1;50
+11;Portsmouth Water Ltd;1;1;51
+12;Sutton & East Surrey Water Ltd;1;1;52
+13;South East Water Ltd;1;1;53
+14;Southern Water Services Ltd;1;1;54
+15;South Staffordshire Water Plc;1;1;55
+16;Severn Trent Water Ltd (pre 2018 merger);1;1;58
+17;South West Water Ltd;1;1;59
+18;Thames Water Utilities Ltd;1;1;61
+19;Veolia Water Central;1;1;64
+20;Veolia Water East;1;1;65
+21;Veolia Water Southeast;1;1;67
+22;Dwr Cymru Cyfyngedig (Welsh);1;1;72
+23;Wessex Water Services Ltd;1;1;73
+24;Yorkshire Water Services Ltd;1;1;75
+25;Albion Water;1;1;88
+26;Independent Water Networks Ltd;1;1;89
+27;Peel Water Networks;1;1;90
+28;Scottish & Southern Energy Water Limited;1;1;91
+29;Veolia Water Projects Ltd;1;1;92
+30;Cholderton & District Water Co Ltd;1;1;93
+31;Affinity Water;1;1;94
+32;South Staffordshire Cambridge;1;1;95
+33;Thames Water (excluding Tideway);1;1;96
+34;Thames Tideway Tunnel;1;1;97
+35;Severn Trent Water Service;1;1;98
+36;South West Water (including Bournemouth);1;1;99
+37;Albion Eco;1;1;100
+38;Icosa Water Services;1;1;101
+39;Bazalgette Tunnel Ltd (Tideway);1;1;102
+40;Severn Trent England Ltd;1;1;103
+41;Hafren Dyfrdwy Cyfyngedig;1;1;104
+42;Powys site;1;1;105
+43;Chester site;1;1;106
+44;Severn Trent Water excl. Powys and Chester;1;1;107
+45;Dee Valley Water excl. Powys and Chester;1;1;108

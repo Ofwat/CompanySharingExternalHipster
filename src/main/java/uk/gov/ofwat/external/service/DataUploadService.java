@@ -92,7 +92,7 @@ public class DataUploadService {
         dataFile.setName(newFileName);
         dataFileRepository.save(dataFile);
 
-//        sharePointOAuthClient.uploadFileToSharePoint(newFile);
+        sharePointOAuthClient.uploadFileToSharePoint(newFile);
 
 
         Thread current = Thread.currentThread();
