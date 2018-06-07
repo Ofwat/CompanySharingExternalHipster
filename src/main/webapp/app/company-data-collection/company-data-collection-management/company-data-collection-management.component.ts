@@ -37,7 +37,7 @@ export class CompanyDataCollectionManagementComponent implements OnInit, OnDestr
         private activatedRoute: ActivatedRoute,
         private router: Router
     ) {
-        this.itemsPerPage = 200;
+        this.itemsPerPage = 4;
         this.routeData = this.activatedRoute.data.subscribe((data) => {
             this.page = data['pagingParams'].page;
             this.previousPage = data['pagingParams'].page;
@@ -108,7 +108,7 @@ export class CompanyDataCollectionManagementComponent implements OnInit, OnDestr
     }
 
     transition() {
-        this.router.navigate(['/data-collection-management'], {
+        this.router.navigate(['/company-data-collection-management'], {
             queryParams: {
                 page: this.page,
                 sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')

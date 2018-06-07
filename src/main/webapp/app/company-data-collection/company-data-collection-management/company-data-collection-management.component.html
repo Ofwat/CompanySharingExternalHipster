@@ -27,4 +27,16 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div *ngIf="dataCollections">
+            <div class="row justify-content-center">
+                <span class="float-left">
+                    <jhi-item-count [page]="page" [total]="queryCount" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+                </span>
+                <span class="float-right">
+                    <ngb-pagination [collectionSize]="totalItems" [(page)]="page" (pageChange)="loadPage(page)"></ngb-pagination>
+                </span>
+            </div>
+        </div>
+    </div>
 </div>
