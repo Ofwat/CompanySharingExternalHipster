@@ -5,6 +5,7 @@ import uk.gov.ofwat.external.domain.DataInput;
 import org.springframework.stereotype.Repository;
 
 import org.springframework.data.jpa.repository.*;
+
 import java.util.List;
 
 /**
@@ -12,7 +13,7 @@ import java.util.List;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface DataInputRepository extends JpaRepository<DataInput,Long> {
+public interface DataInputRepository extends JpaRepository<DataInput, Long> {
 
     @Query("select data_input from DataInput data_input where data_input.owner.login = ?#{principal.username}")
     List<DataInput> findByOwnerIsCurrentUser();
@@ -30,5 +31,9 @@ public interface DataInputRepository extends JpaRepository<DataInput,Long> {
 
     @Query("select data_input from DataInput data_input where data_input.dataBundle.id = ?#{id}")
     List<DataInput> findByDataBundle(@Param("id") Long id);
+
+
+    @Query("select case when count(data_input) > 0  then false else true end from DataInput data_input where data_input.id = :id and data_input.status.id = 4")
+    Boolean isPublished(@Param("id") Long id);
 
 }

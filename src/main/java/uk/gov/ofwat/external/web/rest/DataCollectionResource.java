@@ -1,6 +1,8 @@
 package uk.gov.ofwat.external.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.jhipster.web.util.ResponseUtil;
 import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
@@ -11,13 +13,15 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import uk.gov.ofwat.external.repository.DataCollectionRepository;
-import uk.gov.ofwat.external.service.DataCollectionService;
 import uk.gov.ofwat.external.domain.PublishingStatus;
+import uk.gov.ofwat.external.repository.DataCollectionRepository;
 import uk.gov.ofwat.external.repository.PublishingStatusRepository;
+import uk.gov.ofwat.external.service.DataCollectionService;
 import uk.gov.ofwat.external.service.PublishingStatusService;
 import uk.gov.ofwat.external.service.UserService;
 import uk.gov.ofwat.external.service.dto.DataCollectionDTO;
+import uk.gov.ofwat.external.web.rest.errors.DcsException;
+import uk.gov.ofwat.external.web.rest.errors.DcsServerMessage;
 import uk.gov.ofwat.external.web.rest.util.HeaderUtil;
 import uk.gov.ofwat.external.web.rest.util.PaginationUtil;
 
@@ -67,8 +71,7 @@ public class DataCollectionResource {
 
         if (dataCollectionDTO.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new dataCollection cannot already have an ID")).body(null);
-        }
-        else if (Optional.ofNullable(dataCollectionService.findOneByName(dataCollectionDTO.getName())).isPresent()) {
+        } else if (Optional.ofNullable(dataCollectionService.findOneByName(dataCollectionDTO.getName())).isPresent()) {
             return ResponseEntity.status(HttpStatus.CONFLICT).headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "datacollectionexists", "DataCollection is already in use")).body(null);
         }
 
@@ -82,7 +85,6 @@ public class DataCollectionResource {
         dataCollectionDTO.setStatusStatus(optionalPublishingStatus.get().getStatus());
 
         DataCollectionDTO newDataCollectionDTO = dataCollectionService.saveNew(dataCollectionDTO);
-
 
 
         return ResponseEntity.created(new URI("/api/data-collections/" + newDataCollectionDTO.getId()))
@@ -143,7 +145,7 @@ public class DataCollectionResource {
 
     /**
      */
-    @GetMapping(value="/data-collections", params="name")
+    @GetMapping(value = "/data-collections", params = "name")
     @Timed
     public ResponseEntity<DataCollectionDTO> getDataCollectionByName(@RequestParam("name") String name) {
         log.debug("REST request to get DataCollection : {" + name + "}");
@@ -159,21 +161,26 @@ public class DataCollectionResource {
      */
     @DeleteMapping("/data-collections/{id}")
     @Timed
-    public ResponseEntity<Void> deleteDataCollection(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteDataCollection(@PathVariable Long id) throws DcsException {
         log.debug("REST request to delete DataCollection : {}", id);
-        dataCollectionService.delete(id);
+
+        if (dataCollectionService.isPublished(id)) {
+            dataCollectionService.delete(id);
+        } else {
+            throw new DcsException("Data Collection has already been published");
+        }
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleException(final Exception exception) throws JsonProcessingException {
+        log.debug("handling Exception", exception);
+        return buildResponseEntity(new DcsServerMessage(HttpStatus.INTERNAL_SERVER_ERROR, exception.getMessage(), new Throwable(new Exception("exception"))));
+    }
 
-    /**
-     */
-//    @DeleteMapping(value="/data-collections", params="name")
-//    @Timed
-//    public ResponseEntity<Void> deleteDataCollectionByName(@RequestParam("name") String name) {
-//        log.debug("REST request to delete DataCollection : {" + name + "}");
-//        dataCollectionService.deleteByName(name);
-//        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, name)).build();
-//    }
-
+    private ResponseEntity<String> buildResponseEntity(DcsServerMessage dcsServerMessage) throws JsonProcessingException {
+        ObjectMapper obm = new ObjectMapper();
+        String x = obm.writeValueAsString(dcsServerMessage);
+        return new ResponseEntity<>(x, dcsServerMessage.getStatus());
+    }
 }

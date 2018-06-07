@@ -62,7 +62,7 @@ export class DataCollectionDeletionConfirmationComponent implements OnInit {
         if (msg != "") {
             this.msg = msg;
         } else {
-            let obj = JSON.parse(response);
+            let obj = JSON.parse(response._body);
             this.msg = obj.message;
         }
         this.errorHideParent = true;
@@ -72,12 +72,15 @@ export class DataCollectionDeletionConfirmationComponent implements OnInit {
         this.spinnerShown=true;
         this.dataCollectionService.delete(id).subscribe((response) => {
             if (response.ok === true) {
-                //this.router.navigate(['data-collection-management']);
                 this.processSuccess();
-            }else{
-                this.processError(response,"")
             }
-        });
+        },
+            errorResponse => {
+                console.log("error" + errorResponse.status + errorResponse.statusText);
+                this.processError(errorResponse,"");
+
+            }
+        );
     }
 
     ngOnDestroy() {

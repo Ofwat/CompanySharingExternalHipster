@@ -1,17 +1,15 @@
 package uk.gov.ofwat.external.service;
 
-import org.springframework.data.repository.query.Param;
-import uk.gov.ofwat.external.domain.DataBundle;
-import uk.gov.ofwat.external.domain.DataInput;
-import uk.gov.ofwat.external.repository.DataInputRepository;
-import uk.gov.ofwat.external.service.dto.DataInputDTO;
-import uk.gov.ofwat.external.service.mapper.DataInputMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import uk.gov.ofwat.external.domain.DataInput;
+import uk.gov.ofwat.external.repository.DataInputRepository;
+import uk.gov.ofwat.external.service.dto.DataInputDTO;
+import uk.gov.ofwat.external.service.mapper.DataInputMapper;
 
 import java.util.List;
 
@@ -106,5 +104,14 @@ public class DataInputService {
         log.debug("Request to get DataInput : {}", id);
         DataInput dataInput = dataInputRepository.findOne(id);
         return dataInput;
+    }
+
+    /**
+     *  Check if Input is published.
+     *
+     *  @param id the id of the entity
+     */
+    public Boolean isPublished(Long id){
+        return dataInputRepository.isPublished(id);
     }
 }

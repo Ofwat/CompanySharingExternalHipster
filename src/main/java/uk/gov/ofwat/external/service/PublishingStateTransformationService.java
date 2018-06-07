@@ -95,27 +95,26 @@ public class PublishingStateTransformationService {
                 for (Company company : listOfCompanies) {
 
                     //Get data collection
-                    CompanyDataCollection companyDataCollection = companyDataCollectionRepository.findByCompanyByDataCollectionAndCompany(dataCollection.getId(),company.getId());
-                    if(companyDataCollection==null)
-                    {
+                    CompanyDataCollection companyDataCollection = companyDataCollectionRepository.findByCompanyByDataCollectionAndCompany(dataCollection.getId(), company.getId());
+                    if (companyDataCollection == null) {
                         companyDataCollection = new CompanyDataCollection();
                         companyDataCollection.setCompany(company);
                         companyDataCollection.setCompanyOwner(userRepository.findOne(dataBundleDTO.getOwnerId()));
                         companyDataCollection.setCompanyReviewer(userRepository.findOne(dataBundleDTO.getReviewerId()));
                         companyDataCollection.setDataCollection(dataCollection);
-                        companyDataCollection.setName(company.getName());
+                        companyDataCollection.setName(dataCollection.getName());
                         companyDataCollection.setStatus(companyStatusRepository.findOne(dataCollection.getPublishingStatus().getId()));
                         companyDataCollection.setCompanyDataCollectionOrderIndex(orderIndexL);
                         companyDataCollectionRepository.save(companyDataCollection);
                     }
 
-                    DataBundle dataBundle =dataBundleRepository.findOne(dataBundleDTO.getId());
+                    DataBundle dataBundle = dataBundleRepository.findOne(dataBundleDTO.getId());
                     CompanyDataBundle companyDataBundle = new CompanyDataBundle();
                     companyDataBundle.setCompany(company);
                     companyDataBundle.setStatus(companyStatusRepository.findOne(dataCollection.getPublishingStatus().getId()));
-                    Long maxCount = new Long (0);
+                    Long maxCount = new Long(0);
                     maxCount = companyDataBundleRepository.findByCompanyByDataCollectionAndCompany(companyDataCollection.getId(), company.getId());
-                    maxCount = maxCount+1;
+                    maxCount = maxCount + 1;
                     companyDataBundle.setOrderIndex(maxCount);
                     companyDataBundle.setCompanyDeadline(dataBundleDTO.getDefaultDeadline());
                     companyDataBundle.setCompanyOwner(userRepository.findOne(dataBundleDTO.getOwnerId()));
@@ -177,9 +176,8 @@ public class PublishingStateTransformationService {
             DataCollection dataCollection = dataCollectionRepository.findOne(dataBundle.getDataCollection().getId());
             if ((dataCollection.getPublishingStatus().getId().equals(new Long(4)))
                 && (dataBundle.getStatus().getId().equals(new Long(4)))) {
-                // if ((dataInput.getStatus().getId().equals(new Long(4)))) {
                 List<CompanyDataBundle> companyDataBundleList = companyDataBundleRepository.findByCompanyAndBundle(dataBundle.getId());
-                if(companyDataBundleList.size()==0)
+                if (companyDataBundleList.size() == 0)
                     throw new DcsException("Company Data Bundle does not exist for this Data Input");
                 Optional<CompanyStatus> companyStatus = companyStatusRepository.findOneByStatus("PUBLISHED");
                 Long orderIndexL = new Long(0);

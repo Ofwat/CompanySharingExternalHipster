@@ -2,9 +2,9 @@ id;login;password_hash;first_name;last_name;email;image_url;activated;lang_key;c
 1;system;$2a$10$mE.qmcV0mFU5NcKh73TZx.z4ueI/.bDWbj0T1BYyqP481kGGarKLG;System;System;ofwatdev+system@gmail.com;;true;en;system;system
 2;anonymoususer;$2a$10$j8S5d7Sr7.8VTOYNviDPOeWX8KcYILUVJBsYV83Y5NtECayypx9lO;Anonymous;User;ofwatdev+anonymous@gmail.com;;true;en;system;system
 3;admin;$2a$10$gSAhZrxMllrbgj/kkK9UceBPpChGWJA7SYIb1Mqo.n5aNLq1/oRrC;Administrator;Administrator;ofwatdev+admin@gmail.com;;true;en;system;system
-4;user;$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K;User;User;ofwatdev+user@localhost;;true;en;system;system
-5;testCompany1User;$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K;User;User;ofwatdev+testCompany1User@localhost;;true;en;system;system
-6;testCompany1Admin;$2a$10$gSAhZrxMllrbgj/kkK9UceBPpChGWJA7SYIb1Mqo.n5aNLq1/oRrC;User;User;ofwatdev+testCompany1Admin@localhost;;true;en;system;system
-7;testCompany2User;$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K;User;User;ofwatdev+testCompany2User@localhost;;true;en;system;system
-8;testCompany2Admin;$2a$10$gSAhZrxMllrbgj/kkK9UceBPpChGWJA7SYIb1Mqo.n5aNLq1/oRrC;User;User;ofwatdev+testCompany2Admin@localhost;;true;en;system;system
+4;user;$2a$10$gSAhZrxMllrbgj/kkK9UceBPpChGWJA7SYIb1Mqo.n5aNLq1/oRrC;User;User;ofwatdev+user@localhost;;true;en;system;system
+5;testCompany1User;$2a$10$uS6Zk6NtnseAGGfi/KnmRO5nLz0MHxX3iaLCMrMaxlMQp9tdfur1W;User;User;ofwatdev+testCompany1User@localhost;;true;en;system;system
+6;testCompany1Admin;$2a$10$WPcyO6XglxA3qYO5F8PSNePZYNpbqKr/QM4XjftuizEx4q4gYOymy;User;User;ofwatdev+testCompany1Admin@localhost;;true;en;system;system
+7;testCompany2User;$2a$10$OwQWMebmXUijG1WTBH8AkeuJxnp9cTyVSYcMrY03LQ7tlPnu5.9.S;User;User;ofwatdev+testCompany2User@localhost;;true;en;system;system
+8;testCompany2Admin;$2a$10$yn2rrtpO1h6SMA3yijRK9ONN6tONSnE3Hl2tktBobW4a7lQ.yYoP.;User;User;ofwatdev+testCompany2Admin@localhost;;true;en;system;system
 9;fountain;$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K;fountain;fountain;ofwatdev+fountain@localhost;;true;en;system;system

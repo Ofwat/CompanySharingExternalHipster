@@ -37,7 +37,7 @@ export class CompanyDataCollectionManagementComponent implements OnInit, OnDestr
         private activatedRoute: ActivatedRoute,
         private router: Router
     ) {
-        this.itemsPerPage = ITEMS_PER_PAGE;
+        this.itemsPerPage = 200;
         this.routeData = this.activatedRoute.data.subscribe((data) => {
             this.page = data['pagingParams'].page;
             this.previousPage = data['pagingParams'].page;
@@ -118,17 +118,14 @@ export class CompanyDataCollectionManagementComponent implements OnInit, OnDestr
     }
 
     checkbox(dataCollection: DataCollection) {
-        // dataCollection.enabled = !dataCollection.enabled;
         this.dataCollectionService.update(dataCollection).subscribe(
             (response) => {
                 if (response.status === 200) {
                     this.error = null;
                     this.success = 'OK';
-                    // this.loadAll(); // - We dont need to reload all the users do we?
                 } else {
                     this.success = null;
                     this.error = 'ERROR';
-                    // dataCollection.enabled = !dataCollection.enabled;
                     // TODO display the error message outlet.
                     this.onError( {error: this.error, message: 'Something went wrong - get this from i8n'} );
                 }

@@ -157,9 +157,13 @@ public class DataInputResource {
      */
     @DeleteMapping("/data-inputs/{id}")
     @Timed
-    public ResponseEntity<Void> deleteDataInput(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteDataInput(@PathVariable Long id) throws DcsException {
         log.debug("REST request to delete DataInput : {}", id);
-        dataInputService.delete(id);
+        if (dataInputService.isPublished(id)) {
+            dataInputService.delete(id);
+        } else {
+            throw new DcsException("Data Input has already been published");
+        }
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 

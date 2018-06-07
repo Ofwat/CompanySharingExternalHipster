@@ -14,7 +14,7 @@ import java.util.List;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface DataBundleRepository extends JpaRepository<DataBundle,Long> {
+public interface DataBundleRepository extends JpaRepository<DataBundle, Long> {
     @Query("SELECT coalesce(max(db.orderIndex), -1) FROM DataBundle db WHERE data_Collection_Id = :dataCollectionId")
     Long getMaxOrderIndex(@Param("dataCollectionId") Long dataCollectionId);
 
@@ -23,4 +23,6 @@ public interface DataBundleRepository extends JpaRepository<DataBundle,Long> {
     void updateOrderIndexForId(@Param("orderIndex") Long orderIndex,
                                @Param("dataBundleId") Long dataBundleId);
 
+    @Query("select case when count(db) > 0  then false else true end from DataBundle db where db.id = :id and db.status.id = 4")
+    Boolean isPublished(@Param("id") Long id);
 }

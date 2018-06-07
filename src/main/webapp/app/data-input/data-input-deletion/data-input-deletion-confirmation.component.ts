@@ -65,25 +65,32 @@ export class DataInputDeletionConfirmationComponent implements OnInit {
         if (msg != "") {
             this.msg = msg;
         } else {
-            let obj = JSON.parse(response);
+            let obj = JSON.parse(response._body);
             this.msg = obj.message;
         }
         this.errorHideParent = true;
     }
-
 
     delete(id) {
         this.spinnerShown=true;
         this.dataInputService.delete(id).subscribe((response) => {
             if (response.ok === true) {
                 this.processSuccess();
-            }else{
-                this.processError(response,"Data Input deletion failed");
             }
-        });
+            },
+            errorResponse => {
+                console.log("error" + errorResponse.status + errorResponse.statusText);
+                this.processError(errorResponse,"");
+
+            }
+
+
+        );
     }
 
     ngOnDestroy() {
         this.subscription.unsubscribe();
     }
+
+
 }

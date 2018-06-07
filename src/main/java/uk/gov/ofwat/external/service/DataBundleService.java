@@ -1,20 +1,18 @@
 package uk.gov.ofwat.external.service;
 
-import uk.gov.ofwat.external.domain.DataBundle;
-import uk.gov.ofwat.external.domain.DataInput;
-import uk.gov.ofwat.external.repository.DataBundleRepository;
-import uk.gov.ofwat.external.service.dto.DataBundleDTO;
-import uk.gov.ofwat.external.service.mapper.DataBundleMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import uk.gov.ofwat.external.domain.DataBundle;
+import uk.gov.ofwat.external.domain.DataInput;
+import uk.gov.ofwat.external.repository.DataBundleRepository;
+import uk.gov.ofwat.external.service.dto.DataBundleDTO;
+import uk.gov.ofwat.external.service.mapper.DataBundleMapper;
 
-import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Stream;
 
 
 /**
@@ -49,10 +47,10 @@ public class DataBundleService {
     }
 
     /**
-     *  Get all the dataBundles.
+     * Get all the dataBundles.
      *
-     *  @param pageable the pagination information
-     *  @return the list of entities
+     * @param pageable the pagination information
+     * @return the list of entities
      */
     @Transactional(readOnly = true)
     public Page<DataBundleDTO> findAll(Pageable pageable) {
@@ -61,10 +59,10 @@ public class DataBundleService {
     }
 
     /**
-     *  Get one dataBundle by id.
+     * Get one dataBundle by id.
      *
-     *  @param id the id of the entity
-     *  @return the entity
+     * @param id the id of the entity
+     * @return the entity
      */
     @Transactional(readOnly = true)
     public DataBundleDTO findOne(Long id) {
@@ -74,9 +72,9 @@ public class DataBundleService {
     }
 
     /**
-     *  Delete the  dataBundle by id.
+     * Delete the  dataBundle by id.
      *
-     *  @param id the id of the entity
+     * @param id the id of the entity
      */
     public void delete(Long id) {
         log.debug("Request to delete DataBundle : {}", id);
@@ -91,7 +89,7 @@ public class DataBundleService {
         for (DataBundle db : allDataBundles) {
             if (db.getDataCollection().getId() == dataBundleToDelete.getDataCollection().getId() &&
                 db.getOrderIndex() > dataBundleToDelete.getOrderIndex()) {
-                dataBundleRepository.updateOrderIndexForId(db.getOrderIndex()-1, db.getId());
+                dataBundleRepository.updateOrderIndexForId(db.getOrderIndex() - 1, db.getId());
             }
         }
     }
@@ -107,5 +105,13 @@ public class DataBundleService {
         return dataBundleRepository.getMaxOrderIndex(dataCollectionId);
     }
 
+    /**
+     * Check if Bundle is published.
+     *
+     * @param id the id of the entity
+     */
+    public Boolean isPublished(Long id) {
+        return dataBundleRepository.isPublished(id);
+    }
 
 }

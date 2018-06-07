@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import uk.gov.ofwat.external.domain.DataBundle;
 import uk.gov.ofwat.external.domain.DataCollection;
-import uk.gov.ofwat.external.domain.DataInput;
 import uk.gov.ofwat.external.repository.DataCollectionRepository;
 import uk.gov.ofwat.external.repository.PublishingStatusRepository;
 import uk.gov.ofwat.external.service.dto.DataCollectionDTO;
@@ -63,10 +62,10 @@ public class DataCollectionService {
     }
 
     /**
-     *  Get all the dataCollections.
+     * Get all the dataCollections.
      *
-     *  @param pageable the pagination information
-     *  @return the list of entities
+     * @param pageable the pagination information
+     * @return the list of entities
      */
     @Transactional(readOnly = true)
     public Page<DataCollectionDTO> findAll(Pageable pageable) {
@@ -76,10 +75,10 @@ public class DataCollectionService {
     }
 
     /**
-     *  Get one dataCollection by id.
+     * Get one dataCollection by id.
      *
-     *  @param id the id of the entity
-     *  @return the entity
+     * @param id the id of the entity
+     * @return the entity
      */
     @Transactional(readOnly = true)
     public DataCollectionDTO findOne(Long id) {
@@ -96,9 +95,9 @@ public class DataCollectionService {
     }
 
     /**
-     *  Delete the  dataCollection by id.
+     * Delete the  dataCollection by id.
      *
-     *  @param id the id of the entity
+     * @param id the id of the entity
      */
     public void delete(Long id) {
         DataCollection dataCollection = dataCollectionRepository.findOne(id);
@@ -120,5 +119,14 @@ public class DataCollectionService {
     public void deleteByName(String name) {
         DataCollection dataCollection = dataCollectionRepository.findOneByName(name);
         delete(dataCollection);
+    }
+
+    /**
+     * Check if Collection is published.
+     *
+     * @param id the id of the entity
+     */
+    public Boolean isPublished(Long id) {
+        return dataCollectionRepository.isPublished(id);
     }
 }

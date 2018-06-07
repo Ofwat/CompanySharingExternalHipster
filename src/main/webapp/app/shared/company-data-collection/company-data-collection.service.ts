@@ -27,7 +27,6 @@ export class CompanyDataCollectionService {
     }
 
     find(name: string): Observable<CompanyDataCollection> {
-        // return this.http.get(`${this.resourceUrl}/${name}`).map((res: Response) => res.json());
         return this.http.get(`${this.resourceUrl}?name=${name}`).map((res: Response) => res.json());
     }
 

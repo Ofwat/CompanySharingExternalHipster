@@ -3,18 +3,8 @@ package uk.gov.ofwat.external.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import uk.gov.ofwat.external.domain.*;
-import uk.gov.ofwat.external.repository.*;
-import uk.gov.ofwat.external.service.DataBundleService;
-import uk.gov.ofwat.external.service.PublishingService;
-import uk.gov.ofwat.external.service.PublishingStateTransformationService;
-import uk.gov.ofwat.external.web.rest.errors.DcsException;
-import uk.gov.ofwat.external.web.rest.errors.DcsServerMessage;
-import uk.gov.ofwat.external.web.rest.util.HeaderUtil;
-import uk.gov.ofwat.external.web.rest.util.PaginationUtil;
-import uk.gov.ofwat.external.service.dto.DataBundleDTO;
-import io.swagger.annotations.ApiParam;
 import io.github.jhipster.web.util.ResponseUtil;
+import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -23,11 +13,19 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import uk.gov.ofwat.external.domain.PublishingStatus;
+import uk.gov.ofwat.external.repository.PublishingStatusRepository;
+import uk.gov.ofwat.external.service.DataBundleService;
+import uk.gov.ofwat.external.service.PublishingStateTransformationService;
+import uk.gov.ofwat.external.service.dto.DataBundleDTO;
+import uk.gov.ofwat.external.web.rest.errors.DcsException;
+import uk.gov.ofwat.external.web.rest.errors.DcsServerMessage;
+import uk.gov.ofwat.external.web.rest.util.HeaderUtil;
+import uk.gov.ofwat.external.web.rest.util.PaginationUtil;
 
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -44,9 +42,9 @@ public class DataBundleResource {
     private final PublishingStatusRepository publishingStatusRepository;
     private final PublishingStateTransformationService publishingStateTransformationService;
 
-    public DataBundleResource(PublishingStateTransformationService publishingStateTransformationService,DataBundleService dataBundleService, PublishingStatusRepository publishingStatusRepository
+    public DataBundleResource(PublishingStateTransformationService publishingStateTransformationService, DataBundleService dataBundleService, PublishingStatusRepository publishingStatusRepository
     ) {
-        this.publishingStateTransformationService=publishingStateTransformationService;
+        this.publishingStateTransformationService = publishingStateTransformationService;
         this.dataBundleService = dataBundleService;
         this.publishingStatusRepository = publishingStatusRepository;
     }
@@ -95,7 +93,7 @@ public class DataBundleResource {
      */
     @PutMapping("/data-bundles")
     @Timed
-    public ResponseEntity<DataBundleDTO> updateDataBundle(@Valid @RequestBody DataBundleDTO dataBundleDTO) throws URISyntaxException,DcsException {
+    public ResponseEntity<DataBundleDTO> updateDataBundle(@Valid @RequestBody DataBundleDTO dataBundleDTO) throws URISyntaxException, DcsException {
         log.debug("REST request to update DataBundle : {}", dataBundleDTO);
         if (dataBundleDTO.getId() == null) {
             return createDataBundle(dataBundleDTO);
@@ -148,9 +146,15 @@ public class DataBundleResource {
      */
     @DeleteMapping("/data-bundles/{id}")
     @Timed
-    public ResponseEntity<Void> deleteDataBundle(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteDataBundle(@PathVariable Long id) throws DcsException {
         log.debug("REST request to delete DataBundle : {}", id);
-        dataBundleService.delete(id);
+
+        if (dataBundleService.isPublished(id)) {
+            dataBundleService.delete(id);
+        } else {
+            throw new DcsException("Data Bundle has already been published");
+        }
+
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 
