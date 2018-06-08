@@ -83,7 +83,7 @@
                                  initiallyDeferred="false" referencedColumnNames="id" referencedTableName="jhi_user"/>
     </changeSet>
     <changeSet author="cmel7 (generated)" id="1525875297963-13">
-        <dropColumn columnName="DELETED" tableName="COMPANY"/>
+        <dropColumn columnName="deleted" tableName="company"/>
     </changeSet>
     <changeSet author="cmel7 (generated)" id="1525875297963-14">
         <addNotNullConstraint columnDataType="bigint" columnName="company_data_input_id" tableName="data_file"/>

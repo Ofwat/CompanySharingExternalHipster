@@ -69,15 +69,15 @@ liquibase:
 #        keyAlias: CompanySharingExternal
 # ===================================================================
 server:
-    port: 8443
-#    port: 8080
-    ssl:
-        enabled: true
-        key-store: ./WEB-INF/classes/keystore.p12
-#        key-store: classpath:keystore.p12
-        key-store-password: pwd123
-        keyStoreType: PKCS12
-        keyAlias: dcstest.ofwat.gov.uk
+    port: 8080
+#    port: 8443
+#    ssl:
+#        enabled: true
+#        key-store: ./WEB-INF/classes/keystore.p12
+##        key-store: classpath:keystore.p12
+#        key-store-password: pwd123
+#        keyStoreType: PKCS12
+#        keyAlias: dcstest.ofwat.gov.uk
 #    compression:
 #        enabled: true
 #        mime-types: text/html,text/xml,text/plain,text/css, application/javascript, application/json
