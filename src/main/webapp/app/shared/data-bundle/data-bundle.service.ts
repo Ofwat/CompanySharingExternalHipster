@@ -27,7 +27,6 @@ export class DataBundleService {
     }
 
     find(name: string): Observable<DataBundle> {
-        // return this.http.get(`${this.resourceUrl}/${name}`).map((res: Response) => res.json());
         return this.http.get(`${this.resourceUrl}?name=${name}`).map((res: Response) => res.json());
     }
 
@@ -38,9 +37,7 @@ export class DataBundleService {
     }
 
     delete(id: any): Observable<Response> {
-        return this.http.delete(`${this.resourceUrl}/${id}`)
-            .map((res: Response) => this.convertResponse(res));
-        // return this.http.delete(`${this.resourceUrl}?name=${name}`);
+        return this.http.delete(`${this.resourceUrl}/${id}`);
     }
 
     authorities(): Observable<string[]> {

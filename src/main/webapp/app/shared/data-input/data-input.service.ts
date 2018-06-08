@@ -39,9 +39,7 @@ export class DataInputService {
     }
 
     delete(id: any): Observable<Response> {
-        return this.http.delete(`${this.resourceUrl}/${id}`)
-            .map((res: Response) => this.convertResponse(res));
-        // return this.http.delete(`${this.resourceUrl}?name=${name}`);
+        return this.http.delete(`${this.resourceUrl}/${id}`);
     }
 
     authorities(): Observable<string[]> {

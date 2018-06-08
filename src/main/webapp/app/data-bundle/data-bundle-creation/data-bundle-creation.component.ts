@@ -149,11 +149,9 @@ export class DataBundleCreationComponent implements OnInit {
             errorResponse => {
                 console.log("error" + errorResponse.status + errorResponse.statusText);
                 if (409 == errorResponse.status) {
-                    //this.errorDataBundleExists = true;
                     this.processError(errorResponse,"Data Bundle name is already in use! Please choose another one.")
                 }
                 else {
-                    //this.error = true;
                     this.processError(errorResponse,errorResponse.status + errorResponse.statusText);
                 }
             }
