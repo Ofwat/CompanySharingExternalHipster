@@ -62,16 +62,11 @@ public class SecurityConfiguration{
         protected void configure(HttpSecurity http) throws Exception {
             http
                 .csrf().disable()
-                .antMatcher("/data-job/**")
+                .antMatcher("/data-api/**")
                 .authorizeRequests()
                 .anyRequest().hasRole("FOUNTAIN")
                 .and()
                 .httpBasic().realmName(REALM).authenticationEntryPoint(getBasicAuthEntryPoint());
-
-       /*     http.csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/jobber/**").hasRole("ADMIN")
-                .and().httpBasic().realmName(REALM).authenticationEntryPoint(getBasicAuthEntryPoint());*/
         }
 
 
