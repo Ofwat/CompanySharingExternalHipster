@@ -4,6 +4,7 @@ import { JhiEventManager, JhiPaginationUtil, JhiParseLinks, JhiAlertService } fr
 
 import { ITEMS_PER_PAGE, Principal, DataCollection, CompanyDataCollectionService, ResponseWrapper } from '../../shared';
 import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
+import {CompanyDataCollection} from "../../shared/company-data-collection/company-data-collection.model";
 
 @Component({
     selector: 'jhi-data-collection-mgmt',
@@ -13,7 +14,7 @@ import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
 export class CompanyDataCollectionManagementComponent implements OnInit, OnDestroy {
 
     currentAccount: any;
-    dataCollections: DataCollection[];
+    dataCollections: CompanyDataCollection[];
     error: any;
     success: any;
     routeData: any;

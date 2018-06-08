@@ -11,13 +11,15 @@
                         <thead>
                             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
                                 <th scope="col" jhiSortBy="name"><span>Name</span> <span class="fa fa-sort"></span></th>
-                                <th></th>
+                                <th>Company Name</th>
+                                <th>Status</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody *ngIf ="dataCollections">
                             <tr *ngFor="let dataCollection of dataCollections; trackBy: trackIdentity">
                                 <td>{{dataCollection.name}}</td>
+                                <td>{{dataCollection.companyName}}</td>
                                 <td>{{dataCollection.statusStatus}}</td>
                                 <td><a href="" [routerLink]="['../company-data-collection-detail', dataCollection.id]">Details</a></td>
                             </tr>
