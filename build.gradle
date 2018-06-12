@@ -207,6 +207,8 @@ dependencies {
 
     compile('org.quartz-scheduler:quartz:2.2.1')
 
+    // Use MySQL Connector-J
+    compile 'mysql:mysql-connector-java'
 
     compile 'javax.xml.bind:jaxb-api:2.3.0'
     compile 'com.sun.xml.bind:jaxb-core:2.3.0'

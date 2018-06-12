@@ -35,9 +35,9 @@ spring:
             #path: /h2-console
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:h2:file:./build/h2db/db/companysharingexternal;DB_CLOSE_DELAY=-1;AUTO_SERVER=TRUE
-        username: CompanySharingExternal
-        password:
+        url: jdbc:mysql://localhost:3306/CompanySharingExternal
+        username: root
+        password: mypass
         h2:
             console:
                 enabled: true

@@ -113,7 +113,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
     private Instant passwordLastChangeDate = null;
 
     @JsonIgnore
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
         name = "jhi_user_authority",
         joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
@@ -124,7 +124,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
 
     @JsonIgnore
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
         name = "jhi_user_privilege",
         joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
@@ -155,14 +155,14 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
 
     @JsonIgnore
-    @OneToMany(mappedBy="user",fetch = FetchType.LAZY, cascade= CascadeType.ALL)
+    @OneToMany(mappedBy="user",fetch = FetchType.EAGER, cascade= CascadeType.ALL)
     @OrderColumn(name="order_Index")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<CompanyUserDetails> companyUserDetails;
 
 
     @JsonIgnore
-    @OneToMany(mappedBy="user",fetch = FetchType.LAZY, cascade= CascadeType.ALL)
+    @OneToMany(mappedBy="user",fetch = FetchType.EAGER, cascade= CascadeType.ALL)
     @OrderColumn(name="order_Index")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<CompanyUserPrivilegeDetails> companyUserPrivilegeDetails;

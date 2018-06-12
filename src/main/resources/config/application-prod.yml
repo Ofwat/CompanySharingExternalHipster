@@ -21,7 +21,8 @@ spring:
             enabled: false
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:mariadb://localhost:3306/CompanySharingExternal
+#        url: jdbc:mariadb://localhost:3306/CompanySharingExternal
+        url: jdbc:mysql://localhost:3306/CompanySharingExternal
         username: root
         password: Greenflower
         hikari:

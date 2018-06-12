@@ -78,27 +78,4 @@ public class CompanyUserDetails extends AbstractAuditingEntity implements Serial
         this.id = id;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof CompanyUserDetails)) return false;
-
-        CompanyUserDetails that = (CompanyUserDetails) o;
-
-        if (getId() != null ? !getId().equals(that.getId()) : that.getId() != null) return false;
-        if (getUser() != null ? !getUser().equals(that.getUser()) : that.getUser() != null) return false;
-        if (getCompany() != null ? !getCompany().equals(that.getCompany()) : that.getCompany() != null) return false;
-        return authority != null ? authority.equals(that.authority) : that.authority == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = getId() != null ? getId().hashCode() : 0;
-
-
-        result = 31 * result + (getUser() != null ? getUser().hashCode() : 0);
-        result = 31 * result + (getCompany() != null ? getCompany().hashCode() : 0);
-        result = 31 * result + (authority != null ? authority.hashCode() : 0);
-        return result;
-    }
 }
