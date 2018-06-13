@@ -1,7 +1,7 @@
 <main id="content" role="main" tabindex="-1">
 <div>
     <div class="grid-row">
-    <div class="column-one-half">
+    <div class="column-full">
         <h2 class="heading-large"><span>Ofwat Team Members</span></h2>
     </div>
     <div class="column-one-quarter">
@@ -29,8 +29,7 @@
                 <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
                     <th scope="col" jhiSortBy="email"><span>Email</span> <span class="fa fa-sort"></span></th>
                     <th scope="col" ><span>Login</span></th>
-                    <!--<th scope="col" jhiSortBy="enabled"><span>Enabled</span> <span class="fa fa-sort"></span></th>-->
-                    <th>Company
+                    <th>Company Name
                         <div>
                             <label>Filter: </label>
                             <select (change)="filterCompanies($event.target.value)">
@@ -40,7 +39,6 @@
                                 </option>
                             </select>
                         </div>
-
                     </th>
                 </tr>
             </thead>

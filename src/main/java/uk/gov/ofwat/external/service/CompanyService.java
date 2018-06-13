@@ -113,11 +113,10 @@ public class CompanyService {
      *  @param id the id of the entity
      *  @return the entity
      */
-/*    @Transactional(readOnly = true)
-    public Company findOne(Long id) {
+    public Company findByConpanyId(Long id) {
         log.debug("Request to get Company : {}", id);
         return companyRepository.findOneWithEagerRelationships(id);
-    }*/
+    }
 
     public CompanyDTO findOne(Long id) {
         log.debug("Request to get Company : {}", id);

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import uk.gov.ofwat.external.domain.Company;
 import uk.gov.ofwat.external.domain.User;
 import uk.gov.ofwat.external.service.CompanyDataCollectionService;
+import uk.gov.ofwat.external.service.CompanyService;
 import uk.gov.ofwat.external.service.UserService;
 import uk.gov.ofwat.external.service.dto.CompanyDataCollectionDTO;
 import uk.gov.ofwat.external.web.rest.util.HeaderUtil;
@@ -43,10 +44,12 @@ public class CompanyDataCollectionResource {
 
     private final UserService userService;
 
+    private CompanyService companyService;
 
-    public CompanyDataCollectionResource(CompanyDataCollectionService companyDataCollectionService, UserService userService) {
+    public CompanyDataCollectionResource(CompanyDataCollectionService companyDataCollectionService, UserService userService, CompanyService companyService) {
         this.companyDataCollectionService = companyDataCollectionService;
         this.userService = userService;
+        this.companyService = companyService;
     }
 
     /**
@@ -99,15 +102,17 @@ public class CompanyDataCollectionResource {
      */
     @GetMapping("/company-data-collections")
     @Timed
-    public ResponseEntity<List<CompanyDataCollectionDTO>> getAllCompanyDataCollections(@ApiParam Pageable pageable,@AuthenticationPrincipal User activeUser) {
+    public ResponseEntity<List<CompanyDataCollectionDTO>> getAllCompanyDataCollections(@ApiParam Pageable pageable,@RequestParam Long companyId, @AuthenticationPrincipal User activeUser) {
         final Page<CompanyDataCollectionDTO> page;
         log.debug("REST request to get a page of CompanyDataCollections");
         activeUser = userService.getUserWithAuthorities();
         Set<Company> elligibleCompanies = activeUser.getCompanies();
         List<Long> ids = elligibleCompanies.stream().map(x->x.getId()).collect(Collectors.toList());
-
-        page = companyDataCollectionService.findEligibleDataCollection(ids,pageable);
-
+        if (companyId!=0) {
+            ids.clear();
+            ids.add(companyService.findByConpanyId(companyId).getId());
+        }
+        page = companyDataCollectionService.findEligibleDataCollection(ids, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/company-data-collections");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }

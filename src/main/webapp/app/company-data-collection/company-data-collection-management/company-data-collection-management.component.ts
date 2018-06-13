@@ -5,11 +5,13 @@ import { JhiEventManager, JhiPaginationUtil, JhiParseLinks, JhiAlertService } fr
 import { ITEMS_PER_PAGE, Principal, DataCollection, CompanyDataCollectionService, ResponseWrapper } from '../../shared';
 import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
 import {CompanyDataCollection} from "../../shared/company-data-collection/company-data-collection.model";
+import {Company} from "../../shared/company/company.model";
+import {CompanyService} from "../../shared/company/company.service";
 
 @Component({
     selector: 'jhi-data-collection-mgmt',
     templateUrl: './company-data-collection-management.component.html',
-    providers: [CompanyDataCollectionService]
+    providers: [CompanyDataCollectionService,CompanyService]
 })
 export class CompanyDataCollectionManagementComponent implements OnInit, OnDestroy {
 
@@ -26,6 +28,8 @@ export class CompanyDataCollectionManagementComponent implements OnInit, OnDestr
     predicate: any;
     previousPage: any;
     reverse: any;
+    cacheCompanies: Company[];
+    companies: Company[];
 
     constructor(
         private dataCollectionService: CompanyDataCollectionService,
@@ -36,7 +40,8 @@ export class CompanyDataCollectionManagementComponent implements OnInit, OnDestr
         private paginationUtil: JhiPaginationUtil,
         private paginationConfig: PaginationConfig,
         private activatedRoute: ActivatedRoute,
-        private router: Router
+        private router: Router,
+        private companyService: CompanyService
     ) {
         this.itemsPerPage = 4;
         this.routeData = this.activatedRoute.data.subscribe((data) => {
@@ -48,11 +53,22 @@ export class CompanyDataCollectionManagementComponent implements OnInit, OnDestr
     }
 
     ngOnInit() {
+        this.companyService.fetchCompanies().subscribe((response) => this.onSaveSuccess(response), () => this.onSaveError());
         this.principal.identity().then((account) => {
             this.currentAccount = account;
-            this.loadAll();
+            this.loadAll(0);
             this.registerChangeInDataCollections();
         });
+    }
+
+    private onSaveSuccess(companies) {
+        this.companies = companies;
+        this.cacheCompanies = companies;
+    }
+
+    private onSaveError() {
+        this.error = true;
+        this.success = false;
     }
 
     ngOnDestroy() {
@@ -60,7 +76,7 @@ export class CompanyDataCollectionManagementComponent implements OnInit, OnDestr
     }
 
     registerChangeInDataCollections() {
-        this.eventManager.subscribe('userListModification', (response) => this.loadAll());
+        this.eventManager.subscribe('userListModification', (response) => this.loadAll(0));
     }
 
     setActive(dataCollection, isActivated) {
@@ -71,7 +87,7 @@ export class CompanyDataCollectionManagementComponent implements OnInit, OnDestr
                 if (response.status === 200) {
                     this.error = null;
                     this.success = 'OK';
-                    this.loadAll();
+                    this.loadAll(0);
                 } else {
                     this.success = null;
                     this.error = 'ERROR';
@@ -79,11 +95,23 @@ export class CompanyDataCollectionManagementComponent implements OnInit, OnDestr
             });
     }
 
-    loadAll() {
+/*    loadAll() {
         this.dataCollectionService.query({
             page: this.page - 1,
             size: this.itemsPerPage,
             sort: this.sort()}).subscribe(
+            (res: ResponseWrapper) => this.onSuccess(res.json, res.headers),
+            (res: ResponseWrapper) => this.onError(res.json)
+        );
+    }*/
+
+    loadAll(companyId:number) {
+        // TODO Make sure the correct company id is passed here!
+        this.dataCollectionService.getCollectionByCompany({
+            page: this.page - 1,
+            size: this.itemsPerPage,
+            sort: this.sort()
+        }, companyId).subscribe(
             (res: ResponseWrapper) => this.onSuccess(res.json, res.headers),
             (res: ResponseWrapper) => this.onError(res.json)
         );
@@ -115,7 +143,7 @@ export class CompanyDataCollectionManagementComponent implements OnInit, OnDestr
                 sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
             }
         });
-        this.loadAll();
+        this.loadAll(0);
     }
 
     checkbox(dataCollection: DataCollection) {
@@ -149,5 +177,9 @@ export class CompanyDataCollectionManagementComponent implements OnInit, OnDestr
     clickMe() {
         this.alertService.error('404', {}, null);
         this.alertService.success('Success', {}, null);
+    }
+
+    filterCompanies(companyId: any) {
+        this.loadAll(companyId);
     }
 }

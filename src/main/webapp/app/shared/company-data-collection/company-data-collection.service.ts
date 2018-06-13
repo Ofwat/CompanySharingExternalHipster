@@ -36,6 +36,13 @@ export class CompanyDataCollectionService {
             .map((res: Response) => this.convertResponse(res));
     }
 
+    getCollectionByCompany(req: any, companyId: number): Observable<ResponseWrapper> {
+        const options = createRequestOption(req);
+        options.params.append('companyId', companyId.toString());
+        return this.http.get(this.resourceUrl, options)
+            .map((res: Response) => this.convertResponse(res));
+    }
+
     delete(id: any): Observable<Response> {
         return this.http.delete(`${this.resourceUrl}/${id}`);
     }
