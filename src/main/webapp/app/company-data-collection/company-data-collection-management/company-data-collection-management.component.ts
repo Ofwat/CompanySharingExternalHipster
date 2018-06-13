@@ -30,6 +30,7 @@ export class CompanyDataCollectionManagementComponent implements OnInit, OnDestr
     reverse: any;
     cacheCompanies: Company[];
     companies: Company[];
+    comanyId: any;
 
     constructor(
         private dataCollectionService: CompanyDataCollectionService,
@@ -56,7 +57,8 @@ export class CompanyDataCollectionManagementComponent implements OnInit, OnDestr
         this.companyService.fetchCompanies().subscribe((response) => this.onSaveSuccess(response), () => this.onSaveError());
         this.principal.identity().then((account) => {
             this.currentAccount = account;
-            this.loadAll(0);
+            this.comanyId=0;
+            this.loadAll(this.comanyId);
             this.registerChangeInDataCollections();
         });
     }
@@ -76,18 +78,19 @@ export class CompanyDataCollectionManagementComponent implements OnInit, OnDestr
     }
 
     registerChangeInDataCollections() {
-        this.eventManager.subscribe('userListModification', (response) => this.loadAll(0));
+        this.comanyId =0;
+        this.eventManager.subscribe('userListModification', (response) => this.loadAll(this.comanyId));
     }
 
     setActive(dataCollection, isActivated) {
         dataCollection.activated = isActivated;
-
+        this.comanyId=0;
         this.dataCollectionService.update(dataCollection).subscribe(
             (response) => {
                 if (response.status === 200) {
                     this.error = null;
                     this.success = 'OK';
-                    this.loadAll(0);
+                    this.loadAll(this.comanyId);
                 } else {
                     this.success = null;
                     this.error = 'ERROR';
@@ -95,15 +98,6 @@ export class CompanyDataCollectionManagementComponent implements OnInit, OnDestr
             });
     }
 
-/*    loadAll() {
-        this.dataCollectionService.query({
-            page: this.page - 1,
-            size: this.itemsPerPage,
-            sort: this.sort()}).subscribe(
-            (res: ResponseWrapper) => this.onSuccess(res.json, res.headers),
-            (res: ResponseWrapper) => this.onError(res.json)
-        );
-    }*/
 
     loadAll(companyId:number) {
         // TODO Make sure the correct company id is passed here!
@@ -143,7 +137,11 @@ export class CompanyDataCollectionManagementComponent implements OnInit, OnDestr
                 sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
             }
         });
-        this.loadAll(0);
+        if (this.comanyId != null){
+            this.loadAll(this.comanyId);
+        } else{
+            this.loadAll(0);
+        }
     }
 
     checkbox(dataCollection: DataCollection) {
@@ -180,6 +178,7 @@ export class CompanyDataCollectionManagementComponent implements OnInit, OnDestr
     }
 
     filterCompanies(companyId: any) {
-        this.loadAll(companyId);
+        this.comanyId=companyId;
+        this.loadAll(this.comanyId);
     }
 }
