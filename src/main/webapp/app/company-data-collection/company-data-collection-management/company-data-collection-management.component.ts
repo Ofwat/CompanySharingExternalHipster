@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { JhiEventManager, JhiPaginationUtil, JhiParseLinks, JhiAlertService } from 'ng-jhipster';
 
-import { ITEMS_PER_PAGE, Principal, DataCollection, CompanyDataCollectionService, ResponseWrapper } from '../../shared';
+import { Principal, DataCollection, CompanyDataCollectionService, ResponseWrapper } from '../../shared';
 import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
 import {CompanyDataCollection} from "../../shared/company-data-collection/company-data-collection.model";
 import {Company} from "../../shared/company/company.model";
