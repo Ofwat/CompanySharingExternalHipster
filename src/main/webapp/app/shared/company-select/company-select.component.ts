@@ -53,16 +53,6 @@ export class CompanySelectComponent implements OnInit {
     private onSuccessLoadCompanies(data, headers) {
         this.companies = data;
         this.display = true;
-        // console.log( this.$sessionStorage.retrieve( 'selectedCompany' ) );
-/*        if ( this.$sessionStorage.retrieve( 'selectedCompany' ) != null ) {
-            // console.log( 'Setting company to stored company' );
-            const storedCompany = this.$sessionStorage.retrieve( 'selectedCompany' ) as Company;
-            for ( const entry of this.companies ) {
-                if ( entry.id === storedCompany.id ) {
-                    this.selectedCompany = entry;
-                }
-            }
-        }*/
         if(this.preselectedCompany != null){
             this.selectedCompany = this.preselectedCompany;
             this.companyChangedEvent.emit(this.selectedCompany);
@@ -93,74 +83,3 @@ export class CompanySelectComponent implements OnInit {
 
 }
 
-/*import { ProfileService } from '../profiles/profile.service';
-import { Principal, LoginModalService, LoginService } from '../../shared';
-
-import { VERSION, DEBUG_INFO_ENABLED } from '../../app.constants';
-
-@Component({
-    selector: 'jhi-navbar',
-    templateUrl: './navbar.component.html',
-    styleUrls: [
-        'navbar.scss'
-    ]
-})
-export class NavbarComponent implements OnInit {
-
-    inProduction: boolean;
-    isNavbarCollapsed: boolean;
-    languages: any[];
-    swaggerEnabled: boolean;
-    modalRef: NgbModalRef;
-    version: string;
-
-    constructor(
-        private loginService: LoginService,
-        private principal: Principal,
-        private loginModalService: LoginModalService,
-        private profileService: ProfileService,
-        private router: Router
-    ) {
-        this.version = VERSION ? 'v' + VERSION : '';
-        this.isNavbarCollapsed = true;
-    }
-
-    ngOnInit() {
-        this.profileService.getProfileInfo().subscribe((profileInfo) => {
-            this.inProduction = profileInfo.inProduction;
-            this.swaggerEnabled = profileInfo.swaggerEnabled;
-        });
-    }
-
-    collapseNavbar() {
-        this.isNavbarCollapsed = true;
-    }
-
-    isAuthenticated() {
-        return this.principal.isAuthenticated();
-    }
-
-    isOfwatEmployee() {
-        // TODO This should check for the correct type of Role TBA!
-        return this.principal.hasAnyAuthorityDirect(['ROLE_OFWAT_ADMIN']);
-    }
-
-    login() {
-        this.modalRef = this.loginModalService.open();
-    }
-
-    logout() {
-        this.collapseNavbar();
-        this.loginService.logout();
-        this.router.navigate(['']);
-    }
-
-    toggleNavbar() {
-        this.isNavbarCollapsed = !this.isNavbarCollapsed;
-    }
-
-    getImageUrl() {
-        return this.isAuthenticated() ? this.principal.getImageUrl() : null;
-    }
-}
-*/

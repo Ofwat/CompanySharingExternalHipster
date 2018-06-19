@@ -1,13 +1,5 @@
 package uk.gov.ofwat.external.service.dto;
 
-import com.fasterxml.jackson.annotation.JsonFilter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import uk.gov.ofwat.external.domain.AbstractAuditingEntity;
-import uk.gov.ofwat.external.domain.RejectionCodes;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 public class DataJobDto implements Serializable {

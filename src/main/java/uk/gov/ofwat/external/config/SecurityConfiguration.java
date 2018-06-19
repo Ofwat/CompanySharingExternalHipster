@@ -1,19 +1,15 @@
 package uk.gov.ofwat.external.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.annotation.Order;
-import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
-import uk.gov.ofwat.external.aop.company.CompanySelectionAspect;
-import uk.gov.ofwat.external.config.audit.CustomBasicAuthenticationEntryPoint;
-import uk.gov.ofwat.external.security.*;
-
 import io.github.jhipster.config.JHipsterProperties;
-import io.github.jhipster.security.*;
-
+import io.github.jhipster.security.AjaxAuthenticationFailureHandler;
+import io.github.jhipster.security.AjaxAuthenticationSuccessHandler;
+import io.github.jhipster.security.AjaxLogoutSuccessHandler;
+import io.github.jhipster.security.Http401UnauthorizedEntryPoint;
 import org.springframework.beans.factory.BeanInitializationException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -27,7 +23,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.data.repository.query.SecurityEvaluationContextExtension;
 import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.web.filter.CorsFilter;
+import uk.gov.ofwat.external.aop.company.CompanySelectionAspect;
+import uk.gov.ofwat.external.config.audit.CustomBasicAuthenticationEntryPoint;
+import uk.gov.ofwat.external.security.AuthoritiesConstants;
+import uk.gov.ofwat.external.security.CompanySharingAjaxAuthenticationFailureHandler;
+import uk.gov.ofwat.external.security.CompanySharingDaoAuthenticationProvider;
 import uk.gov.ofwat.external.service.UserService;
 
 import javax.annotation.PostConstruct;

@@ -14,11 +14,9 @@ import {
     AccountService,
     UserService,
     StateStorageService,
-/*    LoginService,
-    LoginModalService,*/
     Principal,
     HasAnyAuthorityDirective
-/*    LoginComponent*/
+
 } from './';
 
 
@@ -28,7 +26,6 @@ import {
         CompanySharingExternalSharedCommonModule
     ],
     declarations: [
-/*        LoginComponent,*/
         HasAnyAuthorityDirective,
         CompanySelectComponent,
         UploadComponent,
@@ -38,8 +35,6 @@ import {
 
     ],
     providers: [
-/*        LoginService,
-        LoginModalService,*/
         AccountService,
         StateStorageService,
         Principal,
@@ -48,10 +43,8 @@ import {
         UserService,
         DatePipe
     ],
-    // entryComponents: [JhiLoginModalComponent],
     exports: [
         CompanySharingExternalSharedCommonModule,
-/*        LoginComponent,*/
         HasAnyAuthorityDirective,
         DatePipe,
         CompanySelectComponent,

@@ -141,7 +141,6 @@ export class PublishingStatusModificationComponent implements OnInit {
         this.resourceService.update(this.dataResource).subscribe(
             response => {
                 console.log("success" + response.status);
-                //this.success = true;
                 this.processSuccess()
             },
             errorResponse => {

@@ -1,9 +1,9 @@
 package uk.gov.ofwat.external.service.mapper;
 
-import uk.gov.ofwat.external.domain.*;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import uk.gov.ofwat.external.domain.CompanyDataInput;
 import uk.gov.ofwat.external.service.dto.CompanyDataInputDTO;
-
-import org.mapstruct.*;
 
 /**
  * Mapper for the entity CompanyDataInput and its DTO CompanyDataInputDTO.

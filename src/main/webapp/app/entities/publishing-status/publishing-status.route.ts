@@ -1,15 +1,10 @@
-import { Injectable } from '@angular/core';
-import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes, CanActivate } from '@angular/router';
-
+import { Routes } from '@angular/router';
 import { UserRouteAccessService } from '../../shared';
-import { JhiPaginationUtil } from 'ng-jhipster';
-
 import { PublishingStatusComponent } from './publishing-status.component';
 import { PublishingStatusDetailComponent } from './publishing-status-detail.component';
 import { PublishingStatusPopupComponent } from './publishing-status-dialog.component';
 import { PublishingStatusDeletePopupComponent } from './publishing-status-delete-dialog.component';
 
-import { Principal } from '../../shared';
 
 export const publishingStatusRoute: Routes = [
     {

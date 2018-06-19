@@ -143,7 +143,6 @@ export class DataBundleCreationComponent implements OnInit {
         this.dataBundleService.create(this.dataBundle).subscribe(
             response => {
                 console.log("success" + response.status);
-                //this.success = true;
                 this.processSuccess();
             },
             errorResponse => {

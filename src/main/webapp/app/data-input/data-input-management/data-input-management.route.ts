@@ -1,11 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes, CanActivate } from '@angular/router';
-
 import { JhiPaginationUtil } from 'ng-jhipster';
-
 import { DataInputMgmtComponent } from './data-input-management.component';
 
-import { Principal } from '../../shared';
 
 @Injectable()
 export class DataInputResolvePagingParams implements Resolve<any> {

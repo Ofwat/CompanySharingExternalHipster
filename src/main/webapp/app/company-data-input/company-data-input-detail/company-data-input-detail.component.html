@@ -22,11 +22,6 @@
                     <dd class="cya-answer"><div *ngIf="dataInput.dataInputId"><a href="api/data-download/{{dataInput.dataInputId}}" #fileInput id="{{dataInput.dataInputId}}" >Download</a></div></dd>
                 </div>
 
-                <!-- <div>
-                     <dd class="cya-question">Publishing Status</dd>
-                     <dd class="cya-answer">{{dataInput.statusStatus}}</dd>
-                     <dd class="cya-answer"><a href="" [routerLink]="['/publishing-status-modification', 'input', dataInput.id]">Change</a></dd>
-                 </div>-->
                 <div>
                     <dd class="cya-question">Status</dd>
                     <dd class="cya-answer">{{dataInput.statusStatus}}</dd>

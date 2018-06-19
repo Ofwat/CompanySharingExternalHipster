@@ -5,7 +5,6 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import uk.gov.ofwat.external.domain.DataCollection;
 import uk.gov.ofwat.external.domain.DataJob;
 
 import java.util.List;

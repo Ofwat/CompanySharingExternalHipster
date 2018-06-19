@@ -1,15 +1,10 @@
-import { Injectable } from '@angular/core';
-import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes, CanActivate } from '@angular/router';
-
+import { Routes } from '@angular/router';
 import { UserRouteAccessService } from '../../shared';
-import { JhiPaginationUtil } from 'ng-jhipster';
-
 import { SmsTemplateComponent } from './sms-template.component';
 import { SmsTemplateDetailComponent } from './sms-template-detail.component';
 import { SmsTemplatePopupComponent } from './sms-template-dialog.component';
 import { SmsTemplateDeletePopupComponent } from './sms-template-delete-dialog.component';
 
-import { Principal } from '../../shared';
 
 export const smsTemplateRoute: Routes = [
     {

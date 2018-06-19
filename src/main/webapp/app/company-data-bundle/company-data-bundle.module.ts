@@ -3,8 +3,6 @@ import { RouterModule } from '@angular/router';
 import { CompanySharingExternalSharedModule } from '../shared';
 import { CompanyDataBundleDetailComponent } from './company-data-bundle-detail/company-data-bundle-detail.component';
 
-/* jhipster-needle-add-admin-module-import - JHipster will add admin modules imports here */
-
 import {
     dataBundleState,
     AuditsService,
@@ -19,7 +17,6 @@ import {
     imports: [
         CompanySharingExternalSharedModule,
         RouterModule.forRoot(dataBundleState, { useHash: true }),
-        /* jhipster-needle-add-admin-module - JHipster will add admin modules here */
     ],
     declarations: [
         CompanyDataBundleDetailComponent

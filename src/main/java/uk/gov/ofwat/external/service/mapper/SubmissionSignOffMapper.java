@@ -1,9 +1,9 @@
 package uk.gov.ofwat.external.service.mapper;
 
-import uk.gov.ofwat.external.domain.*;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import uk.gov.ofwat.external.domain.SubmissionSignOff;
 import uk.gov.ofwat.external.service.dto.SubmissionSignOffDTO;
-
-import org.mapstruct.*;
 
 /**
  * Mapper for the entity SubmissionSignOff and its DTO SubmissionSignOffDTO.
@@ -16,12 +16,12 @@ public interface SubmissionSignOffMapper extends EntityMapper <SubmissionSignOff
 
     @Mapping(source = "companyDataBundle.id", target = "companyDataBundleId")
     @Mapping(source = "companyDataBundle.name", target = "companyDataBundleName")
-    SubmissionSignOffDTO toDto(SubmissionSignOff submissionSignOff); 
+    SubmissionSignOffDTO toDto(SubmissionSignOff submissionSignOff);
 
     @Mapping(source = "signatoryId", target = "signatory")
 
     @Mapping(source = "companyDataBundleId", target = "companyDataBundle")
-    SubmissionSignOff toEntity(SubmissionSignOffDTO submissionSignOffDTO); 
+    SubmissionSignOff toEntity(SubmissionSignOffDTO submissionSignOffDTO);
     default SubmissionSignOff fromId(Long id) {
         if (id == null) {
             return null;

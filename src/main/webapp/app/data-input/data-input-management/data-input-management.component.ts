@@ -32,8 +32,6 @@ export class DataInputMgmtComponent implements OnInit, OnDestroy {
         private alertService: JhiAlertService,
         private principal: Principal,
         private eventManager: JhiEventManager,
-        private paginationUtil: JhiPaginationUtil,
-        private paginationConfig: PaginationConfig,
         private activatedRoute: ActivatedRoute,
         private router: Router
     ) {
@@ -124,11 +122,9 @@ export class DataInputMgmtComponent implements OnInit, OnDestroy {
                 if (response.status === 200) {
                     this.error = null;
                     this.success = 'OK';
-                    // this.loadAll(); // - We dont need to reload all the users do we?
-                } else {
+                    } else {
                     this.success = null;
                     this.error = 'ERROR';
-                    // dataInput.enabled = !dataInput.enabled;
                     // TODO display the error message outlet.
                     this.onError( {error: this.error, message: 'Something went wrong - get this from i8n'} );
                 }

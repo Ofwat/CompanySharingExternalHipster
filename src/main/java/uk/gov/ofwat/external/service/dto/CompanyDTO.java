@@ -3,8 +3,8 @@ package uk.gov.ofwat.external.service.dto;
 
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * A DTO for the Company entity.

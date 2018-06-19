@@ -1,12 +1,13 @@
 package uk.gov.ofwat.external.service.mapper;
 
+import org.springframework.stereotype.Service;
 import uk.gov.ofwat.external.domain.Authority;
 import uk.gov.ofwat.external.domain.User;
 import uk.gov.ofwat.external.service.dto.UserDTO;
 
-import org.springframework.stereotype.Service;
-
-import java.util.*;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**

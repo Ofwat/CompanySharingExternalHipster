@@ -1,12 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
-import { JhiEventManager, JhiParseLinks, JhiPaginationUtil, JhiAlertService } from 'ng-jhipster';
+import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
 import { PublishingStatus } from './publishing-status.model';
 import { PublishingStatusService } from './publishing-status.service';
-import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
-import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
+import { Principal, ResponseWrapper } from '../../shared';
+
 
 @Component({
     selector: 'jhi-publishing-status',

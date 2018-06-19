@@ -4,17 +4,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import uk.gov.ofwat.external.domain.User;
 import uk.gov.ofwat.external.domain.message.MessageConstants;
 import uk.gov.ofwat.external.domain.message.NotifyMessageTemplate;
-import uk.gov.ofwat.external.domain.User;
 import uk.gov.ofwat.external.repository.UserRepository;
-import uk.gov.service.notify.*;
+import uk.gov.service.notify.NotificationClient;
+import uk.gov.service.notify.NotificationClientException;
+import uk.gov.service.notify.SendEmailResponse;
+import uk.gov.service.notify.SendSmsResponse;
 
 import java.time.Instant;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @Service
 public class NotifyService {

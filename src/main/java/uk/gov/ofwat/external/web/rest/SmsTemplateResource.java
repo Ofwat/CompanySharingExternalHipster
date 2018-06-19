@@ -1,20 +1,18 @@
 package uk.gov.ofwat.external.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
-import uk.gov.ofwat.external.domain.message.NotifyMessageTemplate;
-
-import uk.gov.ofwat.external.repository.NotifyMessageTemplateRepository;
-import uk.gov.ofwat.external.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import uk.gov.ofwat.external.domain.message.NotifyMessageTemplate;
+import uk.gov.ofwat.external.repository.NotifyMessageTemplateRepository;
+import uk.gov.ofwat.external.web.rest.util.HeaderUtil;
 
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-
 import java.util.List;
 import java.util.Optional;
 

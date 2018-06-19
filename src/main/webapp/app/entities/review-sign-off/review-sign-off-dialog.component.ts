@@ -1,11 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Response } from '@angular/http';
-
 import { Observable } from 'rxjs/Rx';
 import { NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
-
 import { ReviewSignOff } from './review-sign-off.model';
 import { ReviewSignOffPopupService } from './review-sign-off-popup.service';
 import { ReviewSignOffService } from './review-sign-off.service';
@@ -22,7 +20,6 @@ export class ReviewSignOffDialogComponent implements OnInit {
     reviewSignOff: ReviewSignOff;
     authorities: any[];
     isSaving: boolean;
-
     users: User[];
 
     companydatainputs: CompanyDataInput[];

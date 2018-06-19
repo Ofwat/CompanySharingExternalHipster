@@ -1,26 +1,15 @@
 package uk.gov.ofwat.external.web.rest;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializerProvider;
-import com.fasterxml.jackson.databind.ser.BeanPropertyWriter;
-import com.fasterxml.jackson.databind.ser.FilterProvider;
-import com.fasterxml.jackson.databind.ser.PropertyFilter;
-import com.fasterxml.jackson.databind.ser.PropertyWriter;
-import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
-import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uk.gov.ofwat.external.domain.DataJob;
-import uk.gov.ofwat.external.domain.data.DCSTable;
 import uk.gov.ofwat.external.service.DataJobService;
 import uk.gov.ofwat.external.service.dto.DataJobDto;
 import uk.gov.ofwat.external.service.mapper.DataJobMapper;
 
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -39,13 +28,6 @@ public class DataJobResource {
         this.dataJobService = dataJobService;
         this.dataJobMapper = dataJobMapper;
     }
-
-//    @GetMapping("/new-data-jobs")
-//    public ResponseEntity<List<DataJob>> getAllDataJobs() {
-//        log.info("REST request to get all jobs");
-//        List<DataJob> dataJobs = dataJobService.getNewJobs();
-//        return new ResponseEntity<List<DataJob>>(dataJobs, HttpStatus.OK);
-//    }
 
     @GetMapping("/data-job")
     public ResponseEntity<DataJobDto> getNextDataJob() {

@@ -1,5 +1,5 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
-import { ITEMS_PER_PAGE, Principal, ResponseWrapper, DataInput, DataInputService } from '../../shared';
+import { DataInput, DataInputService } from '../../shared';
 
 @Component({
     selector: 'jhi-data-input-deleted',

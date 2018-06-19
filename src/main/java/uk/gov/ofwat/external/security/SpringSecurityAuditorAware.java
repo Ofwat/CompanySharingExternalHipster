@@ -1,9 +1,8 @@
 package uk.gov.ofwat.external.security;
 
-import uk.gov.ofwat.external.config.Constants;
-
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.stereotype.Component;
+import uk.gov.ofwat.external.config.Constants;
 
 /**
  * Implementation of AuditorAware based on Spring Security.

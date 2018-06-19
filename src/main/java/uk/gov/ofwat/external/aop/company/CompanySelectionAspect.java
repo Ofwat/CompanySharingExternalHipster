@@ -9,13 +9,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
-import uk.gov.ofwat.external.domain.User;
 import uk.gov.ofwat.external.repository.CompanyRepository;
-import uk.gov.ofwat.external.security.AuthoritiesConstants;
 import uk.gov.ofwat.external.security.SecurityUtils;
 import uk.gov.ofwat.external.service.CompanyService;
 import uk.gov.ofwat.external.service.UserService;
-import uk.gov.ofwat.external.web.rest.AccountResource;
 
 import java.util.Arrays;
 import java.util.Optional;

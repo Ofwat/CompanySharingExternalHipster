@@ -66,7 +66,6 @@ export class RegisterInitComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit() {
-        // this.initWithoutKey();
     }
 
     private initWithoutKey() {

@@ -37,8 +37,6 @@ currentAccount: any;
         private activatedRoute: ActivatedRoute,
         private router: Router,
         private eventManager: JhiEventManager,
-        private paginationUtil: JhiPaginationUtil,
-        private paginationConfig: PaginationConfig
     ) {
         this.itemsPerPage = ITEMS_PER_PAGE;
         this.routeData = this.activatedRoute.data.subscribe((data) => {
@@ -114,7 +112,6 @@ currentAccount: any;
         this.links = this.parseLinks.parse(headers.get('link'));
         this.totalItems = headers.get('X-Total-Count');
         this.queryCount = this.totalItems;
-        // this.page = pagingParams.page;
         this.companyDataBundles = data;
     }
     private onError(error) {

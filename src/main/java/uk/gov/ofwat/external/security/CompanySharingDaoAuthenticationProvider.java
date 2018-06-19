@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import uk.gov.ofwat.external.domain.User;
 import uk.gov.ofwat.external.security.exception.UserNotEnabledException;
 import uk.gov.ofwat.external.service.UserService;
+
 import java.util.Optional;
 
 public class CompanySharingDaoAuthenticationProvider extends DaoAuthenticationProvider {

@@ -1,7 +1,6 @@
 package uk.gov.ofwat.external.domain.data;
 
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import uk.gov.ofwat.external.domain.DataCollection;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

@@ -3,8 +3,7 @@ import { Register } from '../register/register.service';
 import { CompanyService } from '../../entities/company/company.service';
 import { ResponseWrapper } from '../../shared';
 import { JhiAlertService } from 'ng-jhipster';
-import { RecaptchaModule } from 'ng-recaptcha';
-import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
+
 
 @Component({
     selector: 'jhi-register-request',

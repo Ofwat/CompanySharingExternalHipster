@@ -1,236 +1,3 @@
-<!--<nav class="navbar navbar-inverse navbar-toggleable-md jh-navbar">
-    <div class="jh-logo-container float-left">
-        <a class="jh-navbar-toggler hidden-lg-up float-right" href="javascript:void(0);" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation" (click)="toggleNavbar()">
-            <i class="fa fa-bars"></i>
-        </a>
-        <a class="navbar-brand logo float-left" routerLink="/" (click)="collapseNavbar()">
-            <span class="logo-img"></span>
-            <span class="navbar-title">CompanySharingExternal</span> <span class="navbar-version">{{version}}</span>
-        </a>
-    </div>
-    <div class="navbar-collapse collapse" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed" [ngSwitch]="isAuthenticated()">
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                <a class="nav-link" routerLink="/" (click)="collapseNavbar()">
-                    <i class="fa fa-home" aria-hidden="true"></i>
-                    <span>Home</span>
-                </a>
-            </li>
-            &lt;!&ndash; jhipster-needle-add-element-to-menu - JHipster will add new menu items here &ndash;&gt;
-            <li *ngSwitchCase="true" ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entity-menu">
-                    <span>
-                        <i class="fa fa-th-list" aria-hidden="true"></i>
-                        <span>
-                            Entities
-                        </span>
-                        <b class="caret"></b>
-                    </span>
-                </a>
-                <ul class="dropdown-menu" ngbDropdownMenu>
-                    <li>
-                        <a class="dropdown-item" routerLink="data-bundle" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <i class="fa fa-fw fa-asterisk" aria-hidden="true"></i>
-                            <span>Data Bundle</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="data-input" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <i class="fa fa-fw fa-asterisk" aria-hidden="true"></i>
-                            <span>Data Input</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="data-collection" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <i class="fa fa-fw fa-asterisk" aria-hidden="true"></i>
-                            <span>Data Collection</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="data-bundle" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <i class="fa fa-fw fa-asterisk" aria-hidden="true"></i>
-                            <span>Data Bundle</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="data-input" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <i class="fa fa-fw fa-asterisk" aria-hidden="true"></i>
-                            <span>Data Input</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="company-data-collection" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <i class="fa fa-fw fa-asterisk" aria-hidden="true"></i>
-                            <span>Company Data Collection</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="company-status" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <i class="fa fa-fw fa-asterisk" aria-hidden="true"></i>
-                            <span>Company Status</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="review-sign-off" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <i class="fa fa-fw fa-asterisk" aria-hidden="true"></i>
-                            <span>Review Sign Off</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="submission-sign-off" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <i class="fa fa-fw fa-asterisk" aria-hidden="true"></i>
-                            <span>Submission Sign Off</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="data-file" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <i class="fa fa-fw fa-asterisk" aria-hidden="true"></i>
-                            <span>Data File</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="company-data-bundle" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <i class="fa fa-fw fa-asterisk" aria-hidden="true"></i>
-                            <span>Company Data Bundle</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="input-type" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <i class="fa fa-fw fa-asterisk" aria-hidden="true"></i>
-                            <span>Input Type</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="company-data-input" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <i class="fa fa-fw fa-asterisk" aria-hidden="true"></i>
-                            <span>Company Data Input</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="company" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <i class="fa fa-fw fa-asterisk" aria-hidden="true"></i>
-                            <span>Company</span>
-                        </a>
-                    </li>
-                    &lt;!&ndash; jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here &ndash;&gt;
-                </ul>
-            </li>
-            <li *jhiHasAnyAuthority="'ROLE_OFWAT_ADMIN'" ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="admin-menu">
-                    <span>
-                        <i class="fa fa-user-plus" aria-hidden="true"></i>
-                        <span>Administration</span>
-                        <b class="caret"></b>
-                    </span>
-                </a>
-                <ul class="dropdown-menu" ngbDropdownMenu>
-                    <li>
-                        <a class="dropdown-item" routerLink="user-management" routerLinkActive="active" (click)="collapseNavbar()">
-                            <i class="fa fa-fw fa-user" aria-hidden="true"></i>
-                            <span>User management</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="jhi-metrics" routerLinkActive="active" (click)="collapseNavbar()">
-                            <i class="fa fa-fw fa-tachometer" aria-hidden="true"></i>
-                            <span>Metrics</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="jhi-health" routerLinkActive="active" (click)="collapseNavbar()">
-                            <i class="fa fa-fw fa-heart" aria-hidden="true"></i>
-                            <span>Health</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="jhi-configuration" routerLinkActive="active" (click)="collapseNavbar()">
-                            <i class="fa fa-fw fa-list" aria-hidden="true"></i>
-                            <span>Configuration</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="audits" routerLinkActive="active" (click)="collapseNavbar()">
-                            <i class="fa fa-fw fa-bell" aria-hidden="true"></i>
-                            <span>Audits</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="logs" routerLinkActive="active" (click)="collapseNavbar()">
-                            <i class="fa fa-fw fa-tasks" aria-hidden="true"></i>
-                            <span>Logs</span>
-                        </a>
-                    </li>
-                    <li *ngIf="swaggerEnabled">
-                        <a class="dropdown-item" routerLink="docs" routerLinkActive="active" (click)="collapseNavbar()">
-                            <i class="fa fa-fw fa-book" aria-hidden="true"></i>
-                            <span>API</span>
-                        </a>
-                    </li>
-                    &lt;!&ndash; jhipster-needle-add-element-to-admin-menu - JHipster will add entities to the admin menu here &ndash;&gt;
-                    <li *ngIf="!inProduction">
-                        <a class="dropdown-item" href='./h2-console' target="_tab" (click)="collapseNavbar()">
-                            <i class="fa fa-fw fa-hdd-o" aria-hidden="true"></i>
-                            <span>Database</span>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="account-menu">
-                  <span *ngIf="!getImageUrl()">
-                    <i class="fa fa-user" aria-hidden="true"></i>
-                    <span>
-                      Account
-                    </span>
-                    <b class="caret"></b>
-                  </span>
-                  <span *ngIf="getImageUrl()">
-                      <img [src]="getImageUrl()" class="profile-image img-circle" alt="Avatar">
-                  </span>
-                </a>
-                <ul class="dropdown-menu dropdown-menu-right" ngbDropdownMenu>
-                    <li *ngSwitchCase="true">
-                        <a class="dropdown-item" routerLink="settings" routerLinkActive="active" (click)="collapseNavbar()">
-                            <i class="fa fa-fw fa-wrench" aria-hidden="true"></i>
-                            <span>Settings</span>
-                        </a>
-                    </li>
-                    <li *ngSwitchCase="true">
-                        <a class="dropdown-item" routerLink="password" routerLinkActive="active" (click)="collapseNavbar()">
-                            <i class="fa fa-fw fa-clock-o" aria-hidden="true"></i>
-                            <span>Password</span>
-                        </a>
-                    </li>
-                    <li *ngSwitchCase="true">
-                        <a class="dropdown-item" routerLink="sessions" routerLinkActive="active" (click)="collapseNavbar()">
-                            <i class="fa fa-fw fa-cloud" aria-hidden="true"></i>
-                            <span>Sessions</span>
-                        </a>
-                    </li>
-                    <li *ngSwitchCase="true">
-                        <a class="dropdown-item" (click)="logout()" id="logout">
-                            <i class="fa fa-fw fa-sign-out" aria-hidden="true"></i>
-                            <span>Sign out</span>
-                        </a>
-                    </li>
-                    <li *ngSwitchCase="false">
-                        <a class="dropdown-item" (click)="login()" id="login">
-                            <i class="fa fa-fw fa-sign-in" aria-hidden="true"></i>
-                            <span>Sign in</span>
-                        </a>
-                    </li>
-                    <li *ngSwitchCase="false">
-                        <a class="dropdown-item" routerLink="register" routerLinkActive="active" (click)="collapseNavbar()">
-                            <i class="fa fa-fw fa-registered" aria-hidden="true"></i>
-                            <span>Register</span>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </div>
-</nav>-->
-
 <span>
 <a href='#proposition-links' class='js-header-toggle menu'>Menu</a>
 <nav id='proposition-menu'>
@@ -238,29 +5,19 @@
     <strong class="phase-tag">Alpha</strong>
     <ul id='proposition-links' [ngSwitch]="isAuthenticated()">
         <li *ngSwitchCase="true"><a href="#" (click)="logout()" id="logout">
-            <!--<i class="fa fa-fw fa-sign-out" aria-hidden="true"></i>-->
             <span>Sign out</span>
         </a></li>
         <li *ngSwitchCase="false"><a href='' [routerLink]="['registration-request']" class=''>Register</a></li>
         <li *ngSwitchCase="false">
             <a class="" href='' [routerLink]="['login']" id="login">
-                <!--<i class="fa fa-fw fa-sign-in" aria-hidden="true"></i>-->
                 <span>Sign in</span>
             </a>
         </li>
         <li *ngSwitchCase="true"><a *jhiHasAnyAuthority="['ROLE_OFWAT_ADMIN', 'ROLE_COMPANY_ADMIN']" href='' [routerLink]="['ofwat-user-management']">User management</a></li>
         <li *ngSwitchCase="true">
-            <!--<jhi-ofwat-company-select></jhi-ofwat-company-select>-->
-            <!-- If it is an ofwat employee display a select list of all companies -->
-            <!-- Else display only for the company the user is associated with. -->
-            <!--<a href='url-to-page-2'>{{isOfwatEmployee()}}</a>-->
             <a *jhiHasAnyAuthority="['ROLE_OFWAT_ADMIN', 'ROLE_OFWAT_USER']" href='' [routerLink]="['data-collection-management']">Data collections</a></li>
         </li>
         <li *ngSwitchCase="true">
-            <!--<jhi-ofwat-company-select></jhi-ofwat-company-select>-->
-            <!-- If it is an ofwat employee display a select list of all companies -->
-            <!-- Else display only for the company the user is associated with. -->
-            <!--<a href='url-to-page-2'>{{isOfwatEmployee()}}</a>-->
             <a *jhiHasAnyAuthority="['ROLE_OFWAT_ADMIN', 'ROLE_COMPANY_ADMIN', 'ROLE_COMPANY_USER']" href='' [routerLink]="['company-data-collection-management']">Company Data collections</a></li>
         </li>
         <li *ngSwitchCase="true">
@@ -270,10 +27,6 @@
             <a href="#">Support</a>
         </li>
                 <li *ngSwitchCase="true">
-            <!--<jhi-ofwat-company-select></jhi-ofwat-company-select>-->
-                    <!-- If it is an ofwat employee display a select list of all companies -->
-                    <!-- Else display only for the company the user is associated with. -->
-                    <!--<a href='url-to-page-2'>{{isOfwatEmployee()}}</a>-->
             <a *jhiHasAnyAuthority="['ROLE_OFWAT_ADMIN']" href='' [routerLink]="['datasubmission']">Data Submissions</a></li>
         </li>
     </ul>

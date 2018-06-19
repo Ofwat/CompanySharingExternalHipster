@@ -1,5 +1,5 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
-import { ITEMS_PER_PAGE, Principal, ResponseWrapper, DataBundle, DataBundleService } from '../../shared';
+import { DataBundle, DataBundleService } from '../../shared';
 
 @Component({
     selector: 'jhi-data-bundle-deleted',
@@ -31,7 +31,6 @@ export class DataBundleDeletedComponent implements OnInit {
         console.log( '************** form submitted **************' );
         this.error = null;
         this.errorDataBundleExists = null;
-        // this.dataBundle.langKey = 'en';
         this.dataBundleService.create(this.dataBundle).subscribe(() => {
             this.success = true;
         }, (response) => this.processError(response));

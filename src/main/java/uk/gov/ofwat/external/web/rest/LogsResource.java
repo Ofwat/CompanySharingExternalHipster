@@ -1,13 +1,12 @@
 package uk.gov.ofwat.external.web.rest;
 
-import uk.gov.ofwat.external.web.rest.vm.LoggerVM;
-
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.LoggerContext;
 import com.codahale.metrics.annotation.Timed;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import uk.gov.ofwat.external.web.rest.vm.LoggerVM;
 
 import java.util.List;
 import java.util.stream.Collectors;

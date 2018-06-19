@@ -15,11 +15,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import uk.gov.ofwat.external.config.ApplicationProperties;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class CaptchaService {

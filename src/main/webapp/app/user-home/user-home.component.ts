@@ -20,7 +20,6 @@ export class UserHomeComponent implements OnInit {
     constructor(
         private principal: Principal,
         private router: Router,
-        // private loginModalService: LoginModalService,
         private eventManager: JhiEventManager
     ) {
     }

@@ -1,11 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes, CanActivate } from '@angular/router';
-
 import { JhiPaginationUtil } from 'ng-jhipster';
-
 import { DataCollectionMgmtComponent } from './data-collection-management.component';
 
-import { Principal } from '../../shared';
 
 @Injectable()
 export class DataCollectionResolvePagingParams implements Resolve<any> {

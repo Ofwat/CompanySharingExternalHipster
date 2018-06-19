@@ -1,7 +1,5 @@
 package uk.gov.ofwat.external.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -9,8 +7,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.context.HttpRequestResponseHolder;
 import org.springframework.security.web.context.SecurityContextRepository;
-import org.springframework.stereotype.Component;
-import org.springframework.util.Assert;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -39,8 +35,6 @@ public class RefreshingUserDetailsSecurityContextRepository implements SecurityC
     }
 
     public RefreshingUserDetailsSecurityContextRepository(final SecurityContextRepository delegate, final UserDetailsService userDetailsService) {
-        //Assert.notNull(delegate);
-        //Assert.notNull(userDetailsService);
         this.delegate = delegate;
         this.userDetailsService = userDetailsService;
     }

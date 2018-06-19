@@ -1,17 +1,15 @@
 package uk.gov.ofwat.external.service;
 
-import uk.gov.ofwat.external.domain.CompanyDataInput;
-import uk.gov.ofwat.external.repository.CompanyDataInputRepository;
-import uk.gov.ofwat.external.service.dto.CompanyDataInputDTO;
-import uk.gov.ofwat.external.service.mapper.CompanyDataInputMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
+import uk.gov.ofwat.external.domain.CompanyDataInput;
+import uk.gov.ofwat.external.repository.CompanyDataInputRepository;
+import uk.gov.ofwat.external.service.dto.CompanyDataInputDTO;
+import uk.gov.ofwat.external.service.mapper.CompanyDataInputMapper;
 
 
 /**

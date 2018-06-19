@@ -1,7 +1,6 @@
 import { Component, OnInit, ElementRef, Renderer, AfterViewInit } from '@angular/core';
 import { InviteUser } from './invite-user.service';
 import { CompanyService } from '../../entities/company/company.service';
-import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
 import { JhiAlertService } from 'ng-jhipster';
 import { Company } from '../../entities/company/company.model';
 
@@ -22,9 +21,7 @@ export class InviteUserComponent implements OnInit, AfterViewInit {
 
     constructor(
         private inviteUserService: InviteUser,
-        private companyService: CompanyService,
-        private elementRef: ElementRef,
-        private alertService: JhiAlertService,
+         private elementRef: ElementRef,
         private renderer: Renderer
     ) {
     }
@@ -32,13 +29,6 @@ export class InviteUserComponent implements OnInit, AfterViewInit {
     ngOnInit() {
         this.success = false;
         this.registerAccount = {};
-/*        this.companies = [];
-        this.selectedCompany = null;
-
-        this.companyService.query().subscribe(
-            (res: ResponseWrapper) => this.onSuccessLoadCompanies(res.json, res.headers),
-            (res: ResponseWrapper) => this.onErrorLoadCompanies(res.json)
-        );*/
     }
 
     ngAfterViewInit() {
@@ -62,16 +52,6 @@ export class InviteUserComponent implements OnInit, AfterViewInit {
     }
 
     register() {
-/*        console.log('In invite()');
-        this.error = null;
-        this.errorUserExists = null;
-        this.errorEmailExists = null;
-        this.errorCaptchaFailed = null;
-        this.registerAccount.langKey = 'en';
-        this.registerAccount.companyId = this.selectedCompany.id;
-        this.registerService.requestAccount(this.registerAccount).subscribe(() => {
-            this.success = true;
-        }, (response) => this.processError(response));*/
     }
 
     cancel() {
@@ -90,12 +70,6 @@ export class InviteUserComponent implements OnInit, AfterViewInit {
         }, (response) => this.processError(response));
     }
 
-/*    private onSuccessLoadCompanies(data, headers) {
-        this.companies = data;
-    }
-    private onErrorLoadCompanies(error) {
-        this.alertService.error(error.message, null, null);
-    }*/
 
     private processError(response) {
         this.success = null;

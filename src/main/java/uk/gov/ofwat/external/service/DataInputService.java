@@ -100,7 +100,6 @@ public class DataInputService {
 
     public DataInput findByDataBundle(Long id){
         log.debug("Request to get Data Input from DataInput");
-        //return dataInputRepository.findByDataBundle(id);
         log.debug("Request to get DataInput : {}", id);
         DataInput dataInput = dataInputRepository.findOne(id);
         return dataInput;

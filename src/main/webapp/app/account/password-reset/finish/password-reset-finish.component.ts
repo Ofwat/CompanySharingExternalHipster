@@ -20,7 +20,6 @@ export class PasswordResetFinishComponent implements OnInit, AfterViewInit {
 
     constructor(
         private passwordResetFinishService: PasswordResetFinishService,
-        // private loginModalService: LoginModalService,
         private route: ActivatedRoute,
         private elementRef: ElementRef, private renderer: Renderer
     ) {
@@ -57,6 +56,5 @@ export class PasswordResetFinishComponent implements OnInit, AfterViewInit {
 
     login() {
         // TODO This should redirect to login component.
-        // this.modalRef = this.loginModalService.open();
     }
 }

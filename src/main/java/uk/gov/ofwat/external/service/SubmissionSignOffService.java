@@ -1,13 +1,13 @@
 package uk.gov.ofwat.external.service;
 
-import uk.gov.ofwat.external.domain.SubmissionSignOff;
-import uk.gov.ofwat.external.repository.SubmissionSignOffRepository;
-import uk.gov.ofwat.external.service.dto.SubmissionSignOffDTO;
-import uk.gov.ofwat.external.service.mapper.SubmissionSignOffMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import uk.gov.ofwat.external.domain.SubmissionSignOff;
+import uk.gov.ofwat.external.repository.SubmissionSignOffRepository;
+import uk.gov.ofwat.external.service.dto.SubmissionSignOffDTO;
+import uk.gov.ofwat.external.service.mapper.SubmissionSignOffMapper;
 
 import java.util.LinkedList;
 import java.util.List;

@@ -1,15 +1,10 @@
-import { Injectable } from '@angular/core';
-import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes, CanActivate } from '@angular/router';
-
+import { Routes, CanActivate } from '@angular/router';
 import { UserRouteAccessService } from '../../shared';
-import { JhiPaginationUtil } from 'ng-jhipster';
-
 import { ReviewSignOffComponent } from './review-sign-off.component';
 import { ReviewSignOffDetailComponent } from './review-sign-off-detail.component';
 import { ReviewSignOffPopupComponent } from './review-sign-off-dialog.component';
 import { ReviewSignOffDeletePopupComponent } from './review-sign-off-delete-dialog.component';
 
-import { Principal } from '../../shared';
 
 export const reviewSignOffRoute: Routes = [
     {

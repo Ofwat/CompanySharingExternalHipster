@@ -3,9 +3,7 @@ package uk.gov.ofwat.external.service.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import uk.gov.ofwat.external.domain.data.DCSRow;
-import uk.gov.ofwat.external.domain.data.DCSTable;
 import uk.gov.ofwat.external.service.dto.data.RowDto;
-import uk.gov.ofwat.external.service.dto.data.TableDto;
 
 /**
  * Mapper for the entity DCSTable and its DTO TableDto.

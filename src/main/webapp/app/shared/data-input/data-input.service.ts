@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
-
 import { DataInput } from './data-input.model';
 import { ResponseWrapper } from '../model/response-wrapper.model';
 import { createRequestOption } from '../model/request-util';
@@ -28,7 +27,6 @@ export class DataInputService {
     }
 
     find(name: string): Observable<DataInput> {
-        // return this.http.get(`${this.resourceUrl}/${name}`).map((res: Response) => res.json());
         return this.http.get(`${this.resourceUrl}?name=${name}`).map((res: Response) => res.json());
     }
 

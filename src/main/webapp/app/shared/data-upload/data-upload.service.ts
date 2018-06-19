@@ -8,15 +8,6 @@ export class UploadService {
     private resourceUrlCompany = 'api/data-upload-company';
 
     constructor(private http: Http) { }
-/*
-    upload(formData: FormData) {
-        return this.http.post(this.resourceUrl, formData)
-            .map((res: Response) => this.convertResponse(res)).catch((error)=>{
-
-
-            });
-
-    }*/
 
     upload(formData: FormData): Observable<any> {
         return this.http.post(this.resourceUrl, formData)

@@ -5,7 +5,6 @@ import { Injector } from '@angular/core';
 import { AuthServerProvider } from '../../shared/auth/auth-session.service';
 import { StateStorageService } from '../../shared/auth/state-storage.service';
 import { Router } from '@angular/router';
-// import { LoginModalService } from '../../shared/login/login-modal.service';
 
 export class AuthExpiredInterceptor extends JhiHttpInterceptor {
 
@@ -39,10 +38,7 @@ export class AuthExpiredInterceptor extends JhiHttpInterceptor {
                     }
                 }
                 authServerProvider.logout();
-
-                // const loginServiceModal = this.injector.get(LoginModalService);
                 // TODO This should redirect to login component.
-                // this.modalRef = this.loginModalService.open();
                 this.router.navigate(['/login']);
             }
             return Observable.throw(error);

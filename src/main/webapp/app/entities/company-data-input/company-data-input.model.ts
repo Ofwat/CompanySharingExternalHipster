@@ -10,8 +10,6 @@ export class CompanyDataInput implements BaseEntity {
         public dataInputId?: number,
         public companyOwnerId?: number,
         public companyReviewerId?: number,
-        public reviewSignOffs?: BaseEntity[],
-        public submissionFiles?: BaseEntity[],
         public inputTypeId?: number,
     ) {
     }

@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
-
 import { Principal } from '../';
 import { StateStorageService } from './state-storage.service';
-// import {LoginModalService} from '../../account/login/login-modal.service';
+
 
 @Injectable()
 export class UserRouteAccessService implements CanActivate {
@@ -37,7 +36,6 @@ export class UserRouteAccessService implements CanActivate {
                 // only show the login dialog, if the user hasn't logged in yet
                 if (!account) {
                     // TODO This should redirect to login component.
-                    // this.modalRef = this.loginModalService.open();
                     this.router.navigate(['/login']);
                 }
             });

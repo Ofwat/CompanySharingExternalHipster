@@ -167,11 +167,9 @@ export class DataInputCreationComponent implements OnInit {
                             this.msg = errorResponse.statusText;
                             this.genericServerMessageService.errorHide = false;
                             if (409 == errorResponse.status) {
-                                //this.errorDataInputExists = true;
                                 this.processError(errorResponse, "Data Input name is already in use! Please choose another one.");
                             }
                             else {
-                                //this.error = true;
                                 this.processError(errorResponse, "");
                             }
                         }

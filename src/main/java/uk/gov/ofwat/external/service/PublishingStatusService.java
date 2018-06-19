@@ -1,13 +1,13 @@
 package uk.gov.ofwat.external.service;
 
-import uk.gov.ofwat.external.domain.PublishingStatus;
-import uk.gov.ofwat.external.repository.PublishingStatusRepository;
-import uk.gov.ofwat.external.service.dto.PublishingStatusDTO;
-import uk.gov.ofwat.external.service.mapper.PublishingStatusMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import uk.gov.ofwat.external.domain.PublishingStatus;
+import uk.gov.ofwat.external.repository.PublishingStatusRepository;
+import uk.gov.ofwat.external.service.dto.PublishingStatusDTO;
+import uk.gov.ofwat.external.service.mapper.PublishingStatusMapper;
 
 import java.util.LinkedList;
 import java.util.List;

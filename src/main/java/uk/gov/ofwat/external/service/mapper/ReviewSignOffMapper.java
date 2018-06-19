@@ -1,9 +1,9 @@
 package uk.gov.ofwat.external.service.mapper;
 
-import uk.gov.ofwat.external.domain.*;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import uk.gov.ofwat.external.domain.ReviewSignOff;
 import uk.gov.ofwat.external.service.dto.ReviewSignOffDTO;
-
-import org.mapstruct.*;
 
 /**
  * Mapper for the entity ReviewSignOff and its DTO ReviewSignOffDTO.
@@ -16,12 +16,12 @@ public interface ReviewSignOffMapper extends EntityMapper <ReviewSignOffDTO, Rev
 
     @Mapping(source = "companyDataInput.id", target = "companyDataInputId")
     @Mapping(source = "companyDataInput.name", target = "companyDataInputName")
-    ReviewSignOffDTO toDto(ReviewSignOff reviewSignOff); 
+    ReviewSignOffDTO toDto(ReviewSignOff reviewSignOff);
 
     @Mapping(source = "signatoryId", target = "signatory")
 
     @Mapping(source = "companyDataInputId", target = "companyDataInput")
-    ReviewSignOff toEntity(ReviewSignOffDTO reviewSignOffDTO); 
+    ReviewSignOff toEntity(ReviewSignOffDTO reviewSignOffDTO);
     default ReviewSignOff fromId(Long id) {
         if (id == null) {
             return null;

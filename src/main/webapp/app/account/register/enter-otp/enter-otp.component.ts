@@ -1,4 +1,4 @@
-import {Component, OnInit, AfterViewInit, Renderer, ElementRef, Input} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import { Register } from '../register.service';
 
 @Component({
@@ -9,7 +9,6 @@ export class EnterOtpComponent {
 
     @Input() email: string;
     resendOTP: Boolean;
-    // success: boolean;
     code: string;
     otpError: boolean;
     verifySuccess: boolean;

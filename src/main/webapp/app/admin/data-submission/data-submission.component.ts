@@ -18,7 +18,7 @@ export class DataSubmissionComponent implements OnInit {
     filter: string;
     orderProp: string;
     reverse: boolean;
-    rejections: String[];
+
 
     msg: string;
     warnHideParent = false;
@@ -30,8 +30,7 @@ export class DataSubmissionComponent implements OnInit {
     constructor(
         private dataSubmissionService: DataSubmissionService,
         private router: Router,
-        private genericServerMessageService: GenericServerMessageService
-    ) {
+        ) {
         this.filter = '';
         this.orderProp = 'name';
         this.reverse = false;

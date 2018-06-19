@@ -13,7 +13,6 @@ import {
     SessionsService,
     SessionsComponent,
     PasswordStrengthBarComponent,
-    // RegisterComponent,
     RegisterInitComponent,
     EnterOtpComponent,
     RegisterFinishComponent,
@@ -38,7 +37,6 @@ import {
     ],
     declarations: [
         ActivateComponent,
-        // RegisterComponent,
         RegisterInitComponent,
         EnterOtpComponent,
         RegisterFinishComponent,

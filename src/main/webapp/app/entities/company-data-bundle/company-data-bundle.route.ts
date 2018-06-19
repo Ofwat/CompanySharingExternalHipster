@@ -1,15 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes, CanActivate } from '@angular/router';
-
 import { UserRouteAccessService } from '../../shared';
 import { JhiPaginationUtil } from 'ng-jhipster';
-
 import { CompanyDataBundleComponent } from './company-data-bundle.component';
 import { CompanyDataBundleDetailComponent } from './company-data-bundle-detail.component';
 import { CompanyDataBundlePopupComponent } from './company-data-bundle-dialog.component';
 import { CompanyDataBundleDeletePopupComponent } from './company-data-bundle-delete-dialog.component';
-
-import { Principal } from '../../shared';
 
 @Injectable()
 export class CompanyDataBundleResolvePagingParams implements Resolve<any> {

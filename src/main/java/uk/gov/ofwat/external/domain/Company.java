@@ -1,8 +1,6 @@
 package uk.gov.ofwat.external.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -10,7 +8,6 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * A Company.
@@ -31,21 +28,6 @@ public class Company extends AbstractAuditingEntity implements Serializable {
 
     @Column(name = "name")
     private String name;
-
-/*    @ManyToMany
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "company_admin",
-        joinColumns = @JoinColumn(name="companies_id", referencedColumnName="id"),
-        inverseJoinColumns = @JoinColumn(name="users_id", referencedColumnName="id"))*/
-
-
-    /*
-    @ManyToMany
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "company_user",
-               joinColumns = @JoinColumn(name="companies_id", referencedColumnName="id"),
-               inverseJoinColumns = @JoinColumn(name="users_id", referencedColumnName="id"))
-    private Set<User> users = new HashSet<>();*/
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "company", fetch = FetchType.LAZY)
@@ -95,25 +77,6 @@ public class Company extends AbstractAuditingEntity implements Serializable {
     public void setCompanyUserPrivilegeDetails(Set<CompanyUserPrivilegeDetails> companyUserPrivilegeDetails) {
         this.companyUserPrivilegeDetails = companyUserPrivilegeDetails;
     }
-
-    /*    public Company addUser(User user, Authority authority) {
-        this.users.add(user);
-        user.getCompanies().add(this);
-        return this;
-    }
-
-    public Company removeUser(User user) {
-        this.users.remove(user);
-        user.getCompanies().remove(this);
-        return this;
-    }*/
-
-/*
-    @JsonBackReference
-    public Set<User> getUsers(){
-        return this.companyUserDetails.stream().map(cud -> cud.getUser()).collect(Collectors.toSet());
-    }
-*/
 
 
     public Long getFountainId() {

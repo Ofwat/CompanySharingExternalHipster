@@ -33,12 +33,6 @@ import {
     declarations: [
         CompanyDataCollectionManagementComponent,
         CompanyDataCollectionDetailComponent,
-     /*   DataCollectionCreationComponent,
-        DataCollectionDetailComponent,
-        DataCollectionDeletionConfirmationComponent,
-        DataCollectionDeletedComponent,
-        DataCollectionEditComponent,
-        PublishingStatusModificationComponent*/
     ],
     entryComponents: [
         JhiHealthModalComponent,

@@ -8,9 +8,6 @@ export * from './auth/auth-session.service';
 export * from './auth/principal.service';
 export * from './auth/has-any-authority.directive';
 export * from './auth/user-route-access-service';
-/*export * from './login/login.component';
-export * from './login/login.service';
-export * from './login/login-modal.service';*/
 export * from './user/account.model';
 export * from './user/user.model';
 export * from './user/user.service';
@@ -32,7 +29,6 @@ export * from './company-data-bundle/company-data-bundle.model';
 export * from './company-data-bundle/company-data-bundle.service';
 export * from './company-data-input/company-data-input.model';
 export * from './company-data-input/company-data-input.service';
-
 export * from './data-bundle/data-bundle.model';
 export * from './data-bundle/data-bundle.service';
 export * from './data-download/data-download.model';

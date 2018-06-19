@@ -1,12 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-
 import { ProfileService } from '../profiles/profile.service';
 import { Principal } from '../../shared';
-
-import { User, UserService } from '../../shared';
-
 import { VERSION, DEBUG_INFO_ENABLED } from '../../app.constants';
 import {Subscription} from 'rxjs/Subscription';
 import {LoginService} from '../../account/login/login.service';
@@ -23,16 +18,13 @@ export class NavbarComponent implements OnInit {
     userName: string;
     inProduction: boolean;
     isNavbarCollapsed: boolean;
-    languages: any[];
     swaggerEnabled: boolean;
-    // modalRef: NgbModalRef;
     version: string;
     private subscription: Subscription;
 
     constructor(
         private loginService: LoginService,
         private principal: Principal,
-        // private loginModalService: LoginModalService,
         private profileService: ProfileService,
         private router: Router
     ) {
@@ -47,7 +39,6 @@ export class NavbarComponent implements OnInit {
         });
         if ( this.isAuthenticated() ) {
             this.principal.identity().then((account) => {
-                // console.log(account);
                 this.userName = account.email;
             });
         }
@@ -67,8 +58,6 @@ export class NavbarComponent implements OnInit {
     }
 
     login() {
-        // this.modalRef = this.loginModalService.open();
-        // this.router.navigateByUrl('login');
         this.router.navigate(['/login']);
     }
 

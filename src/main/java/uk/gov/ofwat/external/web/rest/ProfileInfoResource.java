@@ -1,11 +1,11 @@
 package uk.gov.ofwat.external.web.rest;
 
-import uk.gov.ofwat.external.config.DefaultProfileUtil;
-
 import io.github.jhipster.config.JHipsterProperties;
-
 import org.springframework.core.env.Environment;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import uk.gov.ofwat.external.config.DefaultProfileUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;

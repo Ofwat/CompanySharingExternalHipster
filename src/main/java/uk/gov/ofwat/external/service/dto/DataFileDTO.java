@@ -3,9 +3,6 @@ package uk.gov.ofwat.external.service.dto;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.Objects;
 
 /**
  * A DTO for the DataFile entity.

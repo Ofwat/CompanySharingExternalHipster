@@ -1,12 +1,12 @@
 package uk.gov.ofwat.external.service;
 
-import uk.gov.ofwat.external.config.audit.AuditEventConverter;
-import uk.gov.ofwat.external.repository.PersistenceAuditEventRepository;
 import org.springframework.boot.actuate.audit.AuditEvent;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import uk.gov.ofwat.external.config.audit.AuditEventConverter;
+import uk.gov.ofwat.external.repository.PersistenceAuditEventRepository;
 
 import java.time.Instant;
 import java.util.Optional;

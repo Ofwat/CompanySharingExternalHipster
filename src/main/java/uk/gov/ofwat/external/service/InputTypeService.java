@@ -1,13 +1,13 @@
 package uk.gov.ofwat.external.service;
 
-import uk.gov.ofwat.external.domain.InputType;
-import uk.gov.ofwat.external.repository.InputTypeRepository;
-import uk.gov.ofwat.external.service.dto.InputTypeDTO;
-import uk.gov.ofwat.external.service.mapper.InputTypeMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import uk.gov.ofwat.external.domain.InputType;
+import uk.gov.ofwat.external.repository.InputTypeRepository;
+import uk.gov.ofwat.external.service.dto.InputTypeDTO;
+import uk.gov.ofwat.external.service.mapper.InputTypeMapper;
 
 import java.util.LinkedList;
 import java.util.List;

@@ -1,13 +1,10 @@
 package uk.gov.ofwat.external.service.dto.data;
 
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
-
-import com.google.gson.annotations.SerializedName;
 
 @XmlRootElement(name = "rowDto")
 @XmlType(propOrder = { "cells" })

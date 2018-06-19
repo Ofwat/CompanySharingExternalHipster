@@ -15,9 +15,6 @@
 
     </div>
     <div class="col-md-8 offset-md-2" *ngIf="dataCollection">
-        <!--<button class="button float-left" [routerLink]="['/data-collection-deleted', dataCollection.name]">-->
-            <!--<span class="fa fa-plus"></span> <span>Delete Data Collection</span>-->
-        <!--</button>-->
         <button class="button button-warning float-left" (click)="delete(dataCollection.id)">
             <span>Delete Data Collection</span>
         </button>

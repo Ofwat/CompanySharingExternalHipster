@@ -1,10 +1,6 @@
 package uk.gov.ofwat.external.service;
 
-import uk.gov.ofwat.external.domain.RegistrationRequest;
-import uk.gov.ofwat.external.domain.User;
-
 import io.github.jhipster.config.JHipsterProperties;
-
 import org.apache.commons.lang3.CharEncoding;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +11,8 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring4.SpringTemplateEngine;
+import uk.gov.ofwat.external.domain.RegistrationRequest;
+import uk.gov.ofwat.external.domain.User;
 import uk.gov.ofwat.external.repository.NotifyMessageTemplateRepository;
 
 import javax.mail.internet.MimeMessage;

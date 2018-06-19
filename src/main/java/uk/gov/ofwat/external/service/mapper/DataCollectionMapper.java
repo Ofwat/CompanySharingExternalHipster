@@ -1,10 +1,9 @@
 package uk.gov.ofwat.external.service.mapper;
 
-import uk.gov.ofwat.external.domain.*;
-import uk.gov.ofwat.external.service.dto.DataBundleDTO;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import uk.gov.ofwat.external.domain.DataCollection;
 import uk.gov.ofwat.external.service.dto.DataCollectionDTO;
-
-import org.mapstruct.*;
 
 /**
  * Mapper for the entity DataCollection and its DTO DataCollectionDTO.

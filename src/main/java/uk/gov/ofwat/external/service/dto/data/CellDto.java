@@ -3,11 +3,6 @@ package uk.gov.ofwat.external.service.dto.data;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-import com.google.gson.annotations.SerializedName;
-
-//import uk.gov.ofwat.fountain.api.report.CellType;
-//import uk.gov.ofwat.fountain.audit.SkipAudit;
-
 @XmlRootElement(name = "cellDto")
 @XmlType(propOrder = { "row", "col", "value", "decimalPlaces", "cellFormat", "dataType", "dataFormat", "style", "errorFlag", "errorText", "key", "cellType" })
 public class CellDto implements Cloneable {

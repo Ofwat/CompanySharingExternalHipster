@@ -1,10 +1,11 @@
 package uk.gov.ofwat.external.domain;
 
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 import javax.persistence.*;
-import java.io.Serializable;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "data_job")

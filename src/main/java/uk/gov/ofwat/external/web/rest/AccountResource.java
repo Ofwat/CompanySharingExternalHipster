@@ -1,7 +1,15 @@
 package uk.gov.ofwat.external.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.web.bind.annotation.*;
 import uk.gov.ofwat.external.domain.PersistentToken;
 import uk.gov.ofwat.external.domain.RegistrationRequest;
 import uk.gov.ofwat.external.domain.User;
@@ -12,24 +20,17 @@ import uk.gov.ofwat.external.security.AuthoritiesConstants;
 import uk.gov.ofwat.external.security.SecurityUtils;
 import uk.gov.ofwat.external.service.*;
 import uk.gov.ofwat.external.service.dto.UserDTO;
+import uk.gov.ofwat.external.web.rest.util.HeaderUtil;
 import uk.gov.ofwat.external.web.rest.vm.KeyAndPasswordVM;
 import uk.gov.ofwat.external.web.rest.vm.ManagedUserVM;
-import uk.gov.ofwat.external.web.rest.util.HeaderUtil;
-
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * REST controller for managing the current user's account.

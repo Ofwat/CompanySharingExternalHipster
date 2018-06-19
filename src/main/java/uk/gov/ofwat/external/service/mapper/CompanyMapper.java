@@ -1,9 +1,10 @@
 package uk.gov.ofwat.external.service.mapper;
 
-import uk.gov.ofwat.external.domain.*;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.ReportingPolicy;
+import uk.gov.ofwat.external.domain.Company;
 import uk.gov.ofwat.external.service.dto.CompanyDTO;
-
-import org.mapstruct.*;
 
 /**
  * Mapper for the entity Company and its DTO CompanyDTO.

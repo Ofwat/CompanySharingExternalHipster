@@ -17,7 +17,7 @@ import {ModifyMobileComponent} from './ofwat-user-management/config/modify-mobil
 import {ModifyRolesComponent} from './ofwat-user-management/config/modify-roles.component';
 import {ModifyPasswordComponent} from './ofwat-user-management/config/modify-password.component';
 import {ModifyAccountStatusComponent} from './ofwat-user-management/config/modify-accountstatus.component';
-/* jhipster-needle-add-admin-module-import - JHipster will add admin modules imports here */
+
 
 import {
     adminState,
@@ -55,7 +55,6 @@ import {
         CompanySharingExternalSharedModule,
         MomentModule,
         RouterModule.forRoot(adminState, { useHash: true }),
-        /* jhipster-needle-add-admin-module - JHipster will add admin modules here */
     ],
     declarations: [
         AuditsComponent,

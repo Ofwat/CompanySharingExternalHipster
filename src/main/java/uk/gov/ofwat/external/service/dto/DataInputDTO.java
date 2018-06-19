@@ -3,14 +3,11 @@ package uk.gov.ofwat.external.service.dto;
 
 import uk.gov.ofwat.external.domain.CompanyDataInput;
 
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.time.Instant;
 import java.time.LocalDate;
-import javax.validation.constraints.*;
-import java.io.Serializable;
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.Objects;
 
 /**
  * A DTO for the DataInput entity.

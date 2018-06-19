@@ -1,29 +1,25 @@
 package uk.gov.ofwat.external.service;
 
-import groovy.transform.TailRecursive;
-import org.springframework.boot.actuate.autoconfigure.ShellProperties;
-import uk.gov.ofwat.external.domain.Authority;
-import uk.gov.ofwat.external.domain.Company;
-import uk.gov.ofwat.external.domain.CompanyUserDetails;
-import uk.gov.ofwat.external.domain.User;
-import uk.gov.ofwat.external.repository.AuthorityRepository;
-import uk.gov.ofwat.external.repository.CompanyRepository;
-import uk.gov.ofwat.external.repository.UserRepository;
-import uk.gov.ofwat.external.service.dto.CompanyDTO;
-import uk.gov.ofwat.external.service.mapper.CompanyMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import uk.gov.ofwat.external.domain.Company;
+import uk.gov.ofwat.external.domain.CompanyUserDetails;
+import uk.gov.ofwat.external.domain.User;
+import uk.gov.ofwat.external.repository.AuthorityRepository;
+import uk.gov.ofwat.external.repository.CompanyRepository;
 import uk.gov.ofwat.external.repository.CompanyUserDetailsRepository;
 import uk.gov.ofwat.external.repository.UserRepository;
 import uk.gov.ofwat.external.security.AuthoritiesConstants;
 import uk.gov.ofwat.external.service.Exception.UnableToRemoveUserException;
+import uk.gov.ofwat.external.service.dto.CompanyDTO;
+import uk.gov.ofwat.external.service.mapper.CompanyMapper;
 
-import java.lang.annotation.IncompleteAnnotationException;
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**

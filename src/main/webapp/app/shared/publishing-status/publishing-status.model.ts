@@ -1,4 +1,3 @@
-import {User} from "../user/user.model";
 
 export class PublishingStatus {
     public id?: any;

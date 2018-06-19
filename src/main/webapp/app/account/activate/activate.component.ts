@@ -15,7 +15,6 @@ export class ActivateComponent implements OnInit {
 
     constructor(
         private activateService: ActivateService,
-        // private loginModalService: LoginModalService,
         private route: ActivatedRoute
     ) {
     }
@@ -34,6 +33,5 @@ export class ActivateComponent implements OnInit {
 
     login() {
         // TODO This should redirect to login component.
-        // this.modalRef = this.loginModalService.open();
     }
 }

@@ -1,10 +1,11 @@
 package uk.gov.ofwat.external.repository;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import uk.gov.ofwat.external.domain.DataInput;
 import org.springframework.stereotype.Repository;
-
-import org.springframework.data.jpa.repository.*;
+import uk.gov.ofwat.external.domain.DataInput;
 
 import java.util.List;
 

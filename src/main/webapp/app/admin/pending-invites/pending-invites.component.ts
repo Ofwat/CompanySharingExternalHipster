@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Response } from '@angular/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { JhiEventManager, JhiPaginationUtil, JhiParseLinks, JhiAlertService } from 'ng-jhipster';
 import { ITEMS_PER_PAGE, Principal, User, UserService, ResponseWrapper, RegistrationRequest } from '../../shared';
@@ -104,22 +103,6 @@ export class PendingInvitesComponent implements OnInit, OnDestroy {
         console.log( data );
     }
 
-/*    setActive(registrationRequest, isActivated) {
-        registrationRequest.activated = isActivated;
-
-        this.userService.update(registrationRequest).subscribe(
-            (response) => {
-                if (response.status === 200) {
-                    this.error = null;
-                    this.success = 'OK';
-                    this.loadAll();
-                } else {
-                    this.success = null;
-                    this.error = 'ERROR';
-                }
-            });
-    }*/
-
     loadAll() {
         // TODO Make sure the correct company id is passed here!
         this.userService.queryInvites({
@@ -161,32 +144,6 @@ export class PendingInvitesComponent implements OnInit, OnDestroy {
         this.loadAll();
     }
 
-/*    checkbox(user: User) {
-        user.enabled = !user.enabled;
-        this.userService.update(user).subscribe(
-            (response) => {
-                if (response.status === 200) {
-                    this.error = null;
-                    this.success = 'OK';
-                    // this.loadAll(); // - We dont need to reload all the users do we?
-                } else {
-                    // console.log( 'In the stream response' );
-                    // console.log( user );
-                    this.success = null;
-                    this.error = 'ERROR';
-                    // iterate and find the user...
-                    for (const u of this.users) {
-                        if (user.id === u.id) {
-                            u.enabled = !u.enabled;
-                        }
-                    }
-                    // TODO display the error message outlet.
-                    this.loadAll();
-                    this.onError({error: this.error, message: 'Something went wrong - get this from i8n'});
-                }
-            });
-    }*/
-
     private onSuccess(data, headers) {
         this.links = this.parseLinks.parse(headers.get('link'));
         this.totalItems = headers.get('X-Total-Count');
@@ -204,8 +161,4 @@ export class PendingInvitesComponent implements OnInit, OnDestroy {
         console.log('Resending link for ' + registrationRequest.login);
     }
 
-/*    clickMe() {
-        this.alertService.error('404', {}, null);
-        this.alertService.success('Success', {}, null);
-    }*/
 }

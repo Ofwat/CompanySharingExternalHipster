@@ -145,11 +145,9 @@ export class DataCollectionEditComponent implements OnInit {
                 console.log("error" + errorResponse.status + errorResponse.statusText);
                 if (409 == errorResponse.status) {
                     this.processError(errorResponse,"Data Collection name is already in use, Please choose another one!")
-                    //this.errorDataCollectionExists = true;
                 }
                 else {
                     this.processError(errorResponse,"Data Collection updation failed")
-                    //this.error = true;
                 }
             }
         );

@@ -26,7 +26,6 @@ export class NotificationInterceptor extends JhiHttpInterceptor {
             const alertKey = headers.length >= 1 ? error.headers.get(headers[0]) : null;
             if (typeof alertKey === 'string') {
                 // TODO
-                // JhiAlertService.success(alertKey, { param: response.headers(headers[1])});
             }
             return Observable.throw(error);
         });

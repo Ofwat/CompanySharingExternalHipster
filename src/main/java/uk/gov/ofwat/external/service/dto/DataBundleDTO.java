@@ -3,10 +3,10 @@ package uk.gov.ofwat.external.service.dto;
 
 import uk.gov.ofwat.external.domain.CompanyDataBundle;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Arrays;
 
 /**

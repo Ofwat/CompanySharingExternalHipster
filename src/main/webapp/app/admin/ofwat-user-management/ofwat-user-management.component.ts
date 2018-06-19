@@ -159,10 +159,7 @@ export class OfwatUserMgmtComponent implements OnInit, OnDestroy, OnChanges {
                 if (response.status === 200) {
                     this.error = null;
                     this.success = 'OK';
-                    // this.loadAll(); // - We dont need to reload all the users do we?
                 } else {
-                    // console.log( 'In the stream response' );
-                    // console.log( user );
                     this.success = null;
                     this.error = 'ERROR';
                     // iterate and find the user...

@@ -2,8 +2,6 @@ package uk.gov.ofwat.external.service.dto;
 
 
 import uk.gov.ofwat.external.domain.CompanyDataCollection;
-import uk.gov.ofwat.external.domain.PublishingStatus;
-import uk.gov.ofwat.external.domain.User;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;

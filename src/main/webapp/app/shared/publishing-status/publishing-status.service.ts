@@ -27,8 +27,7 @@ export class PublishingStatusService {
     }
 
     find(name: string): Observable<PublishingStatus> {
-        // return this.http.get(`${this.resourceUrl}/${name}`).map((res: Response) => res.json());
-        return this.http.get(`${this.resourceUrl}?name=${name}`).map((res: Response) => res.json());
+          return this.http.get(`${this.resourceUrl}?name=${name}`).map((res: Response) => res.json());
     }
 
     query(req?: any): Observable<ResponseWrapper> {

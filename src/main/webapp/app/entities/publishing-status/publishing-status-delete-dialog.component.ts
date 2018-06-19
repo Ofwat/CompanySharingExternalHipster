@@ -1,9 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
 import { NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
-
 import { PublishingStatus } from './publishing-status.model';
 import { PublishingStatusPopupService } from './publishing-status-popup.service';
 import { PublishingStatusService } from './publishing-status.service';

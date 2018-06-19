@@ -26,10 +26,6 @@
                           </span>
                         </label>
                         <jhi-ofwat-company-select (companyChangedEvent)="onCompanySelect($event)"></jhi-ofwat-company-select>
-<!--                        <select style="height: auto" class="form-control" id="company" name="company" #companyInput="ngModel"
-                                [(ngModel)]="this.selectedCompany" required>
-                            <option *ngFor="let c of this.companies" [ngValue]="c.id">{{c.name}}</option>
-                        </select> -->
                     </div>
                     <div class="page-footer">
                         <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="button" value="Save" (click)="addSelectedCompany()">Add selected company</button>

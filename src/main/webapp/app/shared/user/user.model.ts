@@ -1,6 +1,3 @@
-import {Company} from '../../entities/company/company.model';
-import {CompanyUserDetails} from "../company-user-details/company.user.model";
-
 export class User {
     public id?: any;
     public login?: string;

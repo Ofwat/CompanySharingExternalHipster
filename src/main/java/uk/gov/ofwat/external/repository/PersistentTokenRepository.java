@@ -1,10 +1,10 @@
 package uk.gov.ofwat.external.repository;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import uk.gov.ofwat.external.domain.PersistentToken;
 import uk.gov.ofwat.external.domain.User;
-import java.time.LocalDate;
-import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**

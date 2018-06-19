@@ -1,9 +1,8 @@
 package uk.gov.ofwat.external.repository;
 
-import uk.gov.ofwat.external.domain.CompanyStatus;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-import org.springframework.data.jpa.repository.*;
+import uk.gov.ofwat.external.domain.CompanyStatus;
 
 import java.util.Optional;
 

@@ -1,9 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
 import { NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
-
 import { SubmissionSignOff } from './submission-sign-off.model';
 import { SubmissionSignOffPopupService } from './submission-sign-off-popup.service';
 import { SubmissionSignOffService } from './submission-sign-off.service';
