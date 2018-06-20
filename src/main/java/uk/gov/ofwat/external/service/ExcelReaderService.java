@@ -16,11 +16,10 @@ import java.io.IOException;
 @Transactional
 public class ExcelReaderService {
 
-    public TableDto readFOut(String excelFilePath, Long reportId)   {
+    public TableDto readFOut(File excelFile, Long reportId)   {
         TableDto tableDto = new TableDto();
         tableDto.setId(reportId.intValue());
         int headerCellCount = 0;
-        File excelFile = new File(excelFilePath);
         try (Workbook workbook = new XSSFWorkbook(excelFile)) {
 
 

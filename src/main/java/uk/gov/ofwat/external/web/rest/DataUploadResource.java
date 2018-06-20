@@ -82,7 +82,7 @@ public class DataUploadResource {
     }
 
     @PostMapping(value = "/data-upload")
-    public ResponseEntity<DataInputDTO> uploadFile(@RequestParam(value = "uploadFiles", required = false) MultipartFile[] files) throws IOException, InterruptedException {
+    public ResponseEntity<DataInputDTO> uploadFile(@RequestParam(value = "uploadFiles", required = false) MultipartFile[] files) throws IOException, JSONException, InterruptedException {
         //-- my stuff with formDataObject and uploaded files
         log.debug("REST request to upload Data : {}");
 

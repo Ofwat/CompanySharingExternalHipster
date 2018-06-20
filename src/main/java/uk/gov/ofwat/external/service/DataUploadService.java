@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import uk.gov.ofwat.external.config.SharePointOAuthClient;
 import uk.gov.ofwat.external.domain.CompanyDataInput;
 import uk.gov.ofwat.external.domain.DataFile;
@@ -17,6 +18,7 @@ import uk.gov.ofwat.external.service.dto.data.TableDto;
 import uk.gov.ofwat.external.service.mapper.DCSTableMapper;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -59,16 +61,9 @@ public class DataUploadService {
         this.dcsTableMapper = dcsTableMapper;
     }
 
-    public void uploadFile(MultipartFile file) throws IOException, InterruptedException {
+    public void uploadFile(MultipartFile file) throws IOException, InterruptedException, JSONException {
         log.debug("Uploaded File Names :" + file.getOriginalFilename());
-        Path theDestination1 = Paths.get("C:\\Files\\" + ofwatFileName);
-        File newFile = new File(theDestination1.toString());
-        try {
-            file.transferTo(newFile);
-        }catch(Exception e){
-            //do nothing if file exists
-        }
-        //sharePointOAuthClient.uploadFileToSharePoint(newFile);
+        sharePointOAuthClient.uploadFileToSharePoint(multipartToFile(file));
 
     }
     public void uploadCompanyFile(String companyInputId, MultipartFile file) throws IOException, JSONException, InterruptedException {
@@ -78,19 +73,12 @@ public class DataUploadService {
         CompanyDataInput companyDataInput = companyDataInputService.findCompanyDataInput(Long.parseLong(companyInputId));
         String newFileName = getUniqueFileName(companyDataInput.getCompany().getName().trim(), String.valueOf(companyDataInput.getDataInput().getReportId()), "0", file.getOriginalFilename().trim()).trim();
         newFileName = newFileName.replaceAll(" ", "%20");
-        Path theDestination1 = Paths.get("C:\\CompanyFiles\\" + newFileName);
-        File newFile = new File(theDestination1.toString());
-        try {
-            file.transferTo(newFile);
-        } catch (Exception e) {
-            //do nothing if file exists
-        }
+        File newFile = multipartToFile(file);
 
         dataFile.setCompanyDataInput(companyDataInput);
         dataFile.setLocation("C:\\CompanyFiles\\");
         dataFile.setName(newFileName);
         dataFileRepository.save(dataFile);
-
         sharePointOAuthClient.uploadFileToSharePoint(newFile);
 
 
@@ -101,7 +89,7 @@ public class DataUploadService {
                 ExecutorService executorService = Executors.newSingleThreadExecutor();
                 executorService.execute(() -> {
                     //Create the Job.
-                    TableDto tableDto = excelReaderService.readFOut(theDestination1.toString(), companyDataInput.getDataInput().getReportId());
+                    TableDto tableDto = excelReaderService.readFOut(newFile, companyDataInput.getDataInput().getReportId());
                     DCSTable dcsTable = dcsTableMapper.toEntity(tableDto);
                     DataJob dataJob = dataJobService.createDataJob(companyDataInput, tableDto);
                 current.interrupt();
@@ -118,6 +106,17 @@ public class DataUploadService {
     String getUniqueFileName(String companyName, String reportId, String runId, String name) {
         String temp = String.valueOf(Instant.now());
         return temp.substring(0, temp.indexOf(":")) + "_" + companyName + "_" + reportId + "_" + runId + "_" + env + name.substring(name.indexOf('.'), name.length());
+    }
+
+    public File multipartToFile(MultipartFile multipart) throws IllegalStateException, IOException {
+        File convFile = new File(multipart.getOriginalFilename());
+        convFile.createNewFile();
+        try (FileOutputStream fos = new FileOutputStream(convFile)) {
+            fos.write(multipart.getBytes());
+            fos.close();
+        }
+        return convFile;
+
     }
 }
 
